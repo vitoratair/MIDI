@@ -5,7 +5,7 @@
 
 	<table class="table table-striped">					
 		<div class="page-header">
-			<h2>Categoria <small> lista de categorias cadastradas no sistema</small></h2>
+			<h2>Marca <small> lista das marcas cadastradas no sistema</small></h2>
 		</div>						
 
 		<p align=right>

@@ -1,69 +1,57 @@
 <!-- Estrutura -->
+
 <div class="container">
 
 	<br>
+	<h2>Edição <small>de marca</small></h2>
+	<hr>
+		<?php
+			$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
+			echo form_open('marca/updateMarca', $atributos); 
+		?>
 
-	<table class="table table-striped">					
-		<div class="page-header">
-			<h2>Categoria <small> lista de categorias cadastradas no sistema</small></h2>
-		</div>						
+		<fieldset>
 
-		<p align=right>
-			<a href="addCategoria" class="btn btn-large btn-success"><i class="icon-plus icon-white"></i> Nova marca</a>	  
-		</p>
-					
+		{marcas}
 
-	<table class='table table-bordered table-striped' id="idTabela">
-			
-			<tr class="">				
-				<td width="7%"><b>ID</b></td>
-				<td width=""><b>Marca</td>
-				<td width=""><b>Sinônimo</td>
-				<td width=""><b>Sinônimo</td>
-				<td width="6%"><b>Modelos</td>
-				<td width="6%"><b>Editar</b></td>
-				<td width="6%"><b>Excluir</b></td>
-			</tr>			
-
-			{marcas}
-			<tr>	
-				<td>{MAID}</td>
-				<td>{MANome}</td>
-				<td>{MANome1}</td>
-				<td>{MANome2}</td>
-				<td><a href="editCategoria/{CID}" class='icon-search'> <a/></td>
-				<td><a href="editMarca/{MAID}" class='icon-edit'> <a/></td>
-				<td><a onclick='Remove("{CID}")' data-toggle="modal" href="#myModal" class='icon-trash'></a></td>
-			</tr>
-			{/marcas}
-	
-	</table> 
-	
-
-<div class="modal hide" id="myModal">
-		<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">×</button>
-			<h3>Excluir</h3>
+		<div class="control-group">					
+			<div class="controls">
+				<input type="hidden" class="input-xlarge" id="ID" value='{MAID}' name="ID">
+			</div>
 		</div>
 
-		<div class="modal-body">
-		<p>Deseja realmente excluir a categoria ?</p>
+		<div class="control-group">
+			<label class="control-label" for="">Marca</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" id="marcaNome" value="{MANome}" name="marcaNome" rel="popover" 
+				data-content="Deve ter no minimo 2 caracteres e no maxímo 45 caracteres." data-original-title="Marca" value="" autocomplete="off">
+			</div>
+		</div>	
+
+		<div class="control-group">
+			<label class="control-label" for="">Sinônimo</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" id="marcaNome1" value="{MANome1}" name="marcaNome1" rel="popover" 
+				data-content="Deve ter no minimo 2 caracteres e no maxímo 45 caracteres." data-original-title="Sinônimo" value="" autocomplete="off">
+			</div>
 		</div>
 
-		 <div class="modal-footer">
-		<a href="" class="btn" data-dismiss="modal">Não</a>
-		<a href="" class="btn btn-danger" id="Excluir">Sim</a>
-	 	</div>
-</div>
+		<div class="control-group">
+			<label class="control-label" for="">Sinônimo</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" id="marcaNome2" value="{MANome2}" name="marcaNome2" rel="popover" 
+				data-content="Deve ter no minimo 2 caracteres e no maxímo 45 caracteres." data-original-title="Sinônimo" value="" autocomplete="off">
+			</div>
+		</div>
 
+		{/marcas}
+
+	<div class="form-actions">
+		<button type="submit" class="btn btn-success">Salvar</button>
+		<button class="btn" type="reset">Limpar</button>
+	</div>	
+	</form>	  
 
 <!-- FIM -->
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#idTabela').dataTable();
-	});
-
-</script>
 
 

@@ -68,6 +68,17 @@ class Marca_model extends CI_Model {
 		return $this->db->insert('Marca', $data);
 	}	
 
+	/**
+	  * update de uma marca
+	  */ 
+	function updateMarca($data) 
+	{		
+		$id = $data['MAID'];
+
+		$this->db->where('MAID', $id);
+		$this->db->update('Marca', $data);
+	}	
+
 
 
 
