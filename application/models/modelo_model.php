@@ -89,11 +89,8 @@ class Modelo_model extends CI_Model {
 	 */
 	function buscaNcm()
 	{
-
-		$query = $this->db->query('SHOW TABLES');
-
-		return $query->result();		
-
+		$query = $this->db->query("SHOW OPEN TABLES FROM `marketips` WHERE `Table` REGEXP \"^.{8}_.{4}$\"");
+		return $query->result();
 	}	
 	
 	/**

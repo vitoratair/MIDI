@@ -40,50 +40,27 @@ class Modelo extends CI_Controller {
 		// Lista todos os modelos //
 		$data['modelos'] = $this->modelo_model->listarModeloByCategoria($id);
 
-
-		// Busca de tabelas do banco de dados // 
-		$ncms = $this->modelo_model->buscaNcm();
-
-		foreach ($ncms as $key => $value)
-		{
-			
-			$ncm = explode("_", $value->Tables_in_marketips);	
-
-			if(preg_match('/[0-9]{8}/', $ncm[0]))			
-			{
-				// Monta o nome da tabela que deverá ser procurado referencia aos modelos
-				$aux = $ncm[0]."_".$ncm[1];
-				array_push($table,$aux);	
-			}	
-				
-		}
-
+		// pegar todas as tabelas de NCMs do sistema
+		$ncms = $this->categoria_model->getAllNcm();
 		
-		
-		/**
-		 * Verfica se o modelo encontra-se em alguma NCM //
-		 */
-		
-		
-
+		// Verfica se o modelo encontra-se em alguma NCM //
 		foreach ($data['modelos'] as $key1 => $value1)
 		{
 			
 			$check = FALSE;
 
-			foreach ($table as $key => $value)
+			// Loop para percorrer as NCMs
+			foreach ($ncms as $key => $value)
 			{
-
-				$countModelos = $this->modelo_model->verificarCadastro($id,$value,$value1->MOID);
+				$countModelos = $this->modelo_model->verificarCadastro($id,$value->Table,$value1->MOID);
 				$countModelos = $countModelos[0]->IDN;
 
 				if ($countModelos != 0)
 				{
 					$check = TRUE;
 					break;
-				}
-					
-			}
+				}				
+			}			
 
 			if ($check == TRUE)
 			{
@@ -96,10 +73,10 @@ class Modelo extends CI_Controller {
 
 		}	
 
-		// Busca as categorias //
+		// // Busca as categorias //
 		$data['categorias'] = $this->categoria_model->listar();
 
-		// Envia todas as informações para tela //
+		// // Envia todas as informações para tela //
 		$this->parser->parse('template', $data);
 
 	}	
