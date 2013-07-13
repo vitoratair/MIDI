@@ -80,9 +80,9 @@ class Marca extends CI_Controller {
 	public function setMarca()
 	{
 		// Recebe os dados do FORM //			
-		$data['MANome'] = $this->input->post('marcaNome');
-		$data['MANome1'] = $this->input->post('marcaNome1');
-		$data['MANome2'] = $this->input->post('marcaNome2');
+		$data['MANome']		= $this->input->post('marcaNome');
+		$data['MANome1']	= $this->input->post('marcaNome1');
+		$data['MANome2'] 	= $this->input->post('marcaNome2');
 
 		// Chama o model responsável pela inserção no banco //
 		$this->marca_model->cadastrar($data);
@@ -90,6 +90,25 @@ class Marca extends CI_Controller {
 		redirect('marca/listAll');
 
 	}
+
+	/**
+	 * Atualiza a marca
+	 */
+	public function updateMarca()
+	{
+		$data['MAID'] 		= $this->input->post('ID');
+		$data['MANome'] 	= $this->input->post('marcaNome');
+		$data['MANome1'] 	= $this->input->post('marcaNome1');
+		$data['MANome2'] 	= $this->input->post('marcaNome2');
+
+		$this->marca_model->updateMarca($data);
+
+		redirect('marca/listAll');
+	
+	}
+
+
+	
 
 	
 
