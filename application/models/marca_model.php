@@ -79,6 +79,30 @@ class Marca_model extends CI_Model {
 		$this->db->update('Marca', $data);
 	}	
 
+	/**
+	 * Deleta a referencia da marca das tabelas NCMs
+	 */
+	function updateMarcaForNcm($data,$id)
+	{
+		$this->db->query("UPDATE `$data` SET Marca = 1, Modelo = 1 WHERE Marca  = '$id'");
+	}
+
+	/**
+	 * Deleta a referencia da marca da tabela Modelo
+	 */
+	function updateModelo($id)
+	{
+		$this->db->query("UPDATE `Modelo` SET Marca_MAID = 1 WHERE Marca_MAID  = '$id'");
+	}	
+	
+	/**
+	 * Deleta a marca
+	 */
+	function deleteMarca($id)
+	{
+		$this->db->query("DELETE FROM `Marca` WHERE MAID = '$id'");
+	}	
+
 
 
 

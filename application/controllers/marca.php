@@ -108,7 +108,33 @@ class Marca extends CI_Controller {
 	}
 
 
+	/**
+	 * Deleta a categoria e suas referencias em outras tabelas
+	 */
+	public function deleteMarca($id)
+	{
+
+		// pegar todas as tabelas de NCMs do sistema
+		$data = $this->categoria_model->getAllNcm();
+
+		// Loop para apagar a referencia da marca em todas as NCMs
+		foreach ($data as $key => $value)
+		{
+			 $this->marca_model->updateMarcaForNcm($value->Table,$id);
+		}
+
+		// Deleta a referencia da marca na tabela Modelo // 
+		$this->marca_model->updateModelo($id);
+
+		// Deleta a marca do banco de dados //
+		$this->marca_model->deleteMarca($id);
+
+		redirect('marca/listAll','refresh');
+	}
 	
+
+
+
 
 	
 

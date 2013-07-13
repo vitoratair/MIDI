@@ -33,7 +33,7 @@
 				<td>{MANome2}</td>
 				<td><a href="editCategoria/{CID}" class='icon-search'> <a/></td>
 				<td><a href="editMarca/{MAID}" class='icon-edit'> <a/></td>
-				<td><a onclick='Remove("{CID}")' data-toggle="modal" href="#myModal" class='icon-trash'></a></td>
+				<td><a onclick='Remove("{MAID}")' data-toggle="modal" href="#myModal" class='icon-trash'></a></td>
 			</tr>
 			{/marcas}
 	
@@ -47,7 +47,7 @@
 		</div>
 
 		<div class="modal-body">
-		<p>Deseja realmente excluir a categoria ?</p>
+		<p>Deseja realmente excluir a marca?</p>
 		</div>
 
 		 <div class="modal-footer">
@@ -56,13 +56,16 @@
 	 	</div>
 </div>
 
-
 <!-- FIM -->
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#idTabela').dataTable();
-	});
+
+function Remove(id){
+
+	document.getElementById("Excluir");
+	document.getElementById('Excluir').href="deleteMarca/"+id;
+
+}	
 
 </script>
 
