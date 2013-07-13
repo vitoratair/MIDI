@@ -1,17 +1,18 @@
 <!-- Estrutura -->
 <div class="container">
 
-	<br>
+	<!-- Buscador  + Adicionar nova marca-->
+	<form class="well form-search" align="right">
+		<input type="text" class="input-xlarge search-query">
+		<button type="submit" class="btn btn-success"><i class="icon-search icon-white"></i> Buscar</button>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="addMarca" class="btn btn-success"><i class="icon-plus icon-white"></i> Nova marca</a>	  
+	</form>
 
 	<table class="table table-striped">					
 		<div class="page-header">
 			<h2>Marca <small> lista das marcas cadastradas no sistema</small></h2>
-		</div>						
-
-		<p align=right>
-			<a href="addMarca" class="btn btn-large btn-success"><i class="icon-plus icon-white"></i> Nova marca</a>	  
-		</p>
-					
+		</div>									
 
 	<table class='table table-bordered table-striped' id="idTabela">
 			
@@ -32,13 +33,16 @@
 				<td>{MANome1}</td>
 				<td>{MANome2}</td>
 				<td><a href="editCategoria/{CID}" class='icon-search'> <a/></td>
-				<td><a href="editMarca/{MAID}" class='icon-edit'> <a/></td>
+				<td><a href="../editMarca/{MAID}" class='icon-edit'> <a/></td>
 				<td><a onclick='Remove("{MAID}")' data-toggle="modal" href="#myModal" class='icon-trash'></a></td>
 			</tr>
 			{/marcas}
 	
 	</table> 
 	
+	<!-- 
+		Exibe os links para paginação
+	 -->
 	<div align="center">
     	 {links}
     </div>
