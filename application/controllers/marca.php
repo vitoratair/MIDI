@@ -34,7 +34,7 @@ class Marca extends CI_Controller {
 		// Carrega a view correspondende //
 		$data['main_content'] = 'marca/marca_view';
 
-		// Lista todos os projetos //
+		// Lista todos as marcas //
 		$data['marcas'] = $this->marca_model->listarMarca();
 
 		// Envia todas as informações para tela //
@@ -51,16 +51,45 @@ class Marca extends CI_Controller {
 		// Carrega a view correspondende //
 		$data['main_content'] = 'marca/marcaEdit_view';
 
-		// Lista todos os projetos //
+		// Busca a marca com ID passado por parâmetro //
 		$data['marcas'] = $this->marca_model->buscaMarca($id);
 
 		// Envia todas as informações para tela //
 		$this->parser->parse('template', $data);
 
-	}		
+	}
+
+	/**
+	 * Adicionar marca
+	 */
+	public function addMarca()
+	{
+
+		// Carrega a view correspondende //
+		$data['main_content'] = 'marca/marcaAdd_view';
+
+		// Envia todas as informações para tela //
+		$this->parser->parse('template', $data);
+
+	}			
 
 
+	/**
+	 * setar nova marca no banco
+	 */
+	public function setMarca()
+	{
+		// Recebe os dados do FORM //			
+		$data['MANome'] = $this->input->post('marcaNome');
+		$data['MANome1'] = $this->input->post('marcaNome1');
+		$data['MANome2'] = $this->input->post('marcaNome2');
 
+		// Chama o model responsável pela inserção no banco //
+		$this->marca_model->cadastrar($data);
+
+		redirect('marca/listAll');
+
+	}
 
 	
 

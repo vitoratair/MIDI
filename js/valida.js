@@ -61,6 +61,28 @@ $(document).ready(function(){
 				maxlength: 45
 			},
 
+			/* Valida marca */
+			marcaNome:
+			{
+				required: true,
+				minlength: 2,				
+				maxlength: 45
+			},
+
+
+			/* Valida marca Sinônimo */
+			marcaNome1:
+			{
+				minlength: 2,				
+				maxlength: 45
+			},	
+
+			/* Valida marca Sinônimo */
+			marcaNome2:
+			{
+				minlength: 2,				
+				maxlength: 45
+			},						
 
 
 			/* Valida o Nome completo do novo usuario */
@@ -173,6 +195,27 @@ $(document).ready(function(){
 				minlength:"O item deve ser maior que 3 caracteres ",
 				maxlength:"O item deve ser menor que 45 caracteres ",
 			},
+
+			marcaNome:{
+				required: "Informe a marca",
+				minlength:"O nova marca deve ser maior que 2 caracteres ",
+				maxlength:"O nova marca deve ser menor que 45 caracteres ",
+			},
+
+			marcaNome1:{
+				minlength:"O nova marca deve ser maior que 2 caracteres ",
+				maxlength:"O nova marca deve ser menor que 45 caracteres ",
+			},
+
+			marcaNome2:{
+				minlength:"O nova marca deve ser maior que 2 caracteres ",
+				maxlength:"O nova marca deve ser menor que 45 caracteres ",
+			},			
+
+
+
+
+
 
 
 
