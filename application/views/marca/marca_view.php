@@ -2,11 +2,19 @@
 <div class="container">
 
 	<!-- Buscador  + Adicionar nova marca-->
-	<form class="well form-search" align="right">
-		<input type="text" class="input-xlarge search-query">
+		
+		<?php
+			$atributos = array('form class'=>'well form-search',  'align'=>'right', 'method'=>'POST');
+			echo form_open('marca/listAll', $atributos); 
+		?>		
+		
+		<input type="text" class="input-xlarge search-query" placeholder="Busca de marca..." name="buscaMarca">
+	
 		<button type="submit" class="btn btn-success"><i class="icon-search icon-white"></i> Buscar</button>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
 		<a href="addMarca" class="btn btn-success"><i class="icon-plus icon-white"></i> Nova marca</a>	  
+	
 	</form>
 
 	<table class="table table-striped">					

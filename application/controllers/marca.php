@@ -30,22 +30,36 @@ class Marca extends CI_Controller {
 	 */
 	public function listAll()
 	{
+		
+		// Recebe os dados do FORM //			
+		$search	= $this->input->post('buscaMarca');
+
 		// Carrega a view correspondende //
 		$data['main_content'] 	= 'marca/marca_view';
-        $config["base_url"] 	= base_url() . "index.php/marca/listAll";
-        $config["total_rows"] 	= $this->marca_model->countMarca();
-	    $config["per_page"] 	= 20;
 
-        $this->pagination->initialize($config);
-        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        
-        $data["marcas"] = $this->marca_model->listarMarca($config["per_page"], $page);
-        $data["links"] = $this->pagination->create_links();
+		if (empty($search))
+		{
+
+	        $config["base_url"] 	= base_url() . "index.php/marca/listAll";
+	        $config["total_rows"] 	= $this->marca_model->countMarca();
+		    $config["per_page"] 	= 20;
+
+	        $this->pagination->initialize($config);
+	        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+	        
+	        $data["marcas"] = $this->marca_model->listarMarca($config["per_page"], $page);
+	        $data["links"] = $this->pagination->create_links();
+
+		}
+		else
+		{
+			$data["marcas"] = $this->marca_model->listarMarcaPesquisa($search);	
+		}
 
 		// Envia todas as informações para tela //
 		$this->parser->parse('template', $data);
 
-	}	
+	}			
 
 
 	/**
@@ -138,7 +152,6 @@ class Marca extends CI_Controller {
 		redirect('marca/listAll','refresh');
 	}
 	
-
 
 
 
