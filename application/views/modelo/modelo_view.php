@@ -13,9 +13,9 @@
 			<a href="addModelo" class="btn btn-large btn-success"><i class="icon-plus icon-white"></i> Novo Modelo</a>	  
 		</p>				
 
-	
+
 		<table>
-			<th valign="top">
+			<th>
 					<div class="btn-group">
 						<button class="btn btn-success">Categoria</button>
 						<button class="btn btn-success dropdown-toggle" data-toggle="dropdown">
@@ -42,11 +42,11 @@
 	<table class='table table-bordered table-striped' id="idTabela">
 			
 			<tr class="">				
-				<td width="7%"><b>ID</b></td>
+				<td width="5%"><b>ID</b></td>
 				<td width=""><b>Modelo</td>
 				<td width=""><b>Sinônimo</td>
 				<td width=""><b>Marca</td>
-				<td width="8%"><b>Categoria</td>
+				<td width=""><b>Categoria</td>
 				<td width="8%"><b>Encontrado</td>
 				<td width="8%"><b>Editar</b></td>
 				<td width="8%"><b>Excluir</b></td>
@@ -69,6 +69,10 @@
 	
 	</table> 
 	
+	<div align="center">
+		{links}
+	</div>
+
 
 <div class="modal hide" id="myModal">
 		<div class="modal-header">
