@@ -7,7 +7,7 @@
 |
 */
     $config["uri_segment"] = 3;
-	$config["num_links"] = '10';
+	$config["num_links"] = '8';
 	$config['full_tag_open'] = '<div class="pagination"><ul>';
 	$config['full_tag_close'] = '</ul></div><!--pagination-->';
 	$config['first_link'] = '&laquo; Primeiro';

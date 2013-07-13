@@ -29,14 +29,22 @@ class Modelo_model extends CI_Model {
 
 	}
 
+	/**
+	 * Count modelo
+	 */
+
+	function countModelo()
+	{
+		return $this->db->count_all('Modelo');
+	}	
 
 	/**
 	 * Lista de modelos
 	 */
 
-	function listarModelo()
+	function listarModelo($limit,$start)
 	{
-
+		$this->db->limit($limit, $start);
 		$this->db->select('*');
 		$this->db->from('Modelo');
 		$this->db->join('Marca' , 'MAID = Marca_MAID');
@@ -50,11 +58,10 @@ class Modelo_model extends CI_Model {
 	/**
 	 * Lista de modelos na categoria selecionada
 	 */
-
-	function listarModeloByCategoria($id)
+	function listarModeloByCategoria($id,$limit,$start)
 	{
 
-
+		$this->db->limit($limit, $start);
 		$this->db->select('*');
 		$this->db->from('Modelo');
 		$this->db->where('Categoria_CID',$id);
@@ -66,16 +73,28 @@ class Modelo_model extends CI_Model {
 		return $query->result();
 	}
 
+	/**
+	 * count de modelos na categoria selecionada
+	 */
+	function countModeloByCategoria($id)
+	{
+		$this->db->from('Modelo');
+		$this->db->where('Categoria_CID',$id);
+		$this->db->join('Marca' , 'MAID = Marca_MAID');
+		$this->db->join('Categoria' , 'CID = Categoria_CID');
+
+		return $this->db->count_all_results();
+	}	
+
 
 	/**
 	 * Verficar se um modelo foi encontrado no sistema ou não
 	 */
-	function verificarCadastro($id,$table,$modelo)
+	function verificarCadastro($table,$modelo)
 	{
 
 		$this->db->select('COUNT(`IDN`) AS IDN');
 		$this->db->FROM($table);
-		$this->db->where('Categoria',$id);
 		$this->db->where('Modelo',$modelo);
 
 		$query = $this->db->get();

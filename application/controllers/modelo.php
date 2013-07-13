@@ -31,14 +31,22 @@ class Modelo extends CI_Controller {
 	public function listModeloByCategoria($id)
 	{
 
-		$table = array();
 		$check = FALSE;
 
 		// Carrega a view correspondende //
 		$data['main_content'] = 'modelo/modelo_view';
 
-		// Lista todos os modelos //
-		$data['modelos'] = $this->modelo_model->listarModeloByCategoria($id);
+		// Configurando paginação //
+        $config["base_url"] 	= base_url() . "index.php/modelo/listModeloByCategoria/$id";
+        $config["per_page"] 	= 20;
+        $config["total_rows"] 	= $this->modelo_model->countModeloByCategoria($id);
+
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+        // Lista todos os modelos //
+        $data["modelos"] = $this->modelo_model->listarModeloByCategoria($id,$config["per_page"], $page);
+        $data["links"] = $this->pagination->create_links();
 
 		// pegar todas as tabelas de NCMs do sistema
 		$ncms = $this->categoria_model->getAllNcm();
@@ -52,7 +60,7 @@ class Modelo extends CI_Controller {
 			// Loop para percorrer as NCMs
 			foreach ($ncms as $key => $value)
 			{
-				$countModelos = $this->modelo_model->verificarCadastro($id,$value->Table,$value1->MOID);
+				$countModelos = $this->modelo_model->verificarCadastro($value->Table,$value1->MOID);
 				$countModelos = $countModelos[0]->IDN;
 
 				if ($countModelos != 0)
@@ -73,10 +81,10 @@ class Modelo extends CI_Controller {
 
 		}	
 
-		// // Busca as categorias //
+		// Busca as categorias //
 		$data['categorias'] = $this->categoria_model->listar();
-
-		// // Envia todas as informações para tela //
+		
+		// Envia todas as informações para tela //
 		$this->parser->parse('template', $data);
 
 	}	
@@ -91,11 +99,52 @@ class Modelo extends CI_Controller {
 		// Carrega a view correspondende //
 		$data['main_content'] = 'modelo/modelo_view';
 
-		// Lista todos os modelos //
-		$data['modelos'] = $this->modelo_model->listarModelo();			
+        $config["base_url"] 	= base_url() . "index.php/modelo/listAll";
+        $config["total_rows"] 	= $this->modelo_model->countModelo();
+	    $config["per_page"] 	= 20;
 
-		// Busca as categorias //
-		$data['categorias'] = $this->categoria_model->listar();
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        
+        $data["modelos"] = $this->modelo_model->listarModelo($config["per_page"], $page);
+        $data["links"] = $this->pagination->create_links();
+
+		// pegar todas as tabelas de NCMs do sistema
+		$ncms = $this->categoria_model->getAllNcm();
+		
+		// Verfica se o modelo encontra-se em alguma NCM //
+		foreach ($data['modelos'] as $key1 => $value1)
+		{
+			
+			$check = FALSE;
+
+			// Loop para percorrer as NCMs
+			foreach ($ncms as $key => $value)
+			{
+				$countModelos = $this->modelo_model->verificarCadastro($value->Table,$value1->MOID);
+				$countModelos = $countModelos[0]->IDN;
+
+				if ($countModelos != 0)
+				{
+					$check = TRUE;
+					break;
+				}				
+			}			
+
+			if ($check == TRUE)
+			{
+				$value1->CHECK = 'icon-ok';
+			}
+			else
+			{
+				$value1->CHECK = 'icon-remove';	
+			}
+
+		}	
+
+
+		// // Busca as categorias //
+		$data['categorias'] = $this->categoria_model->listar();			
 
 		// Envia todas as informações para tela //
 		$this->parser->parse('template', $data);
