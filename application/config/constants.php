@@ -37,5 +37,53 @@ define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 
+
+/*
+|--------------------------------------------------------------------------
+| Constantes de status
+|--------------------------------------------------------------------------
+|
+| Status do sistema, conforme banco de dados
+|
+*/
+
+define('STATUS_AGENDADA',		1);
+define('STATUS_REALIZADA',		2);
+define('STATUS_ANDAMENTO',		3);
+define('STATUS_NAO_APLICAVEL',	4);
+define('STATUS_CONFORME',		5);
+define('STATUS_NAO_CONFORME',	6);
+define('STATUS_ABERTA',			7);
+define('STATUS_FECHADA',		8);
+define('STATUS_EXECUTADA',		9);
+define('STATUS_RETORNADA',		10);
+define('STATUS_DIRETA',			11);
+
+
+/*
+|--------------------------------------------------------------------------
+| Constantes de tipo de usuario
+|--------------------------------------------------------------------------
+|
+| Tipos de usuarios presentes no sistema, conforme banco de dados
+|
+*/
+
+define('USER_ADMIN',		1);
+define('USER_USUARIO',		2);
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Constantes de mensagens
+|--------------------------------------------------------------------------
+|
+| Constantes de mensagens
+|
+*/
+
+define('MSG01',	"Mensagem enviada automaticamente pelo sistema");
+
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

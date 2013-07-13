@@ -1,0 +1,46 @@
+body {
+	background: #ddd;
+	margin: 0;
+	padding: 0;
+	font-family: arial;
+}
+#login_page {
+	width: 300px;
+	background: #f0f0f0;
+	border: 1px solid white;
+	margin: 160px auto 0;
+	padding: 1em;
+	-moz-border-radius: 3px;
+}
+h1,h2,h3,h4,h5 {
+	margin-top: 0;
+	font-family: arial black, arial;
+	text-align: center;
+}
+
+input[type=text], input[type=password] {
+	display: block;
+	margin: 0 20 1em 0;
+	font-size: 1.1em;
+	width: 280px;
+	height: 40px;
+	border: 5px;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	padding: 1em;
+}
+
+
+fieldset {
+	width: 300px;
+	margin: auto;
+	margin-bottom: 2em;
+	display: block;
+}
+
+/* FOR FUN */
+
+h1 {
+	text-shadow: 0 1px 0 white;
+}
+
