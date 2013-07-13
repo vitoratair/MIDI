@@ -9,7 +9,7 @@
 		</div>						
 
 		<p align=right>
-			<a href="addCategoria" class="btn btn-large btn-success"><i class="icon-plus icon-white"></i> Nova marca</a>	  
+			<a href="addMarca" class="btn btn-large btn-success"><i class="icon-plus icon-white"></i> Nova marca</a>	  
 		</p>
 					
 

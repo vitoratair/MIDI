@@ -60,6 +60,15 @@ class Marca_model extends CI_Model {
 	}	
 
 
+	/**
+	  * Insere marca 
+	  */ 
+	function cadastrar($data) 
+	{		
+		return $this->db->insert('Marca', $data);
+	}	
+
+
 
 
 
