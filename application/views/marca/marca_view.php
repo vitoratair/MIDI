@@ -39,6 +39,10 @@
 	
 	</table> 
 	
+	<div align="center">
+    	 {links}
+    </div>
+	
 
 <div class="modal hide" id="myModal">
 		<div class="modal-header">

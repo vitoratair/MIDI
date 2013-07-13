@@ -30,17 +30,23 @@ class Marca extends CI_Controller {
 	 */
 	public function listAll()
 	{
-
 		// Carrega a view correspondende //
-		$data['main_content'] = 'marca/marca_view';
+		$data['main_content'] 	= 'marca/marca_view';
+        $config["base_url"] 	= base_url() . "index.php/marca/listAll";
+        $config["total_rows"] 	= $this->marca_model->countMarca();
+	    $config["per_page"] 	= 20;
 
-		// Lista todos as marcas //
-		$data['marcas'] = $this->marca_model->listarMarca();
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        
+        $data["marcas"] = $this->marca_model->listarMarca($config["per_page"], $page);
+        $data["links"] = $this->pagination->create_links();
 
 		// Envia todas as informações para tela //
 		$this->parser->parse('template', $data);
 
 	}	
+
 
 	/**
 	 * Edição da marca

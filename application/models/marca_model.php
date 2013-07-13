@@ -34,14 +34,24 @@ class Marca_model extends CI_Model {
 	 * Lista de marcas
 	 */
 
-	function listarMarca()
+	function listarMarca($limit,$start)
 	{
 
+		$this->db->limit($limit, $start);
 		$this->db->select('*');
 		$this->db->from('Marca');
 		$query = $this->db->get();
 
 		return $query->result();
+	}
+
+	/**
+	 * Count Marca
+	 */
+
+	function countMarca()
+	{
+		return $this->db->count_all('Marca');
 	}
 
 	/**
