@@ -57,6 +57,8 @@
 						</ul>
 					</li>					
 
+					<li><?php echo anchor('pesquisa/listAll','Pesquisa');?></li>
+
 					<li><?php echo anchor('docs/listAll','Documentação');?></li>
 					
 				</ul>

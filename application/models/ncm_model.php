@@ -69,10 +69,23 @@ class ncm_model extends CI_Model {
 	 */
 	function listar()
 	{
-		//lista somente os ativos
 
 		$this->db->select('*');
 		$this->db->from('NCM');
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
+	/**
+	 * Lista anos
+	 */
+	function listarAno()
+	{
+
+		$this->db->select('*');
+		$this->db->from('Ano');
+		$this->db->order_by('AAno');
 		$query = $this->db->get();
 
 		return $query->result();
@@ -88,6 +101,37 @@ class ncm_model extends CI_Model {
 		$this->db->query("DELETE FROM NCM_has_Categoria WHERE NCM_NID = '$id'");
 		$this->db->query("DELETE FROM NCM WHERE NID = '$id'");
 	}
+
+	/**
+	 * Busca dados somente com NCM e ano
+	 */
+	function buscaDados($limit, $start, $table)
+	{
+		$this->db->limit($limit, $start);
+		$this->db->select('*');
+		$this->db->from($table);
+		$this->db->join('Categoria','Categoria.CID = Categoria');
+		$this->db->join('Marca','Marca.MAID = Marca');
+		$this->db->join('Modelo','Modelo.MOID = Modelo');
+
+
+		$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
+	/**
+	 * COUNT dos dados somente com NCM e ano
+	 */
+	function countBuscaDados($table)
+	{
+		$this->db->select('COUNT(`IDN`)');
+		$this->db->from($table);
+		$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO');
+		
+		return $this->db->count_all_results();
+	}	
 
 
 
