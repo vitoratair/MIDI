@@ -40,8 +40,9 @@
 
 					<select id="categoria" onchange="this.form.submit()" name="categoria" class="input-xlarge">
 						
+							<option value=""> Selecione uma categoria</option>
 						{categorias}		
-							<option value="{CID}"> {CNome} </option>
+							<option value="{CID}">{CNome}</option>
 						{/categorias}
 						
 				    </select>

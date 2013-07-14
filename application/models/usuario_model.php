@@ -108,8 +108,6 @@ class Usuario_model extends CI_Model {
 		
 		return $query->result();
 	}
-
-	
 	
 	/**
 	 * Busca usuario
@@ -124,18 +122,20 @@ class Usuario_model extends CI_Model {
 		return $query->result();
 	}
 	
-	
 	/**
 	 * Busca unidade
 	 */
 	function buscarByLogin($login)
 	{
-		$query = $this->db->query("SELECT usuarioID, usuarioNome, usuarioMatricula, usuarioLogin, usuarioPassword,
-				usuarioEmail, tipoID, usuarioAtivo FROM Usuario WHERE usuarioLogin = '$login' LIMIT 1");
-	
+		
+		$this->db->select('*');
+		$this->db->from('Usuario');
+		$this->db->where('usuarioLogin',$login);
+		$this->db->join('Tipo','Tipo.tipoID = Usuario.tipoID');
+		$this->db->limit(1);
+		$query = $this->db->get();
 		return $query->result();
 	}
-
 
 	/**
 	 * Busca por Email
@@ -188,8 +188,6 @@ class Usuario_model extends CI_Model {
 			
 	}
 	
-
-
 	/**
 	 * Procura e deleta usuario do BD 
 	 */
@@ -200,7 +198,6 @@ class Usuario_model extends CI_Model {
 
 	}
 
-	
 	function getUsuario($id)
 	{
 		
