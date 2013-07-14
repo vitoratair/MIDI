@@ -53,9 +53,11 @@
 							<li><?php echo anchor('marca/listAll','Marca');?></li>
 							
 							<li><?php echo anchor('modelo/listAll','Modelo');?></li>
+
 						</ul>
 					</li>					
 
+					<li><?php echo anchor('docs/listAll','Documentação');?></li>
 					
 				</ul>
 			</div>
