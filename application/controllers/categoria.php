@@ -31,7 +31,7 @@ class Categoria extends CI_Controller {
 	public function listAll()
 	{
 
-		// Lista todos os projetos //
+		// Lista todos as categorias //
 		$data['categorias'] = $this->categoria_model->listar();
 
 		// Carrega a view correspondende //
