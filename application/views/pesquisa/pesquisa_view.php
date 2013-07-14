@@ -10,25 +10,17 @@
 		?>		
 			
 			<fieldset>
-
 			<div class="control-group">
-				<label class="control-label" for="">NCM</label>
+				<label class="control-label" for="">Pesquisa</label>
 				<div class="controls">
 
-					<select id="ncm" name="ncm" class="input">
+					<select id="ncm" name="ncm" class="input" class="">
 						
 						{ncms}		
 							<option value="{NNome}">{NNome}</option>
 						{/ncms}
 						
 				    </select>
-
-				</div>
-			</div>
-
-			<div class="control-group">
-				<label class="control-label" for="">Ano</label>
-				<div class="controls">
 
 					<select id="ano" onchange="this.form.submit()" name="ano" class="input">
 					
@@ -38,9 +30,8 @@
 						
 				    </select>
 
-				</div>
-			</div>			
-	
+			</div>
+
 		</fieldset>
 	</form>
 

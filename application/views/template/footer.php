@@ -1,6 +1,13 @@
-<footer>
-	<p>MIDI - Monitoramento Intelbras de Dados de Importações</p>
-</footer>
+</div>
+
+<!-- Footer -->
+   
+<div id="footer">
+	<br>
+    <p class="muted credit" align="center">Developed by
+    	<a href="http://www.linkedin.com/pub/vitor-atair/49/606/572">Vitor Atair</a>.
+    </p>
+</div>    
 
 
 <!-- javascript -->
@@ -30,6 +37,5 @@
 
 
 
-</div>
 </body>
 </html>
