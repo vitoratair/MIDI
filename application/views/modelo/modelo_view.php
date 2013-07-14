@@ -1,43 +1,43 @@
 <!-- Estrutura -->
 <div class="container">
 
-	<br>
-
 	<table class="table table-striped">					
 		
 		<div class="page-header">
+			
 			<h2>Modelos <small> lista de modelos cadastradas no sistema</small></h2>
+			
+			<p align=right>
+				<a href="addModelo" class="btn btn-large btn-success"><i class="icon-plus icon-white"></i> Novo Modelo</a>	  
+			</p>				
+
 		</div>						
 
-		<p align=right>
-			<a href="addModelo" class="btn btn-large btn-success"><i class="icon-plus icon-white"></i> Novo Modelo</a>	  
-		</p>				
+		<!-- Formulário para combobox sem botão submit -->
+		<?php
+			$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
+			echo form_open('modelo/listModeloByCategoria', $atributos); 
+		?>		
+			
+			<fieldset>
 
+			<div class="control-group">
+				<label class="control-label" for="">Categoria</label>
+				<div class="controls">
 
-		<table>
-			<th>
-					<div class="btn-group">
-						<button class="btn btn-success">Categoria</button>
-						<button class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-							<span class="caret"></span>
-						</button>
-					
-						<ul class="dropdown-menu">
+					<select id="categoria" onchange="this.form.submit()" name="categoria" class="input-xlarge">
 						
-						{categorias}	  				
-				  	
-				  			<li>
-				  				<a href="<?php echo base_url();?>index.php/modelo/listModeloByCategoria/{CID}">{CNome}</a>
-				  			</li>
-					
+						{categorias}		
+							<option value="{CID}"> {CNome} </option>
 						{/categorias}
-					
-					</div>
-			<th>
+						
+				    </select>
 
-		</table>
-
-		<br>
+				</div>
+			</div>
+	
+		</fieldset>
+	</form>
 
 	<table class='table table-bordered table-striped' id="idTabela">
 			
@@ -95,7 +95,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#idTabela').dataTable();
+		$('#teste')
+		alert('asd');
 	});
 
 </script>

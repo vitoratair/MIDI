@@ -28,24 +28,37 @@ class Modelo extends CI_Controller {
 	/**
 	 * Apresenta a view com todos os modelos cadastrados no sistema por categoria
 	 */
-	public function listModeloByCategoria($id)
-	{
+	public function listModeloByCategoria()
+	{		
+		$id = $this->input->post('categoria');		
+		$data['idCategoria'] = $id;
 
+		if (empty($id))
+		{
+			$id = $this->session->userdata('idCategoria');
+		}
+		else
+		{
+			$this->session->set_userdata($data);	
+		}
+		
 		$check = FALSE;
 
 		// Carrega a view correspondende //
 		$data['main_content'] = 'modelo/modelo_view';
 
 		// Configurando paginação //
-        $config["base_url"] 	= base_url() . "index.php/modelo/listModeloByCategoria/$id";
-        $config["per_page"] 	= 20;
+        $config["base_url"] 	= base_url() . "index.php/modelo/listModeloByCategoria";
         $config["total_rows"] 	= $this->modelo_model->countModeloByCategoria($id);
-
+        $config["per_page"] 	= 20;
+        
         $this->pagination->initialize($config);
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
+        
         // Lista todos os modelos //
-        $data["modelos"] = $this->modelo_model->listarModeloByCategoria($id,$config["per_page"], $page);
+        $data["modelos"] = $this->modelo_model->listarModeloByCategoria($config['per_page'], $page, $id);
+        
         $data["links"] = $this->pagination->create_links();
 
 		// pegar todas as tabelas de NCMs do sistema

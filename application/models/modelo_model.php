@@ -58,7 +58,7 @@ class Modelo_model extends CI_Model {
 	/**
 	 * Lista de modelos na categoria selecionada
 	 */
-	function listarModeloByCategoria($id,$limit,$start)
+	function listarModeloByCategoria($limit,$start,$id)
 	{
 
 		$this->db->limit($limit, $start);
