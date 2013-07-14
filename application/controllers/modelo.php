@@ -165,6 +165,7 @@ class Modelo extends CI_Controller {
 
 		}	
 
+
 		// // Busca as categorias //
 		$data['categorias'] = $this->categoria_model->listar();			
 
@@ -183,7 +184,7 @@ class Modelo extends CI_Controller {
 		$data['main_content'] = 'modelo/modeloEdit_view';
 
 		// Busca a lista de marcas cadastradas no sistema //
-		$data['marcas'] = $this->modelo_model->listarMarca();
+		$data['marcas'] = $this->marca_model->listarAllMarca();
 
 		// Lista todos os modelos //
 		$data['modelos'] = $this->modelo_model->bucaModelo($id);			
@@ -194,8 +195,48 @@ class Modelo extends CI_Controller {
 		// Envia todas as informações para tela //
 		$this->parser->parse('template', $data);
 
-	}	
+	}
 
+	/**
+	 * Apresenta a view para adicionar modelos
+	 */
+	public function addModelo()
+	{
+
+		// Carrega a view correspondende //
+		$data['main_content'] = 'modelo/modeloAdd_view';
+
+		// // Busca as categorias //
+		$data['categorias'] = $this->categoria_model->listar();
+
+		// // Busca as marcas //
+		$data['marcas'] = $this->marca_model->listarAllMarca();
+
+		// Envia todas as informações para tela //
+		$this->parser->parse('template', $data);
+
+	}
+
+	/**
+	 * setar novo modelo no banco
+	 */
+	public function setModelo()
+	{
+		// Recebe os dados do FORM //			
+		$data['MNome']		= $this->input->post('nomeModelo');
+		$data['MNome1']		= $this->input->post('nomeModelo1');
+		$data['MNome2']		= $this->input->post('nomeModelo2');
+		$data['MNome3']		= $this->input->post('nomeModelo3');
+		$data['MNome4']		= $this->input->post('nomeModelo4');		
+		$data['Marca_MAID']	= $this->input->post('marca');		
+
+		// Chama o model responsável pela inserção no banco //
+		$this->modelo_model->cadastrar($data);
+
+		// Redereciona a página //
+		redirect('modelo/listAll');
+
+	}
 
 
 

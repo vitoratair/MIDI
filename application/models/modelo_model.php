@@ -143,21 +143,14 @@ class Modelo_model extends CI_Model {
 
 		return $query->result();		
 
-	}		
-
-	/**
-	 * Lista de marcas
-	 */
-
-	function listarMarca()
-	{
-
-		$this->db->select('*');
-		$this->db->from('Marca');
-		$query = $this->db->get();
-
-		return $query->result();
 	}
 
+	/**
+	  * Insere modelo 
+	  */ 
+	function cadastrar($data) 
+	{		
+		return $this->db->insert('Modelo', $data);
+	}	
 
 }

@@ -82,77 +82,48 @@ $(document).ready(function(){
 			{
 				minlength: 2,				
 				maxlength: 45
-			},						
+			},				
 
-
-			/* Valida o Nome completo do novo usuario */
-			Nome:
+			/* Valida modelo */
+			nomeModelo:
 			{
 				required: true,
-				minlength: 6,
+				minlength: 2,				
 				maxlength: 45
-			},
+			},		
 
-			/* Valida campos Nome em cadastros */
-			Nome2:
+			/* Valida modelo */
+			nomeModelo1:
 			{
-				required: true,
-				minlength: 3,
+				minlength: 2,				
 				maxlength: 45
-			},
+			},	
+
+			/* Valida modelo */
+			nomeModelo2:
+			{
+				minlength: 2,				
+				maxlength: 45
+			},		
 			
-			/* Valida campos Descricao */
-			Descricao:
+			/* Valida modelo */
+			nomeModelo3:
 			{
-				required: true,
-				minlength: 6,
-				maxlength: 255				
-			},
+				minlength: 2,				
+				maxlength: 45
+			},		
 
-			/* Valida campos Assunto */
-			Assunto:
+			/* Valida modelo */
+			nomeModelo4:
 			{
-				required: true,
-				minlength: 6,
-				maxlength: 35				
-			},
+				minlength: 2,				
+				maxlength: 45
+			},		
 
-			/* Valida o nome do usuario, inserido */	
-			Matricula:
-			{
-				required: true,
-				minlength: 6,
-				maxlength: 6,
-				number: true
-			},
-			
-			//Valida Email
-			Email:
-			{
-				required: true,
-				email: true
-			},
-
-			/* Valida data */
-			Data:
-			{
-				required: true,
-				dateISO: true
-			},
-
-			Unidade: 
-			{
-				required: true,
-			},
-
-			Setor:
-			{
-				required: true,
-			},
-
-			Projeto: 
-			{
-				required: true,
+			/* Valida marca no combobox */
+			marca:
+			{		
+				required: true
 			},
 		
 		},
@@ -210,74 +181,38 @@ $(document).ready(function(){
 			marcaNome2:{
 				minlength:"O nova marca deve ser maior que 2 caracteres ",
 				maxlength:"O nova marca deve ser menor que 45 caracteres ",
-			},			
-
-
-
-
-
-
-
-
-
-			Nome:{
-				required: "Informe o nome completo do novo usuário",
-				minlength:"O nome do novo usuario deve ser maior que 6 caracteres ",
-				maxlength:"O nome do novo usuario deve ser menor que 45 caracteres ",
 			},
+
+			nomeModelo:{
+				required: "Informe o modelo",
+				minlength:"O modelo deve ser maior que 3 caracteres ",
+				maxlength:"O modelo deve ser menor que 45 caracteres ",
+			},
+
+			nomeModelo1:{
+				minlength:"O modelo deve ser maior que 3 caracteres ",
+				maxlength:"O modelo deve ser menor que 45 caracteres ",
+			},
+
+			nomeModelo2:{
+				minlength:"O modelo deve ser maior que 3 caracteres ",
+				maxlength:"O modelo deve ser menor que 45 caracteres ",
+			},
+
+			nomeModelo3:{
+				minlength:"O modelo deve ser maior que 3 caracteres ",
+				maxlength:"O modelo deve ser menor que 45 caracteres ",
+			},
+
+			nomeModelo4:{
+				minlength:"O modelo deve ser maior que 3 caracteres ",
+				maxlength:"O modelo deve ser menor que 45 caracteres ",
+			},											
 			
-			Nome2:{
-				required: "Informe o nome Válido",
-				minlength:"O nome deve ser maior que 2 caracteres ",
-				maxlength:"O nome deve ser menor que 45 caracteres ",
-			},
+			marca:{
+				required: "Selecione a marca",
+			},	
 
-			Descricao:{
-				required: "Informe a descrição",
-				minlength:"A Descricao deve ser maior que 6 caracteres ",
-				maxlength:"O nome deve ser menor que 256 caracteres ",
-			},
-
-			Assunto:{
-				required: "Informe o assunto",
-				minlength:"O assunto ser maior que 6 caracteres ",
-				maxlength:"O Assunto deve ser menor que 35 caracteres ",
-			},
-
-			Matricula:
-			{
-				required:"Informe a matrícula do usuário",
-				minlength:"A matricula digitada pussui menos que 6 números",
-				maxlength: "A matricula digitada possui mais que 6 números"
-				
-			},
-								
-			Email:
-			{
-				required:"Informe um endereço de e-mail",
-				email:"Endereço de e-mail invalido"
-			},
-
-			Data:{
-				required: "Informe a data para auditoria",
-				dateISO: "Informe uma data valida, exemplo: dd/mm/aaaa"
-			},
-
-			Unidade:
-			{
-				required: "Escolha uma Unidade",
-			},
-
-			Setor:
-			{
-				required: "Escolha um Departamento",
-			},
-
-			Projeto:
-			{
-				required: "Escolha um Projeto",
-			},
-			
 		},
 
 		errorClass: "help-block",
