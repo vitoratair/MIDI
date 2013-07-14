@@ -13,7 +13,7 @@
 		<button type="submit" class="btn btn-success"><i class="icon-search icon-white"></i> Buscar</button>
 		
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
-		<a href="addModelo" class="btn btn-success"><i class="icon-plus icon-white"></i> Novo Modelo</a>	  
+		<a href="<?php echo base_url();?>index.php/modelo/addModelo" class="btn btn-success"><i class="icon-plus icon-white"></i> Novo Modelo</a>	  
 	
 	</form>
 

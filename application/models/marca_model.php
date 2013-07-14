@@ -34,7 +34,6 @@ class Marca_model extends CI_Model {
 	 */
 	function listarMarca($limit,$start)
 	{
-
 		$this->db->limit($limit, $start);
 		$this->db->select('*');
 		$this->db->from('Marca');
@@ -42,6 +41,20 @@ class Marca_model extends CI_Model {
 
 		return $query->result();
 	}
+
+	/**
+	 * Lista de todas as marcas
+	 */
+	function listarAllMarca()
+	{
+		$this->db->select('*');
+		$this->db->from('Marca');
+		$this->db->order_by('MANome');
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
 
 	/**
 	 * Lista marcas da pesquisa
