@@ -72,6 +72,7 @@ class ncm_model extends CI_Model {
 
 		$this->db->select('*');
 		$this->db->from('NCM');
+		$this->db->order_by('NNome');
 		$query = $this->db->get();
 
 		return $query->result();
