@@ -30,34 +30,39 @@ class Pesquisa extends CI_Controller {
 	{
 
 		// Verifica se existe dados de formulário //
-		$ncm = $this->input->post('ncm');
-		$ano = $this->input->post('ano');		
+		$ncm 	= $this->input->post('ncm');
+		$ano 	= $this->input->post('ano');	
+		$marca 	= $this->input->post('marca');
 
-		// MOntando o nome da tabela
-		$table = $ncm . "_" . $ano;
-
-
-		if (empty($ncm) && (empty($ano)))
-		{
-			$ncm = $this->session->userdata('ncm');
-			$ano = $this->session->userdata('ano');
-			
-			// MOntando o nome da tabela
-			$table = $ncm . "_" . $ano;
-
-		}
 		// Carrega a view correspondende //
 		$data['main_content'] = 'pesquisa/pesquisa_view';
 		
-		// Carrega todas as NCMs //
-		$data['ncms'] = $this->ncm_model->listar();
+		// Carrega os dados necessários da model //
+		$data['ncms'] 	= $this->ncm_model->listar();
+		$data['anos'] 	= $this->ncm_model->listarAno();					
+		$data['marcas'] = $this->marca_model->listarAllMarca();			
 
-		// Carrega todos os anos //
-		$data['anos'] = $this->ncm_model->listarAno();
 
+		if (!empty($marca))
+		{
+			// Carrega todos os modelos da marca selecionada //
+			$data['modelos'] = $this->modelo_model->buscaModeloByMarca($marca);			
+		}
 
+		// Caso o usuário não tenha escolhido ncm e ano, recebe os dados da sessão //
+		if (empty($ncm) && (empty($ano)))
+		{
+			$ncm = $this->session->userdata('ncm');
+			$ano = $this->session->userdata('ano');				
+		}
+
+		// Montando o nome da tabela
+		$table = $ncm . "_" . $ano;
+
+		// verifica se a variável table só possui "_" //
 		if (strlen($table) > 3)
 		{
+
 			// Salvando ncm e ano em sessão //
 			$data['ncm'] = $ncm;
 			$data['ano'] = $ano;
@@ -75,8 +80,7 @@ class Pesquisa extends CI_Controller {
 			$data['dados'] = $this->ncm_model->buscaDados($config['per_page'], $page, $table);
 			$data["links"] = $this->pagination->create_links();
 		}
-
-	
+		
 		// Envia todas as informações para tela //
 		$this->parser->parse('template', $data);
 

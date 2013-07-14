@@ -2,50 +2,108 @@
 <div class="container">
 			
 	
-
-		<!-- Formulário para combobox sem botão submit -->
-		<?php
-			$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
-			echo form_open('pesquisa/listAll', $atributos); 
-		?>		
-			
-			<fieldset>
-			<div class="control-group">
-				<label class="control-label" for="">Pesquisa</label>
-				<div class="controls">
-
-					<select id="ncm" name="ncm" class="input" class="">
+	<table class="table" border="0px">
+		<tr>
+			<td>
+				<!-- Formulário para combobox sem botão submit -->
+				<?php
+					$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
+					echo form_open('pesquisa/listAll', $atributos); 
+				?>		
 						
-						{ncms}		
-							<option value="{NNome}">{NNome}</option>
-						{/ncms}
-						
-				    </select>
+				<fieldset>
+					<div class="control-group">
+						<div class="controls">
 
-					<select id="ano" onchange="this.form.submit()" name="ano" class="input">
+							<select id="ncm" name="ncm" class="span2">
+								<option value="">NCM</option>	
+								{ncms}		
+									<option value="{NNome}">{NNome}</option>
+								{/ncms}
+								
+						    </select>
+
+							<select id="ano" onchange="this.form.submit()" name="ano" class="span2">
+								<option value="">Ano</option>
+								{anos}		
+									<option value="{AAno}">{AAno}</option>
+								{/anos}
+								
+						    </select>
+						   </div>
+					</div>
+				</fieldset>
+				</form>				
+			</td>
+			<td>
+				<!-- Buscador-->		
+				<?php
+					$atributos = array('form class'=>'form-search',  'align'=>'right', 'method'=>'POST');
+					echo form_open('pesquisa/listAll', $atributos); 
+				?>		
 					
-						{anos}		
-							<option value="{AAno}">{AAno}</option>
-						{/anos}
+				<input type="text" class="input-xlarge search-query" placeholder="Pesquisa..." name="buscaDados">
+				<button type="submit" class="btn btn-success"><i class="icon-search icon-white"></i> Buscar</button>
+				
+				</form>
+			</td>
+		<tr>
+		<tr>
+			
+			<td>
+				<!-- Formulário para combobox sem botão submit -->
+				<?php
+					$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
+					echo form_open('pesquisa/listAll', $atributos); 
+				?>		
 						
-				    </select>
+				<fieldset>
+					<div class="control-group">
+						<div class="controls">
 
-			</div>
+							<select id="marca" name="marca" class="span2" onchange="this.form.submit()">
+								<option value="">Marca</option>	
+								{marcas}		
+									<option value="{MAID}">{MANome}</option>
+								{/marcas}
+								
+						    </select>
+							<input type="hidden" name="ncm" value="<?php echo $this->session->userdata('ncm');?>">
+							<input type="hidden" name="ano" value="<?php echo $this->session->userdata('ano');?>">
 
-		</fieldset>
-	</form>
+				</form>
+
+							<!-- Formulário para combobox sem botão submit -->
+							<?php
+								$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
+								echo form_open('pesquisa/listAll', $atributos); 
+							?>		
+						
+
+							<select id="modelo" name="marca" class="span2">
+								<option value="">Modelo</option>	
+								{modelos}		
+									<option value="{MOID}">{MNome}</option>
+								{/modelos}
+								
+						    </select>
+					</div>
+				</fieldset>
+				</form>	
+
+			</td>
 
 
-	<!-- Buscador-->		
-	<?php
-		$atributos = array('form class'=>'form-search',  'align'=>'right', 'method'=>'POST');
-		echo form_open('pesquisa/listAll', $atributos); 
-	?>		
-		
-		<input type="text" class="input-xlarge search-query" placeholder="Pesquisa..." name="buscaModelo">	
-		<button type="submit" class="btn btn-success"><i class="icon-search icon-white"></i> Buscar</button>
-	
-	</form>
+		</tr>
+
+
+
+	</table>
+
+	<hr>
+
+	<!-- Legenda da pesquisa -->
+	<h3 align="center"><small>Pesquisa na NCM </small><b>{ncm}</b><small> no ano de </small>{ano}</h3>
 
 
 		

@@ -7,8 +7,8 @@
     <p class="muted credit" align="center">Developed by
     	<a href="http://www.linkedin.com/pub/vitor-atair/49/606/572">Vitor Atair</a>.
     </p>
-</div>    
-
+</div>  
+  
 
 <!-- javascript -->
 <!-- Placed at the end of the document so the pages load faster -->
