@@ -1,15 +1,28 @@
 <!-- Estrutura -->
 <div class="container">
 
+	<!-- Buscador  + Adicionar nova marca-->
+		
+		<?php
+			$atributos = array('form class'=>'well form-search',  'align'=>'right', 'method'=>'POST');
+			echo form_open('modelo/listAll', $atributos); 
+		?>		
+		
+		<input type="text" class="input-xlarge search-query" placeholder="Busca de modelo..." name="buscaModelo">
+	
+		<button type="submit" class="btn btn-success"><i class="icon-search icon-white"></i> Buscar</button>
+		
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
+		<a href="addModelo" class="btn btn-success"><i class="icon-plus icon-white"></i> Novo Modelo</a>	  
+	
+	</form>
+
+
 	<table class="table table-striped">					
 		
 		<div class="page-header">
 			
-			<h2>Modelos <small> lista de modelos cadastradas no sistema</small></h2>
-			
-			<p align=right>
-				<a href="addModelo" class="btn btn-large btn-success"><i class="icon-plus icon-white"></i> Novo Modelo</a>	  
-			</p>				
+			<h2>Modelos <small> lista de modelos cadastradas no sistema</small></h2>				
 
 		</div>						
 

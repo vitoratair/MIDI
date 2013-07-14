@@ -109,18 +109,28 @@ class Modelo extends CI_Controller {
 	public function listAll()
 	{
 
+		// Recebe os dados do FORM //			
+		$search	= $this->input->post('buscaModelo');		
+
 		// Carrega a view correspondende //
 		$data['main_content'] = 'modelo/modelo_view';
 
-        $config["base_url"] 	= base_url() . "index.php/modelo/listAll";
-        $config["total_rows"] 	= $this->modelo_model->countModelo();
-	    $config["per_page"] 	= 20;
+		if (empty($search))
+		{
+	        $config["base_url"] 	= base_url() . "index.php/modelo/listAll";
+	        $config["total_rows"] 	= $this->modelo_model->countModelo();
+		    $config["per_page"] 	= 20;
 
-        $this->pagination->initialize($config);
-        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        
-        $data["modelos"] = $this->modelo_model->listarModelo($config["per_page"], $page);
-        $data["links"] = $this->pagination->create_links();
+	        $this->pagination->initialize($config);
+	        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+	        
+	        $data["modelos"] = $this->modelo_model->listarModelo($config["per_page"], $page);
+	        $data["links"] = $this->pagination->create_links();
+		}
+		else
+		{
+			$data["modelos"] = $this->modelo_model->listarModeloPesquisa($search);
+		}
 
 		// pegar todas as tabelas de NCMs do sistema
 		$ncms = $this->categoria_model->getAllNcm();
@@ -154,7 +164,6 @@ class Modelo extends CI_Controller {
 			}
 
 		}	
-
 
 		// // Busca as categorias //
 		$data['categorias'] = $this->categoria_model->listar();			
