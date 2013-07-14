@@ -41,7 +41,6 @@ class Modelo_model extends CI_Model {
 	/**
 	 * Lista de modelos
 	 */
-
 	function listarModelo($limit,$start)
 	{
 		$this->db->limit($limit, $start);
@@ -49,6 +48,22 @@ class Modelo_model extends CI_Model {
 		$this->db->from('Modelo');
 		$this->db->join('Marca' , 'MAID = Marca_MAID');
 		$this->db->join('Categoria' , 'CID = Categoria_CID');
+
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
+	/**
+	 * Lista de modelos pesquisa
+	 */
+	function listarModeloPesquisa($search)
+	{
+		$this->db->select('*');
+		$this->db->from('Modelo');		
+		$this->db->join('Marca' , 'MAID = Marca_MAID');
+		$this->db->join('Categoria' , 'CID = Categoria_CID');
+		$this->db->like('MNome',$search);
 
 		$query = $this->db->get();
 
