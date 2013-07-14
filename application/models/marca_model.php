@@ -78,7 +78,6 @@ class Marca_model extends CI_Model {
 		return $this->db->count_all('Marca');
 	}
 	
-
 	/**
 	 * Lista uma marca
 	 */
@@ -91,7 +90,7 @@ class Marca_model extends CI_Model {
 		$query = $this->db->get();
 
 		return $query->result();
-	}		
+	}				
 
 	/**
 	  * Insere marca 

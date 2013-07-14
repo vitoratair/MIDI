@@ -89,6 +89,20 @@ class Modelo_model extends CI_Model {
 	}
 
 	/**
+	 * Lista os modelos da marca
+	 */
+	function buscaModeloByMarca($id)
+	{
+
+		$this->db->select('*');
+		$this->db->from('Modelo');
+		$this->db->where('Marca_MAID',$id);
+		$query = $this->db->get();
+
+		return $query->result();
+	}	
+
+	/**
 	 * count de modelos na categoria selecionada
 	 */
 	function countModeloByCategoria($id)
