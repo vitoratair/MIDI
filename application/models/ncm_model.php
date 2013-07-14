@@ -106,32 +106,62 @@ class ncm_model extends CI_Model {
 	/**
 	 * Busca dados somente com NCM e ano
 	 */
-	function buscaDados($limit, $start, $table)
+	function buscaDados($limit, $start, $table, $id, $marca)
 	{
-		$this->db->limit($limit, $start);
-		$this->db->select('*');
-		$this->db->from($table);
-		$this->db->join('Categoria','Categoria.CID = Categoria');
-		$this->db->join('Marca','Marca.MAID = Marca');
-		$this->db->join('Modelo','Modelo.MOID = Modelo');
+		
+		if ($id == 1)
+		{
+			$this->db->limit($limit, $start);
+			$this->db->select('*');
+			$this->db->from($table);
+			$this->db->join('Categoria','Categoria.CID = Categoria');
+			$this->db->join('Marca','Marca.MAID = Marca');
+			$this->db->join('Modelo','Modelo.MOID = Modelo');
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
+			$query = $this->db->get();
 
+			return $query->result();			
+		}
+		elseif($id == 2)
+		{
+			$this->db->limit($limit, $start);
+			$this->db->select('*');
+			$this->db->from($table);
+			$this->db->join('Categoria','Categoria.CID = Categoria');
+			$this->db->join('Marca','Marca.MAID = Marca');
+			$this->db->join('Modelo','Modelo.MOID = Modelo');
+			$this->db->where('Marca',$marca);
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
+			$query = $this->db->get();
 
-		$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
-		$query = $this->db->get();
+			return $query->result();
+		}
 
-		return $query->result();
 	}
 
 	/**
-	 * COUNT dos dados somente com NCM e ano
+	 * COUNT dos dados
 	 */
-	function countBuscaDados($table)
+	function countBuscaDados($table,$id,$marca)
 	{
-		$this->db->select('COUNT(`IDN`)');
-		$this->db->from($table);
-		$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO');
-		
-		return $this->db->count_all_results();
+		if($id == 1)
+		{
+			$this->db->select('COUNT(`IDN`)');
+			$this->db->from($table);
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO');
+			
+			return $this->db->count_all_results();			
+		}
+		elseif ($id == 2) // marca
+		{
+			$this->db->select('COUNT(`IDN`)');
+			$this->db->from($table);
+			$this->db->where('Marca',$marca);
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO');
+			
+			return $this->db->count_all_results();			
+		}
+
 	}	
 
 
