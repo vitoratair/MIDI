@@ -40,7 +40,7 @@ class ncm_model extends CI_Model {
 
 
 	/**
-	 * Busca uma categoria
+	 * Busca uma ncm
 	 */
 	function buscar($id)
 	{
@@ -51,6 +51,25 @@ class ncm_model extends CI_Model {
 		
 		return $query->result();	
 	}
+
+	/**
+	 * Busca uma linha da tabela de NCM
+	 */
+	function listarNCM($table, $id)
+	{
+		$this->db->select('*');
+		$this->db->from($table);
+		$this->db->join('Categoria','Categoria.CID = Categoria');
+		$this->db->join('Marca','Marca.MAID = Marca');
+		$this->db->join('Modelo','Modelo.MOID = Modelo');
+		$this->db->where('IDN',$id);
+		$this->db->limit('1');
+		$query = $this->db->get();
+
+		return $query->result();
+		
+		return $query->result();	
+	}	
 
 	/**
 	 * Update da categoria no banco

@@ -24,6 +24,26 @@ class Pesquisa extends CI_Controller {
 	}
 
 	/**
+	 * Apresenta a view para ediid, $ncm, $anor a ncm
+	 */
+	public function edit($id, $ncm, $year)
+	{
+		// Monta o noma da tabela para pesquisa //
+		$table = $ncm . "_" . $year;
+
+		// Envia os dados para a view //
+		$data['ncm'] 	= $ncm; 
+		$data['year'] 	= $year;
+
+		$data['main_content'] = 'pesquisa/editPesquisa_view';	
+
+		// busca as informações da ncm
+		$data['dados'] = $this->ncm_model->listarNcm($table, $id);
+		
+		$this->parser->parse('template',$data);		
+	}
+
+	/**
 	 * Apresenta a view com todos as opções para o usuário
 	 */
 	public function listAll()
