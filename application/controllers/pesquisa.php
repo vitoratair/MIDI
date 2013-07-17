@@ -65,8 +65,11 @@ class Pesquisa extends CI_Controller {
 		// Caso a variável ncm esteja vazia, recebe os dados que estão em sessão //
 		if (empty($ncm))
 		{
-			$ncm 	= $this->session->userdata['ncm'];
-			$year 	= $this->session->userdata['year'];
+			if (!empty($this->session->userdata['ncm']))
+			{
+				$ncm 	= $this->session->userdata['ncm'];	
+				$year 	= $this->session->userdata['year'];			
+			}	
 		}
 		else
 		{
@@ -77,6 +80,7 @@ class Pesquisa extends CI_Controller {
 
 		if (empty($brand) && (empty($control)))
 		{
+			if (!empty($this->session->userdata['brand']))
 			$brand = $this->session->userdata['brand'];
 		}
 		else
@@ -86,6 +90,7 @@ class Pesquisa extends CI_Controller {
 		}		
 		if (empty($model) && (empty($control)))
 		{
+			if (!empty($this->session->userdata['model']))
 			$model = $this->session->userdata['model'];
 		}
 		else
@@ -93,8 +98,9 @@ class Pesquisa extends CI_Controller {
 			$session['model'] = $model;
 			$this->session->set_userdata($session);	
 		}
-		if (empty($search) && (empty($control)))
+		if (empty($search) && ($control == 2))
 		{
+			if (!empty($this->session->userdata['search']))
 			$search = $this->session->userdata['search'];
 		}
 		else
