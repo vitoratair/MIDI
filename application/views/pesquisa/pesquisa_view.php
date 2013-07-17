@@ -52,6 +52,8 @@
 								{/marcas}
 								
 						    </select>
+
+						    <input type="hidden" name="controle" value="2">
 						
 				</form>
 
