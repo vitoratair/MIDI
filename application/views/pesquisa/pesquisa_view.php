@@ -128,7 +128,7 @@
 				<td>{MANome}</td>
 				<td>{MNome}</td>
 				<td>{QUANTIDADE_COMERCIALIZADA_PRODUTO}</td>				
-				<td><i class="icon-edit"></i></td>
+				<td><a href="edit/{IDN}/{ncm}/{year}"><i class="icon-edit"></a></i></td>
 			</tr>
 			{/dados}
 	
