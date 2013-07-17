@@ -1,10 +1,9 @@
 <!-- Estrutura -->
-<div class="container">
-			
-	
-	<table class="table" border="0px">
+<div class="container">			
+<br>
+	<table class="" width="96%" border="0px" align="center">
 		<tr>
-			<td>
+			<td valign="top">
 				<!-- Formulário para combobox sem botão submit -->
 				<?php
 					$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
@@ -30,27 +29,12 @@
 								{/anos}
 								
 						    </select>
+						    <input type="hidden" name="controle" value="1">
 						   </div>
 					</div>
 				</fieldset>
 				</form>				
-			</td>
-			<td>
-				<!-- Buscador-->		
-				<?php
-					$atributos = array('form class'=>'form-search',  'align'=>'right', 'method'=>'POST');
-					echo form_open('pesquisa/listAll', $atributos); 
-				?>		
-					
-				<input type="text" class="input-xlarge search-query" placeholder="Pesquisa..." name="buscaDados">
-				<button type="submit" class="btn btn-success"><i class="icon-search icon-white"></i> Buscar</button>
-				
-				</form>
-			</td>
-		<tr>
-		<tr>
 			
-			<td>
 				<!-- Formulário para combobox sem botão submit -->
 				<?php
 					$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
@@ -68,9 +52,7 @@
 								{/marcas}
 								
 						    </select>
-							<input type="hidden" name="ncm" value="<?php echo $this->session->userdata('ncm');?>">
-							<input type="hidden" name="ano" value="<?php echo $this->session->userdata('ano');?>">
-
+						
 				</form>
 
 							<!-- Formulário para combobox sem botão submit -->
@@ -80,7 +62,7 @@
 							?>		
 						
 
-							<select id="modelo" name="marca" class="span2">
+							<select id="modelo" name="modelo" class="span2" onchange="this.form.submit()">
 								<option value="">Modelo</option>	
 								{modelos}		
 									<option value="{MOID}">{MNome}</option>
@@ -90,22 +72,38 @@
 					</div>
 				</fieldset>
 				</form>	
-
 			</td>
+			<td>
+	<!-- Buscador-->		
+				<?php
+					$atributos = array('form class'=>'form-search',  'align'=>'right', 'method'=>'POST');
+					echo form_open('pesquisa/listAll', $atributos); 
+				?>					
 
+ 				<div class="control-group success">
+				  	<div class="controls">
+				    	<input type="text" class="input-xlarge search-query" placeholder="Pesquisar por ..." name="search">
+					</div>
+				</div>
 
-		</tr>
+ 				<div class="control-group error">
+				  	<div class="controls">
+				    	<input type="text" class="input-xlarge search-query" placeholder="Retirar a palavra ..." name="unSearch">
+					</div>
+				</div>				
 
-
+				<button type="submit" class="btn btn-success"><i class="icon-search icon-white"></i> Buscar</button>
+				
+				</form>
+			</td>
+		<tr>
 
 	</table>
 
 	<hr>
 
 	<!-- Legenda da pesquisa -->
-	<h3 align="center"><small>Pesquisa na NCM </small><b>{ncm}</b><small> no ano de </small>{ano}</h3>
-
-
+	<h3 align="center"><small>Pesquisa na NCM </small><b>{ncm}</b><small> no ano de </small>{year}</h3><br>
 		
 	<!-- Tabela com a lista de linhas de NCMs -->
 	<table class='table table-bordered table-striped'>

@@ -106,7 +106,7 @@ class ncm_model extends CI_Model {
 	/**
 	 * Busca dados somente com NCM e ano
 	 */
-	function buscaDados($limit, $start, $table, $id, $marca)
+	function buscaDados($limit, $start, $table, $id, $brand, $model, $search)
 	{
 		
 		if ($id == 1)
@@ -122,6 +122,7 @@ class ncm_model extends CI_Model {
 
 			return $query->result();			
 		}
+		// Busca de dados por marcas
 		elseif($id == 2)
 		{
 			$this->db->limit($limit, $start);
@@ -130,21 +131,51 @@ class ncm_model extends CI_Model {
 			$this->db->join('Categoria','Categoria.CID = Categoria');
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
-			$this->db->where('Marca',$marca);
+			$this->db->where('Marca', $brand);
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			$query = $this->db->get();
 
 			return $query->result();
 		}
+		// Busca de dados por modelos
+		elseif($id == 3)
+		{
+			$this->db->limit($limit, $start);
+			$this->db->select('*');
+			$this->db->from($table);
+			$this->db->join('Categoria','Categoria.CID = Categoria');
+			$this->db->join('Marca','Marca.MAID = Marca');
+			$this->db->join('Modelo','Modelo.MOID = Modelo');
+			$this->db->where('Marca', $brand);
+			$this->db->where('Modelo', $model);
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
+			$query = $this->db->get();
 
+			return $query->result();
+		}
+		elseif ($id == 4)
+		{
+			$this->db->limit($limit, $start);
+			$this->db->select('*');
+			$this->db->from($table);
+			$this->db->join('Categoria','Categoria.CID = Categoria');
+			$this->db->join('Marca','Marca.MAID = Marca');
+			$this->db->join('Modelo','Modelo.MOID = Modelo');
+			$this->db->like('DESCRICAO_DETALHADA_PRODUTO', $search);			
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
+			$query = $this->db->get();
+
+			return $query->result();			
+		}		
 	}
 
 	/**
 	 * COUNT dos dados
 	 */
-	function countBuscaDados($table,$id,$marca)
+	function countBuscaDados($table, $id, $brand, $model, $search)
 	{
-		if($id == 1)
+		// count total
+		if($id == 1) 
 		{
 			$this->db->select('COUNT(`IDN`)');
 			$this->db->from($table);
@@ -152,18 +183,38 @@ class ncm_model extends CI_Model {
 			
 			return $this->db->count_all_results();			
 		}
-		elseif ($id == 2) // marca
+		// Count com filtro em marcas
+		elseif ($id == 2) 
 		{
 			$this->db->select('COUNT(`IDN`)');
 			$this->db->from($table);
-			$this->db->where('Marca',$marca);
+			$this->db->where('Marca',$brand);
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO');
 			
 			return $this->db->count_all_results();			
 		}
+		// count por modelos
+		elseif ($id == 3) 
+		{
+			$this->db->select('COUNT(`IDN`)');
+			$this->db->from($table);
+			$this->db->where('Marca',$brand);
+			$this->db->where('Modelo',$model);
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO');
+			
+			return $this->db->count_all_results();					
+		}
+		// count por palavra pesquisada
+		elseif ($id == 4) 
+		{
+			$this->db->select('COUNT(`IDN`)');
+			$this->db->from($table);
+			$this->db->like('DESCRICAO_DETALHADA_PRODUTO',$search);
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO');
+			
+			return $this->db->count_all_results();					
+		}
 
-	}	
-
-
+	}
 
 }
