@@ -39,7 +39,7 @@ class Modelo extends CI_Controller {
 		}
 		else
 		{
-			$this->session->set_userdata($data);	
+			$this->session->set_userdata($data);
 		}
 		
 		$check = FALSE;
