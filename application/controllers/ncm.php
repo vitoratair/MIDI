@@ -105,8 +105,6 @@ class ncm extends CI_Controller {
 	
 	}
 
-
-
 	/**
 	 * Deleta a NCM e suas referencias em outras tabelas
 	 */

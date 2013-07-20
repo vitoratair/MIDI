@@ -251,7 +251,7 @@ class Pesquisa extends CI_Controller {
 		$table 	= $ncm . "_" . $year;
 		
 		// Verfica se a tabela possui 13 caracteres, um valor menor que 13 significa que a tabela não possui ou a ncm ou o ano //
-		if (strlen($table) == 13)
+		if ($this->ncm_model->checkNcm($table))
 		{
 			
 	        // Configurando a url base para paginação //
@@ -357,6 +357,22 @@ class Pesquisa extends CI_Controller {
 					$data["links"] = $this->pagination->create_links();	
 				}
 			}
+		}
+		else
+		{
+			// Limpando a tela para o usuário
+			$data['year'] 	= ' - ';
+			$data['ncm'] 	= ' - ';
+			$data['links'] 	= NULL;
+			$data['dados'][0] = array(
+				'IDN' 								=> NULL,
+				'DESCRICAO_DETALHADA_PRODUTO' 		=> NULL,
+				'CNome'								=> NULL,
+				'MANome'							=> NULL,
+				'MNome'								=> NULL,
+				'QUANTIDADE_COMERCIALIZADA_PRODUTO' => NULL
+				);
+
 		}
 
 		// Carrega a view correspondende //
