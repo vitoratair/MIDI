@@ -31,36 +31,58 @@ class Pesquisa extends CI_Controller {
 		// Monta o noma da tabela para pesquisa //
 		$table = $ncm . "_" . $year;
 
-		// Busca as informações para os modais //
-		$data['categorias'] = $this->categoria_model->listar();
-		$data['marcas'] 	= $this->marca_model->listarAllMarca();						
-		
 		// verifica os dados atuais da NCM //
 		$marca 		= $this->ncm_model->buscarMarca($table, $id);
 		$categoria 	= $this->categoria_model->getCategoriaNcm($table, $id);
 		$modelo 	= $this->ncm_model->buscarModelo($table, $id);
-		
-		
+
+		// Busca as informações para os modais //
+		$data['categorias'] 	= $this->categoria_model->listar();
+		$data['marcas'] 		= $this->marca_model->listarAllMarca();
+		$data['subcategoria1']	= $this->categoria_model->listaItens('SubCategoria1', $categoria[0]->Categoria);
+		$data['subcategoria2']	= $this->categoria_model->listaItens('SubCategoria2', $categoria[0]->Categoria);
+		$data['subcategoria3']	= $this->categoria_model->listaItens('SubCategoria3', $categoria[0]->Categoria);		
+		$data['subcategoria4']	= $this->categoria_model->listaItens('SubCategoria4', $categoria[0]->Categoria);
+		$data['subcategoria5']	= $this->categoria_model->listaItens('SubCategoria5', $categoria[0]->Categoria);
+		$data['subcategoria6']	= $this->categoria_model->listaItens('SubCategoria6', $categoria[0]->Categoria);
+		$data['subcategoria7']	= $this->categoria_model->listaItens('SubCategoria7', $categoria[0]->Categoria);
+		$data['subcategoria8']	= $this->categoria_model->listaItens('SubCategoria8', $categoria[0]->Categoria);
+
 		// Verifica se existe marca //
 		if (!empty($marca))
 		{
 			$data['modelos'] 	= $this->modelo_model->buscaModeloByMarca($marca[0]->Marca, $categoria[0]->Categoria);	
 		}
 
-		// Verficar se existe subcategoria //
 		if (!empty($categoria))
 		{
 			$data['titulos']	= $this->categoria_model->listarTitulos($categoria[0]->Categoria);			
 		}
 
+		// Possui modelo definido //
 		$var 	= array();
-
-		// Loop para verficar as subcategorias do modelo //
-		foreach ($data['titulos'] as $key => $value)
+		if ($modelo[0]->Modelo != 1)
 		{
-			$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasModelo($modelo[0]->Modelo, $value->TColuna);
-			$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+			$data['checkModelo'] = TRUE;
+			// Loop para verficar as subcategorias do modelo //
+			foreach ($data['titulos'] as $key => $value)
+			{
+				$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasModelo($modelo[0]->Modelo, $value->TColuna);
+				$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+			}			
 		}
+		else
+		{			
+			$data['checkModelo'] = FALSE;
+			// Loop para verficar as subcategorias do modelo //
+			foreach ($data['titulos'] as $key => $value)
+			{
+				$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasNcm($table, $value->TColuna, $id);
+				$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+			}	
+		}
+
+
 		
 
 		$data['dados']	 	= $this->ncm_model->listarNcm($table, $id);
@@ -80,7 +102,9 @@ class Pesquisa extends CI_Controller {
 		$ncm 	= $this->input->post('ncm');
 		$year 	= $this->input->post('year');		
 		$idn 	= $this->input->post('idn');
+		$coluna = $this->input->post('coluna');
 
+		$coluna = "SubCategoria".$coluna."_SCID";
 		$table 	=  $ncm . "_" . $year;
 
 		switch ($id)
@@ -103,6 +127,12 @@ class Pesquisa extends CI_Controller {
 
 				break;							
 			
+			case 'SubCategoria':
+				$subcategoria = $this->input->post('subcategoria');
+				$this->ncm_model->update(3, $table, $coluna, $idn, $subcategoria);				
+
+				break;	
+
 			default:
 				# code...
 				break;
@@ -291,7 +321,7 @@ class Pesquisa extends CI_Controller {
 				if (empty($model))
 				{
 					// Carrega todos os modelos da marca selecionada //
-					$data['modelos'] = $this->modelo_model->buscaModeloByMarca($brand);			
+					$data['modelos'] = $this->modelo_model->buscaModeloByMarca($brand, NULL);			
 
 			        $config["total_rows"] 	= $this->ncm_model->countBuscaDados($table,'2', $brand, NULL, NULL, NULL);
 			        $config["per_page"] 	= 20;
@@ -306,7 +336,7 @@ class Pesquisa extends CI_Controller {
 				else
 				{
 					// Carrega todos os modelos da marca selecionada //
-					$data['modelos'] = $this->modelo_model->buscaModeloByMarca($brand);			
+					$data['modelos'] = $this->modelo_model->buscaModeloByMarca($brand, NULL);			
 
 			        $config["total_rows"] 	= $this->ncm_model->countBuscaDados($table,'3', $brand, $model, NULL, NULL);			        			      
 			        $config["per_page"] 	= 20;

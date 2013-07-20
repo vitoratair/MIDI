@@ -56,8 +56,6 @@ class Categoria_model extends CI_Model {
 		$this->db->update($table, $data);
 	}	
 
-
-
 	/**
 	  * Insere subcategoria 
 	  */ 
@@ -65,9 +63,6 @@ class Categoria_model extends CI_Model {
 	{
 		return $this->db->insert('Titulo', $data);
 	}	
-
-
-
 
 	/**
 	 * Update da subcategoria no banco
@@ -77,7 +72,6 @@ class Categoria_model extends CI_Model {
 		$this->db->where('TID', $id);
 		$this->db->update('Titulo', $data); 
 	}
-
 
 	/**
 	 * Busca uma categoria
@@ -118,9 +112,6 @@ class Categoria_model extends CI_Model {
 		return $query->result();	
 	}
 
-
-
-
 	/**
 	 * Verifica se existe uma índice para um categoria selecionada
 	 */
@@ -138,7 +129,6 @@ class Categoria_model extends CI_Model {
 		return $query->result();	
 	}
 
-
 	/**
 	 * Update da categoria no banco
 	 */
@@ -151,7 +141,7 @@ class Categoria_model extends CI_Model {
 	}
 	
 	/**
-	 * Lista dados
+	 * Lista categorias
 	 */
 	function listar()
 	{
@@ -213,6 +203,22 @@ class Categoria_model extends CI_Model {
 		return $query[0]->$coluna;
 		// return $query->result();
 	}
+
+	/**
+	 * Lista itens das subcategoria sem modelo
+	 */
+	function listarSubcategoriasNcm($table, $id, $idn)
+	{
+		
+		$coluna = "SubCategoria".$id."_SCID";
+		$this->db->select($coluna);
+		$this->db->from($table);
+		$this->db->where('IDN',$idn);
+		$query = $this->db->get();
+		$query = $query->result();
+		
+		return $query[0]->$coluna;
+	}	
 
 	/**
 	 * Lista subcategorias

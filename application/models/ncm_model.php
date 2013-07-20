@@ -120,8 +120,13 @@ class ncm_model extends CI_Model {
 		}
 		elseif ($id == 2)
 		{
-			$this->db->query("UPDATE $table SET $colun = $item, Modelo = 1 WHERE IDN  = '$idn'");	
+			$this->db->query("UPDATE $table SET $colun = $item, Modelo = 1 WHERE IDN 	= '$idn'");	
 		}
+		elseif ($id == 3)
+		{		
+			$this->db->query("UPDATE $table SET $colun = $item WHERE IDN = $idn");	
+		}
+
 		
 	}	
 
