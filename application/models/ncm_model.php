@@ -39,6 +39,21 @@ class ncm_model extends CI_Model {
 	}
 
 	/**
+	  * Verifica se a NCM existe
+	  */ 
+	function checkNcm($table) 
+	{
+		if ($this->db->table_exists($table))
+		{		
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}	
+
+	/**
 	 * Busca de marca de uma NCM
 	 */
 	function buscarMarca($table, $id)
