@@ -93,7 +93,7 @@
 				    	<input type="text" class="input-xlarge search-query" placeholder="Retirar a palavra ..." name="unSearch">
 					</div>
 				</div>				
-
+				<input type="hidden" name="controle" value="3">
 				<button type="submit" class="btn btn-success"><i class="icon-search icon-white"></i> Buscar</button>
 				
 				</form>
@@ -105,7 +105,8 @@
 	<hr>
 
 	<!-- Legenda da pesquisa -->
-	<h3 align="center"><small>Pesquisa na NCM </small><b>{ncm}</b><small> no ano de </small>{year}</h3><br>
+	<h3 align="center"><small>Pesquisa na NCM </small><b>{ncm}</b><small> no ano de </small>{year}</h3>
+	<br>
 		
 	<!-- Tabela com a lista de linhas de NCMs -->
 	<table class='table table-bordered table-striped'>
