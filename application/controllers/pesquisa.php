@@ -54,7 +54,7 @@ class Pesquisa extends CI_Controller {
 		$brand 			= $this->input->post('marca');
 		$model 			= $this->input->post('modelo');
 		$search 		= $this->input->post('search');
-		$unsearch 		= $this->input->post('unsearch');
+		$unSearch 		= $this->input->post('unSearch');
 		$control 		= $this->input->post('controle');
 
 		// Carrega os dados necessários da model //
@@ -81,7 +81,9 @@ class Pesquisa extends CI_Controller {
 		if (empty($brand) && (empty($control)))
 		{
 			if (!empty($this->session->userdata['brand']))
-			$brand = $this->session->userdata['brand'];
+			{
+				$brand = $this->session->userdata['brand'];
+			}
 		}
 		else
 		{
@@ -91,27 +93,57 @@ class Pesquisa extends CI_Controller {
 		if (empty($model) && (empty($control)))
 		{
 			if (!empty($this->session->userdata['model']))
-			$model = $this->session->userdata['model'];
+			{
+				$model = $this->session->userdata['model'];
+			}
 		}
 		else
 		{
 			$session['model'] = $model;
 			$this->session->set_userdata($session);	
 		}
-		if (empty($search) && ($control == 2))
+		if (empty($search) && (empty($control)) && (empty($unSearch)))
 		{
 			if (!empty($this->session->userdata['search']))
-			$search = $this->session->userdata['search'];
+			{
+				$search = $this->session->userdata['search'];
+			}	
 		}
 		else
 		{
 			$session['search'] = $search;
 			$this->session->set_userdata($session);	
-		}			
+		}
+
+		if (empty($unSearch) && (empty($control)))
+		{
+			
+			if (empty($search))
+			{
+				if (!empty($this->session->userdata['unSearch']))
+				{
+					$unSearch = $this->session->userdata['unSearch'];
+				}
+			}
+			else
+			{
+				if (!empty($this->session->userdata['unSearch']))
+				{
+					$unSearch = $this->session->userdata['unSearch'];
+					$search = $this->session->userdata['search'];
+				}
+			}
+
+		}
+		else
+		{
+			$session['unSearch'] = $unSearch;
+			$this->session->set_userdata($session);
+		}
 
 		// Montando a nome da tabela a ser procurada //
 		$table 	= $ncm . "_" . $year;
-
+		
 		// Verfica se a tabela possui 13 caracteres, um valor menor que 13 significa que a tabela não possui ou a ncm ou o ano //
 		if (strlen($table) == 13)
 		{
@@ -123,33 +155,66 @@ class Pesquisa extends CI_Controller {
 			$data['ncm'] 	= $ncm;
 			$data['year'] 	= $year;
 
+			// Pesquisando por uma palavra chave
 			if (!empty($search))
 			{
+				// Pesquisando por uma palavra chave e retirando uma palavra chave
+				if (!empty($unSearch))
+				{
+					// Configurando paginação //
+			        $config["total_rows"] 	= $this->ncm_model->countBuscaDados($table,'5',NULL, NULL, $search, $unSearch);
+			        $config["per_page"] 	= 20;
+			        
+			        $this->pagination->initialize($config);
+			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
+					// Carrega os dados somente com ano e ncm //
+					$data['dados'] 	= $this->ncm_model->buscaDados($config['per_page'], $page, $table, '5', NULL, NULL, $search, $unSearch);
+					$data["links"] 	= $this->pagination->create_links();
+				}
+				// Pesquisando por uma palavra chave
+				else
+				{
+					// Configurando paginação //
+			        $config["total_rows"] 	= $this->ncm_model->countBuscaDados($table,'4',NULL, NULL, $search, NULL);
+			        $config["per_page"] 	= 20;
+			        
+			        $this->pagination->initialize($config);
+			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+					// Carrega os dados somente com ano e ncm //
+					$data['dados'] 	= $this->ncm_model->buscaDados($config['per_page'], $page, $table, '4', NULL, NULL, $search, NULL);
+					$data["links"] 	= $this->pagination->create_links();
+				}
+			}
+			// Retirando uma palavra chave
+			elseif (!empty($unSearch))
+			{
 				// Configurando paginação //
-		        $config["total_rows"] 	= $this->ncm_model->countBuscaDados($table,'4',NULL, NULL, $search);
+		        $config["total_rows"] 	= $this->ncm_model->countBuscaDados($table,'6',NULL, NULL, NULL, $unSearch);
 		        $config["per_page"] 	= 20;
 		        
 		        $this->pagination->initialize($config);
 		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 				// Carrega os dados somente com ano e ncm //
-				$data['dados'] 	= $this->ncm_model->buscaDados($config['per_page'], $page, $table, '4', NULL, NULL, $search);
-				$data["links"] 	= $this->pagination->create_links();
+				$data['dados'] 	= $this->ncm_model->buscaDados($config['per_page'], $page, $table, '6', NULL, NULL, NULL, $unSearch);
+				$data["links"] 	= $this->pagination->create_links();								
 
 			}
+			// Pesquisando por marca
 			elseif (empty($brand))
 			{
 				
 				// Configurando paginação //
-		        $config["total_rows"] 	= $this->ncm_model->countBuscaDados($table,'1',NULL, NULL, NULL);
+		        $config["total_rows"] 	= $this->ncm_model->countBuscaDados($table,'1',NULL, NULL, NULL, NULL);
 		        $config["per_page"] 	= 20;
 		        
 		        $this->pagination->initialize($config);
 		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 				// Carrega os dados somente com ano e ncm //
-				$data['dados'] 	= $this->ncm_model->buscaDados($config['per_page'], $page, $table, '1', NULL, NULL, NULL);
+				$data['dados'] 	= $this->ncm_model->buscaDados($config['per_page'], $page, $table, '1', NULL, NULL, NULL, NULL);
 				$data["links"] 	= $this->pagination->create_links();				
 
 			}
@@ -160,14 +225,14 @@ class Pesquisa extends CI_Controller {
 					// Carrega todos os modelos da marca selecionada //
 					$data['modelos'] = $this->modelo_model->buscaModeloByMarca($brand);			
 
-			        $config["total_rows"] 	= $this->ncm_model->countBuscaDados($table,'2', $brand, NULL, NULL);
+			        $config["total_rows"] 	= $this->ncm_model->countBuscaDados($table,'2', $brand, NULL, NULL, NULL);
 			        $config["per_page"] 	= 20;
 			        
 			        $this->pagination->initialize($config);
 			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 					// Carrega os dados somente com ano e ncm //
-					$data['dados'] = $this->ncm_model->buscaDados($config['per_page'], $page, $table, '2', $brand, NULL, NULL);
+					$data['dados'] = $this->ncm_model->buscaDados($config['per_page'], $page, $table, '2', $brand, NULL, NULL, NULL);
 					$data["links"] = $this->pagination->create_links();									
 				}
 				else
@@ -175,27 +240,22 @@ class Pesquisa extends CI_Controller {
 					// Carrega todos os modelos da marca selecionada //
 					$data['modelos'] = $this->modelo_model->buscaModeloByMarca($brand);			
 
-			        $config["total_rows"] 	= $this->ncm_model->countBuscaDados($table,'3', $brand, $model, NULL);			        			      
+			        $config["total_rows"] 	= $this->ncm_model->countBuscaDados($table,'3', $brand, $model, NULL, NULL);			        			      
 			        $config["per_page"] 	= 20;
 			        
 			        $this->pagination->initialize($config);
 			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 					// Carrega os dados somente com ano e ncm //
-					$data['dados'] = $this->ncm_model->buscaDados($config['per_page'], $page, $table, '3', $brand, $model, NULL);
+					$data['dados'] = $this->ncm_model->buscaDados($config['per_page'], $page, $table, '3', $brand, $model, NULL, NULL);
 					$data["links"] = $this->pagination->create_links();	
 				}
 			}
 		}
-		else
-		{
-			// Exibe somente uma tela em branco para o usuário
-
-		}
 
 		// Carrega a view correspondende //
 		$data['main_content'] = 'pesquisa/pesquisa_view';
-
+		
 		// Envia todas as informações para tela //
 		$this->parser->parse('template', $data);
 

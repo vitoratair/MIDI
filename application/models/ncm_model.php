@@ -125,7 +125,7 @@ class ncm_model extends CI_Model {
 	/**
 	 * Busca dados somente com NCM e ano
 	 */
-	function buscaDados($limit, $start, $table, $id, $brand, $model, $search)
+	function buscaDados($limit, $start, $table, $id, $brand, $model, $search, $unSearch)
 	{
 		
 		if ($id == 1)
@@ -184,14 +184,44 @@ class ncm_model extends CI_Model {
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			$query = $this->db->get();
 
-			return $query->result();			
+			return $query->result();						
 		}		
+		elseif ($id == 5)
+		{
+			$this->db->limit($limit, $start);
+			$this->db->select('*');
+			$this->db->from($table);
+			$this->db->join('Categoria','Categoria.CID = Categoria');
+			$this->db->join('Marca','Marca.MAID = Marca');
+			$this->db->join('Modelo','Modelo.MOID = Modelo');
+			$this->db->like('DESCRICAO_DETALHADA_PRODUTO', $search);			
+			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);			
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
+			$query = $this->db->get();
+
+			return $query->result();
+		}	
+		elseif ($id == 6)
+		{
+			$this->db->limit($limit, $start);
+			$this->db->select('*');
+			$this->db->from($table);
+			$this->db->join('Categoria','Categoria.CID = Categoria');
+			$this->db->join('Marca','Marca.MAID = Marca');
+			$this->db->join('Modelo','Modelo.MOID = Modelo');
+			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);			
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
+			$query = $this->db->get();
+
+			return $query->result();
+		}		
+
 	}
 
 	/**
 	 * COUNT dos dados
 	 */
-	function countBuscaDados($table, $id, $brand, $model, $search)
+	function countBuscaDados($table, $id, $brand, $model, $search, $unSearch)
 	{
 		// count total
 		if($id == 1) 
@@ -233,6 +263,33 @@ class ncm_model extends CI_Model {
 			
 			return $this->db->count_all_results();					
 		}
+		// count por palavra pesquisada  e palavra retirada
+		elseif ($id == 5) 
+		{
+			$this->db->select('COUNT(`IDN`)');
+			$this->db->from($table);
+			$this->db->join('Categoria','Categoria.CID = Categoria');
+			$this->db->join('Marca','Marca.MAID = Marca');
+			$this->db->join('Modelo','Modelo.MOID = Modelo');
+			$this->db->like('DESCRICAO_DETALHADA_PRODUTO', $search);			
+			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);			
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
+			
+			return $this->db->count_all_results();					
+		}
+		// count por palavra retirada
+		elseif ($id == 6) 
+		{
+			$this->db->select('COUNT(`IDN`)');
+			$this->db->from($table);
+			$this->db->join('Categoria','Categoria.CID = Categoria');
+			$this->db->join('Marca','Marca.MAID = Marca');
+			$this->db->join('Modelo','Modelo.MOID = Modelo');
+			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);			
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
+			
+			return $this->db->count_all_results();					
+		}		
 
 	}
 
