@@ -111,26 +111,34 @@ class Pesquisa extends CI_Controller {
 		{
 			case 'Categoria':
 				$categoria = $this->input->post('categoria');
-				$this->ncm_model->update(1, $table, $id, $idn, $categoria);
-
+				if (!empty($categoria))
+				{
+					$this->ncm_model->update(1, $table, $id, $idn, $categoria);	
+				}				
 				break;
 
 			case 'Marca':
 				$marca = $this->input->post('marca');
-				$this->ncm_model->update(2, $table, $id, $idn, $marca);
-
+				if (!empty($marca))
+				{
+					$this->ncm_model->update(2, $table, $id, $idn, $marca);
+				}
 				break;	
 
 			case 'Modelo':
 				$modelo = $this->input->post('modelo');
-				$this->ncm_model->update(1, $table, $id, $idn, $modelo);				
-
+				if (!empty($modelo))
+				{
+					$this->ncm_model->update(1, $table, $id, $idn, $modelo);					
+				}				
 				break;							
 			
 			case 'SubCategoria':
 				$subcategoria = $this->input->post('subcategoria');
-				$this->ncm_model->update(3, $table, $coluna, $idn, $subcategoria);				
-
+				if (!empty($subcategoria))
+				{
+					$this->ncm_model->update(3, $table, $coluna, $idn, $subcategoria);					
+				}			
 				break;	
 
 			default:
