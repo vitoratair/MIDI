@@ -31,17 +31,85 @@ class Pesquisa extends CI_Controller {
 		// Monta o noma da tabela para pesquisa //
 		$table = $ncm . "_" . $year;
 
+		// Busca as informações para os modais //
+		$data['categorias'] = $this->categoria_model->listar();
+		$data['marcas'] 	= $this->marca_model->listarAllMarca();						
+		
+		// verifica os dados atuais da NCM //
+		$marca 		= $this->ncm_model->buscarMarca($table, $id);
+		$categoria 	= $this->categoria_model->getCategoriaNcm($table, $id);
+		$modelo 	= $this->ncm_model->buscarModelo($table, $id);
+		
+		
+		// Verifica se existe marca //
+		if (!empty($marca))
+		{
+			$data['modelos'] 	= $this->modelo_model->buscaModeloByMarca($marca[0]->Marca);	
+		}
+
+		// Verficar se existe subcategoria //
+		if (!empty($categoria))
+		{
+			$data['titulos']	= $this->categoria_model->listarTitulos($categoria[0]->Categoria);			
+		}
+
+		$var 	= array();
+
+		// Loop para verficar as subcategorias do modelo //
+		foreach ($data['titulos'] as $key => $value)
+		{
+			$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasModelo($modelo[0]->Modelo, $value->TColuna);
+			$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+		}
+		
+
+		$data['dados']	 	= $this->ncm_model->listarNcm($table, $id);
+		
 		// Envia os dados para a view //
 		$data['ncm'] 	= $ncm; 
 		$data['year'] 	= $year;
-
 		$data['main_content'] = 'pesquisa/editPesquisa_view';	
-
-		// busca as informações da ncm
-		$data['dados'] = $this->ncm_model->listarNcm($table, $id);
-		
 		$this->parser->parse('template',$data);		
 	}
+
+	/**
+	 * Apresenta a view para ediid, $ncm, $anor a ncm
+	 */
+	public function update($id)
+	{		
+		$ncm 	= $this->input->post('ncm');
+		$year 	= $this->input->post('year');		
+		$idn 	= $this->input->post('idn');
+
+		$table 	=  $ncm . "_" . $year;
+
+		switch ($id)
+		{
+			case 'Categoria':
+				$categoria = $this->input->post('categoria');
+				$this->ncm_model->update(1, $table, $id, $idn, $categoria);
+
+				break;
+
+			case 'Marca':
+				$marca = $this->input->post('marca');
+				$this->ncm_model->update(2, $table, $id, $idn, $marca);
+
+				break;	
+
+			case 'Modelo':
+				$modelo = $this->input->post('modelo');
+				$this->ncm_model->update(1, $table, $id, $idn, $modelo);				
+
+				break;							
+			
+			default:
+				# code...
+				break;
+		}	
+
+		redirect("pesquisa/edit/$idn/$ncm/$year");
+	}	
 
 	/**
 	 * Apresenta a view com todos as opções para o usuário
@@ -255,7 +323,7 @@ class Pesquisa extends CI_Controller {
 
 		// Carrega a view correspondende //
 		$data['main_content'] = 'pesquisa/pesquisa_view';
-		
+
 		// Envia todas as informações para tela //
 		$this->parser->parse('template', $data);
 

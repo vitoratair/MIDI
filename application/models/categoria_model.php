@@ -178,9 +178,41 @@ class Categoria_model extends CI_Model {
 		return $query->result();
 	}	
 
+	/**
+	 * busca itens de um modelo
+	 */
+	function getItensByID($coluna, $id)
+	{
+		$table = "SubCategoria".$coluna."";
+		$this->db->select('SCNome');
+		$this->db->from($table);
+		$this->db->where('SCID', $id);
+		$this->db->limit('1');
+		
+		$query = $this->db->get();
+		$query = $query->result();
 
+		return $query[0]->SCNome;
 
-	
+	}		
+
+	/**
+	 * Lista itens das subcategoria de uma modelo
+	 */
+	function listarSubcategoriasModelo($modelo,$id)
+	{
+		
+		$coluna = "SubCategoria".$id."_SCID";
+
+		$this->db->select($coluna);
+		$this->db->from('Modelo');
+		$this->db->where('MOID',$modelo);
+		$query = $this->db->get();
+
+		$query = $query->result();
+		return $query[0]->$coluna;
+		// return $query->result();
+	}
 
 	/**
 	 * Lista subcategorias
@@ -209,7 +241,6 @@ class Categoria_model extends CI_Model {
 		return $query->result();
 	}	
 
-
 	/**
 	 * Deleta a referencia da categoria das tabelas NCMs
 	 */
@@ -233,7 +264,6 @@ class Categoria_model extends CI_Model {
 	/**
 	 * Deleta a referencia do item da tabela modelo
 	 */
-	
 	function updateItemForModelo($id,$categoria,$table)
 	{
 		$this->db->query("UPDATE `Modelo` SET `$table` = 1 WHERE Categoria_CID  = '$categoria' AND `$table` = $id");
@@ -242,16 +272,12 @@ class Categoria_model extends CI_Model {
 	/**
 	 * Deleta o item
 	 */
-	
 	function deleteItem($id,$table)
 	{
 		$this->db->where('SCID',$id);
 		$this->db->delete($table);
 	}
 	
-
-	
-
 	/**
 	 * Deleta a referencia da categoria das tabelas NCMs
 	 */
@@ -296,9 +322,6 @@ class Categoria_model extends CI_Model {
 		$this->db->query("DELETE FROM SubCategoria8 WHERE Categoria_CID = '$id'");		
 
 	}
-
-
-
 
 	/**
 	 * Deleta a referencia da subcategoria da tabela Titulo
@@ -363,6 +386,20 @@ class Categoria_model extends CI_Model {
 		return $query->result();
 	}
 
+	/**
+	 * Retorna o categoria da idn 
+	 */
+	public function getCategoriaNcm($table, $idn)
+	{
+		
+		$this->db->select('Categoria');
+		$this->db->from($table);
+		$this->db->where('IDN',$idn);
+		$this->db->limit(1);
+		$query = $this->db->get();
+
+		return $query->result();
+	}
 
 	/**
 	 * Retorna todas as NCMs cadastradas no sistema

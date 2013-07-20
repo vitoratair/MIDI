@@ -44,33 +44,27 @@
 				<fieldset>
 					<div class="control-group">
 						<div class="controls">
-
 							<select id="marca" name="marca" class="span2" onchange="this.form.submit()">
 								<option value="">Marca</option>	
 								{marcas}		
 									<option value="{MAID}">{MANome}</option>
-								{/marcas}
-								
+								{/marcas}								
 						    </select>
-
-						    <input type="hidden" name="controle" value="2">
-						
+						    <input type="hidden" name="controle" value="2">						
 				</form>
 
-							<!-- Formulário para combobox sem botão submit -->
-							<?php
-								$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
-								echo form_open('pesquisa/listAll', $atributos); 
-							?>		
-						
+						<!-- Formulário para combobox sem botão submit -->
+						<?php
+							$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
+							echo form_open('pesquisa/listAll', $atributos); 
+						?>		
 
-							<select id="modelo" name="modelo" class="span2" onchange="this.form.submit()">
-								<option value="">Modelo</option>	
-								{modelos}		
-									<option value="{MOID}">{MNome}</option>
-								{/modelos}
-								
-						    </select>
+						<select id="modelo" name="modelo" class="span2" onchange="this.form.submit()">
+							<option value="">Modelo</option>	
+							{modelos}		
+								<option value="{MOID}">{MNome}</option>
+							{/modelos}								
+					    </select>
 					</div>
 				</fieldset>
 				</form>	
@@ -111,7 +105,7 @@
 	<!-- Tabela com a lista de linhas de NCMs -->
 	<table class='table table-bordered table-striped'>
 			
-			<tr class="">				
+			<tr class="success">				
 				<td width="4%"><b>ID</b></td>
 				<td width="8%"><b>NCM</td>
 				<td width=""><b>Descrição</td>
@@ -131,7 +125,7 @@
 				<td>{MANome}</td>
 				<td>{MNome}</td>
 				<td>{QUANTIDADE_COMERCIALIZADA_PRODUTO}</td>				
-				<td><a href="edit/{IDN}/{ncm}/{year}"><i class="icon-edit"></a></i></td>
+				<td><a href="<?php echo base_url();?>index.php/pesquisa/edit/{IDN}/{ncm}/{year}" target="_blank"><i class="icon-edit"></a></i></td>
 			</tr>
 			{/dados}
 	

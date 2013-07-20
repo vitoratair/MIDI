@@ -38,6 +38,32 @@ class ncm_model extends CI_Model {
 		return $this->db->insert('NCM', $data);
 	}
 
+	/**
+	 * Busca de marca de uma NCM
+	 */
+	function buscarMarca($table, $id)
+	{
+		$this->db->select('Marca');
+		$this->db->from($table);
+		$this->db->where('IDN',$id);
+		$query = $this->db->get();
+		
+		return $query->result();	
+	}
+
+	/**
+	 * Busca de modelo de uma NCM
+	 */
+	function buscarModelo($table, $id)
+	{
+		$this->db->select('Modelo');
+		$this->db->from($table);
+		$this->db->where('IDN',$id);
+		$query = $this->db->get();
+		
+		return $query->result();	
+	}	
+
 
 	/**
 	 * Busca uma ncm
@@ -83,6 +109,22 @@ class ncm_model extends CI_Model {
 		$this->db->query("UPDATE NCM SET NNome = '$ncm', NDescricao = '$descricao' WHERE NID  = '$id'");
 	}
 	
+	/**
+	 * Update de item da NCM
+	 */
+	public function update($id, $table, $colun, $idn, $item)
+	{
+		if ($id == 1)
+		{
+			$this->db->query("UPDATE $table SET $colun = $item WHERE IDN  = '$idn'");	
+		}
+		elseif ($id == 2)
+		{
+			$this->db->query("UPDATE $table SET $colun = $item, Modelo = 1 WHERE IDN  = '$idn'");	
+		}
+		
+	}	
+
 	/**
 	 * Lista dados
 	 */
