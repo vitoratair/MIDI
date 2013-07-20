@@ -40,28 +40,28 @@
 	<!-- Tabela com a lista dos categoria do sistema -->
 	<table class='table table-bordered table-striped'>			
 			<tr class="">				
-				<td width="4%"><b>ID</b></td>
-				<td width="30%"><b>Subcategoria</td>
-				<td width=""><b>Item</td>
+				<td width="5%"><b>ID</b></td>
+				<td width="47%"><b>Subcategoria</td>
+				<td width="47%"><b>Item</td>
 			</tr>			
 {titulos}
 			<tr>	
 				<td>{TColuna}</td>
 				<td>{TNome}</td>
-				<?php 
-					if ($checkModelo)
-					{
-				?>	
-						<td>{SubCategoria}</td>						
-				<?php
-					}
-					else
-					{
-				?>
-						<td><a href="#subcategoria{TColuna}" data-toggle="modal">{SubCategoria}</a></td>						
-				<?php		
-					}
-				?>
+<?php 
+				if ($checkModelo)
+				{
+?>	
+					<td>{SubCategoria}</td>						
+<?php
+				}
+				else
+				{
+?>
+					<td><a href="#subcategoria{TColuna}" data-toggle="modal">{SubCategoria}</a></td>						
+<?php		
+				}
+?>
 
 				
 			</tr>
