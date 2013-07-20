@@ -89,14 +89,15 @@ class Modelo_model extends CI_Model {
 	}
 
 	/**
-	 * Lista os modelos da marca
+	 * Lista os modelos da marca e categoria
 	 */
-	function buscaModeloByMarca($id)
+	function buscaModeloByMarca($id, $categoria)
 	{
 
 		$this->db->select('*');
 		$this->db->from('Modelo');
 		$this->db->where('Marca_MAID',$id);
+		$this->db->where('Categoria_CID',$categoria);
 		$query = $this->db->get();
 
 		return $query->result();

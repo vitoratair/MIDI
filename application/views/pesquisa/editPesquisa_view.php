@@ -38,19 +38,17 @@
 	<h3 align="center"><small>Subcategorias da categoria </small><strong>{CNome}</strong></h3><br>
 		
 	<!-- Tabela com a lista dos categoria do sistema -->
-	<table class='table table-bordered table-striped'>
-			
+	<table class='table table-bordered table-striped'>			
 			<tr class="">				
 				<td width="7%"><b>Índice</b></td>
 				<td><b>Subcategoria</td>
 				<td><b>Item</td>
 			</tr>			
-
 {titulos}
 			<tr>	
 				<td>{TColuna}</td>
 				<td>{TNome}</td>
-				<td>{SubCategoria}</td>
+				<td><a href="#categoriaAlterar" data-toggle="modal">{SubCategoria}</a></td>
 			</tr>
 {/titulos}
 	
@@ -58,6 +56,11 @@
 
 
 
+<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++
+		++ Janela Modal para alteração dos dados ++
+	+++++++++++++++++++++++++++++++++++++++++++++++++++
+-->
 
 
 

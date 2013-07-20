@@ -44,7 +44,7 @@ class Pesquisa extends CI_Controller {
 		// Verifica se existe marca //
 		if (!empty($marca))
 		{
-			$data['modelos'] 	= $this->modelo_model->buscaModeloByMarca($marca[0]->Marca);	
+			$data['modelos'] 	= $this->modelo_model->buscaModeloByMarca($marca[0]->Marca, $categoria[0]->Categoria);	
 		}
 
 		// Verficar se existe subcategoria //
