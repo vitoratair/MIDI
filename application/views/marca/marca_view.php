@@ -19,7 +19,7 @@
 
 	<table class="table table-striped">					
 		<div class="page-header">
-			<h2>Marca <small> lista das marcas cadastradas no sistema</small></h2>
+			<h2>Marcas <small> cadastradas no sistema</small></h2>
 		</div>									
 
 	<table class='table table-bordered table-striped' id="idTabela">
@@ -40,21 +40,20 @@
 				<td>{MANome}</td>
 				<td>{MANome1}</td>
 				<td>{MANome2}</td>
-				<td><a href="editCategoria/{CID}" class='icon-search'> <a/></td>
-				<td><a href="../editMarca/{MAID}" class='icon-edit'> <a/></td>
+				<td><a href="#" onclick='EnviaMarca("{MAID}")' class='icon-search'> <a/></td>
+				<td><a href="<?php echo base_url();?>index.php/marca/editMarca/{MAID}" class='icon-edit'> <a/></td>
 				<td><a onclick='Remove("{MAID}")' data-toggle="modal" href="#myModal" class='icon-trash'></a></td>
 			</tr>
+			
 			{/marcas}
-	
 	</table> 
-	
+
 	<!-- 
 		Exibe os links para paginação
 	 -->
 	<div align="center">
     	 {links}
     </div>
-	
 
 <div class="modal hide" id="myModal">
 		<div class="modal-header">
@@ -76,6 +75,22 @@
 
 <script type="text/javascript">
 
+// Formulario para enviar variavel via POST //
+function EnviaMarca(marca){  
+{
+    
+	var url = '<?php echo base_url();?>index.php/marca/modelos';
+	var form = $('<form action="' + url + '" method="post">' +
+	  '<input type="hidden" name="marca" value="' + marca + '" />' +
+	  '<input type="hidden" name="categoria" value="-1" />' +
+	  '</form>');
+	$('body').append(form);
+	$(form).submit();
+
+    // location.href="<?php echo base_url();?>index.php/marca/modelos/"+marca;   
+}
+
+}
 function Remove(id){
 
 	document.getElementById("Excluir");
@@ -84,5 +99,7 @@ function Remove(id){
 }	
 
 </script>
+
+
 
 

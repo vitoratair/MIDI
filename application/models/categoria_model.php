@@ -408,6 +408,21 @@ class Categoria_model extends CI_Model {
 	}
 
 	/**
+	 * Retorna o categoria de um modelo
+	 */
+	public function getCategoriaModelo($id)
+	{		
+		$this->db->select('CNome, CID');
+		$this->db->from('Categoria');
+		$this->db->join('Modelo', 'Categoria_CID = CID');
+		$this->db->where('MOID',$id);
+		$this->db->limit(1);
+		$query = $this->db->get();
+
+		return $query->result();
+	}	
+
+	/**
 	 * Retorna todas as NCMs cadastradas no sistema
 	 */
 	public function getNcmCadastradas()

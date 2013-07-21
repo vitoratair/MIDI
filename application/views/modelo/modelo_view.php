@@ -35,7 +35,6 @@
 			<fieldset>
 
 			<div class="control-group">
-				<label class="control-label" for="">Categoria</label>
 				<div class="controls">
 
 					<select id="categoria" onchange="this.form.submit()" name="categoria" class="input-xlarge">
@@ -76,7 +75,7 @@
 				<td>{CNome}</td>			
 				<td><i class="{CHECK}"></i></td>				
 				<td><a href="<?php echo base_url();?>index.php/modelo/editModelo/{MOID}" class='icon-edit'> <a/></td>
-				<td><a onclick='' data-toggle="modal" href="#myModal" class='icon-trash'></a></td>
+				<td><a onclick='Remove("{MOID}")' data-toggle="modal" href="#myModal" class='icon-trash'></a></td>
 			</tr>
 
 			{/modelos}
@@ -95,7 +94,7 @@
 		</div>
 
 		<div class="modal-body">
-		<p>Deseja realmente excluir a categoria ?</p>
+		<p>Deseja realmente excluir o modelo ?</p>
 		</div>
 
 		 <div class="modal-footer">
@@ -108,10 +107,13 @@
 <!-- FIM -->
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#teste')
-		alert('asd');
-	});
+
+function Remove(id){
+
+	document.getElementById("Excluir");
+	document.getElementById('Excluir').href="<?php echo base_url();?>index.php/modelo/deleteModelo/"+id;
+
+}	
 
 </script>
 

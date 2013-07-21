@@ -11,103 +11,83 @@
 		echo form_open('modelo/setModelo', $atributos); 
 	?>
 
-	<fieldset>
+	<!-- Tabela com a lista de linhas de NCMs -->
+	<table class='table table-condensed table-striped'>
+			
+			<tr class="">				
+				<td width=""><strong>Nome</strong></td>				
+				<td width=""><strong>Sinônimo</strong></td>
+				<td width=""><strong>Sinônimo</strong></td>
+				<td width=""><strong>Sinônimo</strong></td>
+				<td width=""><strong>Sinônimo</strong></td>
+				<td width=""><strong>Marca</strong></td>
+				<td width=""><strong>Categoria</strong></td>
+			</tr>			
+			
+			<tr>					
+				<td>
+					<input type="text" class="span2" id="nomeModelo" placeholder="" name="nomeModelo">
+				</td>
+				<td>
+					<input type="text" class="span2" id="nomeModelo1" name="nomeModelo1">
+				</td>
+				<td>
+					<input type="text" class="span2" id="nomeModelo2" name="nomeModelo2">
+				</td>
+				<td>
+					<input type="text" class="span2" id="nomeModelo3" name="nomeModelo3">
+				</td>
+				<td>
+					<input type="text" class="span2" id="nomeModelo4" name="nomeModelo4">
+				</td>
+				<td>
+					<select id="marca"  name="marca" class="span2">					
+						<option value=""> - </option>
+						{marcas}	
+							<option value="{MAID}">{MANome}</option>
+						{/marcas}
+						
+				    </select>
+				</td>																				
+				<td>
+					<select id="categoria"  name="categoria" class="span2">					
+							<option value=""> - </option>					
 
-		<div class="control-group">
-			<label class="control-label" for="">Nome</label>
-			<div class="controls">
-				<input type="text" class="input-xlarge" id="nomeModelo" placeholder="Nome" name="nomeModelo" rel="popover" 
-				data-content="Nome do modelo" data-original-title="Modelo" autocomplete="off">
-			</div>
-		</div>	
-
-		<div class="control-group">
-			<label class="control-label" for="">Sinônimo</label>
-			<div class="controls">
-				<input type="text" class="input-xlarge" id="nomeModelo1" placeholder="Sinônimo" name="nomeModelo1" rel="popover" 
-				data-content="Sinônimo do modelo" data-original-title="Sinônimo" autocomplete="off">
-			</div>
-		</div>	
-
-		<div class="control-group">
-			<label class="control-label" for="">Sinônimo</label>
-			<div class="controls">
-				<input type="text" class="input-xlarge" id="nomeModelo2" placeholder="Sinônimo" name="nomeModelo2" rel="popover" 
-				data-content="Sinônimo do modelo" data-original-title="Sinônimo" autocomplete="off">
-			</div>
-		</div>
-
-		<div class="control-group">
-			<label class="control-label" for="">Sinônimo</label>
-			<div class="controls">
-				<input type="text" class="input-xlarge" id="nomeModelo3" placeholder="Sinônimo" name="nomeModelo3" rel="popover" 
-				data-content="Sinônimo do modelo" data-original-title="Sinônimo" autocomplete="off">
-			</div>
-		</div>
-
-		<div class="control-group">
-			<label class="control-label" for="">Sinônimo</label>
-			<div class="controls">
-				<input type="text" class="input-xlarge" id="nomeModelo4" placeholder="Sinônimo" name="nomeModelo4" rel="popover" 
-				data-content="Sinônimo do modelo" data-original-title="Sinônimo" autocomplete="off">
-			</div>
-		</div>				
-
-		<div class="control-group" >
-			<label class="control-label" for="" >Marca</label>
-			<div class="controls" valing="top">
-				
-				<select id="marca" name="marca" class="input-xlarge">
-						<!-- Valor sem marca cadastrada para tratamento de erro -->
-						<option value=""> Selecione a marca</option>
-					
-					{marcas}		
-						<option value="{MAID}"> {MANome} </option>
-					{/marcas}
-					
-			    </select>
-			</div>
-		</div>
-
-		<div class="control-group" >
-			<label class="control-label" for="" >Categoria</label>
-			<div class="controls" valing="top">
-				
-				<select id="marca" onchange="alert('ad');" name="marca" class="input-xlarge">
-						<!-- Valor sem marca cadastrada para tratamento de erro -->
-						<option value=""> Selecione a categoria</option>
-					
-					{categorias}		
-						<option value="{CID}"> {CNome} </option>
-					{/categorias}
-					
-			    </select>
-			</div>
-		</div>	
-
+						{categorias}	
+							<option value="{CID}">{CNome}</option>
+						{/categorias}
+						
+				    </select>			
+			    </td>
+			</tr>		
+	</table>
 		<div class="form-actions">
-			<button type="submit" class="btn btn-success">Salvar</button>
-			<button class="btn" type="reset">Limpar</button>
+			<input type="hidden" value="{modeloID}" name="id">
+			<button type="submit" class="btn btn-success" id="salvar">Salvar</button>
+			<button class="btn" type="reset">Voltar</button>
 		</div>
 
 	</fieldset>	
+</form>
 
 
-<!-- Java Script com modal para alteração da marca -->
+<script type="text/javascript">
+	
+	$("#salvar").click( function() {
+		
+		alert('asd');
+	});
 
-<!-- Modal MARCA ALTERAR-->
+</script>
 
-<div id="modalMarca" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Modal mensagem salvar -->
+
+<div id="salvar" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
 	<div class="modal-header">
     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
   	</div>
 
-	{marcas}
-	
-			<input type="radio" name="marca" value="">{MANome}<br>
-	
-  	{/marcas}
   
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
