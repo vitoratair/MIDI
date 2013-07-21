@@ -1,18 +1,15 @@
 <!-- Estrutura -->
 <div class="container">
 
+	<div class="">
+		<h2>Categoria <small> lista de categorias cadastradas no sistema</small></h2>
+	</div>
+
+	<div class="" align="right">
+		<a href="addCategoria" class="btn btn-success"><i class="icon-plus icon-white"></i> Nova Categoria</a>		
+	</div>					
+	<hr>
 	<br>
-
-	<table class="table table-striped">					
-		<div class="page-header">
-			<h2>Categoria <small> lista de categorias cadastradas no sistema</small></h2>
-		</div>						
-
-		<p align=right>
-			<a href="addCategoria" class="btn btn-large btn-success"><i class="icon-plus icon-white"></i> Nova Categoria</a>	  
-		</p>
-					
-	
 	<!-- Tabela com a lista dos categoria do sistema -->
 	<table class='table table-bordered table-striped'>
 			
