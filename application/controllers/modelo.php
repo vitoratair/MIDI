@@ -165,7 +165,6 @@ class Modelo extends CI_Controller {
 
 		}	
 
-
 		// // Busca as categorias //
 		$data['categorias'] = $this->categoria_model->listar();			
 
@@ -183,18 +182,106 @@ class Modelo extends CI_Controller {
 		// Carrega a view correspondende //
 		$data['main_content'] = 'modelo/modeloEdit_view';
 
-		// Busca a lista de marcas cadastradas no sistema //
-		$data['marcas'] = $this->marca_model->listarAllMarca();
+		// Busca informações do modelo //
+		$data['marca'] 			= $this->modelo_model->bucaMarcaByModelo($id);
+		$data['categoria']		= $this->categoria_model->getCategoriaModelo($id);
+		$data['subcategoria1']	= $this->categoria_model->listaItens('SubCategoria1', $data['categoria'][0]->CID);
+		$data['subcategoria2']	= $this->categoria_model->listaItens('SubCategoria2', $data['categoria'][0]->CID);
+		$data['subcategoria3']	= $this->categoria_model->listaItens('SubCategoria3', $data['categoria'][0]->CID);		
+		$data['subcategoria4']	= $this->categoria_model->listaItens('SubCategoria4', $data['categoria'][0]->CID);
+		$data['subcategoria5']	= $this->categoria_model->listaItens('SubCategoria5', $data['categoria'][0]->CID);
+		$data['subcategoria6']	= $this->categoria_model->listaItens('SubCategoria6', $data['categoria'][0]->CID);
+		$data['subcategoria7']	= $this->categoria_model->listaItens('SubCategoria7', $data['categoria'][0]->CID);
+		$data['subcategoria8']	= $this->categoria_model->listaItens('SubCategoria8', $data['categoria'][0]->CID);		
 
-		// Lista todos os modelos //
-		$data['modelos'] = $this->modelo_model->bucaModelo($id);			
+		if (!empty($data['categoria']))
+		{
+			$data['titulos']	= $this->categoria_model->listarTitulos($data['categoria'][0]->CID);			
+		}
 
-		// // Busca as categorias //
+		// Loop para verficar as subcategorias do modelo //
+		foreach ($data['titulos'] as $key => $value)
+		{
+			$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasModelo($id, $value->TColuna);
+			$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+		}		
+
+		// Lista de informações para view //
+		$data['marcas'] 	= $this->marca_model->listarAllMarca();
+		$data['modelos'] 	= $this->modelo_model->bucaModelo($id);
 		$data['categorias'] = $this->categoria_model->listar();
 
 		// Envia todas as informações para tela //
 		$this->parser->parse('template', $data);
 
+	}
+
+	/**
+	 * Atualiza a modelo
+	 */
+	public function updateModelo()
+	{
+		$id 			= $this->input->post('id');
+		$data['MOID'] 	= $id;
+
+			
+		if ($this->input->post('controle') != 1)
+		{
+			$data['MNome'] 				= $this->input->post('nomeModelo');
+			$data['MNome1'] 			= $this->input->post('nomeModelo1');
+			$data['MNome2'] 			= $this->input->post('nomeModelo2');
+			$data['MNome3'] 			= $this->input->post('nomeModelo3');
+			$data['MNome4'] 			= $this->input->post('nomeModelo4');			
+		}
+
+		
+		if ($this->input->post('subcategoria1'))
+		{
+			$data['SubCategoria1_SCID'] = $this->input->post('subcategoria1');
+		}
+		elseif ($this->input->post('subcategoria2'))
+		{
+			$data['SubCategoria2_SCID'] = $this->input->post('subcategoria2');
+		}
+		elseif ($this->input->post('subcategoria3'))
+		{
+			$data['SubCategoria3_SCID'] = $this->input->post('subcategoria3');
+		}
+		elseif ($this->input->post('subcategoria4'))
+		{
+			$data['SubCategoria4_SCID'] = $this->input->post('subcategoria4');
+		}
+		elseif ($this->input->post('subcategoria5'))
+		{
+			$data['SubCategoria5_SCID'] = $this->input->post('subcategoria5');
+		}								
+		elseif ($this->input->post('subcategoria6'))
+		{
+			$data['SubCategoria6_SCID'] = $this->input->post('subcategoria6');
+		}						
+		elseif ($this->input->post('subcategoria7'))
+		{
+			$data['SubCategoria7_SCID'] = $this->input->post('subcategoria7');
+		}						
+		elseif ($this->input->post('subcategoria8'))
+		{
+			$data['SubCategoria8_SCID'] = $this->input->post('subcategoria8');
+		}										
+
+
+
+		if ($this->input->post('marca') != 0)
+		{
+			$data['Marca_MAID'] = $this->input->post('marca');
+		}
+		if ($this->input->post('categoria') != 0)
+		{
+			$data['Categoria_CID'] 	= $this->input->post('categoria');	
+		}
+
+		$this->modelo_model->updateModelo($data);
+
+		redirect("modelo/editModelo/$id");				
 	}
 
 	/**
@@ -204,13 +291,28 @@ class Modelo extends CI_Controller {
 	{
 
 		// Carrega a view correspondende //
-		$data['main_content'] = 'modelo/modeloAdd_view';
+		$data['main_content'] 	= 'modelo/modeloAdd_view';
 
-		// // Busca as categorias //
+		// Recebendo ID do modelo //
+		$data['modeloID']		= $this->modelo_model->getID();
+		$data['modeloID']		= $data['modeloID'][0]->Auto_increment;
+		
+		// // Busca as informações //
 		$data['categorias'] = $this->categoria_model->listar();
+		$data['marcas'] 	= $this->marca_model->listarAllMarca();
+		$data['categoria']	= $this->categoria_model->getCategoriaModelo($data['modeloID']);
 
-		// // Busca as marcas //
-		$data['marcas'] = $this->marca_model->listarAllMarca();
+		if (!empty($data['categoria']))
+		{
+			$data['titulos']	= $this->categoria_model->listarTitulos($data['categoria'][0]->CID);			
+
+			// Loop para verficar as subcategorias do modelo //
+			foreach ($data['titulos'] as $key => $value)
+			{
+				$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasModelo($data['modeloID'], $value->TColuna);
+				$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+			}
+		}
 
 		// Envia todas as informações para tela //
 		$this->parser->parse('template', $data);
@@ -223,20 +325,44 @@ class Modelo extends CI_Controller {
 	public function setModelo()
 	{
 		// Recebe os dados do FORM //			
-		$data['MNome']		= $this->input->post('nomeModelo');
-		$data['MNome1']		= $this->input->post('nomeModelo1');
-		$data['MNome2']		= $this->input->post('nomeModelo2');
-		$data['MNome3']		= $this->input->post('nomeModelo3');
-		$data['MNome4']		= $this->input->post('nomeModelo4');		
-		$data['Marca_MAID']	= $this->input->post('marca');		
+		$id						= $this->input->post('id');
+		$data['MNome']			= $this->input->post('nomeModelo');
+		$data['MNome1']			= $this->input->post('nomeModelo1');
+		$data['MNome2']			= $this->input->post('nomeModelo2');
+		$data['MNome3']			= $this->input->post('nomeModelo3');
+		$data['MNome4']			= $this->input->post('nomeModelo4');		
+		$data['Marca_MAID']		= $this->input->post('marca');
+		$data['Categoria_CID']	= $this->input->post('categoria');		
 
 		// Chama o model responsável pela inserção no banco //
 		$this->modelo_model->cadastrar($data);
 
 		// Redereciona a página //
-		redirect('modelo/listAll');
+		redirect("modelo/editModelo/$id");
 
 	}
+
+	/**
+	 * Deletar um modelo
+	 */
+	public function deleteModelo($id)
+	{
+		// pegar todas as tabelas de NCMs do sistema
+		$data = $this->categoria_model->getAllNcm();
+
+		// Loop para apagar a referencia da categoria em todas as NCMs
+		foreach ($data as $key => $value)
+		{
+			 $this->modelo_model->updateNcm($value->Table,$id);
+		}
+
+		// Deletar o modelo //
+		$this->modelo_model->delete($id);
+
+		// Redereciona a página //
+		redirect("modelo/listAll");
+
+	}	
 
 
 

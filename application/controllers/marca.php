@@ -24,6 +24,111 @@ class Marca extends CI_Controller {
 		}		
 	}
 
+	/**
+	 * Lista os modelos da marca
+	 */
+	public function modelos()
+	{
+		$marca 		= $this->input->post('marca');
+		$categoria 	= $this->input->post('categoria');
+
+		// Busca dados para pesquisa //
+		$data['categorias'] = $this->categoria_model->listar();		
+
+		if (empty($marca))
+		{
+			$marca = $this->session->userdata('marcaid');
+		}
+		else
+		{			
+			$data['marcaid'] = $marca;
+			$this->session->set_userdata($data);
+		}
+		if (empty($categoria) && $categoria != -1)
+		{
+			if ($this->session->userdata('categoriaID'))
+			{
+				$categoria = $this->session->userdata('categoriaID');	
+			}			
+		}
+		else
+		{			
+			$data['categoriaID'] = $categoria;
+			$this->session->set_userdata($data);
+		}		
+
+		if (!empty($categoria) && ($categoria != -1))
+		{
+			// Carrega a view correspondende //
+	        $config["base_url"] 	= base_url() . "index.php/marca/modelos";
+	        $config["total_rows"] 	= $this->modelo_model->countModeloByMarcaCategoria($marca,$categoria);
+		    $config["per_page"] 	= 20;
+
+	        $this->pagination->initialize($config);
+	        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+	        
+	        $data["modelos"] = $this->modelo_model->listarModeloByMarcaCategoria($config["per_page"], $page, $marca, $categoria);
+	        $data["links"] = $this->pagination->create_links();
+
+			// pegar todas as tabelas de NCMs do sistema
+			$ncms = $this->categoria_model->getAllNcm();
+
+
+		}
+		else
+		{
+			// Carrega a view correspondende //
+	        $config["base_url"] 	= base_url() . "index.php/marca/modelos";
+	        $config["total_rows"] 	= $this->modelo_model->countModeloByMarca($marca);
+		    $config["per_page"] 	= 20;
+
+	        $this->pagination->initialize($config);
+	        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+	        
+	        $data["modelos"] = $this->modelo_model->listarModeloByMarca($config["per_page"], $page, $marca);
+	        $data["links"] = $this->pagination->create_links();
+
+			// pegar todas as tabelas de NCMs do sistema
+			$ncms = $this->categoria_model->getAllNcm();			
+		}
+		
+		// Verfica se o modelo encontra-se em alguma NCM //
+		foreach ($data['modelos'] as $key1 => $value1)
+		{
+			
+			$check = FALSE;
+
+			// Loop para percorrer as NCMs
+			foreach ($ncms as $key => $value)
+			{
+				$countModelos = $this->modelo_model->verificarCadastro($value->Table,$value1->MOID);
+				$countModelos = $countModelos[0]->IDN;
+
+				if ($countModelos != 0)
+				{
+					$check = TRUE;
+					break;
+				}				
+			}			
+
+			if ($check == TRUE)
+			{
+				$value1->CHECK = 'icon-ok';
+			}
+			else
+			{
+				$value1->CHECK = 'icon-remove';	
+			}
+		}
+
+
+
+		// Envia todas as informações para tela //
+		$data['main_content'] 	= 'marca/modelo_view';
+		$data['marca']			= $this->marca_model->buscaMarca($marca);
+		$this->parser->parse('template', $data);
+	}	
+
 	
 	/**
 	 * Apresenta a view com todos as marcas cadastrados no sistema 

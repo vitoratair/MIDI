@@ -55,6 +55,41 @@ class Modelo_model extends CI_Model {
 	}
 
 	/**
+	 * Lista de modelos por marca
+	 */
+	function listarModeloByMarca($limit,$start, $marca)
+	{
+		$this->db->limit($limit, $start);
+		$this->db->select('*');
+		$this->db->where('Marca_MAID', $marca);
+		$this->db->from('Modelo');
+		$this->db->join('Marca' , 'MAID = Marca_MAID');
+		$this->db->join('Categoria' , 'CID = Categoria_CID');
+
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
+	/**
+	 * Lista de modelos por marca e categoria
+	 */
+	function listarModeloByMarcaCategoria($limit,$start, $marca, $categoria)
+	{
+		$this->db->limit($limit, $start);
+		$this->db->select('*');
+		$this->db->where('Marca_MAID', $marca);
+		$this->db->where('Categoria_CID', $categoria);
+		$this->db->from('Modelo');
+		$this->db->join('Marca' , 'MAID = Marca_MAID');
+		$this->db->join('Categoria' , 'CID = Categoria_CID');
+
+		$query = $this->db->get();
+
+		return $query->result();
+	}	
+
+	/**
 	 * Lista de modelos pesquisa
 	 */
 	function listarModeloPesquisa($search)
@@ -120,6 +155,32 @@ class Modelo_model extends CI_Model {
 		return $this->db->count_all_results();
 	}	
 
+	/**
+	 * count de modelos por marca
+	 */
+	function countModeloByMarca($id)
+	{
+		$this->db->from('Modelo');
+		$this->db->where('Marca_MAID',$id);
+		$this->db->join('Marca' , 'MAID = Marca_MAID');
+		$this->db->join('Categoria' , 'CID = Categoria_CID');
+
+		return $this->db->count_all_results();
+	}
+
+	/**
+	 * count de modelos por marca e categoria
+	 */
+	function countModeloByMarcaCategoria($marca, $categoria)
+	{
+		$this->db->from('Modelo');
+		$this->db->where('Marca_MAID',$marca);
+		$this->db->where('Categoria_CID',$categoria);
+		$this->db->join('Marca' , 'MAID = Marca_MAID');
+		$this->db->join('Categoria' , 'CID = Categoria_CID');
+
+		return $this->db->count_all_results();
+	}	
 
 	/**
 	 * Verficar se um modelo foi encontrado no sistema ou não
@@ -163,6 +224,60 @@ class Modelo_model extends CI_Model {
 		return $query->result();		
 
 	}
+
+	/**
+	 * Busca marca do modelo
+	 */
+	function bucaMarcaByModelo($id)
+	{
+
+		$this->db->select('MANome');
+		$this->db->FROM('Marca');
+		$this->db->join('Modelo','MAID = Marca_MAID');
+		$this->db->where('MOID',$id);
+
+		$query = $this->db->get();
+
+		return $query->result();		
+
+	}	
+
+	/**
+	 * Busca o próximo ID
+	 */
+	function getId()
+	{		
+		$query = $this->db->query("SHOW TABLE STATUS LIKE 'Modelo'");
+		
+		return $query->result();	
+	}	
+
+	/**
+	  * update de um modelo
+	  */ 
+	function updateModelo($data) 
+	{				
+		$id = $data['MOID'];
+		$this->db->where('MOID', $id);
+		$this->db->update('Modelo', $data);
+	}
+
+	/**
+	 * Deleta o modelo
+	 */
+	function delete($id)
+	{
+		$this->db->where('MOID',$id);
+		$this->db->delete('Modelo');
+	}	
+
+	/**
+	  * update da NCM com modelo = 1
+	  */ 
+	function updateNcm($table, $id) 
+	{				
+		$this->db->query("UPDATE $table SET Modelo = 1 WHERE Modelo  = '$id'");
+	}	
 
 	/**
 	  * Insere modelo 

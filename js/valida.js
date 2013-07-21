@@ -125,6 +125,12 @@ $(document).ready(function(){
 			{		
 				required: true
 			},
+			
+			/* Valida categoria no combobox */
+			categoria:
+			{		
+				required: true
+			},			
 		
 		},
 		
@@ -211,7 +217,11 @@ $(document).ready(function(){
 			
 			marca:{
 				required: "Selecione a marca",
-			},	
+			},
+
+			categoria:{
+				required: "Selecione a categoria",
+			},				
 
 		},
 
