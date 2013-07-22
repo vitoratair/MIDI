@@ -124,6 +124,21 @@ class Modelo_model extends CI_Model {
 	}
 
 	/**
+	 * Lista de modelos na categoria selecionada
+	 */
+	function listarAllModeloByCategoria($id)
+	{
+
+		$this->db->select('DISTINCT(`MOID`)');
+		$this->db->from('Modelo');
+		$this->db->where('Categoria_CID',$id);
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
+
+	/**
 	 * Lista os modelos da marca e categoria
 	 */
 	function buscaModeloByMarca($id, $categoria)

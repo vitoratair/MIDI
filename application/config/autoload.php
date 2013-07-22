@@ -115,7 +115,8 @@ $autoload['model'] = array(
 							'titulo_model',
 							'marca_model',
 							'usuario_model',
-							'modelo_model'
+							'modelo_model',
+							'analise_model'
 
 							);
 
