@@ -3,8 +3,9 @@
 <!-- Footer -->
    
 <div id="footer">
-	<br>
-    <p class="muted credit" align="center">Developed by
+	<br><br>
+    <p class="muted credit" align="center">MIDI - Monitoramento Intelbras de Dados de Importações<br>
+    	Developed by
     	<a href="http://www.linkedin.com/pub/vitor-atair/49/606/572">Vitor Atair</a>.
     </p>
 </div>  
