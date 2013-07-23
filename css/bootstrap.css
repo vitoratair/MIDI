@@ -1520,13 +1520,13 @@ table {
 
 .table {
   width: 100%;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .table th,
 .table td {
   padding: 8px;
-  line-height: 18px;
+  line-height: 20px;
   text-align: left;
   vertical-align: top;
   border-top: 1px solid #dddddd;
@@ -1561,7 +1561,7 @@ table {
 .table-bordered {
   border: 1px solid #dddddd;
   border-collapse: separate;
-  *border-collapse: collapsed;
+  *border-collapse: collapse;
   border-left: 0;
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
@@ -1600,7 +1600,8 @@ table {
 }
 
 .table-bordered thead:last-child tr:last-child th:first-child,
-.table-bordered tbody:last-child tr:last-child td:first-child {
+.table-bordered tbody:last-child tr:last-child td:first-child,
+.table-bordered tfoot:last-child tr:last-child td:first-child {
   -webkit-border-radius: 0 0 0 4px;
      -moz-border-radius: 0 0 0 4px;
           border-radius: 0 0 0 4px;
@@ -1610,10 +1611,29 @@ table {
 }
 
 .table-bordered thead:last-child tr:last-child th:last-child,
-.table-bordered tbody:last-child tr:last-child td:last-child {
+.table-bordered tbody:last-child tr:last-child td:last-child,
+.table-bordered tfoot:last-child tr:last-child td:last-child {
   -webkit-border-bottom-right-radius: 4px;
           border-bottom-right-radius: 4px;
   -moz-border-radius-bottomright: 4px;
+}
+
+.table-bordered caption + thead tr:first-child th:first-child,
+.table-bordered caption + tbody tr:first-child td:first-child,
+.table-bordered colgroup + thead tr:first-child th:first-child,
+.table-bordered colgroup + tbody tr:first-child td:first-child {
+  -webkit-border-top-left-radius: 4px;
+          border-top-left-radius: 4px;
+  -moz-border-radius-topleft: 4px;
+}
+
+.table-bordered caption + thead tr:first-child th:last-child,
+.table-bordered caption + tbody tr:first-child td:last-child,
+.table-bordered colgroup + thead tr:first-child th:last-child,
+.table-bordered colgroup + tbody tr:first-child td:last-child {
+  -webkit-border-top-right-radius: 4px;
+          border-top-right-radius: 4px;
+  -moz-border-right-topleft: 4px;
 }
 
 .table-striped tbody tr:nth-child(odd) td,
@@ -1621,10 +1641,11 @@ table {
   background-color: #f9f9f9;
 }
 
-.table tbody tr:hover td,
-.table tbody tr:hover th {
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
   background-color: #f5f5f5;
 }
+
 
 table .span1 {
   float: none;
@@ -1770,11 +1791,28 @@ table .span24 {
   margin-left: 0;
 }
 
+.table tbody tr.warning td {
+  background-color: #fcf8e3;
+}
+
+.table tbody tr.success td {
+  background-color: #dff0d8;
+}
+
+.table tbody tr.error td {
+  background-color: #f2dede;
+}
+
+.table tbody tr.info td {
+  background-color: #d9edf7;
+}
+
 [class^="icon-"],
 [class*=" icon-"] {
   display: inline-block;
   width: 14px;
   height: 14px;
+  margin-top: 1px;
   *margin-right: .3em;
   line-height: 14px;
   vertical-align: text-top;
@@ -1783,11 +1821,17 @@ table .span24 {
   background-repeat: no-repeat;
 }
 
-[class^="icon-"]:last-child,
-[class*=" icon-"]:last-child {
-  *margin-left: 0;
-}
+/* White icons with optional class, or on hover/active states of certain elements */
 
+.icon-white,
+.nav > .active > a > [class^="icon-"],
+.nav > .active > a > [class*=" icon-"],
+.dropdown-menu > li > a:hover > [class^="icon-"],
+.dropdown-menu > li > a:hover > [class*=" icon-"],
+.dropdown-menu > .active > a > [class^="icon-"],
+.dropdown-menu > .active > a > [class*=" icon-"] {
+  background-image: url("../img/glyphicons-halflings-white.png");
+}
 .icon-white {
   background-image: url("../img/glyphicons-halflings-white.png");
 }

@@ -126,12 +126,21 @@ class Modelo_model extends CI_Model {
 	/**
 	 * Lista de modelos na categoria selecionada
 	 */
-	function listarAllModeloByCategoria($id)
+	function listarAllModeloByCategoria($categoria, $subcategoria)
 	{
-
 		$this->db->select('DISTINCT(`MOID`)');
 		$this->db->from('Modelo');
-		$this->db->where('Categoria_CID',$id);
+		$this->db->where('Categoria_CID',$categoria);
+		
+		foreach ($subcategoria as $key => $value)
+		{
+			$coluna = "SubCategoria". ($key + 1) ."_SCID";
+			if (!empty($value))
+			{
+				$this->db->where($coluna,$value);
+			}
+		}
+
 		$query = $this->db->get();
 
 		return $query->result();
