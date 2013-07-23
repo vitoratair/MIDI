@@ -18,6 +18,7 @@ class ncm_model extends CI_Model {
 	 */
 	function validar()
 	{
+		
 		$this->db->where('usuarioLogin', $this->input->post('login'));
 		$this->db->where('usuarioPassword',$this->input->post('password'));
 		$query = $this->db->get('Usuario');
@@ -28,7 +29,6 @@ class ncm_model extends CI_Model {
 		}
 
 	}
-
 
 	/**
 	  * Insere categoria 

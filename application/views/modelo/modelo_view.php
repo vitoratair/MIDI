@@ -52,7 +52,7 @@
 		</fieldset>
 	</form>
 
-	<table class='table table-bordered table-striped' id="idTabela">
+	<table class='table table-bordered table-hover table-striped' id="idTabela">
 			
 			<tr class="">				
 				<td width="5%"><b>ID</b></td>

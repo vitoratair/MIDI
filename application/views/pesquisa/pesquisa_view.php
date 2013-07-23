@@ -103,9 +103,9 @@
 	<br>
 		
 	<!-- Tabela com a lista de linhas de NCMs -->
-	<table class='table table-bordered table-striped'>
+	<table class='table table-bordered table-striped table-condensed'>
 			
-			<tr class="success">				
+			<tr class="">				
 				<td width="4%"><b>ID</b></td>
 				<td width="8%"><b>NCM</td>
 				<td width=""><b>Descrição</td>
