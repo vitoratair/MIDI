@@ -366,6 +366,37 @@ class ncm_model extends CI_Model {
 		$this->db->join('NCM','NCM_NID = NID');
 		$query = $this->db->get();
 		return $query->result();
+	}
+
+	/**
+	 * Retorna todas as marcas com um array de modelos
+	 */
+	public function getDadosAnosByMarca($table, $modelos)
+	{
+		$this->db->select('DISTINCT(`Marca`)');
+		$this->db->from($table);
+		$this->db->where_in('Modelo', $modelos);
+		$query = $this->db->get();
+		
+		return $query->result();
 	}	
+
+	/**
+	 * Retorna a lista de importações
+	 */
+	public function getDadosMarcaDetalhe($table, $modelos, $marca)
+	{
+		$this->db->select('DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome');
+		$this->db->from($table);
+		$this->db->join('Marca', 'MAID = Marca');
+		$this->db->join('Modelo', 'MOID = Modelo');
+		$this->db->where('Marca', $marca);
+		$this->db->where_in('Modelo', $modelos);
+		$query = $this->db->get();
+		
+		return $query->result();
+	}		
+
+
 
 }
