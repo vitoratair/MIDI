@@ -180,10 +180,6 @@ class Analise extends CI_Controller {
 		$data['ncm']			= $this->checkNcmCategoria($categoria);		
 		$data['titulos']		= $this->categoria_model->listarTitulos($categoria);
 
-        
-        $this->pagination->initialize($config);
-        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
 		if (!empty($data['ncm']))
 		{
 			$i = 0;
@@ -213,15 +209,142 @@ class Analise extends CI_Controller {
 		$this->parser->parse('template', $data);		
 	}
 
+	/**
+	 * Evolução de marcas
+	 */		
+	public function analiseMarcaEvolucao()
+	{
+		
+		// Recebendo dados via POST //
+		$marca 	= $this->input->post('marca');
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc 		= $this->input->post('subcategorias');		
+		$sc 		= explode(",", $sc);
 
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listarAno();
+		$data['ncm']			= $this->checkNcmCategoria($categoria);		
+		$data['titulos']		= $this->categoria_model->listarTitulos($categoria);
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+
+			// Recebe as opções de detalhes de NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{
+				$aux[$key]	= $this->getDadosMarcaDetalhe($table, $categoria, $sc, $marca);
+			}
+			
+			$aux 	= $this->mergeTabela($aux);
+			$aux	= $this->mergeMeses($aux);	
+
+		}
+		
+
+		foreach ($aux as $key => $value)
+		{
+			$unidades 	= $unidades . ", " . $value['unidades'];
+			$fob 		= $fob . ", " . $value['fob'];
+		}
+
+		$data['unidades'] 	= substr($unidades, 1);
+		$data['fob'] 		= substr($fob, 1);
+
+		$data['main_content'] 	= 'analise/analiseMarcaEvolucao_view';
+		$this->parser->parse('template', $data);        
+	
+	}	
+
+	/**
+	 * Merge das meses iguais
+	 */	
+	function mergeMeses($result)
+	{
+		for ($i=0; $i < 12 ; $i++)
+		{ 
+			$array[$i]['mes'] 		= $i + 1;
+			$array[$i]['unidades'] 	= 0;
+			$array[$i]['fob'] 		= 0;
+		}
+
+		foreach ($result as $key => $value)
+		{
+			switch ($value['mes'])
+			{
+				case '1':
+					$array[0]['unidades'] 	+= $value['unidades'];
+					$array[0]['fob'] 		+= $value['fob'];
+					break;			
+				case '2':
+					$array[1]['unidades'] 	+= $value['unidades'];
+					$array[1]['fob'] 		+= $value['fob'];
+					break;
+				case '3':
+					$array[2]['unidades'] 	+= $value['unidades'];
+					$array[2]['fob'] 		+= $value['fob'];
+					break;					
+				case '4':
+					$array[3]['unidades'] 	+= $value['unidades'];
+					$array[3]['fob'] 		+= $value['fob'];
+					break;	
+				case '5':
+					$array[4]['unidades'] 	+= $value['unidades'];
+					$array[4]['fob'] 		+= $value['fob'];
+					break;	
+				case '6':
+					$array[5]['unidades'] 	+= $value['unidades'];
+					$array[5]['fob'] 		+= $value['fob'];
+					break;	
+				case '7':
+					$array[6]['unidades'] 	+= $value['unidades'];
+					$array[6]['fob'] 		+= $value['fob'];
+					break;					
+				case '8':
+					$array[7]['unidades'] 	+= $value['unidades'];
+					$array[7]['fob'] 		+= $value['fob'];
+					break;	
+				case '9':
+					$array[8]['unidades'] 	+= $value['unidades'];
+					$array[8]['fob'] 		+= $value['fob'];
+					break;	
+				case '10':
+					$array[9]['unidades'] 	+= $value['unidades'];
+					$array[9]['fob'] 		+= $value['fob'];
+					break;
+				case '11':
+					$array[10]['unidades'] 	+= $value['unidades'];
+					$array[10]['fob'] 		+= $value['fob'];
+					break;
+				case '12':
+					$array[11]['unidades'] 	+= $value['unidades'];
+					$array[11]['fob'] 		+= $value['fob'];
+					break;
+				default:
+					# code...
+					break;
+			}
+		}
+		
+		return $array;		
+	}
 	
 	/**
-	 * Merge das tabelas com anos iguais
+	 * Merge de todas as NCMs em um único array
 	 */	
 	function mergeTabela($dados)
 	{
 		$result = array();
-
 
 		for ($i=0; $i < sizeof($dados); $i++)
 		{ 
@@ -645,6 +768,7 @@ class Analise extends CI_Controller {
 			$data[$key]['unidades'] 	= $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;
 			$data[$key]['marca'] 		= $value->MANome;
 			$data[$key]['modelo'] 		= $value->MNome;
+			$data[$key]['mes'] 			= $value->MES;
 		}
 
 		return $data;
