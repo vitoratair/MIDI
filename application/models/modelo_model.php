@@ -135,7 +135,7 @@ class Modelo_model extends CI_Model {
 		foreach ($subcategoria as $key => $value)
 		{
 			$coluna = "SubCategoria". ($key + 1) ."_SCID";
-			if (!empty($value))
+			if (!empty($value) && ($value != 'false'))
 			{
 				$this->db->where($coluna,$value);
 			}

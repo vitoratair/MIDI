@@ -31,7 +31,4 @@
 
 </table>
 
-
-<p>
-    <legend>Escolha uma categoria</legend>
-</p>
+<br>

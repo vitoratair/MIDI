@@ -88,7 +88,7 @@
                         <td>{ano}</td>
                         <td>{unidades}</td>
                         <td>{volume}</td>
-                        <td><a href="<?php echo base_url();?>index.php/analise/analiseAno" class='icon-search'> <a/></td>
+                        <td><a onclick="enviar({categoriaID}, {ano});" href="#" class='icon-search'> <a/></td>
                     </tr>
 
                     {/dados}
@@ -103,10 +103,21 @@
     </tr>
 </table>
 
-
 <br><br><br>
 
+<script type="text/javascript">
 
+function enviar(categoria, ano)
+{    
+    document.write('<form action="analiseAno" name="Myform" method="POST">')
+    document.write('<input type="hidden" name="categoria" value="'+categoria+'">');
+    document.write('<input type="hidden" name="ano" value="'+ano+'">');
+    document.write('<input type="hidden" name="subcategorias" value="'+<?php echo $postSubcategorias;?>+'">');
+    document.write('</form>')
+    document.Myform.submit()
+}
+
+</script>
 
 <script type="text/javascript">
 $(function () {

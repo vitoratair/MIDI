@@ -2,11 +2,16 @@
 <!-- Estrutura -->
 <div class="container">
 
-	<div class="hero-unit">
-		<h1>MIDI</h1>
-		<p>Monitoramento Intelbras de Dados de Importações</p>
-	</div>
+	<p align="center">		
+		
+	</p>
+
+<br><br><br><br><br><br><br><br>
+
 	
+	<p align="center">
+		<img src="<?php echo base_url();?>img/logo.jpg" width="300px">
+	</p>
 
 
 <!-- FIM -->
