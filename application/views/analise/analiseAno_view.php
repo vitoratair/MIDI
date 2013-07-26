@@ -65,8 +65,8 @@
                 <td>{shareUnidades}</td>
                 <td>{shareVolume}</td>
                 <td width="5%"><a href="<?php echo base_url();?>index.php/analise/analiseAno" class='icon-search'> <a/></td>
-                <td width="5%" ><a href="<?php echo base_url();?>index.php/analise/analiseAno" class='icon-search'> <a/></td>
-                <td width="5%"><a onclick="enviar({marca});" href="#" class='icon-search'> <a/></td>
+                <td width="5%"><a onclick="enviar(1, {marca});" href="#" class='icon-search'> <a/></td>
+                <td width="5%"><a onclick="enviar(2, {marca});" href="#" class='icon-search'> <a/></td>
             </tr>
 
     {/dados}
@@ -96,15 +96,24 @@
 
 
 <script type="text/javascript">
-    function enviar(marca)
+    function enviar(id, marca)
     {    
-        document.write('<form action="analiseMarcaDetalhe" name="Myform" method="POST">')
+        if (id == 1)
+        {
+            document.write('<form action="analiseMarcaEvolucao" name="Myform" method="POST">')
+        }
+        else if(id == 2)
+        {
+            document.write('<form action="analiseMarcaDetalhe" name="Myform" method="POST">')
+        }
+        
         document.write('<input type="hidden" name="categoria" value="'+<?php echo $categoria;?>+'">');
         document.write('<input type="hidden" name="ano" value="'+<?php echo $ano;?>+'">');
         document.write('<input type="hidden" name="subcategorias" value="'+<?php echo $postSubcategorias;?>+'">');
         document.write('<input type="hidden" name="marca" value="'+marca+'">');
         document.write('</form>')
         document.Myform.submit()
+
     }
 </script>
 

@@ -386,7 +386,7 @@ class ncm_model extends CI_Model {
 	 */
 	public function getDadosMarcaDetalhe($table, $modelos, $marca)
 	{
-		$this->db->select('DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome');
+		$this->db->select('DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome, MES');
 		$this->db->from($table);
 		$this->db->join('Marca', 'MAID = Marca');
 		$this->db->join('Modelo', 'MOID = Modelo');
