@@ -116,8 +116,11 @@ $autoload['model'] = array(
 							'marca_model',
 							'usuario_model',
 							'modelo_model',
-							'analise_model'
-
+							'analise_model',
+							'cargo_model',
+							'departamento_model',
+							'unidade_model',
+							'tipo_model'
 							);
 
 

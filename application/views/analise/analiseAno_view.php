@@ -1,49 +1,21 @@
 <!-- Estrutura -->
 <div class="container">
 				
+
+    <div class="page-header">
+        <h2>{categoriaNome} <small> importados no ano de {ano}</h2>
+    </div>
+
     <?php
-        $atributos = array('form class'=>'well form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
+        $atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align' => 'right', 'method'=>'POST');
         echo form_open('analise/listAll', $atributos); 
     ?>
-
-        <div align="right">
-            <select id="datainicial"  name="datainicial" class="span2">                                   
-                <option value=""> Data Inicial </option>                 
-                    <option value="1">Janeiro</option>
-                    <option value="2">Fevereiro</option>
-                    <option value="3">Março</option>
-                    <option value="4">Abril</option>
-                    <option value="5">Maio</option>
-                    <option value="6">Junho</option>
-                    <option value="7">Julho</option>
-                    <option value="8">Agosto</option>
-                    <option value="9">Setembro</option>
-                    <option value="10">Outubro</option>
-                    <option value="11">Novembro</option>
-                    <option value="12">Dezembro</option>            
-            </select>
-            &nbsp;&nbsp;&nbsp;
-            <select id="datafinal"  name="datafinal" class="span2">                   
-                
-                <option value=""> Data Final </option>                 
-                    <option value="1">Janeiro</option>
-                    <option value="2">Fevereiro</option>
-                    <option value="3">Março</option>
-                    <option value="4">Abril</option>
-                    <option value="5">Maio</option>
-                    <option value="6">Junho</option>
-                    <option value="7">Julho</option>
-                    <option value="8">Agosto</option>
-                    <option value="9">Setembro</option>
-                    <option value="10">Outubro</option>
-                    <option value="11">Novembro</option>
-                    <option value="12">Dezembro</option>                
-            </select>
-        </div>
-
+    <input type="hidden" name="categoria" value="{categoria}">
+    <a class="btn" onclick="enviar(6);" href="#"><i class="icon-search"></i> Gráfico</a>
+    <button type="submit" class="btn btn"><i class="icon-arrow-left"></i> Voltar</button>
     </form>
 
-    <table class='table table-striped table-bordered' id="idTabela" align="right">
+    <table class='table table-striped table-bordered table-hover' id="idTabela" align="right">
             
             <tr>
                 <td width=""><b>Marca</b></td>
@@ -57,38 +29,38 @@
                 <td width=""><b>Detalhes</td>
             </tr>           
     {dados}    
-            <tr>    
+            <tr class="table-condensed">
                 <td>{nomeMarca}</td>
                 <td>{unidades}</td>
                 <td>$ {volume}</td>
                 <td>$ {fob}</td>
                 <td>{shareUnidades}</td>
                 <td>{shareVolume}</td>
-                <td width="5%"><a href="<?php echo base_url();?>index.php/analise/analiseAno" class='icon-search'> <a/></td>
                 <td width="5%"><a onclick="enviar(1, {marca});" href="#" class='icon-search'> <a/></td>
                 <td width="5%"><a onclick="enviar(2, {marca});" href="#" class='icon-search'> <a/></td>
+                <td width="5%"><a onclick="enviar(3, {marca});" href="#" class='icon-search'> <a/></td>
             </tr>
 
     {/dados}
 
     {total}
-            <tr class="info">    
+            <tr class="info table-condensed">  
                 <td><strong>Total</strong></td>
                 <td><strong>{totalunidades}</strong></td>
                 <td><strong>$ {totalvolume}</strong></td>
                 <td colspan = "5"></td>
-                <td width="5%"><a href="<?php echo base_url();?>index.php/analise/analiseAno" class='icon-search'> <a/></td>
+                <td width="5%"><a onclick="enviar(4);" href="#" class='icon-search'> <a/></td>
             </tr>
     {/total}
 
     {outros}
 
-            <tr class="info">    
+            <tr class="info table-condensed">    
                 <td><strong>Outros</strong></td>
                 <td><strong>{unidades}</strong></td>
                 <td><strong>$ {volume}</strong></td>
                 <td colspan = "5"></td>
-                <td width="5%"><a href="<?php echo base_url();?>index.php/analise/analiseAno" class='icon-search'> <a/></td>
+                <td width="5%"><a onclick="enviar(5);" href="#" class='icon-search'> <a/></td>
             </tr>
     {/outros}
 
@@ -100,17 +72,35 @@
     {    
         if (id == 1)
         {
-            document.write('<form action="analiseMarcaEvolucao" name="Myform" method="POST">')
+            document.write('<form action="analiseModelo" name="Myform" method="POST">')
+            document.write('<input type="hidden" name="marca" value="'+marca+'">');            
         }
-        else if(id == 2)
+        else if (id == 2)
+        {
+            document.write('<form action="analiseMarcaEvolucao" name="Myform" method="POST">')
+            document.write('<input type="hidden" name="marca" value="'+marca+'">');
+        }
+        else if(id == 3)
         {
             document.write('<form action="analiseMarcaDetalhe" name="Myform" method="POST">')
+            document.write('<input type="hidden" name="marca" value="'+marca+'">');
         }
-        
+        else if(id == 4)
+        {
+            document.write('<form action="analiseMarcaDetalhe" name="Myform" method="POST">')
+        }        
+        else if(id == 5)
+        {
+            document.write('<form action="analiseOutrosDetalhe" name="Myform" method="POST">')
+        } 
+        else if(id == 6)
+        {
+            document.write('<form action="analiseAnoParticipacao" name="Myform" method="POST">')
+        }                
+
         document.write('<input type="hidden" name="categoria" value="'+<?php echo $categoria;?>+'">');
         document.write('<input type="hidden" name="ano" value="'+<?php echo $ano;?>+'">');
-        document.write('<input type="hidden" name="subcategorias" value="'+<?php echo $postSubcategorias;?>+'">');
-        document.write('<input type="hidden" name="marca" value="'+marca+'">');
+        document.write('<input type="hidden" name="subcategorias" value="'+<?php echo $postSubcategorias;?>+'">');        
         document.write('</form>')
         document.Myform.submit()
 

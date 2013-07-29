@@ -19,7 +19,7 @@
 				<td width="%"><b>Unidades</td>
 			</tr>			
 			
-			<tr>	
+			<tr class="table-condensed">	
 				<td>{IDN}</td>
 				<td>{ncm}</td>				
 				<td>{DESCRICAO_DETALHADA_PRODUTO}</td>
@@ -45,7 +45,7 @@
 				<td width="47%"><b>Item</td>
 			</tr>			
 {titulos}
-			<tr>	
+			<tr class="table-condensed">	
 				<td>{TColuna}</td>
 				<td>{TNome}</td>
 <?php 

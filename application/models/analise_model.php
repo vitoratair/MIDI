@@ -56,6 +56,24 @@ class Analise_model extends CI_Model {
 	}	
 
 	/**
+	 * Calcula o peças referente a uma NCM e um modelo //
+	 */
+	function calcAnoByModelo($table, $modelo, $categoria)
+	{
+
+		$this->db->select_sum('QUANTIDADE_COMERCIALIZADA_PRODUTO');
+		$this->db->select_sum('VALOR_TOTAL_PRODUTO_DOLAR');
+		$this->db->select_sum('VALOR_UNIDADE_PRODUTO_DOLAR');
+		$this->db->from($table);
+		$this->db->where('Modelo',$modelo);
+		$this->db->where('Categoria', $categoria);
+		$query = $this->db->get();
+
+		return $query->result();
+
+	}
+
+	/**
 	 * Calcula o peças referente a uma NCM //
 	 */
 	function calcUnidadesAnoByMarca($table, $marca, $categoria, $modelo)
@@ -91,6 +109,34 @@ class Analise_model extends CI_Model {
 	/**
 	 * Busca as informações de outros 
 	 */
+	function getOutrosByMarca($table, $categoria, $subcategoria, $marca)
+	{
+		$this->db->select_sum('QUANTIDADE_COMERCIALIZADA_PRODUTO');
+		$this->db->select_sum('VALOR_TOTAL_PRODUTO_DOLAR');
+		$this->db->from($table);
+		$this->db->where('Categoria',$categoria);
+		$this->db->where('Marca',$marca);
+		$this->db->where('Modelo','1');
+		$this->db->where('Marca','1');
+		
+		foreach ($subcategoria as $key => $value)
+		{
+			$coluna = "SubCategoria". ($key + 1) ."_SCID";
+			if (!empty($value) && ($value != 'false'))
+			{
+				$this->db->where($coluna,$value);
+			}
+		}
+				
+		$query = $this->db->get();
+
+	
+		return $query->result();
+	}
+
+	/**
+	 * Busca as informações de outros 
+	 */
 	function getOutrosByAno($table, $categoria, $subcategoria)
 	{
 		$this->db->select_sum('QUANTIDADE_COMERCIALIZADA_PRODUTO');
@@ -113,7 +159,7 @@ class Analise_model extends CI_Model {
 
 	
 		return $query->result();
-	}
+	}	
 
 
 

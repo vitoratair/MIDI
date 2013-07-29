@@ -11,6 +11,11 @@
 			$this->load->view("template/menu"); 
 			break;
 		
+		case USER_USUARIO:
+			
+			$this->load->view("template/menu_usuario"); 
+			break;
+
 		default:
 			# code...
 			break;

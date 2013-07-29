@@ -38,26 +38,7 @@
             	
             	<ul class="nav">
               							
-					<li><?php echo anchor('app/home','Home');?></li>
-
-					<li class="dropdown">
-						
-						<a class="dropdown-toggle" href="#">Cadastro </a>
-						
-						<ul class="dropdown-menu">
-							
-							<li><?php echo anchor('categoria/listAll','Categoria');?></li>						
-
-							<li><?php echo anchor('ncm/listAll','NCM');?></li>													
-
-							<li><?php echo anchor('marca/listAll','Marca');?></li>
-							
-							<li><?php echo anchor('modelo/listAll','Modelo');?></li>
-
-							<li><?php echo anchor('usuario/listAll','Usuário');?></li>
-
-						</ul>
-					</li>					
+					<li><?php echo anchor('app/home','Home');?></li>				
 
 					<li><?php echo anchor('pesquisa/listAll','Pesquisa');?></li>
 

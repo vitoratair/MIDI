@@ -3,7 +3,7 @@
 				
     <?php
         $atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align' => 'right', 'method'=>'POST');
-        echo form_open('analise/analiseAno', $atributos); 
+        echo form_open('analise/analiseModelo', $atributos); 
     ?>
 
     <input type="hidden" name="categoria" value="{categoria}">
@@ -13,7 +13,7 @@
     <button type="submit" class="btn"><i class="icon-arrow-left"></i> Voltar</button>
     </form>
 
-    <div class="" id="evolucao_marca" style="min-width: 400px; height: 400px; margin: 0 auto"></div>    
+    <div class="" id="evolucao_modelo" style="min-width: 400px; height: 400px; margin: 0 auto"></div>    
 
 <!--
     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -22,12 +22,12 @@
 <!-- Java scrip para criação do gráfico -->
 <script type="text/javascript">
     $(function () {
-        $('#evolucao_marca').highcharts({
+        $('#evolucao_modelo').highcharts({
             chart: {
                 zoomType: 'xy'
             },
             title: {
-                text: 'Evolução Marca'
+                text: 'Evolução Modelo {modeloNome}'
             },
             subtitle: {
                 text: 'Arraste o mouse nos meses desejados'
