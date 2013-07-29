@@ -99,16 +99,145 @@ class Analise extends CI_Controller {
 		$this->parser->parse('template', $data);
 	}	
 
+	
 	/**
 	 * Montar array para ser exibido no gráfico em javascript
 	 */	
-	function analiseAno()
+	public function analiseAnoParticipacaoModelo()
+	{
+
+		// Recebendo dados via POST //
+		$marca 		= $this->input->post('marca');
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc1 		= $this->input->post('subcategorias');
+		$sc 		= explode(",", $sc1);
+
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listarAno();
+		$data['ncm']			= $this->checkNcmCategoria($categoria);		
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+			// Verficar os valores de unidades e volumes de cada NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{
+				$aux[$key] 			= $this->getDadosModelo($table, $categoria, $sc, $marca);
+			}
+
+			$aux 	= $this->mergeTabela($aux);			
+			$aux 	= $this->mergeModelo($aux);
+			$aux 	= $this->ordena($aux, 'unidades');
+		
+			foreach ($aux as $key => $value)
+			{
+				$dados 	= $dados . "," . "['" . $value['modeloNome'] . "'," . $value['unidades'] . "]";
+			}			
+
+			$dados 			= substr($dados, 1);
+			$data['dados'] 	= $dados;
+
+		}
+
+		$data['categoriaNome'] 		= $this->categoria_model->buscar($categoria);
+		$data['categoriaNome'] 		= $data['categoriaNome'][0]->CNome;
+		$data['ano'] 				= $ano;
+		$data['categoria'] 			= $categoria;
+		$data['marca'] 			= $marca;
+		$data['postSubcategorias'] 	= $sc1;
+
+		$data['main_content'] 		= 'analise/analiseAnoParticipacaoModelo_view';
+		$this->parser->parse('template', $data);
+	}
+
+	/**
+	 * Montar array para ser exibido no gráfico em javascript
+	 */	
+	public function analiseAnoParticipacao()
+	{
+		
+		// Recebendo dados via POST //
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc1 		= $this->input->post('subcategorias');
+		$sc 		= explode(",", $sc1);
+
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listarAno();
+		$data['ncm']			= $this->checkNcmCategoria($categoria);		
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+
+			// Verficar os valores de unidades e volumes de cada NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{
+				$aux[$key] 			= $this->getDadosAnoParticipacao($table, $categoria, $sc);
+			}
+
+			$aux 	= $this->mergeTabela($aux);
+			$aux 	= $this->mergeMarca($aux);
+			$aux 	= $this->ordena($aux, 'unidades');
+		
+			foreach ($aux as $key => $value)
+			{
+				$dados 	= $dados . "," . "['" . $value['marcaNome'] . "'," . $value['unidades'] . "]";
+			}			
+
+			if (substr($dados,0,1) == ",")
+			{
+				$dados = substr($dados, 1);
+			}
+			else
+			{
+				$dados = substr($dados, 1, -7);	
+			}
+
+			$data['dados'] 				= $dados;
+
+		}
+
+		$data['categoriaNome'] 		= $this->categoria_model->buscar($categoria);
+		$data['categoriaNome'] 		= $data['categoriaNome'][0]->CNome;
+		$data['ano'] 				= $ano;
+		$data['categoria'] 			= $categoria;
+		$data['postSubcategorias'] 	= $sc1;
+
+		$data['main_content'] 		= 'analise/analiseAnoParticipacao_view';
+		$this->parser->parse('template', $data);
+
+	}
+
+		/**
+	 * Montar array para ser exibido no gráfico em javascript
+	 */	
+	public function analiseAno()
 	{
 		// Recebendo dados via POST //
 		$categoria 	= $this->input->post('categoria');
 		$ano 		= $this->input->post('ano');
-		$sc 		= $this->input->post('subcategorias');
-		$sc 		= explode(",", $sc);
+		$sc1 		= $this->input->post('subcategorias');
+		$sc 		= explode(",", $sc1);
 
 		// Lista todas as opções //
 		$data['anos']			= $this->ncm_model->listarAno();
@@ -140,6 +269,19 @@ class Analise extends CI_Controller {
 			$aux 				= $this->mergeTabela($aux);
 			$data['dados'] 		= $this->mergeMarca($aux);
 			$data['dados'] 		= $this->ordena($data['dados'], 'unidades');
+			
+			// Verficando e deletando o último elemento caso seja 0 //			
+			$ultimo = sizeof($data['dados']) - 1;
+			
+			foreach ($data['dados'] as $key => $value)
+			{
+				if (($value['volume']) == 0)
+				{
+					unset($data['dados'][$key]);	
+				}
+			}
+			
+			// unset($data['dados'][sizeof($data['dados']) - 1]);
 			$data['dados'] 		= $this->getMarcas($data['dados']);
 			$data['dados'] 		= $this->calcularFob($data['dados']);
 			$data['total'][0] 	= $this->calcularTotal($data['dados']);		
@@ -151,17 +293,142 @@ class Analise extends CI_Controller {
 			$data['dados'] 		= $this->formatarDados(2, $data['dados']);
 			$data['outros'][0] 	= $this->formatarDados(3, $data['outros'][0]);
 
-		}
-
-		$data['categoria'] 			= $categoria;
+		}		
+		$data['categoriaNome'] 		= $this->categoria_model->buscar($categoria);
+		$data['categoriaNome'] 		= $data['categoriaNome'][0]->CNome;
 		$data['ano'] 				= $ano;
+		$data['categoria'] 			= $categoria;
 		$data['postSubcategorias'] 	= json_encode($sc);
 
 		$data['main_content'] 	= 'analise/analiseAno_view';
 		$this->parser->parse('template', $data);
 
 	}
+
+	/**
+	 * Análise de modelos
+	 */	
+	public function analiseModelo()
+	{
+
+		// Recebendo dados via POST //
+		$marca 		= $this->input->post('marca');
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc1 		= $this->input->post('subcategorias');		
+		$sc 		= explode(",", $sc1);
+		
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listarAno();
+		$data['ncm']			= $this->checkNcmCategoria($categoria);		
+		$data['titulos']		= $this->categoria_model->listarTitulos($categoria);
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+
+			// Recebe as opções de detalhes de NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{
+				$aux[$key]	= $this->getDadosModelo($table, $categoria, $sc, $marca);
+			}
+			
+			$aux 					= $this->mergeTabela($aux);			
+			$data['dados'] 			= $this->mergeModelo($aux);						
+			$data['dados'] 			= $this->calcularFob($data['dados']);
+			$data['total'][0] 		= $this->calcularTotal($data['dados']);		
+			$data['dados'] 			= $this->calcularShare(1, $data['dados'], $data['total'][0]);						
+			$data['dados'] 			= $this->ordena($data['dados'], 'unidades');
+
+			// Formatando os dados com as devidas casa decimais //
+			$data['total'][0] 		= $this->formatarDados(1, $data['total'][0]);
+			$data['dados'] 			= $this->formatarDados(2, $data['dados']);
+
+			$marca 					= $this->marca_model->buscaMarca($marca);
+			$data['marca'] 			= $marca[0]->MANome;
+			$data['marcaID'] 		= $marca[0]->MAID;
+			$data['ano']			= $ano;
+			$categoria 				= $this->categoria_model->buscar($categoria);
+			$data['categoriaNome'] 	= $categoria[0]->CNome;
+		}
+
+		$data['categoria'] 			= $categoria[0]->CID;
+		$data['ano'] 				= $ano;
+		$data['postSubcategorias'] 	= json_encode($sc1);
+
+		$data['main_content'] 	= 'analise/analiseModelo_view';
+		$this->parser->parse('template', $data);
+
+	}
+
+	/**
+	 * Lista detalhada de importações feitas em um período por um modelo
+	 */		
+	public function analiseModeloDetalhe()
+	{
+
+		// Recebendo dados via POST //
+		$modelo 	= $this->input->post('modelo');
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc1 		= $this->input->post('subcategorias');		
+		$sc 		= explode(",", $sc1);
+
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listarAno();
+		$data['ncm']			= $this->checkNcmCategoria($categoria);		
+		$data['titulos']		= $this->categoria_model->listarTitulos($categoria);
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+
+			// Recebe as opções de detalhes de NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{
+				$aux[$key]	= $this->getDadosModeloDetalhe($table, $modelo);
+			}
+			
+			$aux = $this->mergeTabela($aux);
+			$data['dados'] = $this->ordena($aux, 'unidades');
+			$data['dados'] = $this->formatarDados(6, $data['dados']);
+
+		}
+
+		$data['modelo'] 	= $modelo;
+		$data['modeloNome'] = $this->modelo_model->getModelo($modelo);
+		$data['modeloNome'] = $data['modeloNome'][0]->MNome;
+		$data['ano'] 		= $ano;
+		$data['categoria']	= $categoria;
+		$data['marca']		= $this->modelo_model->bucaMarcaByModelo($modelo);
+		$data['marca'] 		= $data['marca'][0]->MAID;
 	
+		$data['postSubcategorias'] 	= $sc1;
+
+		// // print_r($data['postSubcategorias']);
+		$data['main_content'] 	= 'analise/analiseModeloDetalhe_view';
+		$this->parser->parse('template', $data);		
+
+	}
+
 	/**
 	 * Lista detalhada de importações feitas em um período por uma marca
 	 */		
@@ -169,11 +436,11 @@ class Analise extends CI_Controller {
 	{
 		
 		// Recebendo dados via POST //
-		$marca 	= $this->input->post('marca');
+		$marca 		= $this->input->post('marca');
 		$categoria 	= $this->input->post('categoria');
 		$ano 		= $this->input->post('ano');
-		$sc 		= $this->input->post('subcategorias');		
-		$sc 		= explode(",", $sc);
+		$sc1 		= $this->input->post('subcategorias');		
+		$sc 		= explode(",", $sc1);
 
 		// Lista todas as opções //
 		$data['anos']			= $this->ncm_model->listarAno();
@@ -200,13 +467,72 @@ class Analise extends CI_Controller {
 			}
 			
 			$aux = $this->mergeTabela($aux);
-			$data['dados'] = $aux;
-			$data['dados'] = $this->formatarDados(2, $data['dados']);
+			$aux = $this->ordena($aux, 'unidades');
+			$data['dados'] = $this->formatarDados(5, $aux);
+			
+		}
+		
+		$data['categoria'] 		= $categoria;	
+		$categoria 				= $this->categoria_model->buscar($categoria);
+		$data['categoriaNome'] 	= $categoria[0]->CNome;
+		$data['ano'] 			= $ano;
+		$data['marcaNome'] 		= $this->marca_model->buscaMarca($marca);
+		$data['marcaNome'] 		= $data['marcaNome'][0]->MANome;
+		$data['postSubcategorias'] 	= $sc1;
+
+		$data['main_content'] 	= 'analise/analiseDetalhe_view';
+		$this->parser->parse('template', $data);		
+	}
+
+	/**
+	 * Lista de dados
+	 */		
+	public function analiseOutrosDetalhe()
+	{
+		
+		// Recebendo dados via POST //
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc1 		= $this->input->post('subcategorias');		
+		$sc 		= explode(",", $sc1);
+
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listarAno();
+		$data['ncm']			= $this->checkNcmCategoria($categoria);		
+		$data['titulos']		= $this->categoria_model->listarTitulos($categoria);
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+
+			// Recebe as opções de detalhes de NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{
+				$aux[$key]	= $this->getDadosOutrosDetalhe($table, $categoria, $sc);
+			}
+
+			$data['dados'] 	= $this->mergeTabela($aux);
+			$data['dados'] 	= $this->ordena($data['dados'], 'unidades');
+
+			$data['dados'] 	= $this->formatarDados(6, $data['dados']);
 
 		}
+		$data['categoria'] 			= $categoria;
+		$data['ano'] 				= $ano;		
+		$data['postSubcategorias'] 	= $sc1;
+		$data['main_content'] 	= 'analise/analiseOutrosDetalhe_view';
+		$this->parser->parse('template', $data);				
 
-		$data['main_content'] 	= 'analise/analiseMarcaDetalhe_view';
-		$this->parser->parse('template', $data);		
+
 	}
 
 	/**
@@ -216,11 +542,11 @@ class Analise extends CI_Controller {
 	{
 		
 		// Recebendo dados via POST //
-		$marca 	= $this->input->post('marca');
+		$marca 		= $this->input->post('marca');
 		$categoria 	= $this->input->post('categoria');
 		$ano 		= $this->input->post('ano');
-		$sc 		= $this->input->post('subcategorias');		
-		$sc 		= explode(",", $sc);
+		$sc1 		= $this->input->post('subcategorias');		
+		$sc 		= explode(",", $sc1);
 
 		// Lista todas as opções //
 		$data['anos']			= $this->ncm_model->listarAno();
@@ -251,6 +577,84 @@ class Analise extends CI_Controller {
 
 		}
 		
+		foreach ($aux as $key => $value)
+		{
+			$unidades 	= $unidades . ", " . $value['unidades'];
+			$fob 		= $fob . ", " . $value['fob'];
+		}
+
+		
+		$data['categoria']	= $categoria;
+		$data['marca']		= $marca;
+		$data['ano']		= $ano;
+		$data['sc']			= $sc1;
+		$data['unidades'] 	= substr($unidades, 1);
+		$data['fob'] 		= substr($fob, 1);
+
+		$data['main_content'] 	= 'analise/analiseMarcaEvolucao_view';
+		$this->parser->parse('template', $data);        
+	
+	}
+
+	/**
+	 * Edição de importação
+	 */		
+	public function analiseEdicao()
+	{
+
+		$idn 	= $this->input->post('idn'); 
+		$ncm 	= $this->input->post('ncm');
+		$ano 	= $this->input->post('ano');
+
+		$data['main_content'] 	= 'analise/analiseEdicao_view';
+		$this->parser->parse('template', $data); 
+
+
+	}
+	
+	/**
+	 * Evolução de marcas
+	 */		
+	public function analiseModeloEvolucao()
+	{
+		
+		// Recebendo dados via POST //
+		$modelo 	= $this->input->post('modelo');
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc1 		= $this->input->post('subcategorias');		
+		$sc 		= explode(",", $sc1);
+
+
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listarAno();
+		$data['ncm']			= $this->checkNcmCategoria($categoria);		
+		$data['titulos']		= $this->categoria_model->listarTitulos($categoria);
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+
+			// Recebe as opções de detalhes de NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{
+				$aux[$key]	= $this->getDadosModeloDetalhe($table, $modelo);
+			}
+			
+			$aux 	= $this->mergeTabela($aux);
+			$aux	= $this->mergeMeses($aux);	
+
+		}
+		
 
 		foreach ($aux as $key => $value)
 		{
@@ -258,13 +662,22 @@ class Analise extends CI_Controller {
 			$fob 		= $fob . ", " . $value['fob'];
 		}
 
+		
+		$data['categoria']	= $categoria;
+		$data['modelo']		= $modelo;
+		$data['modeloNome']	= $this->modelo_model->getModelo($modelo);
+		$data['modeloNome'] = $data['modeloNome'][0]->MNome;
+		$data['ano']		= $ano;
+		$data['sc']			= $sc1;
+		$marca 				= $this->modelo_model->bucaMarcaByModelo($modelo);
+		$data['marca'] 		= $marca[0]->MAID;		
 		$data['unidades'] 	= substr($unidades, 1);
 		$data['fob'] 		= substr($fob, 1);
 
-		$data['main_content'] 	= 'analise/analiseMarcaEvolucao_view';
+		$data['main_content'] 	= 'analise/analiseModeloEvolucao_view';
 		$this->parser->parse('template', $data);        
 	
-	}	
+	}
 
 	/**
 	 * Merge das meses iguais
@@ -390,9 +803,7 @@ class Analise extends CI_Controller {
 				$dados[$key]['volume'] 			= number_format($value['volume'],0,",",".");
 				$dados[$key]['fob'] 			= number_format($value['fob'],2,",",".");
 				$dados[$key]['shareUnidades'] 	= number_format($value['shareUnidades'],2,",",".");
-				$dados[$key]['shareVolume'] 	= number_format($value['shareVolume'],2,",",".");
-
-				
+				$dados[$key]['shareVolume'] 	= number_format($value['shareVolume'],2,",",".");				
 			}			
 		}
 		elseif ($id == 3)
@@ -404,6 +815,25 @@ class Analise extends CI_Controller {
 		{
 			$dados['fob'] 	= number_format($dados['fob'],2,",",".");
 			$dados['unidades'] 	= number_format($dados['unidades'],0,",",".");			
+		}
+		elseif ($id == 5)
+		{
+			foreach ($dados as $key => $value)
+			{
+				$dados[$key]['unidades']		= number_format($value['unidades'],0,",",".");
+				$dados[$key]['volume'] 			= number_format($value['volume'],0,",",".");
+				$dados[$key]['fob'] 			= number_format($value['fob'],2,",",".");
+				$dados[$key]['descricao'] 		= wordwrap($value['descricao'], 15, "\n", true);
+			}			
+		}
+		elseif ($id == 6)
+		{
+			foreach ($dados as $key => $value)
+			{
+				$dados[$key]['descricao'] 		= wordwrap($value['descricao'], 15, "\n", true);
+				$dados[$key]['fob'] 			= number_format($value['fob'],2,",",".");
+				$dados[$key]['unidades']		= number_format($value['unidades'],0,",",".");				
+			}			
 		}
 
 
@@ -490,26 +920,53 @@ class Analise extends CI_Controller {
 	}
 
 	/**
+	 * Merge dos modelos iguais
+	 */	
+	function mergeModelo($result)
+	{
+
+		for ($i=0; $i<sizeof($result); $i++)		// compara o primeira posição do vetor com todas as outras
+		{
+			for ($j=1; $j<sizeof($result); $j++)
+			{	
+				if ($result[$i]['modelo'] == $result[$j]['modelo'])
+				{					
+					if ($i != $j)
+					{
+						$result[$i]['unidades'] = $result[$i]['unidades'] + $result[$j]['unidades'];
+						$result[$i]['volume'] 	= $result[$i]['volume'] + $result[$j]['volume'];					
+						unset($result[$j]);
+					}
+				}					
+				
+			} 				
+		}
+
+		// Exclui resultados em branco
+		foreach ($result as $key => $value)
+		{
+			if($value['unidades'] < 1)
+			{
+				unset($result[$key]);
+			}
+		}
+		return $result;		
+	}	
+
+	/**
 	 * Ordenação do array
 	 */
 	function ordena($data, $op)
 	{	
-		foreach ($data as $key => $row)
+		
+		if (sizeof($data) > 1)
 		{
-		   $filtro[$key] = $row[$op];
+			foreach ($data as $key => $row)
+			{
+			   $filtro[$key] = $row[$op];
+			}
+			array_multisort($filtro, SORT_DESC, $data);			
 		}
-
-		// $var 	= $data[0]['TotalPecaMarca']; 
-		// $var1 	= $data[0]['TotalVolumeMarca']; 
-		// $var2	= $data[0]['TotalPeca']; 
-		array_multisort($filtro, SORT_DESC, $data);
-		unset($data[sizeof($data) - 1]);
-
-		// $data[0]['TotalPecaMarca'] 		= $var;
-		// $data[0]['TotalVolumeMarca'] 	= $var1;
-		// $data[0]['TotalPeca'] 			= $var2;
-
-
 		return $data;
 	}
 
@@ -629,7 +1086,7 @@ class Analise extends CI_Controller {
 	/**
 	 * Verifica quais as NCMs / anos pertencente a uma NCM
 	 */
-	public function checkNcmCategoria($categoria)
+	function checkNcmCategoria($categoria)
 	{
 		$ncms				= $this->categoria_model->getAllNcm();
 		$ncmCategoria 		= $this->ncm_model->getNcmByCategoria($categoria);
@@ -665,7 +1122,7 @@ class Analise extends CI_Controller {
 	/**
 	 * Realiza o calculo para o share inicial de cada NCM
 	 */
-	public function getDados($table, $categoria, $sc)
+	function getDados($table, $categoria, $sc)
 	{
 
 		$modelos	= array();
@@ -735,6 +1192,105 @@ class Analise extends CI_Controller {
 
 	}
 
+	/**
+	 * 
+	 */	
+	function getDadosAnoParticipacaoModelo($table, $categoria, $sc, $marca)
+	{
+
+		$modelos	= array();
+		$ano 		= explode('_', $table);
+		$ano 		= $ano[1];		
+
+		//  //
+		$marca = $this->ncm_model->getDadosAnosByMarca($table, $modelos);
+		
+		if (!empty($marca))
+		{
+			foreach ($marca as $key => $value)
+			{
+				$array[$key]['marca'] 		= $marca[$key]->Marca;
+				$array[$key]['marcaNome'] 	= $marca[$key]->MANome;
+				$unidades					= $this->analise_model->calcUnidadesAnoByMarca($table, $array[$key]['marca'], $categoria, $modelos);			
+				$array[$key]['unidades'] 	= $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+			}			
+		}
+
+		return $array;
+	}	
+
+	/**
+	 * Realiza o calculo para um determinado ano
+	 */	
+	function getDadosAnoParticipacao($table, $categoria, $sc)
+	{
+
+		$modelos	= array();
+		$marcas		= array();
+		$ano 		= explode('_', $table);
+		$ano 		= $ano[1];		
+
+		// Verifica os modelos da categoria //
+		$modelo 	= $this->modelo_model->listarAllModeloByCategoria($categoria, $sc);			
+		
+		// Formata o query para a clausula IN //
+		foreach ($modelo as $key => $value)
+		{
+			array_push($modelos, $value->MOID);	
+		}		
+
+		// Listando as marcas que tem modelos com as categorias especificadas //
+		$marca = $this->ncm_model->getDadosAnosByMarca($table, $modelos);
+		
+		if (!empty($marca))
+		{
+			foreach ($marca as $key => $value)
+			{
+				$array[$key]['marca'] 		= $marca[$key]->Marca;
+				$array[$key]['marcaNome'] 	= $marca[$key]->MANome;
+				$unidades 					= $this->analise_model->calcUnidadesAnoByMarca($table, $array[$key]['marca'], $categoria, $modelos);			
+				$array[$key]['unidades'] 	= $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+			}			
+		}
+
+		return $array;
+	}	
+
+	/**
+	 * Realiza o calculo para um determinado ano
+	 */	
+	function getDadosModelo($table, $categoria, $sc, $marca)
+	{
+
+		$modelos	= array();
+		$marcas		= array();
+		$ano 		= explode('_', $table);
+		$ano 		= $ano[1];		
+
+		// Verifica os modelos da categoria e marca //
+		$modelo 	= $this->modelo_model->listarAllModeloByMarca($categoria, $sc, $marca);			
+		
+		// Formata o query para a clausula IN //
+		foreach ($modelo as $key => $value)
+		{
+			array_push($modelos, $value->MOID);	
+		}		
+
+		if (!empty($modelos))
+		{
+			foreach ($modelos as $key => $value)
+			{
+				$dados 						= $this->analise_model->calcAnoByModelo($table, $value, $categoria);			
+				$array[$key]['modelo'] 		= $value;
+				$array[$key]['modeloNome'] 	= $this->modelo_model->getModelo($value);
+				$array[$key]['modeloNome']	= $array[$key]['modeloNome'][0]->MNome;
+				$array[$key]['unidades'] 	= $dados[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+				$array[$key]['volume'] 		= $dados[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+			}			
+		}
+		
+		return $array;
+	}
 
 	/**
 	 * Busca as informações detlahadas de cada NCM
@@ -758,11 +1314,20 @@ class Analise extends CI_Controller {
 		}		
 
 		// Listando as marcas que tem modelos com as categorias especificadas //
-		$dados = $this->ncm_model->getDadosMarcaDetalhe($table, $modelos, $marca);
+		if (empty($marca))
+		{
+			$dados = $this->ncm_model->getDadosMarcaDetalhe($table, $modelos, NULL, $categoria);	
+		}
+		else
+		{
+			$dados = $this->ncm_model->getDadosMarcaDetalhe($table, $modelos, $marca, $categoria);
+		}
 		
 		foreach ($dados as $key => $value)
 		{
+			$data[$key]['idn']	 		= $value->IDN;
 			$data[$key]['ncm']	 		= $ncm;
+			$data[$key]['ano']	 		= $ano;			
 			$data[$key]['descricao']	= $value->DESCRICAO_DETALHADA_PRODUTO;
 			$data[$key]['fob'] 			= $value->VALOR_UNIDADE_PRODUTO_DOLAR;
 			$data[$key]['unidades'] 	= $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;
@@ -772,8 +1337,63 @@ class Analise extends CI_Controller {
 		}
 
 		return $data;
-
 	}
+
+	/**
+	 * Busca as informações detlahadas de cada NCM
+	 */	
+	function getDadosModeloDetalhe($table, $modelo)
+	{
+
+		$ano 		= explode('_', $table);
+		$ncm 		= $ano[0];
+		$ano 		= $ano[1];
+
+		// buscando as informações de importações de modelos //
+		$dados = $this->ncm_model->getDadosModeloDetalhe($table, $modelo);
+		
+		foreach ($dados as $key => $value)
+		{
+			$data[$key]['ncm']	 		= $ncm;
+			$data[$key]['ano']	 		= $ano;
+			$data[$key]['idn']	 		= $value->IDN;
+			$data[$key]['descricao']	= $value->DESCRICAO_DETALHADA_PRODUTO;
+			$data[$key]['fob'] 			= $value->VALOR_UNIDADE_PRODUTO_DOLAR;
+			$data[$key]['unidades'] 	= $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+			$data[$key]['marca'] 		= $value->MANome;
+			$data[$key]['modelo'] 		= $value->MNome;
+			$data[$key]['mes'] 			= $value->MES;
+		}
+		return $data;
+
+	}	
+
+	/**
+	 * Busca as informações detlahadas de cada NCM
+	 */	
+	function getDadosOutrosDetalhe($table, $categoria, $sc)
+	{
+
+		$ano 		= explode('_', $table);
+		$ncm 		= $ano[0];
+		$ano 		= $ano[1];		
+
+		// // Listando as marcas que tem modelos com as categorias especificadas //
+		$dados = $this->ncm_model->getDadosOutrosDetalhe($table, $categoria, $sc);
+		foreach ($dados as $key => $value)
+		{
+			$data[$key]['ncm'] 			= $ncm;
+			$data[$key]['idn'] 			= $value->IDN;
+			$data[$key]['descricao'] 	= $value->DESCRICAO_DETALHADA_PRODUTO;
+			$data[$key]['fob'] 			= $value->VALOR_UNIDADE_PRODUTO_DOLAR;
+			$data[$key]['unidades'] 	= $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+			$data[$key]['marca'] 		= $value->MANome;
+			$data[$key]['modelo'] 		= $value->MNome;
+			$data[$key]['mes'] 			= $value->MES;
+		}
+
+		return $data;
+	}	
 
 
 

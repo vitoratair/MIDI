@@ -374,7 +374,9 @@ class ncm_model extends CI_Model {
 	public function getDadosAnosByMarca($table, $modelos)
 	{
 		$this->db->select('DISTINCT(`Marca`)');
+		$this->db->select('MANome');
 		$this->db->from($table);
+		$this->db->join('Marca','Marca = MAID');
 		$this->db->where_in('Modelo', $modelos);
 		$query = $this->db->get();
 		
@@ -384,19 +386,73 @@ class ncm_model extends CI_Model {
 	/**
 	 * Retorna a lista de importações
 	 */
-	public function getDadosMarcaDetalhe($table, $modelos, $marca)
+	public function getDadosMarcaDetalhe($table, $modelos, $marca, $categoria)
 	{
-		$this->db->select('DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome, MES');
+		if (empty($marca))
+		{
+			$this->db->select('IDN, DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome, MES');
+			$this->db->from($table);
+			$this->db->join('Marca', 'MAID = Marca');
+			$this->db->join('Modelo', 'MOID = Modelo');
+			$this->db->where('Categoria', $categoria);
+			$this->db->where_in('Modelo', $modelos);
+			$query = $this->db->get();
+		}
+		else
+		{
+			$this->db->select('IDN, DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome, MES');
+			$this->db->from($table);
+			$this->db->join('Marca', 'MAID = Marca');
+			$this->db->join('Modelo', 'MOID = Modelo');
+			$this->db->where('Marca', $marca);			
+			$this->db->where_in('Modelo', $modelos);
+			$query = $this->db->get();			
+		}
+		
+		return $query->result();
+	}	
+
+	/**
+	 * Retorna a lista de importações
+	 */
+	public function getDadosModeloDetalhe($table, $modelo)
+	{
+		$this->db->select('IDN, DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome, MES');
 		$this->db->from($table);
 		$this->db->join('Marca', 'MAID = Marca');
 		$this->db->join('Modelo', 'MOID = Modelo');
-		$this->db->where('Marca', $marca);
-		$this->db->where_in('Modelo', $modelos);
+		$this->db->where('Modelo', $modelo);			
 		$query = $this->db->get();
 		
 		return $query->result();
 	}		
 
+	/**
+	 * Retorna a lista de importações
+	 */
+	public function getDadosOutrosDetalhe($table, $categoria, $subcategoria)
+	{
+		$this->db->select('IDN, DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MES, MANome, MNome');
+		$this->db->from($table);
+		$this->db->join('Marca', 'MAID = Marca');
+		$this->db->join('Modelo', 'MOID = Modelo');				
+		
+		foreach ($subcategoria as $key => $value)
+		{
+			$coluna = $table . ".SubCategoria". ($key + 1) ."_SCID";
+			if (!empty($value) && ($value != 'false'))
+			{
+				$this->db->where($coluna,$value);
+			}
+		}
+
+		$this->db->where('Modelo', 1);
+		$this->db->where('Marca', 1);
+		$this->db->where('Categoria', $categoria);
+		$query = $this->db->get();			
+	
+		return $query->result();
+	}		
 
 
 }

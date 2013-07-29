@@ -5051,8 +5051,9 @@ a.badge:hover {
 }
 #footer {
   background-color: #f5f5f5;
-  position: absolute;
+  position: relative;
   bottom: 0;
+  margin-bottom: 0;
   width: 100%;
 
 

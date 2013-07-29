@@ -124,6 +124,29 @@ class Modelo_model extends CI_Model {
 	}
 
 	/**
+	 * Lista de modelos na categoria e marca selecionadas
+	 */
+	function listarAllModeloByMarca($categoria, $subcategoria, $marca)
+	{
+		$this->db->select('DISTINCT(`MOID`)');
+		$this->db->from('Modelo');
+		$this->db->where('Categoria_CID',$categoria);
+		$this->db->where('Marca_MAID',$marca);
+		
+		foreach ($subcategoria as $key => $value)
+		{
+			$coluna = "SubCategoria". ($key + 1) ."_SCID";
+			if (!empty($value) && ($value != 'false'))
+			{
+				$this->db->where($coluna,$value);
+			}
+		}
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
+	/**
 	 * Lista de modelos na categoria selecionada
 	 */
 	function listarAllModeloByCategoria($categoria, $subcategoria)
@@ -144,8 +167,7 @@ class Modelo_model extends CI_Model {
 		$query = $this->db->get();
 
 		return $query->result();
-	}
-
+	}	
 
 	/**
 	 * Lista os modelos da marca e categoria
@@ -215,11 +237,9 @@ class Modelo_model extends CI_Model {
 		$this->db->select('COUNT(`IDN`) AS IDN');
 		$this->db->FROM($table);
 		$this->db->where('Modelo',$modelo);
-
 		$query = $this->db->get();
 
 		return $query->result();
-
 	}
 
 	/**
@@ -240,13 +260,10 @@ class Modelo_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->FROM('Modelo');
 		$this->db->where('MOID',$id);
-	
 		$this->db->join('Marca','MAID = Marca_MAID');
-
 		$query = $this->db->get();
 
-		return $query->result();		
-
+		return $query->result();
 	}
 
 	/**
@@ -255,11 +272,24 @@ class Modelo_model extends CI_Model {
 	function bucaMarcaByModelo($id)
 	{
 
-		$this->db->select('MANome');
+		$this->db->select('MAID, MANome');
 		$this->db->FROM('Marca');
 		$this->db->join('Modelo','MAID = Marca_MAID');
 		$this->db->where('MOID',$id);
+		$query = $this->db->get();
 
+		return $query->result();		
+	}	
+
+	/**
+	 * Busca modelo
+	 */
+	function getModelo($id)
+	{
+
+		$this->db->select('MNome');
+		$this->db->FROM('Modelo');
+		$this->db->where('MOID',$id);
 		$query = $this->db->get();
 
 		return $query->result();		
