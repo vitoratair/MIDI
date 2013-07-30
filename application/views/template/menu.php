@@ -26,6 +26,7 @@
 				<ul class="dropdown-menu">
 					<input type="hidden" class="input-xlarge" id="login" value='{usuarioLogin}' name="login">
 					<li><?php echo anchor("usuario/pageUser/$usuario",'Perfil');?></li>
+					<li><?php echo anchor("requisicoes/listAll",'Requisições');?></li>
 					<li class="divider"></li>
 					<li><?php echo anchor('login/logout','Sair');?></li>
 					
