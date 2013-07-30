@@ -120,7 +120,8 @@ $autoload['model'] = array(
 							'cargo_model',
 							'departamento_model',
 							'unidade_model',
-							'tipo_model'
+							'tipo_model',
+							'requisicoes_model'
 							);
 
 

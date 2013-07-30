@@ -82,15 +82,21 @@ class Pesquisa extends CI_Controller {
 			}	
 		}
 
-
-		
-
 		$data['dados']	 	= $this->ncm_model->listarNcm($table, $id);
 		
 		// Envia os dados para a view //
 		$data['ncm'] 	= $ncm; 
 		$data['year'] 	= $year;
-		$data['main_content'] = 'pesquisa/editPesquisa_view';	
+
+		if ($this->session->userdata('usuarioTipo') == 1)
+		{
+			$data['main_content'] = 'pesquisa/editPesquisa_view';	
+		}
+		else
+		{
+			$data['main_content'] = 'pesquisa/editPesquisaUser_view';		
+		}
+		
 		$this->parser->parse('template',$data);		
 	}
 
