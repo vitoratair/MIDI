@@ -48,10 +48,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root';
-$db['default']['password'] = 'lockinet';
-$db['default']['database'] = 'marketips';
+$db['default']['hostname'] = '127.7.100.2';
+$db['default']['username'] = 'adming1YvpZl';
+$db['default']['password'] = 'sPHakl74eTBN';
+$db['default']['database'] = 'midi';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
