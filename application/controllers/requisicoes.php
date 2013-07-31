@@ -34,15 +34,14 @@ class Requisicoes extends CI_Controller {
 		$data['dadosRequisicao'] = $this->buscaDados(1, $dados);
 
 		// Busca as informações da NCM //
-		$data['dados'] = $this->buscaDados(2, $dados);
+		$data['dados'] 	= $this->buscaDados(2, $dados);
 		$data['dados']	= $this->mergeTabela($data['dados']);
 
-		// Juntando os arrays //
-		$data['dados'] = $this->joinArray($data['dados'], $data['dadosRequisicao']);
+		// // Juntando os arrays //
+		$data['dados'] = $this->joinArray($data['dados'], $data['dadosRequisicao']);					
 
 
-
-		$data['main_content'] = 'requisicoes/requisicoes_view';				
+		$data['main_content'] = 'requisicoes/requisicoes_view';
 		$this->parser->parse('template',$data);	
 
 	}
@@ -103,16 +102,39 @@ class Requisicoes extends CI_Controller {
 			$array[$key]['marca'] 			= $value->MANome;
 			
 			$categoria 						= $this->categoria_model->getCategoria($dadosRequisicao[$key]['categoria']);
-			$array[$key]['categoriaRe'] 	= $categoria[0]->CNome;
-			$array[$key]['categoriaReID'] 	= $dadosRequisicao[$key]['categoria'];
+			if (!empty($categoria[0]->CNome))
+			{
+				$array[$key]['categoriaRe'] 	= $categoria[0]->CNome;
+				$array[$key]['categoriaReID'] 	= $dadosRequisicao[$key]['categoria'];				
+			}
+			else
+			{
+				$array[$key]['categoriaRe'] 	= ' - ';
+			}
 
 			$marca 							= $this->marca_model->buscaMarca($dadosRequisicao[$key]['marca']);
-			$array[$key]['marcaRe'] 		= $marca[0]->MANome;
-			$array[$key]['marcaReID'] 		= $dadosRequisicao[$key]['marca'];
+			if (!empty($marca[0]->MANome))
+			{
+				$array[$key]['marcaRe'] 		= $marca[0]->MANome;
+				$array[$key]['marcaReID'] 		= $dadosRequisicao[$key]['marca'];				
+			}
+			else
+			{
+				$array[$key]['marcaRe'] 	= ' - ';
+			}
 
 			$modelo 						= $this->modelo_model->getModelo($dadosRequisicao[$key]['modelo']);
-			$array[$key]['modeloRe'] 		= $modelo[0]->MNome;
-			$array[$key]['modeloReID'] 		= $dadosRequisicao[$key]['modelo'];			
+			if (!empty($modelo[0]->MNome))
+			{
+				$array[$key]['modeloRe'] 		= $modelo[0]->MNome;
+				$array[$key]['modeloReID'] 		= $dadosRequisicao[$key]['modelo'];							
+			}
+			else
+			{
+				$array[$key]['modeloRe'] 	= ' - ';
+			}
+
+
 
 		}
 

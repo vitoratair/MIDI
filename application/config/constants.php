@@ -72,6 +72,8 @@ define('STATUS_DIRETA',			11);
 define('USER_ADMIN',		1);
 define('USER_USUARIO',		2);
 
+define('DATABASE',			'midi');
+
 
 
 /*

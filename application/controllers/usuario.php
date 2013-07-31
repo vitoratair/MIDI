@@ -37,10 +37,10 @@ class Usuario extends CI_Controller {
 		// Lista todos os usuarios //
 		$data['usuarios'] = $this->usuario_model->listar(0);
 
-		// Carrega a view correspondende //
+		// // Carrega a view correspondende //
 		$data['main_content'] = 'usuario/listUser_view';
 		
-		// Envia todas as informacoes para tela //
+		// // Envia todas as informacoes para tela //
 		$this->parser->parse('template', $data);
 
 	} 
@@ -57,7 +57,7 @@ class Usuario extends CI_Controller {
 		$data['cargos'] = $this->cargo_model->listar(2);
 
 		// Lista todos os departamentos //
-		$data['departamentos'] = $this->departamento_model->listar(0);
+		// $data['departamentos'] = $this->departamento_model->listar(0);
 
 		// Lista todas as unidades de negocio //
 		$data['unidades'] = $this->unidade_model->listar(0);
@@ -87,14 +87,12 @@ class Usuario extends CI_Controller {
 		$data['usuarioPassword'] 	= create_username($this->input->post('Nome'), $this->input->post('Matricula')); 
 		$data['usuarioEmail']    	= $this->input->post('Email');
 		$data['cargoID']    		= $this->input->post('Cargo');
-		$data['departamentoID']		= $this->input->post('Setor');
+		$data['unidadeID']			= $this->input->post('Unidade');
 		$data['tipoID']   		    = $this->input->post('Tipo');
-		$data['usuarioAtivo']		= "SIM";
-			 
+
 		 
 		// Insere os dados do novo usuario no bd //
 		$this->usuario_model->cadastrar($data);
-
 		redirect('usuario/listAll');
 
 	}
@@ -118,7 +116,6 @@ class Usuario extends CI_Controller {
 		
 		$data2['unidades']		= $this->unidade_model->listar(2);
 		
-		$data2['departamentos']	= $this->departamento_model->listar(2);
 		
 		$data2['tipos']			= $this->tipo_model->listar(2);
 		
@@ -137,11 +134,9 @@ class Usuario extends CI_Controller {
 		$data['usuarioNome']     	= $this->input->post('Nome');
 		$data['usuarioEmail']    	= $this->input->post('Email');
 		$data['cargoID']    		= $this->input->post('Cargo');
-		$data['departamentoID']		= $this->input->post('Setor');
+		$data['unidadeID']			= $this->input->post('Unidade');
 		$data['tipoID']   		    = $this->input->post('Tipo');
-		$data['usuarioAtivo']		= $this->input->post('Ativo');
 	
-		//print_r($data);	
 		// Insere os dados do novo usuario no bd //
 		$this->usuario_model->atualizaUsuario($id, $data);
 	

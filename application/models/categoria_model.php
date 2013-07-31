@@ -440,7 +440,8 @@ class Categoria_model extends CI_Model {
 	 */
 	public function getAllNcm()
 	{
-		$query = $this->db->query("SHOW OPEN TABLES FROM `marketips` WHERE `Table` REGEXP \"^.{8}_.{4}$\"");
+		$base = DATABASE;
+		$query = $this->db->query("SHOW OPEN TABLES FROM `$base` WHERE `Table` REGEXP \"^.{8}_.{4}$\"");
 		return $query->result();
 	}
 

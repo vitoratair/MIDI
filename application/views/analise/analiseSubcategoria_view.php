@@ -27,6 +27,29 @@
         </div>
     </form>
 
+
+    <?php
+        $atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
+        echo form_open('analise/listAll', $atributos); 
+    ?>
+
+{subcategorias}
+
+        <select id="subcategoria"  name="{name}" class="span2">                   
+            
+            <option value=""> {titulo} </option>                 
+            {subc}    
+                <option value="{SCID}">{SCNome}</option>
+            {/subc}
+            
+        </select>
+
+ {/subcategorias}   
+
+    <input type="hidden" name="categoria" value="{categoriaID}">
+    <button type="submit" class="btn btn-success"><i class=""></i> Pesquisa</button>
+    </form>
+
         </td>
 
     </tr>
