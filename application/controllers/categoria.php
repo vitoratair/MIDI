@@ -56,9 +56,10 @@ class Categoria extends CI_Controller {
 
 		// passando o objeto ncmCategoria para um array		
 		foreach ($categoria as $key => $value)
-		{
+		{			
 			$arrayCategoria[$key] = $value->NID;
 		}
+
 
 		// Caso não exista nenhuma categoria associada, seta um número inválido no array
 		if (empty($arrayCategoria))

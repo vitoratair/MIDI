@@ -105,6 +105,7 @@ class Pesquisa extends CI_Controller {
 	 */
 	public function update($id)
 	{		
+		$user 	= $this->input->post('userID');
 		$ncm 	= $this->input->post('ncm');
 		$year 	= $this->input->post('year');		
 		$idn 	= $this->input->post('idn');
@@ -146,6 +147,66 @@ class Pesquisa extends CI_Controller {
 					$this->ncm_model->update(3, $table, $coluna, $idn, $subcategoria);					
 				}			
 				break;	
+
+			case 'CategoriaRequisicao':
+				$categoria = $this->input->post('categoria');				
+				$check = $this->requisicoes_model->verificar($ncm, $year, $idn, $user);				
+				
+				if ($check[0]->RequestID)
+				{
+					if (!empty($categoria))
+					{
+						 $this->requisicoes_model->updateItem(1, $check[0]->RequestID, $ncm, $year, $idn, $categoria);					
+					}
+				}
+				else
+				{
+					if (!empty($categoria))
+					{
+						 $this->requisicoes_model->adicionar(1, $user, $ncm, $year, $idn, $categoria);					
+					}
+				}
+				break;	
+
+			case 'MarcaRequisicao':
+				$marca = $this->input->post('marca');				
+				$check = $this->requisicoes_model->verificar($ncm, $year, $idn, $user);				
+				
+				if ($check[0]->RequestID)
+				{
+					if (!empty($marca))
+					{
+						 $this->requisicoes_model->updateItem(2, $check[0]->RequestID, $ncm, $year, $idn, $marca);					
+					}
+				}
+				else
+				{
+					if (!empty($marca))
+					{
+						 $this->requisicoes_model->adicionar(2, $user, $ncm, $year, $idn, $marca);					
+					}
+				}
+				break;
+
+			case 'ModeloRequisicao':
+				$modelo = $this->input->post('modelo');				
+				$check = $this->requisicoes_model->verificar($ncm, $year, $idn, $user);				
+
+				if ($check)
+				{
+					if (!empty($modelo))
+					{
+						 $this->requisicoes_model->updateItem(3, $check[0]->RequestID, $ncm, $year, $idn, $modelo);					
+					}
+				}
+				else
+				{
+					if (!empty($modelo))
+					{
+						 $this->requisicoes_model->adicionar(3, $user, $ncm, $year, $idn, $modelo);					
+					}
+				}
+				break;									
 
 			default:
 				# code...

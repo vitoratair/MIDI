@@ -36,6 +36,7 @@ class Analise extends CI_Controller {
 
 		// Busca informações vinda do POST //
 		$categoria 	= $this->input->post('categoria');
+
 		for ($i=1; $i <= 8; $i++)
 		{ 
 			$varPost 	= "SubCategoria" . $i;
@@ -49,20 +50,21 @@ class Analise extends CI_Controller {
 		$data['anos']			= $this->ncm_model->listarAno();
 		$data['ncm']			= $this->checkNcmCategoria($categoria);		
 		$data['titulos']		= $this->categoria_model->listarTitulos($categoria);
-		
+
+
 		if (!empty($data['ncm']))
-		{
-		
+		{		
 			foreach ($data['ncm'] as $key => $value)
 			{
 				$ncms[$key] = $value[0] . "_" . $value[1];
-			}
 
+			}
+			
 			// Verficar os valores de unidades e volumes de cada NCM //
 			$i= 0;
 			foreach ($ncms as $key => $table)
 			{
-				$aux = $this->getDados($table, $categoria, $sc);
+				$aux = $this->getDados($table, $categoria, $sc);				
 				if ($aux['unidades'] > 0)
 				{
 					$dados[$i] = $aux;
@@ -82,8 +84,16 @@ class Analise extends CI_Controller {
 				$data['dados'] 			= $resultado;
 				$data['categoriaID']	= $categoria;
 
-				$data = $this->montarArrayJavascript($data, $categoria);				
-				$data['main_content'] 	= 'analise/analise_view';
+				$data = $this->montarArrayJavascript($data, $categoria);
+
+				if (empty($data['titulos']))
+				{
+					$data['main_content'] 	= 'analise/analise_view';
+				}
+				else
+				{
+					$data['main_content'] 	= 'analise/analiseSubcategoria_view';
+				}				
 
 			}
 			else
@@ -1026,7 +1036,7 @@ class Analise extends CI_Controller {
 		   $filtro[$key] = $row['ano'];
 		}
 		array_multisort($filtro, SORT_ASC, $array);
-		unset($array[0]);	
+		// unset($array[0]);	
 
 		return $array;
 	}
@@ -1038,19 +1048,20 @@ class Analise extends CI_Controller {
 	{		
 
 		$lastYear 	= sizeof($array);
+		$lastYear 	= $lastYear - 1;
 		$next		= $lastYear + 1;
-		// Novos anos //
+	
+		// Novos anos //		
 		$array[$next]['ano'] 		= ($array[$lastYear]['ano'] + 1);
-		$array[$next + 1]['ano'] 	= ($array[$lastYear]['ano'] + 2);
-		
+		$array[$next + 1]['ano'] 	= ($array[$lastYear]['ano'] + 2);		
+
 		// Novos volumes //
 		$array[$next]['volume'] 	= (($array[$lastYear]['volume'] / 100)) + $array[$lastYear]['volume'];
 		$array[$next+1]['volume'] 	= (($array[$next]['volume'] / 100)) + $array[$next]['volume'];
 
 
 		// Novos Quantidades //
-		$array[$next]['unidades'] 	= (($array[$lastYear]['unidades']/100)) + $array[$lastYear]['unidades'];		
-	
+		$array[$next]['unidades'] 	= (($array[$lastYear]['unidades']/100)) + $array[$lastYear]['unidades'];
 		$array[$next+1]['unidades'] = (($array[$next]['unidades']/100)) + $array[$lastYear]['unidades'];
 
 		return $array;
@@ -1080,6 +1091,8 @@ class Analise extends CI_Controller {
 			}
 		}
 
+
+
 		return $array;
 	}
 
@@ -1089,18 +1102,16 @@ class Analise extends CI_Controller {
 	function checkNcmCategoria($categoria)
 	{
 		$ncms				= $this->categoria_model->getAllNcm();
-		$ncmCategoria 		= $this->ncm_model->getNcmByCategoria($categoria);
-
+		$ncmCategoria 		= $this->ncm_model->getNcmByCategoria($categoria);		
 		$aux 		= array();
 
 		foreach ($ncms as $key => $value)
 		{			
-			$ncm = explode('_', $value->Table);			
-
+			$ncm = explode('_', $value->Table);
 			foreach ($ncmCategoria as $key1 => $value1)
-			{
+			{	
 				if (in_array($value1->NNome, $ncm))
-				{ 				   
+				{ 							
 					array_push($aux, $ncm);
 				}				
 			}
@@ -1112,7 +1123,7 @@ class Analise extends CI_Controller {
 			{
 				$table[$key] = $value;
 			}			
-
+			
 			return $table;		
 		}
 
@@ -1132,10 +1143,13 @@ class Analise extends CI_Controller {
 		// Verifica os modelos da categoria //
 		$modelo 	= $this->modelo_model->listarAllModeloByCategoria($categoria, $sc);
 
-		// Formata o query para a clausula IN //
-		foreach ($modelo as $key => $value)
+		if (!empty($modelo))
 		{
-			array_push($modelos, $value->MOID);	
+			// Formata o query para a clausula IN //
+			foreach ($modelo as $key => $value)
+			{
+				array_push($modelos, $value->MOID);	
+			}			
 		}
 
 		// Calcula as unidades referente a uma NCM //

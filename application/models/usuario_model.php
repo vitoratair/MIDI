@@ -73,9 +73,9 @@ class Usuario_model extends CI_Model {
 			$this->db->from('Usuario');
 			$this->db->order_by('usuarioNome', 'asc');
 			$this->db->join('Cargo', 'Usuario.cargoID = Cargo.cargoID');
-			$this->db->join('Departamento', 'Usuario.departamentoID = Departamento.departamentoID');
 			$this->db->join('Tipo', 'Usuario.tipoID = Tipo.tipoID');
-			$this->db->join('Unidade', 'Departamento.unidadeID = Unidade.unidadeID');
+
+			$this->db->join('Unidade', 'Usuario.unidadeID = Unidade.unidadeID');
 			$query = $this->db->get();
 		}
 
@@ -115,9 +115,8 @@ class Usuario_model extends CI_Model {
 	function buscar($id)
 	{
 		$query = $this->db->query("SELECT usuarioID, usuarioNome, usuarioMatricula, usuarioLogin, usuarioPassword, 
-				usuarioEmail, tipoID, departamentoID, usuarioAtivo FROM Usuario WHERE usuarioID = '$id' LIMIT 1");
+				usuarioEmail, tipoID FROM Usuario WHERE usuarioID = '$id' LIMIT 1");
 		
-		//$query = $this->db->tipo_model->buscar('tipoID');
 	
 		return $query->result();
 	}
@@ -182,7 +181,7 @@ class Usuario_model extends CI_Model {
 	 */
 	function atualizaSenha($senha)
 	{
-		$id 			= $data['usuarioID'];
+		$id = $data['usuarioID'];
 	
 		$query = $this->db->query("UPDATE Usuario SET usuarioPassword='$senha' WHERE unidadeID='$id'");
 			
