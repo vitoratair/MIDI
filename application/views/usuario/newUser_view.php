@@ -63,20 +63,7 @@
 				    </select>
 				</div>
 			</div>
-
-
-			<div class="control-group">
-				<label class="control-label" for="">Departamento</label>
-				<div class="controls">
-					<select id="" name="Setor" class="input-xlarge">
-						
-						<option value=""> Escolha </option>
-						
-				    </select>
-				</div>
-			</div>
-			
-
+		
 			<div class="control-group">
 				<label class="control-label" for="">Tipo de usuário</label>
 				<div class="controls">

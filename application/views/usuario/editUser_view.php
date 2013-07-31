@@ -52,7 +52,7 @@
 		<div class="control-group">
 			<label class="control-label" for="">Unidade</label>
 			<div class="controls">
-				<select id="" class="input-xlarge"> 
+				<select id="" name="Unidade" class="input-xlarge"> 
 				{unidades}
 					<option value="{unidadeID}">{unidadeNome}</option> 
 				{/unidades}
@@ -60,7 +60,7 @@
 			</div>
 		</div>
 
-		<div class="control-group">
+<!-- 		<div class="control-group">
 			<label class="control-label" for="">Departamento</label>
 			<div class="controls">
 				<select id="" name="Setor" class="input-xlarge"> 
@@ -70,7 +70,7 @@
 
 				</select>
 			</div>
-		</div>
+		</div> -->
 
 		<div class="control-group">
 			<label class="control-label" for="">Tipo de usuário</label>
@@ -84,7 +84,7 @@
 			</div>
 		</div>
 
-		<div class="control-group">
+<!-- 		<div class="control-group">
 			<label class="control-label" for="">Ativo</label>
 			<div class="controls">
 				<select id="Ativo" name="Ativo" class="input-xlarge"> 
@@ -92,7 +92,7 @@
 					<option value="NÃO">NÃO</option>
 				</select>
 			</div>
-		</div>
+		</div> -->
 		
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary">Salvar</button>
