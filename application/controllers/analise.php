@@ -78,6 +78,7 @@ class Analise extends CI_Controller {
 				$resultado = $this->somarByAno($dados);
 				$resultado = $this->ordenaTabelaAno($resultado);
 
+
 				// Projeção de dados com dois anos a frente //
 				$resultado = $this->projecao($resultado);
 				
@@ -1019,9 +1020,7 @@ class Analise extends CI_Controller {
 			$data['dados'][$key]['unidades'] 	= number_format($data['dados'][$key]['unidades'],0,",",".");
 			$data['dados'][$key]['volume'] 		= number_format($data['dados'][$key]['volume'],0,",",".");
 		}
-
-
-
+		
 		return $data;
 	}
 
@@ -1031,12 +1030,19 @@ class Analise extends CI_Controller {
 	function ordenaTabelaAno($array)
 	{
 		
-		foreach ($array as $key => $row)
+		foreach ($array as $key => $value)
 		{
-		   $filtro[$key] = $row['ano'];
+			// Verifica se existe alguma entrada com unidades igual a 0 //
+			if ($value['unidades'] > 0)
+			{
+				$filtro[$key] = $value['ano'];	
+			}
+			else
+			{
+				unset($array[$key]);
+			}		   
 		}
 		array_multisort($filtro, SORT_ASC, $array);
-		// unset($array[0]);	
 
 		return $array;
 	}

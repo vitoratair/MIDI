@@ -3,26 +3,22 @@
 
 	<!-- Buscador  + Adicionar nova marca-->
 		
-		<?php
-			$atributos = array('form class'=>'well form-search',  'align'=>'right', 'method'=>'POST');
-			echo form_open('marca/listAll', $atributos); 
-		?>		
-		
-		<input type="text" class="input-xlarge search-query" placeholder="Busca de marca..." name="buscaMarca">
+	<div class="page-header">
+		<h2>Marcas <small> cadastradas no sistema</small></h2>
+	</div>
+
+	<?php
+		$atributos = array('form class'=>'form-search',  'align'=>'right', 'method'=>'POST');
+		echo form_open('marca/listAll', $atributos); 
+	?>		
 	
-		<button type="submit" class="btn btn-success"><i class="icon-search icon-white"></i> Buscar</button>
-		
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
-		<a href="addMarca" class="btn btn-success"><i class="icon-plus icon-white"></i> Nova marca</a>	  
-	
+	<input type="text" class="input-xlarge search-query" placeholder="Busca de marca..." name="buscaMarca">
+	<button type="submit" class="btn btn-success"><i class="icon-search icon-white"></i> Buscar</button>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
+	<a href="addMarca" class="btn btn-success"><i class="icon-plus icon-white"></i> Nova marca</a>	  	
 	</form>
-
-	<table class="table table-striped">					
-		<div class="page-header">
-			<h2>Marcas <small> cadastradas no sistema</small></h2>
-		</div>									
-
-	<table class='table table-bordered table-striped' id="idTabela">
+									
+	<table class='table table-bordered table-striped table-hover' id="idTabela">
 			
 			<tr class="">				
 				<td width="7%"><b>ID</b></td>
@@ -35,7 +31,7 @@
 			</tr>			
 
 			{marcas}
-			<tr>	
+			<tr class="table-condensed">	
 				<td>{MAID}</td>
 				<td>{MANome}</td>
 				<td>{MANome1}</td>

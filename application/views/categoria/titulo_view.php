@@ -7,11 +7,10 @@
 	<hr>
 
 
-		<?php
-			$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
-			echo form_open('categoria/setSubcategoria', $atributos); 
-		?>
-
+	<?php
+		$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
+		echo form_open('categoria/setSubcategoria', $atributos); 
+	?>
 
 		<fieldset>
 			
@@ -46,7 +45,7 @@
 		</form>	 
 
 	<!-- Tabela com a lista dos categoria do sistema -->
-	<table class='table table-bordered table-striped'>
+	<table class='table table-bordered table-striped table-hover'>
 			
 			<tr class="">				
 				<td width="7%"><b>Índice</b></td>
@@ -57,7 +56,7 @@
 			</tr>			
 
 			{titulos}
-			<tr>	
+			<tr class="table-condensed">
 				<td>{TColuna}</td>
 				<td>{TNome}</td>
 				<td><a href="../editSubcategoria/{TID}" class='icon-edit'> <a/></td>

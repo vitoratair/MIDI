@@ -1,27 +1,15 @@
 <!-- Estrutura -->
 <div class="container">
 
-	<br>
-
-	<table class="table table-striped">					
 		<div class="page-header">
-			<h2>Categoria <small>/</small> NCM<small> associar uma categoria a uma NCM</small></h2>
+			<h2>{categoriaNome}{CNome}{/categoriaNome}<small>, selecione as NCMs referente a categoria escolhida</small></h2>
 		</div>						
 					
+	<table class="table table-striped">					
 		<?php
 			$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
 			echo form_open('categoria/updateAssociarCategoria', $atributos); 
 		?>		
-
-		<blockquote>
-			<br>
-			<p>
-				Categoria <b>{categoriaNome}{CNome}{/categoriaNome}</b> escolhida
-			</p>
-			<br>
-			<hr>
-		</blockquote>
-
 
  		<?php
 	

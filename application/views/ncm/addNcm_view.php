@@ -17,7 +17,7 @@
 			</div>
 
 			<div class="control-group">
-				<label class="control-label" for="">Categoria</label>
+				<label class="control-label" for=""><strong>Categoria</strong></label>
 				<div class="controls">
 					<input type="text" class="input-xlarge" id="categoriaNome" placeholder="Nome da NCM" name="ncmNome" rel="popover" 
 					data-content="Deve possuir 8 caracteres numéricos." data-original-title="Categoria" autocomplete="off">
@@ -25,7 +25,7 @@
 			</div>			
 
 			<div class="control-group">
-				<label class="control-label" for="">Descrição</label>
+				<label class="control-label" for=""><strong>Descrição</strong></label>
 				<div class="controls">
 					<input type="text" class="input-xlarge" id="categoriaNome" placeholder="Descriçao da NCM" name="ncmDescricao" rel="popover" 
 					data-content="Deve possuir de 6 há 150 caracteres" data-original-title="Descrição" autocomplete="off">
