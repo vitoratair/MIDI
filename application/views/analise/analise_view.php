@@ -1,80 +1,76 @@
 <!-- Estrutura -->
 <div class="container">
 				
-	<div class="">
-		
-	</div>
-	<br>									
+<br>									
 
-<table width="100%" class="table table-bordered">
+<table class="table table-bordered">
     <tr>
-        <td>
-            
-    <?php
-        $atributos = array('form class'=>' form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
-        echo form_open('analise/listAll', $atributos); 
-    ?>
+        <td>            
+            <?php
+                $atributos = array('form class'=>' form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
+                echo form_open('analise/listAll', $atributos); 
+            ?>
 
-        <div align="left">
-            <select id="categoria"  name="categoria" class="span3" onchange="this.form.submit()">                   
-                
-                <option value=""> Selecione uma categoria </option>                 
-                {categorias}    
-                    <option value="{CID}">{CNome}</option>
-                {/categorias}
-                
-            </select>
-        </div>
-    </form>
+                <div align="left">
+                    <select id="categoria"  name="categoria" class="span3" onchange="this.form.submit()">                   
+                        
+                        <option value=""> Selecione uma categoria </option>                 
+                        {categorias}    
+                            <option value="{CID}">{CNome}</option>
+                        {/categorias}
+                        
+                    </select>
+                </div>
+            </form>
 
         </td>
 
     </tr>
 
 </table>	
-<hr>
+
 
 <table class="table table-bordered">
     <tr>
         <td>
             
-<div class="row-fluid">
-  <div class="span12">
-    <div class="row-fluid">
-      
-      <div class="span8">
-        
-            <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
-
-      </div>
-
-      <div class="span4">
-            <br><br><br>
-            <table class='table table-striped table-bordered' id="idTabela" align="right">
+            <div class="row-fluid">
+              <div class="span12">
+                <div class="row-fluid">
+                  
+                  <div class="span8">
                     
-                    <tr>
-                        <td width="10%"><b>Ano</b></td>
-                        <td width="10%"><b>Unidades</td>
-                        <td width="10%"><b>Volume</td>
-                        <td width="10%"><b>Detalhes</td>
-                    </tr>           
+                        <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 
-                    {dados}
+                  </div>
+
+                <div class="span4">
+                            <br><br><br>
+                            <table class='table table-striped table-bordered' id="idTabela" align="right">
+                            
+                                <tr>
+                                    <td width="10%"><b>Ano</b></td>
+                                    <td width="10%"><b>Unidades</td>
+                                    <td width="10%"><b>Volume</td>
+                                    <td width="10%"><b>Detalhes</td>
+                                </tr>           
+
+                            {dados}
+                            
+                                <tr>    
+                                    <td>{ano}</td>
+                                    <td>{unidades}</td>
+                                    <td>{volume}</td>
+                                    <td><a onclick="enviar({categoriaID}, {ano});" href="#" class='icon-search'> <a/></td>
+                                </tr>
+
+                            {/dados}
                     
-                    <tr>    
-                        <td>{ano}</td>
-                        <td>{unidades}</td>
-                        <td>{volume}</td>
-                        <td><a onclick="enviar({categoriaID}, {ano});" href="#" class='icon-search'> <a/></td>
-                    </tr>
-
-                    {/dados}
-            
-            </table>
-      </div>
-    </div>
-  </div>
-</div>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </td>
     </tr>

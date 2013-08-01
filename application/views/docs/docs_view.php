@@ -15,9 +15,13 @@
 
 	<div id="Table of Contents1">
 		
-		<p><a href="#__RefHeading__587_71787220">1 - Arquivos</a></p>
+		<p><a href="#__RefHeading__587_71787220">1 - Cadastro</a></p>
 
-		<p><a href="#__RefHeading__587_71787220">2 - Classes</a></p>
+		<p style="margin-left: 16"><a href="#__RefHeading__587_71787220">1.1 - Categoria</a></p>
+
+		<p><a href="#__RefHeading__587_71787220">2 - Pesquisa</a></p>
+
+		<p><a href="#__RefHeading__587_71787220">3 - Análise</a></p>
 
 	</div>
 	<hr>

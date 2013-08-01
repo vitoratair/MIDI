@@ -2,7 +2,7 @@
 
 <!-- Footer -->
    
-<div id="footer">
+<div id="">
 	<br><br>
     <p class="muted credit" align="center">MIDI - Monitoramento Intelbras de Dados de Importações<br>
     	Developed by
