@@ -1,17 +1,21 @@
 <!-- Estrutura -->
 <div class="container">
 
+	<div class="page-header">
+		
+		<h2>Modelos <small> lista de modelos cadastradas no sistema</small></h2>				
+
+	</div>
+
 	<!-- Buscador  + Adicionar nova marca-->
 		
 		<?php
-			$atributos = array('form class'=>'well form-search',  'align'=>'right', 'method'=>'POST');
+			$atributos = array('form class'=>'form-search',  'align'=>'right', 'method'=>'POST');
 			echo form_open('modelo/listAll', $atributos); 
 		?>		
 		
 		<input type="text" class="input-xlarge search-query" placeholder="Busca de modelo..." name="buscaModelo">
-	
-		<button type="submit" class="btn btn-success"><i class="icon-search icon-white"></i> Buscar</button>
-		
+		<button type="submit" class="btn btn-success"><i class="icon-search icon-white"></i> Buscar</button>		
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
 		<a href="<?php echo base_url();?>index.php/modelo/addModelo" class="btn btn-success"><i class="icon-plus icon-white"></i> Novo Modelo</a>	  
 	
@@ -19,13 +23,7 @@
 
 
 	<table class="table table-striped">					
-		
-		<div class="page-header">
-			
-			<h2>Modelos <small> lista de modelos cadastradas no sistema</small></h2>				
-
-		</div>						
-
+							
 		<!-- Formulário para combobox sem botão submit -->
 		<?php
 			$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
@@ -67,7 +65,7 @@
 
 			{modelos}
 			
-			<tr>	
+			<tr class="table-condensed">	
 				<td>{MOID}</td>
 				<td>{MNome}</td>
 				<td>{MNome1}</td>

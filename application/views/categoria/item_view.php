@@ -30,7 +30,7 @@
 		
 
 	<!-- Tabela com a lista dos categoria do sistema -->
-	<table class='table table-bordered table-striped'>
+	<table class='table table-bordered table-striped table-hover'>
 			
 			<tr class="">				
 				<td width="7%"><b>ID</b></td>
@@ -40,7 +40,7 @@
 			</tr>			
 
 			{itens}
-			<tr>	
+			<tr class="table-condensed">
 				<td>{SCID}</td>
 				<td>{SCNome}</td>
 				<td><a href="../../../editItem/{SCID}/{coluna}/{idSubcategoria}" class='icon-edit'> <a/></td>

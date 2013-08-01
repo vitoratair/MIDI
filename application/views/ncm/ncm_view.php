@@ -2,29 +2,28 @@
 <div class="container">
 	
 	<div class="">
-		<h2>NCM <small> - lista de NCMs cadastradas no sistema</small></h2>
+		<h2>NCM<small>s cadastradas no sistema</small></h2>
 	</div>
-
+	<hr>
+	
 	<div class="" align="right">
 		<a href="addNCM" class="btn btn-success"><i class="icon-plus icon-white"></i> Nova NCM</a>	  
-	</div>					
-	<hr>
+	</div>						
 	<br>
 
 	<!-- Tabela com a lista dos categoria do sistema -->
 	<table class='table table-bordered table-striped'>
-		<thead>
+
 			<tr>				
-				<td width="7%">ID</td>
-				<td width="15%">NCM</td>
-				<td>Descrição</td>				
-				<td width="10%">Editar</td>
-				<td width="10%">Excluir</td>
+				<td width="7%"><strong>ID</strong></td>
+				<td width="15%"><strong>NCM</strong></td>
+				<td><strong>Descrição</strong></td>				
+				<td width="10%"><strong>Editar</strong></td>
+				<td width="10%"><strong>Excluir</strong></td>
 			</tr>
-		</thead>				
-		<tbody>
+
 			{ncm}
-			<tr>	
+			<tr class="table-condensed">	
 				<td>{NID}</td>
 				<td>{NNome}</td>
 				<td>{NDescricao}</td>
@@ -32,7 +31,6 @@
 				<td><a onclick='RemoveNCM("{NID}")' data-toggle="modal" href="#myModal" class='icon-trash'></a></td>
 				</tr>
 			{/ncm}
-		</tbody>
 	</table>
 	<br>
 

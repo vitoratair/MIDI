@@ -9,33 +9,33 @@
 
 		</div>						
 
+	<div class=" form-search" align="right">
+		<a href="<?php echo base_url();?>index.php/marca/listAll" class="btn"><i class="icon-arrow-left"></i> Voltar</a>	  
+	</div>
+	<br>
+
 	<!-- Formulário para combobox sem botão submit -->
-	<?php
-		$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCategoria', 'method'=>'POST');
-		echo form_open('marca/modelos', $atributos); 
-	?>		
+		<?php
+			$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCategoria', 'method'=>'POST');
+			echo form_open('marca/modelos', $atributos); 
+		?>
+			
+		<select id="categoria" onchange="this.form.submit()" name="categoria" class="input-xlarge">
+			
+				<option value=""> Selecione uma categoria</option>
+			{categorias}		
+				<option value="{CID}">{CNome}</option>
+			{/categorias}
+			
+	    </select>
+				
+		</form>
+
 		
-		<fieldset>
+		
 
-		<div class="control-group">
-			<div class="controls">
 
-				<select id="categoria" onchange="this.form.submit()" name="categoria" class="input-xlarge">
-					
-						<option value=""> Selecione uma categoria</option>
-					{categorias}		
-						<option value="{CID}">{CNome}</option>
-					{/categorias}
-					
-			    </select>
-
-			</div>
-		</div>
-
-	</fieldset>
-</form>
-
-	<table class='table table-bordered table-striped' id="idTabela">
+	<table class='table table-bordered table-striped table-hover' id="idTabela">
 			
 			<tr class="">				
 				<td width="5%"><b>ID</b></td>
@@ -50,7 +50,7 @@
 
 			{modelos}
 			
-			<tr>	
+			<tr class="table-condensed">	
 				<td>{MOID}</td>
 				<td>{MNome}</td>
 				<td>{MNome1}</td>
@@ -92,7 +92,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#teste')
-		alert('asd');
+	
 	});
 
 </script>

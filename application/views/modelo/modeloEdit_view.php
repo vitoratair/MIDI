@@ -6,13 +6,19 @@
 		<h2>Edição <small> edição de modelos</small></h2>
 	</div>						
 
+
+	<div class=" form-search" align="right">
+		<a href="<?php echo base_url();?>index.php/modelo/listAll" class="btn"><i class="icon-arrow-left"></i> Voltar</a>	  
+	</div>
+	<br>
+
 	<?php
 		$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
 		echo form_open('modelo/updateModelo', $atributos); 
 	?>	
 	{modelos}
 	<!-- Tabela com a lista de linhas de NCMs -->
-	<table class='table table-condensed table-striped'>
+	<table class='table table-striped table-bordered'>
 			
 			<tr class="">				
 				<td width=""><strong>Nome</strong></td>				
@@ -62,12 +68,15 @@
 						
 				    </select>			
 			    </td>
+			</tr>
+			<tr>
+				<td colspan="7"></td>
 			</tr>		
 	</table>
 		<div class="form-actions">
 			<input type="hidden" value="{MOID}" name="id">
 			<button type="submit" class="btn btn-success">Salvar</button>
-			<button class="btn" type="reset">Voltar</button>
+			<button class="btn" type="reset">Limpar</button>
 		</div>
 
 	</fieldset>	
@@ -92,11 +101,6 @@
 	
 	</table>
 	
-	<div class=" form-search" align="right">
-		<a href="<?php echo base_url();?>index.php/modelo/listAll" class="btn btn-success"><i class="icon-circle-arrow-left icon-white"></i> Voltar</a>	  
-	</div>
-
-
 
 <!-- Java Script com modal para alteração da marca -->
 

@@ -11,7 +11,7 @@
 	<hr>
 	<br>
 	<!-- Tabela com a lista dos categoria do sistema -->
-	<table class='table table-bordered table-striped'>
+	<table class='table table-bordered table-striped table-hover'>
 			
 			<tr class="">				
 				<td width="7%"><b>ID</b></td>
@@ -23,7 +23,7 @@
 			</tr>			
 
 			{categorias}
-			<tr>	
+			<tr class="table-condensed">	
 				<td>{CID}</td>
 				<td>{CNome}</td>
 				<td><a href="editCategoria/{CID}" class='icon-edit'> <a/></td>

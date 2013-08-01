@@ -2,15 +2,19 @@
 <div class="container">
 
 	<br>
+	<h2>Usuários <small>cadastrados</small></h2>
+	<hr>	
 
-	<!-- Adicionar novo usuario -->
-	<a href="newUser" class="btn btn-primary"> <i class="icon-plus icon-white"></i> Novo Usuário </a>
+	<div align="right">
+		<!-- Adicionar novo usuario -->
+		<a href="newUser" class="btn btn-success"> <i class="icon-plus icon-white"></i> Novo Usuário </a>				
+	</div>
 	<br>
-	<br>
+
 
 	<!-- Tabela com a lista dos usuarios do sistema -->
-	<table class='table table-bordered table-striped'>
-		<thead>
+	<table class='table table-bordered table-striped table-hover'>
+
 			<tr>
 				<th>Nome</th>
 				<th>Login</th>
@@ -21,11 +25,9 @@
 				<th>Editar</th>
 				<th>Excluir</th>
 			</tr>
-		</thead>
 				
-		<tbody>
-			{usuarios}
-			<tr>
+		{usuarios}
+			<tr class="table-condensed">
 				<td>{usuarioNome}</td>
 				<td>{usuarioLogin}</td>
 				<td>{usuarioEmail}</td>
@@ -35,8 +37,8 @@
 				<td><a href="editUser/{usuarioID}" class='icon-edit'> <a/></td>
 				<td><a onclick='RemoveUser("{usuarioID}")' data-toggle="modal" href="#myModal" class='icon-trash'></a></td>
 			</tr>
-			{/usuarios}
-		</tbody>
+		{/usuarios}
+
 	</table>
 	<br>
 
