@@ -1,7 +1,7 @@
 <!-- Estrutura -->
 <div class="container">			
 <br>
-	<table class="" width="96%" border="0px" align="center">
+	<table class="table" width="96%" border="0px" align="center">
 		<tr>
 			<td valign="top">
 				<!-- Formulário para combobox sem botão submit -->
@@ -70,25 +70,26 @@
 				</form>	
 			</td>
 			<td>
+
 	<!-- Buscador-->		
 				<?php
 					$atributos = array('form class'=>'form-search',  'align'=>'right', 'method'=>'POST');
 					echo form_open('pesquisa/listAll', $atributos); 
 				?>					
 
- 				<div class="control-group success">
+ 				<div class="control-group">
 				  	<div class="controls">
-				    	<input type="text" class="input-xlarge search-query" placeholder="Pesquisar por ..." name="search">
+				    	<input type="text" class="span3 search-query" placeholder="Pesquisar por ..." name="search">
 					</div>
 				</div>
 
- 				<div class="control-group error">
+ 				<div class="control-group">
 				  	<div class="controls">
-				    	<input type="text" class="input-xlarge search-query" placeholder="Retirar a palavra ..." name="unSearch">
+				    	<input type="text" class="span3 search-query" placeholder="Retirar a palavra ..." name="unSearch">
 					</div>
 				</div>				
 				<input type="hidden" name="controle" value="3">
-				<button type="submit" class="btn btn-success"><i class="icon-search icon-white"></i> Buscar</button>
+				<button type="submit" class="btn btn"><i class="icon-search"></i> Buscar</button>
 				
 				</form>
 			</td>

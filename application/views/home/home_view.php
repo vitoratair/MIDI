@@ -2,16 +2,47 @@
 <!-- Estrutura -->
 <div class="container">
 
-	<p align="center">		
-		
-	</p>
-
-<br><br><br><br><br><br><br><br>
-
+	<div class="hero-unit">
+		<h1>MIDI</h1>
+		<p>Monitoramento Intelbras de Dados de Importações</p>
+	</div>
 	
-	<p align="center">
-		<img src="<?php echo base_url();?>img/logo.jpg" width="300px">
-	</p>
+	<ul class="thumbnails">
+		<li class="span3">
+
+			<div class="thumbnail">
+				<img src="<?php echo base_url();?>img/quality.jpg" alt="">
+				<a href="<?php echo site_url()?>/app/SQAP" class="link"></i><h5>Manual de utilização</h5></a>
+			</div>
+		</li>
+
+
+		<li class="span3">
+
+			<div class="thumbnail">
+				<img src="<?php echo base_url();?>img/auditoria.jpg" alt="">
+				<a href="<?php echo site_url()?>/app/DOCS" class="link"></i><h5>Documentação do Sistema</h5></a>
+			</div>
+
+		</li>
+
+		<li class="span3">
+
+			<div class="thumbnail">
+				<img src="<?php echo base_url();?>img/process.jpg" alt="">
+				<a href="<?php echo site_url()?>/app/Workflow" class="link"></i><h5>Funcionamento</h5></a>
+			</div>
+
+		</li>
+
+		<li class="span3">
+
+			<div class="thumbnail">
+				<img src="<?php echo base_url();?>img/sw.jpg" alt="">
+				<a href="http://www.intelbras.com.br"><h5>Intelbras</h5></a>
+			</div>
+		</li>
+	</ul>
 
 
 <!-- FIM -->
