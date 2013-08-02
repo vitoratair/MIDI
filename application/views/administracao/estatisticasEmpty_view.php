@@ -16,6 +16,7 @@
 
 			<select id="ncm" name="ncm" class="span2">
 				
+				<option value="">Selecione uma NCM</option>
 				{ncms}		
 					<option value="{NNome}">{NNome}</option>
 				{/ncms}
@@ -26,11 +27,12 @@
 
 			<select id="anoCombo" name="ano" class="span2">
 				
+				<option value="">Selecione um ano</option>
 				{anos}		
 					<option value="{AAno}">{AAno}</option>
 				{/anos}
 				
-		    </select>		    
+		    </select>			    
 	
 		    &nbsp;&nbsp;&nbsp;
 		    

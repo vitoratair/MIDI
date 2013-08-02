@@ -77,10 +77,6 @@ class Analise extends CI_Controller {
 				// Somar os array com aos iguais //
 				$resultado = $this->somarByAno($dados);
 				$resultado = $this->ordenaTabelaAno($resultado);
-
-
-				// Projeção de dados com dois anos a frente //
-				$resultado = $this->projecao($resultado);
 				
 				$data['dados'] 			= $resultado;
 				$data['categoriaID']	= $categoria;

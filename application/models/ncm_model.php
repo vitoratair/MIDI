@@ -527,7 +527,15 @@ class ncm_model extends CI_Model {
 			$this->db->from($table);			
 			return $this->db->count_all_results();			
 		}		
-
+		elseif ($id == 11)
+		{
+			$this->db->select('DISTINCT(`CNome`)');
+			$this->db->from($table);
+			$this->db->where('CID !=', 1);
+			$this->db->join('Categoria', 'Categoria = CID');
+			$query = $this->db->get();
+			return $query->result();	
+		}	
 
 	}
 

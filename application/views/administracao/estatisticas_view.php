@@ -16,6 +16,7 @@
 
 			<select id="ncm" name="ncm" class="span2">
 				
+				<option value="{ncm}">{ncm}</option>
 				{ncms}		
 					<option value="{NNome}">{NNome}</option>
 				{/ncms}
@@ -26,6 +27,7 @@
 
 			<select id="anoCombo" name="ano" class="span2">
 				
+				<option value="{ano}">{ano}</option>
 				{anos}		
 					<option value="{AAno}">{AAno}</option>
 				{/anos}
@@ -44,13 +46,13 @@
 	<table class='table table-bordered table-hover table-striped' id="idTabela">
 			
 			<tr class="">				
-				<td width="10%"><b>Meses</td>
-				<td width="%"><b>Total de importações</td>
-				<td width="%"><b>Marcas encontradas</td>
-				<td width="%"><b>Modelos encontrados</td>
-				<td width="%"><b>Marca e Modelo encontrados</td>
-				<td width="8%"><b>Outros</td>
-				<td width="8%"><b>Categorias</td>
+				<td width="%"><b>Meses</td>
+				<td width="%"><b>Total</td>
+				<td width="%"><b>Marcas</td>
+				<td width="%"><b>Modelos</td>
+				<td width="%"><b>Marca e Modelo</td>
+				<td width="%"><b>Outros</td>
+				<td width="%"><b>Categorias</td>
 			</tr>			
 			
 		{dados}	
@@ -61,20 +63,52 @@
 				<td>{modeloEncontrado}</td>
 				<td>{marca_modelo}</td>
 				<td>{outros}</td>	
-				<td><i class="icon icon-search"></td>				
+				<td>{categorias}</td>			
 			</tr>
 		{/dados}
 
-			<tr class="table-condensed info">	
+<!-- 			<tr class="table-condensed info">	
 				<td><b>TOTAL</b></td>
 				<td><b>{total}</b></td>
 				<td><b>{marcaEncontrada}</b></td>
 				<td><b>{modeloEncontrado}</b></td>
 				<td><b>{marca_modelo}</b></td>
 				<td><b>{outros}</b></td>	
-				<td><i class="icon icon-search"></td>				
-			</tr>		
+				<td></td>	
+			</tr> -->		
 	
 	</table>
 
 
+
+
+<script type="text/javascript">
+	
+	function Abrir(mes)
+	{
+	    
+		document.write("
+			<div class=\"modal hide\" id=\"myModal\">
+					<div class=\"modal-header\">
+					<button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>
+						<h3>Excluir</h3>
+					</div>
+
+					<div class=\"modal-body\">
+					<p>Deseja realmente excluir a marca?</p>
+					</div>
+
+					 <div class=\"modal-footer\">
+					<a href="" class=\"btn\" data-dismiss=\"modal\">Não</a>
+					<a href="" class=\"btn btn-danger\" id=\"Excluir\">Sim</a>
+				 	</div>
+			</div>
+
+			")
+
+		document.write("<div></div>")
+
+
+
+	}
+</script>

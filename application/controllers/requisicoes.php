@@ -6,6 +6,7 @@ class Requisicoes extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		error_reporting(E_ALL ^ (E_NOTICE));
 		$this->logged();
 
 	}
@@ -102,6 +103,7 @@ class Requisicoes extends CI_Controller {
 			$array[$key]['marca'] 			= $value->MANome;
 			
 			$categoria 						= $this->categoria_model->getCategoria($dadosRequisicao[$key]['categoria']);
+			
 			if (!empty($categoria[0]->CNome))
 			{
 				$array[$key]['categoriaRe'] 	= $categoria[0]->CNome;
@@ -151,11 +153,23 @@ class Requisicoes extends CI_Controller {
 		{
 			foreach ($data as $key => $value)
 			{
-				$dados[$key]['idRe']		= $value->RequestID;
+				$dados[$key]['idRe']		= $value->RequestID;	
 				$dados[$key]['table'] 		= $value->RequestNcm . "_" . $value->RequestAno;
-				$dados[$key]['categoria'] 	= $value->RequestCategoria;
-				$dados[$key]['marca'] 		= $value->RequestMarca;
-				$dados[$key]['modelo'] 		= $value->RequestModelo;
+				
+				if (!empty($value->RequestCategoria))
+				{
+					$dados[$key]['categoria'] 	= $value->RequestCategoria;	
+				}
+				if (!empty($value->RequestMarca))
+				{
+					$dados[$key]['marca'] 		= $value->RequestMarca;	
+				}
+				if (!empty($value->RequestModelo))
+				{
+					$dados[$key]['modelo'] 		= $value->RequestModelo;	
+				}
+				
+				
 			}		
 
 		}
