@@ -182,6 +182,7 @@ class Analise extends CI_Controller {
 		$ano 		= $this->input->post('ano');
 		$sc1 		= $this->input->post('subcategorias');
 		$sc 		= explode(",", $sc1);
+		$valor 		= $this->input->post('valor');
 
 		// Lista todas as opções //
 		$data['anos']			= $this->ncm_model->listarAno();
@@ -206,10 +207,22 @@ class Analise extends CI_Controller {
 				$aux[$key] 			= $this->getDadosAnoParticipacao($table, $categoria, $sc);
 			}
 
-			$aux 	= $this->mergeTabela($aux);
-			$aux 	= $this->mergeMarca($aux);
-			$aux 	= $this->ordena($aux, 'unidades');
+			$aux 			= $this->mergeTabela($aux);
+			$aux 			= $this->mergeMarca($aux);
+			$aux 			= $this->ordena($aux, 'unidades');
+			$data['maximo'] = sizeof($aux);
+			
+			if (empty($valor))
+			{
+				$valor = $data['maximo'];
+			}
+
+			$data['valor'] = $valor;
+
+			// exclui as entradas acima do valor especificado no segundo argumento //
+			$aux 	= $this->montaOutros($aux, $valor, $data['maximo']);
 		
+
 			foreach ($aux as $key => $value)
 			{
 				$dados 	= $dados . "," . "['" . $value['marcaNome'] . "'," . $value['unidades'] . "]";
@@ -224,7 +237,8 @@ class Analise extends CI_Controller {
 				$dados = substr($dados, 1, -7);	
 			}
 
-			$data['dados'] 				= $dados;
+			$data['dados'] 	= $dados;
+			
 
 		}
 
@@ -239,7 +253,28 @@ class Analise extends CI_Controller {
 
 	}
 
-		/**
+	/**
+	 * Montar array somente com os valore acima de determinado valor
+	 */	
+	public function montaOutros($dados, $valor, $maximo)
+	{
+
+		for ($i=$valor; $i <= $maximo; $i++)
+		{ 
+			$outros = $outros + $dados[$i]['unidades'];
+			unset($dados[$i]);
+		}
+		
+		$last = sizeof($dados) + 1;
+
+		$dados[$last]['marca'] 		= 0;
+		$dados[$last]['marcaNome'] 	= 'Outros';
+		$dados[$last]['unidades'] 	= $outros;
+
+		return $dados;
+	}
+
+	/**
 	 * Montar array para ser exibido no gráfico em javascript
 	 */	
 	public function analiseAno()

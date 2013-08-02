@@ -13,6 +13,8 @@
 <link href="<?php echo base_url();?>css/bootstrap.css" rel="stylesheet">
 <link href="<?php echo base_url();?>css/bootstrap-responsive.css" rel="stylesheet">
 <link href="<?php echo base_url();?>css/datepicker.css" rel="stylesheet">
+<link href="<?php echo base_url();?>css/slider.css" rel="stylesheet">
+
 <style>
 body {
 	padding-top: 60px;
@@ -23,5 +25,8 @@ body {
 </head>
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
-
 <script src="<?php echo base_url();?>js/jquery.min.js"></script>
+<script src="<?php echo base_url();?>js/prettify.js"></script>
+<script src="<?php echo base_url();?>js/modernizr.js"></script>
+<script src="<?php echo base_url();?>js/bootstrap-slider.js"></script>
+
