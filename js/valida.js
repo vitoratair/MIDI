@@ -130,7 +130,13 @@ $(document).ready(function(){
 			categoria:
 			{		
 				required: true
-			},			
+			},	
+
+			/* Valida NCM no combobox */
+			ncmCombo:
+			{		
+				required: true
+			},				
 		
 		},
 		

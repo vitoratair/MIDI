@@ -37,7 +37,5 @@
 <script src="<?php echo base_url();?>js/relatNc.js"></script>
 <script src="<?php echo base_url();?>js/relatAc.js"></script>
 
-
-
 </body>
 </html>

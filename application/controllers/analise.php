@@ -1107,13 +1107,15 @@ class Analise extends CI_Controller {
 	 */
 	function checkNcmCategoria($categoria)
 	{
-		$ncms				= $this->categoria_model->getAllNcm();
-		$ncmCategoria 		= $this->ncm_model->getNcmByCategoria($categoria);		
-		$aux 		= array();
-
+		$varTable 		= "Tables_in_" . DATABASE;
+		$aux 			= array();
+		$ncms			= $this->categoria_model->getAllNcm();
+		$ncmCategoria 	= $this->ncm_model->getNcmByCategoria($categoria);		
+		
 		foreach ($ncms as $key => $value)
 		{			
-			$ncm = explode('_', $value->Table);
+			$ncm = explode('_', $value->$varTable);
+
 			foreach ($ncmCategoria as $key1 => $value1)
 			{	
 				if (in_array($value1->NNome, $ncm))

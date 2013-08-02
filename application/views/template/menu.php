@@ -43,6 +43,25 @@
 
 					<li class="dropdown">
 						
+						<a class="dropdown-toggle" href="#">Administração </a>
+						
+						<ul class="dropdown-menu">
+							
+							<li><?php echo anchor('','Processamento');?></li>
+
+							<li><?php echo anchor('administracao/estatisticasListAll','Estatísticas');?></li>
+
+							<li><?php echo anchor('','Upload NCM');?></li>
+
+							<li><?php echo anchor('','Upload Marcas');?></li>
+
+							<li><?php echo anchor('','Upload Modelos');?></li>
+
+						</ul>
+					</li>
+
+					<li class="dropdown">
+						
 						<a class="dropdown-toggle" href="#">Cadastro </a>
 						
 						<ul class="dropdown-menu">
