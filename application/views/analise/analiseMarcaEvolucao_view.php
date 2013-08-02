@@ -30,7 +30,7 @@
                 text: 'Evolução Marca'
             },
             subtitle: {
-                text: 'Arraste o mouse nos meses desejados'
+                text: '{marcaNome}'
             },
             xAxis: [{
                 categories: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',

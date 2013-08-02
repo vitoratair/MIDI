@@ -160,7 +160,11 @@ class Analise extends CI_Controller {
 		$data['categoriaNome'] 		= $data['categoriaNome'][0]->CNome;
 		$data['ano'] 				= $ano;
 		$data['categoria'] 			= $categoria;
-		$data['marca'] 			= $marca;
+		$data['marca'] 				= $marca;
+		$data['marcaNome'] 			= $this->marca_model->buscaMarca($marca);
+		$data['marcaNome'] 			= $data['marcaNome'][0]->MANome;
+
+
 		$data['postSubcategorias'] 	= $sc1;
 
 		$data['main_content'] 		= 'analise/analiseAnoParticipacaoModelo_view';
@@ -593,6 +597,8 @@ class Analise extends CI_Controller {
 		
 		$data['categoria']	= $categoria;
 		$data['marca']		= $marca;
+		$data['marcaNome']	= $this->marca_model->buscaMarca($marca);
+		$data['marcaNome'] 	= $data['marcaNome'][0]->MANome;
 		$data['ano']		= $ano;
 		$data['sc']			= $sc1;
 		$data['unidades'] 	= substr($unidades, 1);

@@ -62,11 +62,11 @@ class Administracao extends CI_Controller {
 			}
 
 			// Busca as informações totais de cada NCM //
-			$data['total'] 				= $this->ncm_model->estatisticas(6, $table, NULL);
+			$data['total'] 					= $this->ncm_model->estatisticas(6, $table, NULL);
 			$data['marcaEncontrada'] 	= $this->ncm_model->estatisticas(7, $table, NULL);
 			$data['modeloEncontrado'] 	= $this->ncm_model->estatisticas(8, $table, NULL);
-			$data['marca_modelo'] 		= $this->ncm_model->estatisticas(9, $table, NULL);
-			$data['outros'] 			= $this->ncm_model->estatisticas(10, $table, NULL); 
+			$data['marca_modelo'] 			= $this->ncm_model->estatisticas(9, $table, NULL);
+			$data['outros'] 				= $this->ncm_model->estatisticas(10, $table, NULL); 
 
 			$data['main_content'] = 'administracao/estatisticas_view';
 		}
