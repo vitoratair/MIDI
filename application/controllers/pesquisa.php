@@ -74,6 +74,7 @@ class Pesquisa extends CI_Controller {
 		else
 		{			
 			$data['checkModelo'] = FALSE;
+
 			// Loop para verficar as subcategorias do modelo //
 			foreach ($data['titulos'] as $key => $value)
 			{
@@ -83,6 +84,7 @@ class Pesquisa extends CI_Controller {
 		}
 
 		$data['dados']	 	= $this->ncm_model->listarNcm($table, $id);
+		$data['dados'] 		= $this->formatarDados(1, $data['dados']);
 		
 		// Envia os dados para a view //
 		$data['ncm'] 	= $ncm; 
@@ -449,6 +451,24 @@ class Pesquisa extends CI_Controller {
 		$this->parser->parse('template', $data);
 
 	}
+
+	/**
+	 * Formata os dados unidades e o volume
+	 */	
+	function formatarDados($id, $dados)
+	{
+		
+		if($id == 1)
+		{
+			foreach ($dados as $key => $value)
+			{
+				$dados[$key]->QUANTIDADE_COMERCIALIZADA_PRODUTO = number_format($value->QUANTIDADE_COMERCIALIZADA_PRODUTO,0,",",".");
+			}			
+		}
+
+		return $dados;
+	}
+
 }
 
 ?>

@@ -16,8 +16,6 @@
     <div class="" id="participacao_de_mercadoPeca" style="min-width: 800px; height: 700px; margin: 0 auto"></div>    
 
 
-
-
 <!--
     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 -->
@@ -33,10 +31,10 @@ $(function () {
                 plotShadow: false
             },
             title: {
-                text: 'Participação de mercado'
+                text: 'Análise de importação'
             },
             subtitle:{
-	          // text: 'marcas com share acima de 1%'  
+	          text: '{categoriaNome}'  
             },
             tooltip: {
 	            pointFormat: "Value: {point.y:,.0f}"	         

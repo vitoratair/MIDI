@@ -34,10 +34,10 @@ $(function () {
                 plotShadow: false
             },
             title: {
-                text: 'Participação de mercado'
+                text: 'Análise de importação'
             },
             subtitle:{
-	          // text: 'marcas com share acima de 1%'  
+	          text: '{marcaNome}'  
             },
             tooltip: {
 	            pointFormat: "Value: {point.y:,.0f}"	         

@@ -96,12 +96,13 @@ class Marca extends CI_Controller {
 		foreach ($data['modelos'] as $key1 => $value1)
 		{
 			
+			$varTable = "Tables_in_" . DATABASE;
 			$check = FALSE;
 
 			// Loop para percorrer as NCMs
 			foreach ($ncms as $key => $value)
 			{
-				$countModelos = $this->modelo_model->verificarCadastro($value->Table,$value1->MOID);
+				$countModelos = $this->modelo_model->verificarCadastro($value->$varTable, $value1->MOID);
 				$countModelos = $countModelos[0]->IDN;
 
 				if ($countModelos != 0)

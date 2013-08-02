@@ -50,32 +50,31 @@
 				<td width="%"><b>Total</td>
 				<td width="%"><b>Marcas</td>
 				<td width="%"><b>Modelos</td>
-				<td width="%"><b>Marca e Modelo</td>
 				<td width="%"><b>Outros</td>
 				<td width="%"><b>Categorias</td>
 			</tr>			
 			
 		{dados}	
+		
 			<tr class="table-condensed">	
 				<td>{mes}</td>
 				<td>{total}</td>
 				<td>{marcaEncontrada}</td>
 				<td>{modeloEncontrado}</td>
-				<td>{marca_modelo}</td>
 				<td>{outros}</td>	
 				<td>{categorias}</td>			
 			</tr>
+		
 		{/dados}
 
-<!-- 			<tr class="table-condensed info">	
+			<tr class="table-condensed info">	
 				<td><b>TOTAL</b></td>
 				<td><b>{total}</b></td>
 				<td><b>{marcaEncontrada}</b></td>
 				<td><b>{modeloEncontrado}</b></td>
-				<td><b>{marca_modelo}</b></td>
 				<td><b>{outros}</b></td>	
 				<td></td>	
-			</tr> -->		
+			</tr>		
 	
 	</table>
 
