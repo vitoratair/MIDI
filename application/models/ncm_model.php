@@ -79,7 +79,6 @@ class ncm_model extends CI_Model {
 		return $query->result();	
 	}	
 
-
 	/**
 	 * Busca uma ncm
 	 */
@@ -439,20 +438,100 @@ class ncm_model extends CI_Model {
 		
 		foreach ($subcategoria as $key => $value)
 		{
-			$coluna = $table . ".SubCategoria". ($key + 1) ."_SCID";
+
+			$coluna = $table . ".SubCategoria". ($key + 1) ."_SCID";			
 			if (!empty($value) && ($value != 'false'))
 			{
 				$this->db->where($coluna,$value);
 			}
+
 		}
 
 		$this->db->where('Modelo', 1);
 		$this->db->where('Marca', 1);
 		$this->db->where('Categoria', $categoria);
-		$query = $this->db->get();			
+		$query = $this->db->get();	
 	
 		return $query->result();
 	}		
+
+	/**
+	 * Retorna a lista de importações
+	 */
+	public function estatisticas($id, $table, $mes)
+	{
+		// Retorna o número total de importações
+		if ($id == 1)
+		{			
+			$this->db->where('MES', $mes);
+			$this->db->from($table);			
+			return $this->db->count_all_results();
+		}
+		elseif ($id == 2)
+		{
+			$this->db->where('MES', $mes);			
+			$this->db->where('Marca !=', 1);
+			$this->db->from($table);			
+			return $this->db->count_all_results();			
+		}
+		elseif ($id == 3)
+		{
+			$this->db->where('MES', $mes);			
+			$this->db->where('Modelo !=', 1);
+			$this->db->from($table);			
+			return $this->db->count_all_results();			
+		}	
+		elseif ($id == 4)
+		{
+			$this->db->where('MES', $mes);			
+			$this->db->where('Marca !=', 1);
+			$this->db->where('Modelo !=', 1);
+			$this->db->from($table);			
+			return $this->db->count_all_results();			
+		}				
+		elseif ($id == 5)
+		{
+			$this->db->where('MES', $mes);
+			$this->db->where('Marca =', 1);
+			$this->db->where('Modelo =', 1);
+			$this->db->from($table);			
+			return $this->db->count_all_results();			
+		}
+		elseif ($id == 6)
+		{			
+			return $this->db->count_all($table);
+		}
+		elseif ($id == 7)
+		{
+			$this->db->where('Marca !=', 1);
+			$this->db->from($table);			
+			return $this->db->count_all_results();			
+		}
+		elseif ($id == 8)
+		{
+			$this->db->where('Modelo !=', 1);
+			$this->db->from($table);			
+			return $this->db->count_all_results();			
+		}	
+		elseif ($id == 9)
+		{
+			$this->db->where('Marca !=', 1);
+			$this->db->where('Modelo !=', 1);
+			$this->db->from($table);			
+			return $this->db->count_all_results();			
+		}				
+		elseif ($id == 10)
+		{
+			$this->db->where('Marca =', 1);
+			$this->db->where('Modelo =', 1);
+			$this->db->from($table);			
+			return $this->db->count_all_results();			
+		}		
+
+
+	}
+
+
 
 
 }

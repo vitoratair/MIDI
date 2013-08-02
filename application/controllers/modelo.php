@@ -144,7 +144,8 @@ class Modelo extends CI_Controller {
 			// Loop para percorrer as NCMs
 			foreach ($ncms as $key => $value)
 			{
-				$countModelos = $this->modelo_model->verificarCadastro($value->Table,$value1->MOID);
+				$varTable = "Tables_in_" . DATABASE;
+				$countModelos = $this->modelo_model->verificarCadastro($value->$varTable, $value1->MOID);
 				$countModelos = $countModelos[0]->IDN;
 
 				if ($countModelos != 0)
@@ -177,10 +178,7 @@ class Modelo extends CI_Controller {
 	 * Apresenta a view para edição de modelos
 	 */
 	public function editModelo($id)
-	{
-
-		// Carrega a view correspondende //
-		$data['main_content'] = 'modelo/modeloEdit_view';
+	{		
 
 		// Busca informações do modelo //
 		$data['marca'] 			= $this->modelo_model->bucaMarcaByModelo($id);
@@ -212,6 +210,7 @@ class Modelo extends CI_Controller {
 		$data['categorias'] = $this->categoria_model->listar();
 
 		// Envia todas as informações para tela //
+		$data['main_content'] = 'modelo/modeloEdit_view';
 		$this->parser->parse('template', $data);
 
 	}
