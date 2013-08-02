@@ -33,6 +33,8 @@ class Administracao extends CI_Controller {
 		// Recebe os dados do formulário //
 		$ncm = $this->input->post('ncm');
 		$ano = $this->input->post('ano');
+		$data['ncm'] 				= $ncm;
+		$data['ano']				= $ano;		
 
 		if (!empty($ncm) && (!empty($ano)))
 		{
@@ -53,7 +55,10 @@ class Administracao extends CI_Controller {
 				$data['dados'][$i]['marcaEncontrada'] 	= $this->ncm_model->estatisticas(2, $table, $i);
 				$data['dados'][$i]['modeloEncontrado'] 	= $this->ncm_model->estatisticas(3, $table, $i);
 				$data['dados'][$i]['marca_modelo'] 		= $this->ncm_model->estatisticas(4, $table, $i);
-				$data['dados'][$i]['outros'] 			= $this->ncm_model->estatisticas(5, $table, $i);			
+				$data['dados'][$i]['outros'] 			= $this->ncm_model->estatisticas(5, $table, $i);
+				$categorias 							= $this->ncm_model->estatisticas(11, $table, $i);			
+				$data['dados'][$i]['categorias']	 	= $this->formataCategorias($categorias);
+
 			}
 
 			// Busca as informações totais de cada NCM //
@@ -61,8 +66,8 @@ class Administracao extends CI_Controller {
 			$data['marcaEncontrada'] 	= $this->ncm_model->estatisticas(7, $table, NULL);
 			$data['modeloEncontrado'] 	= $this->ncm_model->estatisticas(8, $table, NULL);
 			$data['marca_modelo'] 		= $this->ncm_model->estatisticas(9, $table, NULL);
-			$data['outros'] 			= $this->ncm_model->estatisticas(10, $table, NULL);			
-			
+			$data['outros'] 			= $this->ncm_model->estatisticas(10, $table, NULL); 
+
 			$data['main_content'] = 'administracao/estatisticas_view';
 		}
 		else
@@ -77,6 +82,20 @@ class Administracao extends CI_Controller {
 
 
 	}
+
+
+	function formataCategorias($dados)
+	{
+
+		foreach ($dados as $key => $value)
+		{
+			$categorias = $categorias . " - " . $value->CNome;
+		}
+
+		$categorias = substr($categorias, 3);
+		return $categorias;
+	}
+
 
 	function buscaMes($i)
 	{

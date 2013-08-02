@@ -47,15 +47,15 @@
 						
 						<ul class="dropdown-menu">
 							
-							<li><?php echo anchor('','Processamento');?></li>
+							<li><?php echo anchor('app/home','Processamento');?></li>
 
 							<li><?php echo anchor('administracao/estatisticasListAll','Estatísticas');?></li>
 
-							<li><?php echo anchor('','Upload NCM');?></li>
+							<li><?php echo anchor('app/home','Upload NCM');?></li>
 
-							<li><?php echo anchor('','Upload Marcas');?></li>
+							<li><?php echo anchor('app/home','Upload Marcas');?></li>
 
-							<li><?php echo anchor('','Upload Modelos');?></li>
+							<li><?php echo anchor('app/home','Upload Modelos');?></li>
 
 						</ul>
 					</li>
