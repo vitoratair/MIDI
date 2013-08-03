@@ -2,7 +2,7 @@
 <div class="container">
 
 	<div class="">
-		<h2>Estatísticas <small> de NCMs</small></h2>
+		<h2>Processamento <small> de NCMs</small></h2>
 
 	</div>
 		
@@ -10,7 +10,7 @@
 	<!-- Formulário para combobox sem botão submit -->
 	<?php
 		$atributos = array('form class'=>' form-horizontal',  'id'=>'FormCadastro', 'align'=> 'right',  'method'=>'POST');
-		echo form_open('administracao/estatisticasListAll', $atributos); 
+		echo form_open('administracao/processamento', $atributos); 
 	?>		
 		<fieldset>
 

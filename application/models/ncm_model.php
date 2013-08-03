@@ -539,6 +539,42 @@ class ncm_model extends CI_Model {
 
 	}
 
+	function processarModelos($table, $mes, $modelo, $modelo1, $modelo2, $modelo3, $modelo4, $dados)
+	{			
+		
+		$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo%'");
+
+		if (!empty($modelo1))
+		{
+			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo1%'");
+		}
+		if (!empty($modelo2))
+		{
+			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo2%'");
+		}
+		if (!empty($modelo3))
+		{
+			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo3%'");
+		}
+		if (!empty($modelo4))
+		{
+			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo4%'");
+		}				
+		
+		$this->db->where('MES', 1);
+		$this->db->where('Modelo', 1);
+		$this->db->update($table, $dados);
+	}
+
+	function clean($table, $mes)
+	{
+		$this->db->query("UPDATE $table SET Modelo = '1', Marca = 1, Categoria = 1,
+			SubCategoria1_SCID = 1, SubCategoria2_SCID = 1, SubCategoria3_SCID = 1,
+			SubCategoria4_SCID = 1, SubCategoria5_SCID = 1, SubCategoria6_SCID = 1,
+			SubCategoria7_SCID = 1, SubCategoria8_SCID = 1 WHERE MES = $mes");
+	}
+
+
 
 
 

@@ -124,6 +124,20 @@ class Modelo_model extends CI_Model {
 	}
 
 	/**
+	 * Lista de todos os modelos cadastrados no sistema
+	*/
+	function listarAllModelo()
+	{
+
+		$this->db->select('MOID, MNome, MNome1, MNome2, MNome3, MNome4');
+		$this->db->from('Modelo');
+		$query = $this->db->get();
+
+		return $query->result();		
+	}
+
+
+	/**
 	 * Lista de modelos na categoria e marca selecionadas
 	 */
 	function listarAllModeloByMarca($categoria, $subcategoria, $marca)
