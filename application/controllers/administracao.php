@@ -88,6 +88,23 @@ class Administracao extends CI_Controller {
 		// Recebe os dados do formulário //
 		$ncm 			= $this->input->post('ncm');
 		$ano 			= $this->input->post('ano');
+
+		// Caso a variável ncm esteja vazia, recebe os dados que estão em sessão //
+		if (empty($ncm))
+		{
+			if (!empty($this->session->userdata['ncm']))
+			{
+				$ncm 	= $this->session->userdata['ncm'];	
+				$ano 	= $this->session->userdata['ano'];		
+			}	
+		}
+		else
+		{
+			$session['ncm'] 	= $ncm;
+			$session['ano'] 	= $ano;
+			$this->session->set_userdata($session);
+		}	
+		
 		$data['ncm'] 	= $ncm;
 		$data['ano']	= $ano;
 
@@ -194,7 +211,7 @@ class Administracao extends CI_Controller {
 			$this->ncm_model->processarMarcas($table, $mes, $value->MANome, $value->MANome1, $value->MANome2, $dados);
 		}
 
-		redirect('administracao/processamento','refresh');
+		redirect('administracao/processamento', 'refresh');
 
 	}
 
