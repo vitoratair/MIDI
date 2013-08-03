@@ -119,6 +119,7 @@ class Analise extends CI_Controller {
 		$ano 		= $this->input->post('ano');
 		$sc1 		= $this->input->post('subcategorias');
 		$sc 		= explode(",", $sc1);
+		$valor 		= $this->input->post('valor');
 
 		// Lista todas as opções //
 		$data['anos']			= $this->ncm_model->listarAno();
@@ -145,6 +146,17 @@ class Analise extends CI_Controller {
 			$aux 	= $this->mergeTabela($aux);			
 			$aux 	= $this->mergeModelo($aux);
 			$aux 	= $this->ordena($aux, 'unidades');
+			$data['maximo'] = sizeof($aux);
+			
+			if (empty($valor))
+			{
+				$valor = $data['maximo'];
+			}
+
+			$data['valor'] = $valor;
+
+			// exclui as entradas acima do valor especificado no segundo argumento //
+			$aux 	= $this->montaOutros($aux, $valor, $data['maximo']);			
 		
 			foreach ($aux as $key => $value)
 			{
@@ -267,9 +279,10 @@ class Analise extends CI_Controller {
 		
 		$last = sizeof($dados) + 1;
 
-		$dados[$last]['marca'] 		= 0;
+		$dados[$last]['marcaNome'] 		= 0;
+		$dados[$last]['modeloNome'] 	= 'Outros';
 		$dados[$last]['marcaNome'] 	= 'Outros';
-		$dados[$last]['unidades'] 	= $outros;
+		$dados[$last]['unidades'] 		= $outros;
 
 		return $dados;
 	}
