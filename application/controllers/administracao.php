@@ -194,7 +194,7 @@ class Administracao extends CI_Controller {
 			$this->ncm_model->processarMarcas($table, $mes, $value->MANome, $value->MANome1, $value->MANome2, $dados);
 		}
 
-		// redirect('administracao/processamento','refresh');
+		redirect('administracao/processamento','refresh');
 
 	}
 

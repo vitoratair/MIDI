@@ -571,46 +571,66 @@ class ncm_model extends CI_Model {
 	function processarModelos($table, $mes, $modelo, $modelo1, $modelo2, $modelo3, $modelo4, $dados)
 	{			
 		
-		$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo%'");
+		$this->db->where('MES', $mes);
+		$this->db->where('Modelo', 1);		
 
+		if (!empty($modelo))
+		{		
+			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo%'");
+		}
 		if (!empty($modelo1))
-		{
-			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo1%'");
+		{		
+			$this->db->or_where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo1%'");
+			$this->db->where('MES', $mes);
+			$this->db->where('Modelo', 1);			
 		}
 		if (!empty($modelo2))
-		{
-			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo2%'");
+		{			
+			$this->db->or_where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo2%'");
+			$this->db->where('MES', $mes);
+			$this->db->where('Modelo', 1);						
 		}
 		if (!empty($modelo3))
-		{
-			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo3%'");
+		{	
+			$this->db->or_where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo3%'");
+			$this->db->where('MES', $mes);
+			$this->db->where('Modelo', 1);						
 		}
 		if (!empty($modelo4))
-		{
-			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo4%'");
+		{			
+			$this->db->or_where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo4%'");
+			$this->db->where('MES', $mes);
+			$this->db->where('Modelo', 1);						
 		}				
 		
-		$this->db->where('MES', $mes);
-		$this->db->where('Modelo', 1);
+
 		$this->db->update($table, $dados);
 	}
 
 	function processarMarcas($table, $mes, $marca, $marca1, $marca2, $dados)
 	{			
 		
-		$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$marca%'");
+		$this->db->where('MES', $mes);
+		$this->db->where('Marca', 1);
 
+		if (!empty($marca))
+		{
+			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$marca%'");
+		}		
 		if (!empty($marca1))
 		{
-			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$marca1%'");
+			$this->db->or_where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$marca1%'");
+			$this->db->where('MES', $mes);
+			$this->db->where('Marca', 1);			
 		}
 		if (!empty($marca2))
 		{
-			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$marca2%'");
+			$this->db->or_where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$marca2%'");
+			$this->db->where('MES', $mes);
+			$this->db->where('Marca', 1);			
 		}			
 		
-		$this->db->where('MES', $mes);
-		$this->db->where('Marca', 1);
+
 		$this->db->update($table, $dados);
 	}
 
