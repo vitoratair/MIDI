@@ -129,7 +129,7 @@ class Modelo_model extends CI_Model {
 	function listarAllModelo()
 	{
 
-		$this->db->select('MOID, MNome, MNome1, MNome2, MNome3, MNome4');
+		$this->db->select('MOID, MNome, MNome1, MNome2, MNome3, MNome4, Categoria_CID, Marca_MAID');
 		$this->db->from('Modelo');
 		$query = $this->db->get();
 

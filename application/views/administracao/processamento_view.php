@@ -10,7 +10,7 @@
 	<!-- Formulário para combobox sem botão submit -->
 	<?php
 		$atributos = array('form class'=>' form-horizontal',  'id'=>'FormCadastro', 'align'=> 'right',  'method'=>'POST');
-		echo form_open('administracao/estatisticasListAll', $atributos); 
+		echo form_open('administracao/processamento', $atributos); 
 	?>		
 		<fieldset>
 
@@ -47,6 +47,7 @@
 				<td width="%"><b>Marcas</td>
 				<td width="%"><b>Modelos</td>
 				<td width="%"><b>Outros</td>
+				<td width="7%"><b>Visualizar</td>
 				<td width="7%"><b>Processar</td>
 				<td width="7%"><b>Limpar</td>
 			</tr>			
@@ -59,6 +60,7 @@
 				<td>{marcaEncontrada}</td>
 				<td>{modeloEncontrado}</td>
 				<td>{outros}</td>				
+				<td><a onclick='Visualizar("{mesID}")' data-toggle="modal" href="#" class='icon icon-search'></a></td>									
 				<td><a onclick='Processar("{mesID}")' data-toggle="modal" href="#processar" class='icon icon-wrench'></a></td>					
 				<td><a onclick='CleanNcm("{mesID}")' data-toggle="modal" href="#clean" class='icon icon-remove'></a></td>					
 			</tr>
@@ -70,7 +72,7 @@
 				<td><b>{total}</b></td>
 				<td><b>{marcaEncontrada}</b></td>
 				<td><b>{modeloEncontrado}</b></td>
-				<td colspan="3"><b>{outros}</b></td>	
+				<td colspan="4"><b>{outros}</b></td>	
 			</tr>		
 	
 	</table>
@@ -78,7 +80,7 @@
 
 
 
-<!-- <div class="modal hide" id="processar">
+<div class="modal hide" id="processar">
 		<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">×</button>
 			<h3>d!</h3>
@@ -86,7 +88,7 @@
 
 		<div class="modal-body">
 			<p>
-				Você deseja realmente apagar todos os registros de marcas e modelos dessa NCM?
+				Você deseja processar os dados dessa NCM?
 			</p>
 		</div>
 
@@ -94,7 +96,7 @@
 			<a href="" class="btn" data-dismiss="modal">Não</a>
 			<a href="" class="btn btn-danger" id="Processamento">Sim</a>
 	 	</div>
-</div> -->
+</div>
 
 <div class="modal hide" id="Clean">
 		<div class="modal-header">
@@ -139,6 +141,17 @@
         document.write('<input type="hidden" name="ncm" value="'+<?php echo $ncm;?>+'">');
         document.write('</form>')
         document.Myform.submit()
-	}		
+	}
+
+	function Visualizar(mes)
+	{
+
+        document.write('<form action="visualizar" name="Myform" method="POST">')
+		document.write('<input type="hidden" name="mes" value="'+mes+'">');                       
+        document.write('<input type="hidden" name="ano" value="'+<?php echo $ano;?>+'">');
+        document.write('<input type="hidden" name="ncm" value="'+<?php echo $ncm;?>+'">');
+        document.write('</form>')
+        document.Myform.submit()
+	}			
 
 </script>
