@@ -2,7 +2,7 @@
 <head>
 
 <meta charset="utf-8">
-<title>Marketips - Análise de importações</title>
+<title>MIDI - Monitoramento Intelbras de Dados de Importação</title>
 
 <!-- Le styles -->
 <link href="<?php echo base_url();?>css/bootstrap.css" rel="stylesheet">
@@ -35,7 +35,7 @@
 				  </div>
 	
 			<div class="form-actions">
-				<button type="submit" class="btn btn-primary">Acessar</button>
+				<button type="submit" class="btn btn-info">Acessar</button>
 			</div>
 
 	
