@@ -153,8 +153,6 @@ class Administracao extends CI_Controller {
 			$data['main_content'] = 'administracao/processamentoEmpty_view';
 		}
 
-
-		
 		$this->parser->parse('template', $data);
 
 	}
