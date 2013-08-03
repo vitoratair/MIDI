@@ -186,7 +186,7 @@ class ncm_model extends CI_Model {
 	/**
 	 * Busca dados somente com NCM e ano
 	 */
-	function buscaDados($limit, $start, $table, $id, $brand, $model, $search, $unSearch)
+	function buscaDados($limit, $start, $table, $id, $brand, $model, $search, $unSearch, $mes)
 	{
 		
 		if ($id == 1)
@@ -275,14 +275,29 @@ class ncm_model extends CI_Model {
 			$query = $this->db->get();
 
 			return $query->result();
-		}		
+		}
+		elseif ($id == 7)
+		{
+			$this->db->limit($limit, $start);
+			$this->db->select('*');
+			$this->db->from($table);
+			$this->db->join('Categoria','Categoria.CID = Categoria');
+			$this->db->join('Marca','Marca.MAID = Marca');
+			$this->db->join('Modelo','Modelo.MOID = Modelo');
+			$this->db->where('MES', $mes);
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
+			$query = $this->db->get();
+
+			return $query->result();
+		}
+
 
 	}
 
 	/**
 	 * COUNT dos dados
 	 */
-	function countBuscaDados($table, $id, $brand, $model, $search, $unSearch)
+	function countBuscaDados($table, $id, $brand, $model, $search, $unSearch, $mes)
 	{
 		// count total
 		if($id == 1) 
@@ -350,7 +365,21 @@ class ncm_model extends CI_Model {
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			
 			return $this->db->count_all_results();					
-		}		
+		}	
+		// count por mês
+		elseif ($id == 7) 
+		{
+			$this->db->select('COUNT(`IDN`)');
+			$this->db->from($table);
+			$this->db->join('Categoria','Categoria.CID = Categoria');
+			$this->db->join('Marca','Marca.MAID = Marca');
+			$this->db->join('Modelo','Modelo.MOID = Modelo');
+			$this->db->where('MES', $mes);
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
+			
+			return $this->db->count_all_results();					
+		}	
+
 
 	}
 
@@ -561,10 +590,31 @@ class ncm_model extends CI_Model {
 			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$modelo4%'");
 		}				
 		
-		$this->db->where('MES', 1);
+		$this->db->where('MES', $mes);
 		$this->db->where('Modelo', 1);
 		$this->db->update($table, $dados);
 	}
+
+	function processarMarcas($table, $mes, $marca, $marca1, $marca2, $dados)
+	{			
+		
+		$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$marca%'");
+
+		if (!empty($marca1))
+		{
+			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$marca1%'");
+		}
+		if (!empty($marca2))
+		{
+			$this->db->where("DESCRICAO_DETALHADA_PRODUTO LIKE '%$marca2%'");
+		}			
+		
+		$this->db->where('MES', $mes);
+		$this->db->where('Marca', 1);
+		$this->db->update($table, $dados);
+	}
+
+	
 
 	function clean($table, $mes)
 	{
