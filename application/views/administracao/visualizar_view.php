@@ -33,7 +33,7 @@
 				<td>{MANome}</td>
 				<td>{MNome}</td>
 				<td>{QUANTIDADE_COMERCIALIZADA_PRODUTO}</td>				
-				<td><a href="<?php echo base_url();?>index.php/pesquisa/edit/{IDN}/{ncm}/{year}" target="_blank"><i class="icon-edit"></a></i></td>
+				<td><a href="<?php echo base_url();?>index.php/pesquisa/edit/{IDN}/{ncm}/{ano}" target="_blank"><i class="icon-edit"></a></i></td>
 			</tr>
 			{/dados}
 	

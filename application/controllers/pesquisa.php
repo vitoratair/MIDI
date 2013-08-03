@@ -24,7 +24,7 @@ class Pesquisa extends CI_Controller {
 	}
 
 	/**
-	 * Apresenta a view para ediid, $ncm, $anor a ncm
+	 * Apresenta a view para editar o item importado
 	 */
 	public function edit($id, $ncm, $year)
 	{
