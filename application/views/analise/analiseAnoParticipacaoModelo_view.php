@@ -14,6 +14,23 @@
     <button type="submit" class="btn"><i class="icon-arrow-left"></i> Voltar</button>
     </form>
 
+    <!-- Range para escolha das peças mínimas por marca -->
+    <?php
+        $atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align' => 'left', 'method'=>'POST');
+        echo form_open('analise/analiseAnoParticipacaoModelo', $atributos); 
+    ?>
+
+<br>
+    
+    <input id="slider" onchange="this.form.submit()" class="slider slider-horizontal slider-track" type="range" min="1" max="{maximo}" step="1" value="{valor}" name="valor" onchange="updateSlider(this.value)">
+
+    <input type="hidden" name="categoria" value="{categoria}">
+    <input type="hidden" name="ano" value="{ano}">
+    <input type="hidden" name="subcategorias" value="{postSubcategorias}">
+    <input type="hidden" name="marca" value="{marca}">
+    </form>
+    <br>
+    
     <div class="" id="participacao_de_mercadoPeca" style="min-width: 800px; height: 700px; margin: 0 auto"></div>    
 
 
