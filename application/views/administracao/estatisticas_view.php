@@ -25,7 +25,7 @@
 
 		    &nbsp;&nbsp;&nbsp;
 
-			<select id="anoCombo" name="ano" class="span2">
+			<select id="anoCombo" name="ano" class="span2" onchange="this.form.submit()">
 				
 				<option value="{ano}">{ano}</option>
 				{anos}		
@@ -33,10 +33,6 @@
 				{/anos}
 				
 		    </select>		    
-	
-		    &nbsp;&nbsp;&nbsp;
-		    
-			<button type="submit" class="btn btn-success"><i class=""></i> Pesquisa</button>
 
 		</fieldset>
 
@@ -78,36 +74,3 @@
 	
 	</table>
 
-
-
-
-<script type="text/javascript">
-	
-	function Abrir(mes)
-	{
-	    
-		document.write("
-			<div class=\"modal hide\" id=\"myModal\">
-					<div class=\"modal-header\">
-					<button type=\"button\" class=\"close\" data-dismiss=\"modal\">×</button>
-						<h3>Excluir</h3>
-					</div>
-
-					<div class=\"modal-body\">
-					<p>Deseja realmente excluir a marca?</p>
-					</div>
-
-					 <div class=\"modal-footer\">
-					<a href="" class=\"btn\" data-dismiss=\"modal\">Não</a>
-					<a href="" class=\"btn btn-danger\" id=\"Excluir\">Sim</a>
-				 	</div>
-			</div>
-
-			")
-
-		document.write("<div></div>")
-
-
-
-	}
-</script>

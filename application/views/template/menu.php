@@ -47,7 +47,7 @@
 						
 						<ul class="dropdown-menu">
 							
-							<li><?php echo anchor('app/home','Processamento');?></li>
+							<li><?php echo anchor('administracao/processamento','Processamento');?></li>
 
 							<li><?php echo anchor('administracao/estatisticasListAll','Estatísticas');?></li>
 

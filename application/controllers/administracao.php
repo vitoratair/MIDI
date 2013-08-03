@@ -75,11 +75,111 @@ class Administracao extends CI_Controller {
 			$data['main_content'] = 'administracao/estatisticasEmpty_view';
 		}
 		
-
-
-
 		$this->parser->parse('template', $data);		
 
+	}
+
+	/**
+	 * Apresenta a view com principal para processamento 
+	 */
+	public function processamento()
+	{
+		
+		// Recebe os dados do formulário //
+		$ncm 			= $this->input->post('ncm');
+		$ano 			= $this->input->post('ano');
+		$data['ncm'] 	= $ncm;
+		$data['ano']	= $ano;
+
+		// Busca as informações para enviar para view //
+		$data['ncms'] 	= $this->ncm_model->listar();
+		$data['anos'] 	= $this->ncm_model->listarAno();
+
+
+		if (!empty($ncm) && (!empty($ano)))
+		{
+			$table = $ncm . "_" . $ano;	
+		}
+		
+		// Busca as informações para enviar para view //
+		$data['ncms'] 	= $this->ncm_model->listar();
+		$data['anos'] 	= $this->ncm_model->listarAno();
+
+		if(!empty($table))
+		{
+			// Busca os detalhes da NCM desejada por Mês//
+			for ($i=1; $i <= 12; $i++)
+			{ 			
+				$data['dados'][$i]['mesID'] 			= $i;
+				$data['dados'][$i]['mes'] 				= $this->buscaMes($i);
+				$data['dados'][$i]['total'] 			= $this->ncm_model->estatisticas(1, $table, $i);
+				$data['dados'][$i]['marcaEncontrada'] 	= $this->ncm_model->estatisticas(2, $table, $i);
+				$data['dados'][$i]['modeloEncontrado'] 	= $this->ncm_model->estatisticas(3, $table, $i);
+				$data['dados'][$i]['marca_modelo'] 		= $this->ncm_model->estatisticas(4, $table, $i);
+				$data['dados'][$i]['outros'] 			= $this->ncm_model->estatisticas(5, $table, $i);
+				$categorias 							= $this->ncm_model->estatisticas(11, $table, $i);			
+				$data['dados'][$i]['categorias']	 	= $this->formataCategorias($categorias);
+
+			}
+
+			// Busca as informações totais de cada NCM //
+			$data['total'] 					= $this->ncm_model->estatisticas(6, $table, NULL);
+			$data['marcaEncontrada'] 	= $this->ncm_model->estatisticas(7, $table, NULL);
+			$data['modeloEncontrado'] 	= $this->ncm_model->estatisticas(8, $table, NULL);
+			$data['marca_modelo'] 			= $this->ncm_model->estatisticas(9, $table, NULL);
+			$data['outros'] 				= $this->ncm_model->estatisticas(10, $table, NULL); 
+
+			$data['main_content'] = 'administracao/processamento_view';
+		}
+		else
+		{
+			$data['main_content'] = 'administracao/processamentoEmpty_view';
+		}
+
+
+		
+		$this->parser->parse('template', $data);
+
+	}
+
+	/**
+	 * Processa os dados de uma determinada NCM.
+	 */
+	public function cleanNcm()
+	{
+		$ncm = $this->input->post('ncm');
+		$ano = $this->input->post('ano');
+		$mes = $this->input->post('mes');
+		$table = $ncm . "_" . $ano;
+
+		$this->ncm_model->clean($table, $mes);
+
+		redirect('administracao/processamento','refresh');
+
+	}
+
+	/**
+	 * Processa os dados de uma determinada NCM.
+	 */
+	public function processar()
+	{
+		$ncm = $this->input->post('ncm');
+		$ano = $this->input->post('ano');
+		$mes = $this->input->post('mes');
+		$table = $ncm . "_" . $ano;
+
+		// Busca todos os modelos cadastrados no sistema //
+		$modelos = $this->modelo_model->listarAllModelo();
+		unset($modelos[0]);
+
+		// Percorre o array de modelos buscando referencia em cada linha de importação //
+		foreach ($modelos as $key => $value)
+		{	
+			$dados = array('Modelo' => $value->MOID);
+			$this->ncm_model->processarModelos($table, $mes, $value->MNome, $value->MNome1, $value->MNome2, $value->MNome3, $value->MNome4, $dados);
+		}
+
+		redirect('administracao/processamento','refresh');
 
 	}
 
