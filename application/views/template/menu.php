@@ -51,11 +51,11 @@
 
 							<li><?php echo anchor('administracao/estatisticasListAll','Estatísticas');?></li>
 
-							<li><?php echo anchor('app/home','Upload NCM');?></li>
+							<!-- <li><?php echo anchor('app/home','Upload NCM');?></li> -->
 
-							<li><?php echo anchor('app/home','Upload Marcas');?></li>
+							<!-- <li><?php echo anchor('app/home','Upload Marcas');?></li> -->
 
-							<li><?php echo anchor('app/home','Upload Modelos');?></li>
+							<!-- <li><?php echo anchor('app/home','Upload Modelos');?></li> -->
 
 						</ul>
 					</li>
