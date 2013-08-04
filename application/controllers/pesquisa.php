@@ -6,6 +6,8 @@ class Pesquisa extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		error_reporting(E_ALL ^ (E_NOTICE));
+		error_reporting(E_ALL ^ (E_WARNING));
 		$this->logged();
 
 	}
@@ -26,11 +28,11 @@ class Pesquisa extends CI_Controller {
 	/**
 	 * Apresenta a view para editar o item importado
 	 */
-	public function edit($id, $ncm, $year)
+	public function edit($id, $ncm, $year, $idn)
 	{
 		// Monta o noma da tabela para pesquisa //
 		$table = $ncm . "_" . $year;
-
+		$user 	= $this->input->post('userID');
 		// verifica os dados atuais da NCM //
 		$marca 		= $this->ncm_model->buscarMarca($table, $id);
 		$categoria 	= $this->categoria_model->getCategoriaNcm($table, $id);
@@ -96,6 +98,29 @@ class Pesquisa extends CI_Controller {
 		}
 		else
 		{
+			if (!empty($idn))
+			{
+				$check = $this->requisicoes_model->verificar($ncm, $year, $idn, $user);
+
+				$categoria 				= $this->categoria_model->buscar($check[0]->RequestCategoria);
+				$marca 					= $this->marca_model->buscaMarca($check[0]->RequestMarca);
+				$modelo 				= $this->modelo_model->bucaModelo($check[0]->RequestModelo);
+
+				if (!empty($categoria))
+				{
+					$data['categoriaNome'] 	= $categoria[0]->CNome;	
+				}
+				if (!empty($marca))
+				{
+					$data['marcaNome'] 		= $marca[0]->MANome;	
+				}
+				if (!empty($modelo))
+				{
+					$data['modeloNome'] 	= $modelo[0]->MNome;
+				}				
+				
+			}
+
 			$data['main_content'] = 'pesquisa/editPesquisaUser_view';		
 		}
 		
@@ -154,6 +179,7 @@ class Pesquisa extends CI_Controller {
 				$categoria = $this->input->post('categoria');				
 				$check = $this->requisicoes_model->verificar($ncm, $year, $idn, $user);				
 				
+
 				if ($check[0]->RequestID)
 				{
 					if (!empty($categoria))
@@ -215,7 +241,7 @@ class Pesquisa extends CI_Controller {
 				break;
 		}	
 
-		redirect("pesquisa/edit/$idn/$ncm/$year");
+		redirect("pesquisa/edit/$idn/$ncm/$year/$idn");
 	}	
 
 	/**

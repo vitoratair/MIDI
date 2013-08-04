@@ -115,12 +115,17 @@ class Requisicoes_model extends CI_Model {
 	function verificar($ncm, $ano, $idn, $user)
 	{
 
-		$this->db->select('RequestID');
+		$this->db->select('*');
 		$this->db->from('Request');
 		$this->db->where('RequestNcm', $ncm);
 		$this->db->where('RequestAno', $ano);
 		$this->db->where('RequestIDN', $idn);
-		$this->db->where('RequestUser', $user);
+		
+		if (!empty($user))
+		{
+			$this->db->where('RequestUser', $user);
+		}
+		
 		$query = $this->db->get();
 		
 		return $query->result();
