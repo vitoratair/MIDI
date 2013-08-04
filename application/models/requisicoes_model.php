@@ -35,6 +35,7 @@ class Requisicoes_model extends CI_Model {
 
 		$this->db->select('*');
 		$this->db->from('Request');
+		$this->db->join('Usuario', 'usuarioID = RequestUser');
 		$this->db->order_by('RequestID');
 		$query = $this->db->get();
 		
