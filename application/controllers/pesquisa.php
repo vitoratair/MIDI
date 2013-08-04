@@ -6,7 +6,6 @@ class Pesquisa extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		error_reporting(E_ALL ^ (E_NOTICE));
 		error_reporting(E_ALL ^ (E_WARNING));
 		$this->logged();
 
@@ -30,99 +29,237 @@ class Pesquisa extends CI_Controller {
 	 */
 	public function edit($id, $ncm, $year, $idn)
 	{
-		// Monta o noma da tabela para pesquisa //
-		$table = $ncm . "_" . $year;
-		$user 	= $this->input->post('userID');
-		// verifica os dados atuais da NCM //
-		$marca 		= $this->ncm_model->buscarMarca($table, $id);
-		$categoria 	= $this->categoria_model->getCategoriaNcm($table, $id);
-		$modelo 	= $this->ncm_model->buscarModelo($table, $id);
+		// Variável para cotrolar se os modelos vieram da NCM ou da requisição //
+		$control 	= FALSE;
 
-		// Busca as informações para os modais //
-		$data['categorias'] 	= $this->categoria_model->listar();
-		$data['marcas'] 		= $this->marca_model->listarAllMarca();
-		$data['subcategoria1']	= $this->categoria_model->listaItens('SubCategoria1', $categoria[0]->Categoria);
-		$data['subcategoria2']	= $this->categoria_model->listaItens('SubCategoria2', $categoria[0]->Categoria);
-		$data['subcategoria3']	= $this->categoria_model->listaItens('SubCategoria3', $categoria[0]->Categoria);		
-		$data['subcategoria4']	= $this->categoria_model->listaItens('SubCategoria4', $categoria[0]->Categoria);
-		$data['subcategoria5']	= $this->categoria_model->listaItens('SubCategoria5', $categoria[0]->Categoria);
-		$data['subcategoria6']	= $this->categoria_model->listaItens('SubCategoria6', $categoria[0]->Categoria);
-		$data['subcategoria7']	= $this->categoria_model->listaItens('SubCategoria7', $categoria[0]->Categoria);
-		$data['subcategoria8']	= $this->categoria_model->listaItens('SubCategoria8', $categoria[0]->Categoria);
+		$userType 	= $this->session->userdata('usuarioTipo');
 
-		// Verifica se existe marca //
-		if (!empty($marca))
+		if ($userType == 1)
 		{
-			$data['modelos'] 	= $this->modelo_model->buscaModeloByMarca($marca[0]->Marca, $categoria[0]->Categoria);	
-		}
 
-		if (!empty($categoria))
-		{
-			$data['titulos']	= $this->categoria_model->listarTitulos($categoria[0]->Categoria);			
-		}
+			// Monta o noma da tabela para pesquisa //
+			$table = $ncm . "_" . $year;
+			$user 	= $this->input->post('userID');	
+			
+			// verifica os dados atuais da NCM //
+			$categoria 	= $this->categoria_model->getCategoriaNcm($table, $id);
+			$marca 		= $this->ncm_model->buscarMarca($table, $id);	
+			$modelo 	= $this->ncm_model->buscarModelo($table, $id);			
 
-		// Possui modelo definido //
-		$var 	= array();
-		if ($modelo[0]->Modelo != 1)
-		{
-			$data['checkModelo'] = TRUE;
-			// Loop para verficar as subcategorias do modelo //
-			foreach ($data['titulos'] as $key => $value)
-			{
-				$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasModelo($modelo[0]->Modelo, $value->TColuna);
-				$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
-			}			
-		}
-		else
-		{			
-			$data['checkModelo'] = FALSE;
+			// Busca as informações para os modais //
+			$data['categorias'] 	= $this->categoria_model->listar();
+			$data['marcas'] 		= $this->marca_model->listarAllMarca();
+			$data['subcategoria1']	= $this->categoria_model->listaItens('SubCategoria1', $categoria[0]->Categoria);
+			$data['subcategoria2']	= $this->categoria_model->listaItens('SubCategoria2', $categoria[0]->Categoria);
+			$data['subcategoria3']	= $this->categoria_model->listaItens('SubCategoria3', $categoria[0]->Categoria);		
+			$data['subcategoria4']	= $this->categoria_model->listaItens('SubCategoria4', $categoria[0]->Categoria);
+			$data['subcategoria5']	= $this->categoria_model->listaItens('SubCategoria5', $categoria[0]->Categoria);
+			$data['subcategoria6']	= $this->categoria_model->listaItens('SubCategoria6', $categoria[0]->Categoria);
+			$data['subcategoria7']	= $this->categoria_model->listaItens('SubCategoria7', $categoria[0]->Categoria);
+			$data['subcategoria8']	= $this->categoria_model->listaItens('SubCategoria8', $categoria[0]->Categoria);
 
-			// Loop para verficar as subcategorias do modelo //
-			foreach ($data['titulos'] as $key => $value)
-			{
-				$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasNcm($table, $value->TColuna, $id);
-				$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
-			}	
-		}
-
-		$data['dados']	 	= $this->ncm_model->listarNcm($table, $id);
-		$data['dados'] 		= $this->formatarDados(1, $data['dados']);
-		
-		// Envia os dados para a view //
-		$data['ncm'] 	= $ncm; 
-		$data['year'] 	= $year;
-
-		if ($this->session->userdata('usuarioTipo') == 1)
-		{
-			$data['main_content'] = 'pesquisa/editPesquisa_view';	
-		}
-		else
-		{
-			if (!empty($idn))
-			{
-				$check = $this->requisicoes_model->verificar($ncm, $year, $idn, $user);
-
-				$categoria 				= $this->categoria_model->buscar($check[0]->RequestCategoria);
-				$marca 					= $this->marca_model->buscaMarca($check[0]->RequestMarca);
-				$modelo 				= $this->modelo_model->bucaModelo($check[0]->RequestModelo);
-
-				if (!empty($categoria))
-				{
-					$data['categoriaNome'] 	= $categoria[0]->CNome;	
-				}
-				if (!empty($marca))
-				{
-					$data['marcaNome'] 		= $marca[0]->MANome;	
-				}
-				if (!empty($modelo))
-				{
-					$data['modeloNome'] 	= $modelo[0]->MNome;
-				}				
-				
+			// Verifica se existe marca //
+			if (!empty($marca))
+			{			
+				$data['modelos'] 	= $this->modelo_model->buscaModeloByMarca($marca[0]->Marca, $categoria[0]->Categoria);				
 			}
 
-			$data['main_content'] = 'pesquisa/editPesquisaUser_view';		
+			if (!empty($categoria))
+			{
+				$data['titulos']	= $this->categoria_model->listarTitulos($categoria[0]->Categoria);			
+			}
+
+			if (!empty($modelo))
+			{
+				if ($modelo[0]->Modelo != 1)
+				{
+					$data['checkModelo'] = TRUE;
+					// Loop para verficar as subcategorias do modelo //
+					foreach ($data['titulos'] as $key => $value)
+					{
+						$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasModelo($modelo[0]->Modelo, $value->TColuna);
+						$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+					}			
+				}
+				else
+				{			
+					$data['checkModelo'] = FALSE;
+
+					// Loop para verficar as subcategorias do modelo //
+					foreach ($data['titulos'] as $key => $value)
+					{
+						$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasNcm($table, $value->TColuna, $id);
+						$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+					}	
+				}				
+			}
+
+			$data['dados']	 	= $this->ncm_model->listarNcm($table, $id);
+			$data['dados'] 		= $this->formatarDados(1, $data['dados']);
+			
+			// Envia os dados para a view //
+			$data['ncm'] 	= $ncm; 
+			$data['year'] 	= $year;
+
+			$data['main_content'] = 'pesquisa/editPesquisa_view';
+
 		}
+		// usuário do tipo Usuário
+		else
+		{
+
+		}
+
+
+
+
+		// // verifica os dados atuais da NCM //
+		// $categoria 	= $this->categoria_model->getCategoriaNcm($table, $id);
+		// $marca 		= $this->ncm_model->buscarMarca($table, $id);
+
+		// if ($marca[0]->Marca == 1)
+		// {
+		// 	// Verfica se já existe uam requisição para a importação selecionada //
+		// 	$check 	= $this->requisicoes_model->verificar($ncm, $year, $id, $user);
+		// 	if (!empty($check))
+		// 	{
+		// 		$marca 	= $this->marca_model->buscaMarca($check[0]->RequestMarca);
+		// 		$modelo = $this->modelo_model->buscaModeloByMarca($marca[0]->MAID, NULL);
+		// 		$control = TRUE;
+		// 	}
+		// }
+		// else
+		// {
+		// 	$modelo 	= $this->ncm_model->buscarModelo($table, $id);	
+		// }
+
+
+		// // Busca as informações para os modais //
+		// $data['categorias'] 	= $this->categoria_model->listar();
+		// $data['marcas'] 		= $this->marca_model->listarAllMarca();
+		// $data['subcategoria1']	= $this->categoria_model->listaItens('SubCategoria1', $categoria[0]->Categoria);
+		// $data['subcategoria2']	= $this->categoria_model->listaItens('SubCategoria2', $categoria[0]->Categoria);
+		// $data['subcategoria3']	= $this->categoria_model->listaItens('SubCategoria3', $categoria[0]->Categoria);		
+		// $data['subcategoria4']	= $this->categoria_model->listaItens('SubCategoria4', $categoria[0]->Categoria);
+		// $data['subcategoria5']	= $this->categoria_model->listaItens('SubCategoria5', $categoria[0]->Categoria);
+		// $data['subcategoria6']	= $this->categoria_model->listaItens('SubCategoria6', $categoria[0]->Categoria);
+		// $data['subcategoria7']	= $this->categoria_model->listaItens('SubCategoria7', $categoria[0]->Categoria);
+		// $data['subcategoria8']	= $this->categoria_model->listaItens('SubCategoria8', $categoria[0]->Categoria);
+
+		// // Verifica se existe marca //
+		// if (!empty($marca))
+		// {			
+		// 	if ($control)
+		// 	{
+		// 		$data['modelos']	= $modelo;		
+		// 	}
+		// 	else
+		// 	{
+		// 		$data['modelos'] 	= $this->modelo_model->buscaModeloByMarca($marca[0]->Marca, NULL);
+		// 	}
+			
+		// }
+
+		// if (!empty($categoria))
+		// {
+		// 	$data['titulos']	= $this->categoria_model->listarTitulos($categoria[0]->Categoria);			
+		// }
+
+		// // Possui modelo definido //
+		// $var 	= array();
+
+		// if ($control)
+		// {
+		// 	if ($modelo[0]->MOID != 1)
+		// 	{
+		// 		$data['checkModelo'] = TRUE;
+		// 		// Loop para verficar as subcategorias do modelo //
+		// 		foreach ($data['titulos'] as $key => $value)
+		// 		{
+		// 			$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasModelo($modelo[0]->MOID, $value->TColuna);
+		// 			$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+		// 		}			
+		// 	}
+		// 	else
+		// 	{			
+		// 		$data['checkModelo'] = FALSE;
+
+		// 		// Loop para verficar as subcategorias do modelo //
+		// 		foreach ($data['titulos'] as $key => $value)
+		// 		{
+		// 			$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasNcm($table, $value->TColuna, $id);
+		// 			$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+		// 		}	
+		// 	}			
+		// }
+		// else
+		// {			
+		// 	if (!empty($modelo))
+		// 	{
+		// 		if ($modelo[0]->Modelo != 1)
+		// 		{
+		// 			$data['checkModelo'] = TRUE;
+		// 			// Loop para verficar as subcategorias do modelo //
+		// 			foreach ($data['titulos'] as $key => $value)
+		// 			{
+		// 				$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasModelo($modelo[0]->Modelo, $value->TColuna);
+		// 				$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+		// 			}			
+		// 		}
+		// 		else
+		// 		{			
+		// 			$data['checkModelo'] = FALSE;
+
+		// 			// Loop para verficar as subcategorias do modelo //
+		// 			foreach ($data['titulos'] as $key => $value)
+		// 			{
+		// 				$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasNcm($table, $value->TColuna, $id);
+		// 				$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+		// 			}	
+		// 		}				
+		// 	}
+			
+		// }
+
+
+		// $data['dados']	 	= $this->ncm_model->listarNcm($table, $id);
+		// $data['dados'] 		= $this->formatarDados(1, $data['dados']);
+		
+		// // Envia os dados para a view //
+		// $data['ncm'] 	= $ncm; 
+		// $data['year'] 	= $year;
+
+		// if ($this->session->userdata('usuarioTipo') == 1)
+		// {
+		// 	$data['main_content'] = 'pesquisa/editPesquisa_view';	
+		// }
+		// else
+		// {
+		// 	if (!empty($idn))
+		// 	{
+		// 		$check = $this->requisicoes_model->verificar($ncm, $year, $idn, $user);
+
+		// 		$categoria 				= $this->categoria_model->buscar($check[0]->RequestCategoria);
+		// 		$marca 					= $this->marca_model->buscaMarca($check[0]->RequestMarca);
+		// 		$modelo 				= $this->modelo_model->bucaModelo($check[0]->RequestModelo);
+
+		// 		if (!empty($categoria))
+		// 		{
+		// 			$data['categoriaNome'] 	= $categoria[0]->CNome;	
+		// 		}
+		// 		if (!empty($marca))
+		// 		{
+		// 			$data['marcaNome'] 		= $marca[0]->MANome;	
+		// 		}
+		// 		if (!empty($modelo))
+		// 		{
+		// 			$data['modeloNome'] 	= $modelo[0]->MNome;
+		// 		}				
+				
+		// 	}
+
+		// 	$data['main_content'] = 'pesquisa/editPesquisaUser_view';		
+		// }
 		
 		$this->parser->parse('template',$data);		
 	}
@@ -179,14 +316,13 @@ class Pesquisa extends CI_Controller {
 				$categoria = $this->input->post('categoria');				
 				$check = $this->requisicoes_model->verificar($ncm, $year, $idn, $user);				
 				
-
-				if ($check[0]->RequestID)
+				if (!empty($check))
 				{
 					if (!empty($categoria))
 					{
 						 $this->requisicoes_model->updateItem(1, $check[0]->RequestID, $ncm, $year, $idn, $categoria);					
 					}
-				}
+				} 
 				else
 				{
 					if (!empty($categoria))

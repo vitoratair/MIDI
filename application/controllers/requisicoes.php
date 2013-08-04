@@ -31,16 +31,15 @@ class Requisicoes extends CI_Controller {
 	{
 
 		// Lista todas as requisições //
-		$dados = $this->requisicoes_model->buscar();
-		$data['dadosRequisicao'] = $this->buscaDados(1, $dados);
+		$dados 						= $this->requisicoes_model->buscar();
+		$data['dadosRequisicao'] 	= $this->buscaDados(1, $dados);
 
 		// Busca as informações da NCM //
 		$data['dados'] 	= $this->buscaDados(2, $dados);
 		$data['dados']	= $this->mergeTabela($data['dados']);
 
 		// // Juntando os arrays //
-		$data['dados'] = $this->joinArray($data['dados'], $data['dadosRequisicao']);					
-
+		$data['dados'] 	= $this->joinArray($data['dados'], $data['dadosRequisicao']);					
 
 		$data['main_content'] = 'requisicoes/requisicoes_view';
 		$this->parser->parse('template',$data);	
@@ -168,7 +167,14 @@ class Requisicoes extends CI_Controller {
 				{
 					$dados[$key]['modelo'] 		= $value->RequestModelo;	
 				}
-				
+				if (!empty($value->RequestUser))
+				{
+					$dados[$key]['user'] 		= $value->RequestUser;	
+				}				
+				if (!empty($value->usuarioLogin))
+				{
+					$dados[$key]['login'] 	= $value->usuarioLogin;	
+				}								
 				
 			}		
 
@@ -177,9 +183,9 @@ class Requisicoes extends CI_Controller {
 		{
 			foreach ($data as $key => $value)
 			{
-				$table 				= $value->RequestNcm . "_" . $value->RequestAno;
-				$idn 				= $value->RequestIDN;
-				$dados[$key]		= $this->ncm_model->listarNCM($table, $idn);	
+				$table 					= $value->RequestNcm . "_" . $value->RequestAno;
+				$idn 					= $value->RequestIDN;
+				$dados[$key]			= $this->ncm_model->listarNCM($table, $idn);	
 			}		
 
 		}
