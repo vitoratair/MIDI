@@ -243,13 +243,13 @@ class Pesquisa extends CI_Controller {
 			if (!empty($this->session->userdata['ncm']))
 			{
 				$ncm 	= $this->session->userdata['ncm'];	
-				$year 	= $this->session->userdata['year'];			
+				$year 	= $this->session->userdata['ano'];			
 			}	
 		}
 		else
 		{
-			$session['ncm'] = $ncm;
-			$session['year'] = $year;
+			$session['ncm'] 	= $ncm;
+			$session['ano'] 	= $year;
 			$this->session->set_userdata($session);
 		}
 
