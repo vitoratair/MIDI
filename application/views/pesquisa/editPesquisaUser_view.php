@@ -35,13 +35,34 @@
 	<!-- subcategorias -->
 	<h3 align="center">Itens Alterados</h3><br>
 		
+	<table class="table table-bordered">
+		<tr>
+		
+			<td width="8%">
+				<b>Categoria:</b>
+			</td>
+			<td>
+				{categoriaNome}
+			</td>			
+		</tr>
+		<tr>
+			<td width="8%">
+				<b>Marca:</b>
+			</td>
+			<td>
+				{marcaNome}
+			</td>			
+		</tr>
+		<tr>		
+			<td width="8%">
+				<b>Modelo:</b>
+			</td>
+			<td>
+				{modeloNome}
+			</td>			
+		</tr>
 
-	Categoria:
-	<br>
-	Marca:
-	<br>
-	Modelo:
-	<br>
+	</table>
 
 
 
