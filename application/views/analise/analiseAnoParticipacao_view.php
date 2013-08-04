@@ -1,32 +1,39 @@
 <!-- Estrutura -->
 <div class="container">
                 
-    <?php
-        $atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align' => 'right', 'method'=>'POST');
-        echo form_open('analise/analiseAno', $atributos); 
-    ?>
+    <div class="">
+        <h2>Exibição<small> de {valor} marcas de {categoriaNome}</small></h2>
+    </div>
 
-    <input type="hidden" name="categoria" value="{categoria}">
-    <input type="hidden" name="ano" value="{ano}">
-    <input type="hidden" name="subcategorias" value="{postSubcategorias}">
-    <button type="submit" class="btn"><i class="icon-arrow-left"></i> Voltar</button>
+    <div class="" align="right">
+        <?php
+            $atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align' => 'right', 'method'=>'POST');
+            echo form_open('analise/analiseAno', $atributos); 
+        ?>
+            <input type="hidden" name="categoria" value="{categoria}">
+            <input type="hidden" name="ano" value="{ano}">
+            <input type="hidden" name="subcategorias" value="{postSubcategorias}">
+            <button type="submit" class="btn"><i class="icon-arrow-left"></i> Voltar</button>
+        </form>
+    </div>                  
+    <hr>
+    <br>
 
-    </form>
+
+
 
     <!-- Range para escolha das peças mínimas por marca -->
     <?php
         $atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align' => 'left', 'method'=>'POST');
         echo form_open('analise/analiseAnoParticipacao', $atributos); 
     ?>
-
-<br>
+        
+        <input id="slider" onchange="this.form.submit()" class="slider slider-horizontal slider-track" type="range" min="1" max="{maximo}" step="1" value="{valor}" name="valor" onchange="updateSlider(this.value)">
+        <input type="hidden" name="categoria" value="{categoria}">
+        <input type="hidden" name="ano" value="{ano}">
+        <input type="hidden" name="subcategorias" value="{postSubcategorias}">
+        </form>
     
-    <input id="slider" onchange="this.form.submit()" class="slider slider-horizontal slider-track" type="range" min="1" max="{maximo}" step="1" value="{valor}" name="valor" onchange="updateSlider(this.value)">
-
-    <input type="hidden" name="categoria" value="{categoria}">
-    <input type="hidden" name="ano" value="{ano}">
-    <input type="hidden" name="subcategorias" value="{postSubcategorias}">
-    </form>
     <br>
 
     <div class="" id="participacao_de_mercadoPeca" style="min-width: 700px; height: 600px; margin: 0 auto"></div>                    

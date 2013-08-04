@@ -1,18 +1,30 @@
 <!-- Estrutura -->
 <div class="container">
-                
-    <?php
-        $atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align' => 'right', 'method'=>'POST');
-        echo form_open('analise/analiseModelo   ', $atributos); 
-    ?>
 
-    <input type="hidden" name="categoria" value="{categoria}">
-    <input type="hidden" name="ano" value="{ano}">
-    <input type="hidden" name="subcategorias" value="{postSubcategorias}">
-    <input type="hidden" name="marca" value="{marca}">
+    <div class="">
+        <h2>Exibição<small> de {valor} modelos de {categoriaNome}, marca {marcaNome}</small></h2>
+    </div>
 
-    <button type="submit" class="btn"><i class="icon-arrow-left"></i> Voltar</button>
-    </form>
+    <div class="" align="right">
+        <?php
+            $atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align' => 'right', 'method'=>'POST');
+            echo form_open('analise/analiseModelo   ', $atributos); 
+        ?>
+            <input type="hidden" name="categoria" value="{categoria}">
+            <input type="hidden" name="ano" value="{ano}">
+            <input type="hidden" name="subcategorias" value="{postSubcategorias}">
+            <input type="hidden" name="marca" value="{marca}">
+
+            <button type="submit" class="btn"><i class="icon-arrow-left"></i> Voltar</button>
+        </form>
+    </div>                  
+    <hr>
+    <br>
+
+
+
+
+
 
     <!-- Range para escolha das peças mínimas por marca -->
     <?php
