@@ -27,7 +27,7 @@
                 zoomType: 'xy'
             },
             title: {
-                text: 'Evolução Marca'
+                text: 'Análise de importações'
             },
             subtitle: {
                 text: '{marcaNome}'
