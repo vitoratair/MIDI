@@ -69,11 +69,12 @@ class Modelo extends CI_Controller {
 		{
 			
 			$check = FALSE;
+			$varTable = "Tables_in_" . DATABASE;
 
 			// Loop para percorrer as NCMs
 			foreach ($ncms as $key => $value)
 			{
-				$countModelos = $this->modelo_model->verificarCadastro($value->Table,$value1->MOID);
+				$countModelos = $this->modelo_model->verificarCadastro($value->$varTable, $value1->MOID);
 				$countModelos = $countModelos[0]->IDN;
 
 				if ($countModelos != 0)
