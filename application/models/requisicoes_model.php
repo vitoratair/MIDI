@@ -45,11 +45,24 @@ class Requisicoes_model extends CI_Model {
 	/**
 	 * Atualiza um requisição
 	 */
-	function update($table, $idn, $categoria, $marca, $modelo)
+	function update($id, $table, $idn, $item)
 	{
 
-		$this->db->query("UPDATE Request SET Categoria = '$categoria', Marca = '$marca', Modelo = '$modelo' WHERE IDN = '$idn'");
-	
+		// Update Categoria
+		if ($id == 1)
+		{
+			$this->db->query("UPDATE $table SET Categoria = '$item' WHERE IDN = '$idn'");	
+		}
+		// Update Modelo
+		elseif ($id == 2)
+		{
+			$this->db->query("UPDATE $table SET Marca = '$item' WHERE IDN = '$idn'");	
+		}		
+		// Update Marca
+		elseif ($id == 3)
+		{
+			$this->db->query("UPDATE $table SET Modelo = '$item' WHERE IDN = '$idn'");	
+		}	
 	}
 
 	/**

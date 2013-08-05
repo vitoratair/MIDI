@@ -60,8 +60,21 @@ class Requisicoes extends CI_Controller {
 		$marca 		= $this->input->post('marca');
 		$modelo 	= $this->input->post('modelo');
 
-		$this->requisicoes_model->update($table, $idn, $categoria, $marca, $modelo);
-		// $this->requisicoes_model->delete($id);
+		if (is_numeric($categoria))
+		{
+			$this->requisicoes_model->update(1, $table, $idn, $categoria);
+		}
+
+		if (is_numeric($marca))
+		{
+			$this->requisicoes_model->update(2, $table, $idn, $marca);
+		}
+
+		if (is_numeric($modelo))
+		{
+			$this->requisicoes_model->update(3, $table, $idn, $modelo);
+		}				
+		$this->requisicoes_model->delete($id);
 		
 		redirect('requisicoes/listAll','refresh');
 
@@ -73,7 +86,7 @@ class Requisicoes extends CI_Controller {
 	public function delete()
 	{
 
-		$id 	= $this->input->post('idRe');
+		$id = $this->input->post('idRe');
 		
 		$this->requisicoes_model->delete($id);
 			
