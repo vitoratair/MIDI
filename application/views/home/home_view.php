@@ -2,10 +2,15 @@
 <!-- Estrutura -->
 <div class="container">
 
-	<div class="hero-unit">
-		<h1>MIDI</h1>
-		<p>Monitoramento Intelbras de Dados de Importações</p>
+
+
+	<div class="hero-unit">		
+		<h1 align="">MIDI</h1>
+		<p align="">Monitoramento Intelbras de Dados de Importações</p>		
 	</div>
+	
+	<br><br>
+
 	
 	<ul class="thumbnails">
 		<li class="span3">
