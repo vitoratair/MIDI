@@ -6,7 +6,6 @@
 	<h2>Cadastro <small>de subcategoria na categoria, </small>{categoriaNome}{CNome}{/categoriaNome}</h2>
 	<hr>
 
-
 	<?php
 		$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
 		echo form_open('categoria/setSubcategoria', $atributos); 
@@ -32,7 +31,7 @@
 				<label class="control-label" for="">Índice</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge" id="indice" placeholder="Índice da subcategoria" name="indice" rel="popover" 
-					data-content="Deve possuir o valor entre 0 e 8" data-original-title="Descrição" autocomplete="off">
+					data-content="Deve possuir o valor entre 1 e 8" data-original-title="Descrição" autocomplete="off">
 				</div>
 			</div>
 
@@ -66,8 +65,6 @@
 			{/titulos}
 	
 	</table>
-
-
 
 <div class="modal hide" id="myModal">
 		<div class="modal-header">

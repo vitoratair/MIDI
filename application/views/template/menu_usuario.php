@@ -38,13 +38,32 @@
             	
             	<ul class="nav">
               							
-					<li><?php echo anchor('app/home','Home');?></li>				
+					<li><?php echo anchor('app/home','Home');?></li>	
+
+					<li class="dropdown">
+						
+						<a class="dropdown-toggle" href="#">Administração </a>
+						
+						<ul class="dropdown-menu">
+							
+							<!-- <li><?php echo anchor('administracao/processamento','Processamento');?></li> -->
+
+							<li><?php echo anchor('administracao/estatisticasListAll','Estatísticas');?></li>
+
+							<!-- <li><?php echo anchor('app/home','Upload NCM');?></li> -->
+
+							<!-- <li><?php echo anchor('app/home','Upload Marcas');?></li> -->
+
+							<!-- <li><?php echo anchor('app/home','Upload Modelos');?></li> -->
+
+						</ul>
+					</li>								
 
 					<li><?php echo anchor('pesquisa/listAll','Pesquisa');?></li>
 
 					<li><?php echo anchor('analise/listAll','Análise');?></li>
 
-					<li><?php echo anchor('docs/listAll','Documentação');?></li>
+					<!-- <li><?php echo anchor('docs/listAll','Documentação');?></li> -->
 					
 				</ul>
 			</div>

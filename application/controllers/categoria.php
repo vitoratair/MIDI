@@ -243,13 +243,15 @@ class Categoria extends CI_Controller {
 	public function deleteCategoria($id)
 	{
 
+		$varTable = "Tables_in_" . DATABASE;
+
 		// pegar todas as tabelas de NCMs do sistema
 		$data = $this->categoria_model->getAllNcm();
 
 		// Loop para apagar a referencia da categoria em todas as NCMs
 		foreach ($data as $key => $value)
 		{
-			 $this->categoria_model->updateCategoriaForNcm($value->Table,$id);
+			 $this->categoria_model->updateCategoriaForNcm($value->$varTable,$id);
 		}
 
 		// Deleta a referencia da categoria na tebela Titulo Modelo e NCM-has-Categoria// 
@@ -292,7 +294,8 @@ class Categoria extends CI_Controller {
 		// Loop para apagar a referencia da categoria em todas as NCMs
 		foreach ($data as $key => $value)
 		{
-			 $this->categoria_model->updateSubcategoriaForNcm($value->Table,$indice,$id);
+			 $varTable = "Tables_in_" . DATABASE;
+			 $this->categoria_model->updateSubcategoriaForNcm($value->$varTable, $indice,$id);
 		}
 		
 		// Deleta a referencia da categoria nas tabelas de subcategorias // 
@@ -310,6 +313,8 @@ class Categoria extends CI_Controller {
 	public function deleteItem($id,$coluna,$categoria,$subcategoria)
 	{
 
+		$varTable = "Tables_in_" . DATABASE;
+
 		$table  = "SubCategoria".$coluna."_SCID";
 		$table1 = "SubCategoria".$coluna ;
 
@@ -320,7 +325,7 @@ class Categoria extends CI_Controller {
 		// Loop para apagar a referencia da categoria em todas as NCMs
 		foreach ($data as $key => $value)
 		{
-			 $this->categoria_model->updateItemForNcm($value->Table,$id,$table,$categoria);
+			 $this->categoria_model->updateItemForNcm($value->$varTable, $id, $table, $categoria);
 		}
 
 		// Deleta a referencia do item na tabela Modelo //

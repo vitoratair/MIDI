@@ -106,7 +106,75 @@ class Analise extends CI_Controller {
 		$this->parser->parse('template', $data);
 	}	
 
+	/**
+	 *  Análise completa de uma marca 
+	 */	
+	public function analiseMarcaAno()
+	{
+
+		$varTable = "Tables_in_" . DATABASE;
+
+		// busca dados vindo via POST //
+		$marca = $this->input->post('marca');
+
+		// Busca todas as NCMs disponível //
+		$data['ncms'] = $this->categoria_model->getAllNcm();
+
+		// Busca a lista de marcas do sistema //
+		$data['marcas'] = $this->marca_model->listarAllMarca();		
+
+		// Verifica quais categorias a marca esta vinculada //
+		$i = 0;
+		foreach ($data['ncms'] as $value)
+		{
+			$categorias = $this->marca_model->buscaCategoria($value->$varTable, $marca);
+			if (!empty($categorias))
+			{
+				$array[$i] = $categorias;
+				$i++;
+			}
+		}
+
+		if (!empty($array))
+		{
+			$categorias = $this->mergeTabela($array);
+			
+			$categorias = $this->objectToArray($categorias, 'Categoria');
+
+			$data['categorias'] = array_unique($categorias);			
+		}
+
+		$data['marcaNome'] = $this->marca_model->buscaMarca($marca);
+		$data['marcaNome'] = $data['marcaNome'][0]->MANome;
+
+		if (empty($marca))
+		{
+			$data['main_content'] 	= 'analise/consolidadoMarcaEmpty_view';	
+		}
+		else
+		{
+			$data['main_content'] 	= 'analise/consolidadoMarca_view';		
+		}
+		
+		$this->parser->parse('template', $data);
+
 	
+	}
+
+
+
+	
+	function objectToArray($array, $object)
+	{
+
+		for ($i=0; $i < sizeof($array); $i++)
+		{ 
+			$array2[$i] = $array[$i]->$object; 
+		}
+
+		return $array2;
+	}
+
 	/**
 	 * Montar array para ser exibido no gráfico em javascript
 	 */	
