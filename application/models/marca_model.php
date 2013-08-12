@@ -135,7 +135,19 @@ class Marca_model extends CI_Model {
 		$this->db->query("DELETE FROM `Marca` WHERE MAID = '$id'");
 	}	
 
+	/**
+	 * Busca as informações de categoria dentro de uma NCM
+	 */
+	function buscaCategoria($table, $marca)
+	{
+		$this->db->select('DISTINCT(`Categoria`)');
+		$this->db->from($table);
+		$this->db->where('Marca', $marca);
+		$this->db->where('Categoria !=', 1);
+		$query = $this->db->get();
 
+		return $query->result();
+	}
 
 
 

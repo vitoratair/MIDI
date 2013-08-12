@@ -81,7 +81,20 @@
 
 					<li><?php echo anchor('pesquisa/listAll','Pesquisa');?></li>
 
-					<li><?php echo anchor('analise/listAll','Análise');?></li>
+					<li class="dropdown">
+						
+						<a class="dropdown-toggle" href="#">Análise </a>
+						
+						<ul class="dropdown-menu">
+							
+							<li><?php echo anchor('analise/listAll','Análise por ano');?></li>
+
+							<li><?php echo anchor('analise/analiseMarcaAno','Análise por marca');?></li>
+
+							<li><?php echo anchor('analise/listAll','Comparativo');?></li>
+
+						</ul>
+					</li>															
 					
 				</ul>
 			</div>

@@ -239,6 +239,7 @@ class Marca extends CI_Controller {
 	 */
 	public function deleteMarca($id)
 	{
+		$varTable = "Tables_in_" . DATABASE;
 
 		// pegar todas as tabelas de NCMs do sistema
 		$data = $this->categoria_model->getAllNcm();
@@ -246,7 +247,7 @@ class Marca extends CI_Controller {
 		// Loop para apagar a referencia da marca em todas as NCMs
 		foreach ($data as $key => $value)
 		{
-			 $this->marca_model->updateMarcaForNcm($value->Table,$id);
+			 $this->marca_model->updateMarcaForNcm($value->$varTable, $id);
 		}
 
 		// Deleta a referencia da marca na tabela Modelo // 

@@ -39,6 +39,7 @@
                 <td width="5%"><a onclick="enviar(1, {marca});" href="#" class='icon-search'> <a/></td>
                 <td width="5%"><a onclick="enviar(2, {marca});" href="#" class='icon-search'> <a/></td>
                 <td width="5%"><a onclick="enviar(3, {marca});" href="#" class='icon-search'> <a/></td>
+                
             </tr>
 
     {/dados}
