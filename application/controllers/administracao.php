@@ -184,10 +184,10 @@ class Administracao extends CI_Controller {
 		$table = $ncm . "_" . $ano;
 
 		// Busca todos os modelos cadastrados no sistema //
-		$modelos = $this->modelo_model->listarAllModelo();
-		unset($modelos[0]);
-
-		// Percorre o array de modelos buscando referencia em cada linha de importação //
+		$modelos = $this->modelo_model->listarAllModelo();		
+		unset($modelos[0]);	// Retirar o modelo 1 //
+		
+		// Percorre o array de modelos buscando referência em cada linha de importação //
 		foreach ($modelos as $key => $value)
 		{	
 			$dados = array(
@@ -195,7 +195,7 @@ class Administracao extends CI_Controller {
 				'Categoria' => $value->Categoria_CID,
 				'Marca' 	=> $value->Marca_MAID
 			);
-			$this->ncm_model->processarModelos($table, $mes, $value->MNome, $value->MNome1, $value->MNome2, $value->MNome3, $value->MNome4, $dados);
+			$this->ncm_model->processarModelos($table, $dados, $mes, $value->MNome, $value->MNome1, $value->MNome2, $value->MNome3, $value->MNome4);
 		}
 
 		// Busca todos as marcas cadastrados no sistema //

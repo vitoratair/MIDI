@@ -7,6 +7,7 @@ class Modelo extends CI_Controller {
 	{
 		parent::__construct();
 		$this->logged();
+		error_reporting(E_ALL ^ (E_NOTICE));
 
 	}
 
@@ -199,11 +200,15 @@ class Modelo extends CI_Controller {
 		}
 
 		// Loop para verficar as subcategorias do modelo //
-		foreach ($data['titulos'] as $key => $value)
+		if (!empty($data['titulos']))
 		{
-			$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasModelo($id, $value->TColuna);
-			$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
-		}		
+			foreach ($data['titulos'] as $key => $value)
+			{
+				$data['titulos'][$key]->SubCategoriaID 	= $this->categoria_model->listarSubcategoriasModelo($id, $value->TColuna);
+				$data['titulos'][$key]->SubCategoria 	= $this->categoria_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+			}					
+		}
+	
 
 		// Lista de informações para view //
 		$data['marcas'] 	= $this->marca_model->listarAllMarca();
@@ -347,13 +352,14 @@ class Modelo extends CI_Controller {
 	 */
 	public function deleteModelo($id)
 	{
+		$varTable = "Tables_in_" . DATABASE;
 		// pegar todas as tabelas de NCMs do sistema
 		$data = $this->categoria_model->getAllNcm();
 
 		// Loop para apagar a referencia da categoria em todas as NCMs
 		foreach ($data as $key => $value)
 		{
-			 $this->modelo_model->updateNcm($value->Table,$id);
+			 $this->modelo_model->updateNcm($value->$varTable, $id);
 		}
 
 		// Deletar o modelo //

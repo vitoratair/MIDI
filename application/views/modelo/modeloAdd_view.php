@@ -70,16 +70,6 @@
 	</fieldset>	
 </form>
 
-
-<script type="text/javascript">
-	
-	$("#salvar").click( function() {
-		
-		alert('asd');
-	});
-
-</script>
-
 <!-- Modal mensagem salvar -->
 
 <div id="salvar" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
