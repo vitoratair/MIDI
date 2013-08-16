@@ -568,7 +568,7 @@ class ncm_model extends CI_Model {
 
 	}
 
-	function processarModelos($table, $mes, $modelo, $modelo1, $modelo2, $modelo3, $modelo4, $dados)
+	function processarModelos($table, $dados, $mes, $modelo, $modelo1, $modelo2, $modelo3, $modelo4)
 	{			
 		
 		$this->db->where('MES', $mes);
@@ -602,7 +602,6 @@ class ncm_model extends CI_Model {
 			$this->db->where('MES', $mes);
 			$this->db->where('Modelo', 1);						
 		}				
-		
 
 		$this->db->update($table, $dados);
 	}

@@ -83,8 +83,9 @@ class Pesquisa extends CI_Controller {
 				}
 				else
 				{			
-					$data['checkModelo'] = FALSE;
 
+					$data['checkModelo'] = FALSE;
+					
 					// Loop para verficar as subcategorias do modelo //
 					foreach ($data['titulos'] as $key => $value)
 					{
