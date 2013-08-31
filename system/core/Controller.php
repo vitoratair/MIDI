@@ -51,25 +51,11 @@ class CI_Controller {
 		$this->load->initialize();
 		
 		log_message('debug', "Controller Class Initialized");
-
-
 	}
 
 	public static function &get_instance()
 	{
 		return self::$instance;
-	}
-
-	// Pega o Tipo do usuario na session //
-	public function getTipo()
-	{
-		return $this->session->userdata('usuarioTipo');
-	}
-
-	// Pega o ID do usuario na session //
-	public function getUserID()
-	{
-		return $this->session->userdata('usuarioID');
 	}
 }
 // END Controller class

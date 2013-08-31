@@ -1,32 +1,33 @@
 <!DOCTYPE html>
-<html>
+<!--[if IE 7]> <html lang="en" class="ie7"> <![endif]-->  
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
 
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
 <head>
+    <title><?php echo TITLE;?></title>
 
-<meta charset="utf-8">
-<title>MIDI - Monitoramento Intelbras de Dados de Importação</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<!-- Le styles -->
-<link href="<?php echo base_url();?>css/bootstrap.css" rel="stylesheet">
-<link href="<?php echo base_url();?>css/bootstrap-responsive.css" rel="stylesheet">
-<link href="<?php echo base_url();?>css/datepicker.css" rel="stylesheet">
-<link href="<?php echo base_url();?>css/slider.css" rel="stylesheet">
+    <!-- CSS Global Compulsory-->
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/headers/header1.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/bootstrap/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style_responsive.css">
+    <!-- <link rel="shortcut icon" href="<?php echo base_url();?>/assets/img/favicon.ico">         -->
+    <!-- CSS Implementing Plugins -->    
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/flexslider/flexslider.css" type="text/css" media="screen">      
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/parallax-slider/css/parallax-slider.css" type="text/css">
+    <!-- CSS Theme -->    
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/themes/default.css" id="style_color">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/themes/headers/default.css" id="style_color-header-1">    
+</head> 
 
-<style>
-body {
-	padding-top: 60px;
-	/* 60px to make the container go all the way to the bottom of the topbar */
-}
-</style>
-
-</head>
-
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
-<script src="<?php echo base_url();?>js/jquery.min.js"></script>
-<script src="<?php echo base_url();?>js/prettify.js"></script>
-<script src="<?php echo base_url();?>js/modernizr.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap-slider.js"></script>
-
+<br>
+<br>

@@ -1,55 +1,105 @@
+<!--=== Slider ===-->
+<div class="slider-inner">
+    <div id="da-slider" class="da-slider">
+        <div class="da-slide">
+            <h2><i>texto  &amp; texto</i> <br /> <i> </i> <br /> <i></i></h2>
+            <p><i>texto e texto e mais texto</i> <br /> <i> texto </i> <br /> <i>texto texto  </i></p>
+            <!-- <div class="da-img"><img src="<?php echo base_url();?>assets/plugins/parallax-slider/img/1.png" alt="" /></div> -->
+        </div>
+        <div class="da-slide">
+            <h2><i>Textos </i> <br /> <i>Textos </i> <br /> <i>Textos </i></h2>
+            <p><i> e mais textos</i> <br /> <i>texto</i></p>
+            <div class="da-img span6">
+                <div class="span6">
+                    <!-- <iframe src="http://player.vimeo.com/video/47911018" width="100%" height="320" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>  -->
+                </div>
+            </div>
+        </div>
+        <div class="da-slide">
+            <h2><i>Utilizando </i> <br /> <i>soluções com </i> <br /> <i>HTML5/CSS3</i></h2>
+            <p><i>Desfrute de um portal feito com</i> <br /> <i> as melhores tecnologias</i> <br /> <i> para WEB </i></p>
+            <div class="da-img"><img src="<?php echo base_url();?>assets/plugins/parallax-slider/img/html5andcss3.png" alt="image01" /></div>
+        </div>
+        <nav class="da-arrows">
+            <span class="da-arrows-prev"></span>
+            <span class="da-arrows-next"></span>        
+        </nav>
+    </div><!--/da-slider-->
+</div><!--/slider-->
+<!--=== End Slider ===-->
 
-<!-- Estrutura -->
-<div class="container">
+<!--=== Purchase Block ===-->
+<div class="row-fluid purchase margin-bottom-30">
+    <div class="container">
+        <div class="span9">
+            
+            <span>Pesquisas de importações com qualidade!</span>
+            <p>
+                Se você pretende entrar em um novo mercado, ou saber sua participação em um mercado que já atue, começe a utilizar
+                as pesquisas de mercado <i> DJV - Market Research</i>.    
+            </p>
 
+        </div>
+        <a href="#" class="btn-buy hover-effect">Faça um Tour</a>
+    </div>
+</div><!--/row-fluid-->
+<!-- End Purchase Block -->
 
+<!--=== Content Part ===-->
+<div class="container"> 
+    <!-- Service Blocks -->    
+    <div class="row-fluid">
+        <a href="#">
+        <div class="span4">
+            <div class="service clearfix">
+                <i class="icon-cogs"></i>
+                <div class="desc">
+                    <h4>Metodologia</h4>
+                    <p>
+                        Métodolia utilizada para elaboração das pesquisas
 
-	<div class="hero-unit">		
-		<h1 align="">MIDI</h1>
-		<p align="">Monitoramento Intelbras de Dados de Importações</p>		
-	</div>
-	
-	<br><br>
+                        texto textotexto textotexto textotexto texto
+                        texto textotexto textotexto texto
+                    </p>
+                </div>
+            </div>  
+        </div>
+        </a>
 
-	
-	<ul class="thumbnails">
-		<li class="span3">
+        <a href="#">
+        <div class="span4">
+            <div class="service clearfix">
+                <i class="icon-desktop"></i>
+                <div class="desc">
+                    <h4>Portfólio</h4>
+                    <p>
+                        Portfólio de pesquisas
 
-			<div class="thumbnail">
-				<img src="<?php echo base_url();?>img/quality.jpg" alt="">
-				<a href="<?php echo site_url()?>/app/SQAP" class="link"></i><h5>Manual de utilização</h5></a>
-			</div>
-		</li>
+                        texto textotexto textotexto textotexto texto
+                        texto textotexto textotexto texto                        
+                    </p>
+                </div>
+            </div>  
+        </div>
+        </a>
 
+        <a href="#">
+        <div class="span4">
+            <div class="service clearfix">
+                <i class="icon-heart"></i>
+                <div class="desc">
+                    <h4>Clientes</h4>
+                    <p>
+                        Clientes que já utilizam os serviços DJV
 
-		<li class="span3">
-
-			<div class="thumbnail">
-				<img src="<?php echo base_url();?>img/auditoria.jpg" alt="">
-				<a href="<?php echo site_url()?>/app/DOCS" class="link"></i><h5>Documentação do Sistema</h5></a>
-			</div>
-
-		</li>
-
-		<li class="span3">
-
-			<div class="thumbnail">
-				<img src="<?php echo base_url();?>img/process.jpg" alt="">
-				<a href="<?php echo site_url()?>/app/Workflow" class="link"></i><h5>Funcionamento</h5></a>
-			</div>
-
-		</li>
-
-		<li class="span3">
-
-			<div class="thumbnail">
-				<img src="<?php echo base_url();?>img/sw.jpg" alt="">
-				<a href="http://www.intelbras.com.br"><h5>Intelbras</h5></a>
-			</div>
-		</li>
-	</ul>
-
-
-<!-- FIM -->
-
+                        texto textotexto textotexto textotexto texto
+                        texto textotexto textotexto texto                        
+                    </p>
+                </div>
+            </div>  
+        </div>              
+        </a>
+    </div><!--/row-fluid-->
+    <!-- //End Service Blokcs -->
+</div>
 

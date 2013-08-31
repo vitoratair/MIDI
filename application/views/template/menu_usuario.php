@@ -1,73 +1,118 @@
-<!-- Navbar
-================================================== -->
-<div class="navbar navbar-inverse navbar-fixed-top">
-  	<div class="navbar-inner">
-    	<div class="container">
+<?php 
 
-	    	<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-	      	<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-	        	<span class="icon-bar"></span>
-	        	<span class="icon-bar"></span>
-	        	<span class="icon-bar"></span>
-	      	</a>
+    $usuario = $this->session->userdata('usuarioLogin');
+    $tipo    = $this->session->userdata('usuarioTipo');
 
-			<div class="btn-group pull-right">
-				
-				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> 
-					
-					<?php 
+?>
 
-						$usuario = $this->session->userdata('usuarioLogin');
-						$tipo 	 = $this->session->userdata('usuarioTipo');
-					?>
-					
-					<i class="icon-user"> </i> <?php echo $usuario ?> <span class="caret"></span>
-				</a>
-				<ul class="dropdown-menu">
-					<input type="hidden" class="input-xlarge" id="login" value='{usuarioLogin}' name="login">
-					<li><?php echo anchor("usuario/pageUser/$usuario",'Perfil');?></li>
-					<li class="divider"></li>
-					<li><?php echo anchor('login/logout','Sair');?></li>
-					
-				</ul>
-			</div>
+<!--=== Header ===-->
+<div class="header">               
+    <div class="container"> 
+        <!-- Logo -->       
+        <div class="logo">                                             
+            <a href="<?php echo base_url();?>index.php/app/home"><img id="logo-header" src="<?php echo base_url();?>assets/img/djv.png" alt="Logo"></a>
+        </div><!-- /logo -->        
+                                    
+        <!-- Menu -->       
+        <div class="navbar">                                
+            <div class="navbar-inner">                                  
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a><!-- /nav-collapse -->                                  
+                
+                <div class="nav-collapse collapse">                                     
+                    <ul class="nav top-2">
+                        
+                        <li class="active"><?php echo anchor('app/home','Home');?></li>                        
+                        
+                        <li>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Administração
+                                <b class="caret"></b>                            
+                            </a>
+                            
+                            <ul class="dropdown-menu">
 
+                                <!-- <li><?php echo anchor('administration/processing','Processamento');?></li> -->
 
+                                <li><?php echo anchor('administration/statistic','Estatísticas');?></li>
 
-          	<div class="nav-collapse">
-            	
-            	<ul class="nav">
-              							
-					<li><?php echo anchor('app/home','Home');?></li>	
+                                <!-- <li><?php echo anchor('app/home','Upload NCM');?></li> -->
 
-					<li class="dropdown">
-						
-						<a class="dropdown-toggle" href="#">Administração </a>
-						
-						<ul class="dropdown-menu">
-							
-							<!-- <li><?php echo anchor('administracao/processamento','Processamento');?></li> -->
+                                <!-- <li><?php echo anchor('app/home','Upload Marcas');?></li> -->
 
-							<li><?php echo anchor('administracao/estatisticasListAll','Estatísticas');?></li>
+                                <!-- <li><?php echo anchor('app/home','Upload Modelos');?></li> -->
+                            </ul>
+                            
+                            <b class="caret-out"></b>                        
+                        </li>
 
-							<!-- <li><?php echo anchor('app/home','Upload NCM');?></li> -->
+<!--                         <li>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Cadastro
+                                <b class="caret"></b>                            
+                            </a>
+                            
+                            <ul class="dropdown-menu">
+                                <li><?php echo anchor('category/listAll','Categoria');?></li>                      
 
-							<!-- <li><?php echo anchor('app/home','Upload Marcas');?></li> -->
+                                <li><?php echo anchor('ncm/listAll','NCM');?></li>
+                            </ul>
+                            
+                            <b class="caret-out"></b>                        
+                        </li>
+ -->
+                        <li>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Pesquisas
+                                <b class="caret"></b>                            
+                            </a>
+                            
+                            <ul class="dropdown-menu">
+                                <li><?php echo anchor('search/ncm','Importações');?></li>                                                                       
 
-							<!-- <li><?php echo anchor('app/home','Upload Modelos');?></li> -->
+                                <li><?php echo anchor('brand/listAll','Marca');?></li>
+                                
+                                <li><?php echo anchor('model/listAll','Modelo');?></li>
 
-						</ul>
-					</li>								
+                                <li><?php echo anchor('user/listAll','Usuário');?></li>
+                            </ul>
+                            
+                            <b class="caret-out"></b>                        
+                        </li>                        
 
-					<li><?php echo anchor('pesquisa/listAll','Pesquisa');?></li>
+                        <li>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Análise
+                                <b class="caret"></b>                            
+                            </a>
+                            <ul class="dropdown-menu">
 
-					<li><?php echo anchor('analise/listAll','Análise');?></li>
+                                <li><?php echo anchor('analise/listAll','Análise por ano');?></li>
 
-					<!-- <li><?php echo anchor('docs/listAll','Documentação');?></li> -->
-					
-				</ul>
-			</div>
+                                <li><?php echo anchor('analise/analiseMarcaAno','Análise por marca');?></li>
 
-		</div>
-	</div>
-</div>
+                                <li><?php echo anchor('analise/listAll','Comparativo');?></li>
+
+                            </ul>
+                            <b class="caret-out"></b>                        
+                        </li>
+
+                        <li>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            
+                            <i class="icon-user"> </i> <?php echo $usuario ?> <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><?php echo anchor("user/perfil/$usuario",'Perfil');?></li>
+                                <!-- <li><?php echo anchor("request/listAll",'Requisições');?></li> -->
+                                <li><?php echo anchor('login/logout','Logout');?></li>
+                            </ul>
+                            <b class="caret-out"></b>                        
+                        </li>  
+
+                    </ul>
+                </div><!-- /nav-collapse -->                                
+            </div><!-- /navbar-inner -->
+        </div><!-- /navbar -->                          
+    </div><!-- /container -->               
+</div><!--/header -->      
+<!--=== End Header ===-->

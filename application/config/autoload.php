@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 'session', 'parser', 'form_validation','pagination','table');
+$autoload['libraries'] = array('database', 'session', 'parser', 'form_validation', 'others', 'pagination');
 
 
 /*
@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database', 'session', 'parser', 'form_validation
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'form', 'date', 'user','dates','string','text');
+$autoload['helper'] = array('url');
 
 
 /*
@@ -110,19 +110,13 @@ $autoload['language'] = array();
 */
 
 $autoload['model'] = array(
-							'categoria_model',
-							'ncm_model',
-							'titulo_model',
-							'marca_model',
-							'usuario_model',
-							'modelo_model',
-							'analise_model',
-							'cargo_model',
-							'departamento_model',
-							'unidade_model',
-							'tipo_model',
-							'requisicoes_model'
-							);
+					'user_model',
+					'ncm_model',
+					'category_model',
+					'brand_model',
+					'model_model',
+					'request_model'
+					);
 
 
 /* End of file autoload.php */
