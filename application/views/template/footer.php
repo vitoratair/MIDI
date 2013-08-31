@@ -9,9 +9,12 @@
 <!--=== End Copyright ===-->
 
 
+
+<!-- highcharts -->           
 <!-- JS Global Compulsory -->           
-<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/modernizr.custom.js"></script>        
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/highcharts.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/exporting.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/plugins/bootstrap/js/bootstrap.min.js"></script> 
 <!-- JS Implementing Plugins -->           
 <script type="text/javascript" src="<?php echo base_url();?>assets/plugins/flexslider/jquery.flexslider-min.js"></script>
@@ -27,6 +30,7 @@
 <script src="<?php echo base_url();?>assets/js/post.js"></script>
 <!-- JS bootstrap -->           
 <script src="<?php echo base_url();?>assets/js/bootstrap-popover.js"></script>
+
 
 <script type="text/javascript">
     jQuery(document).ready(function() {

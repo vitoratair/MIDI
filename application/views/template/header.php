@@ -29,5 +29,7 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/themes/headers/default.css" id="style_color-header-1">    
 </head> 
 
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.js"></script>
+
 <br>
 <br>

@@ -176,7 +176,7 @@ class Category_model extends CI_Model
 	}
 
 	// Lista itens da subcategoria //
-	function listElement($table,$categoria)
+	function listElement($table, $categoria)
 	{		
 		$this->db->select('SCID,SCNome');
 		$this->db->from($table);

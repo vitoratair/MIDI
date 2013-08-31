@@ -214,6 +214,49 @@ class Model_model extends CI_Model
 		return $query->result();	
 	}
 
+	// Retorna a lista de modelos de uma categoria e subcategorias //
+	function listAllModelByCategory($categoria, $subcategoria)
+	{
+		$this->db->select('DISTINCT(`MOID`)');
+		$this->db->from('Modelo');
+		$this->db->where('Categoria_CID',$categoria);
+		
+		foreach ($subcategoria as $key => $value)
+		{
+			$coluna = "SubCategoria". ($key + 1) ."_SCID";
+			if (!empty($value) && ($value != 'false'))
+			{
+				$this->db->where($coluna,$value);
+			}
+		}
+
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
+	// Retorna a soma de todas as importações de um modelos dentro de uma NCM //
+	function calcPartsByModel($table, $modelo)
+	{
+		$this->db->select_sum('QUANTIDADE_COMERCIALIZADA_PRODUTO');
+		$this->db->from($table);
+		$this->db->where_in('Modelo',$modelo);
+		$query = $this->db->get();			
+	
+		return $query->result();
+	}
+
+	// Calcula o volume referente a uma NCM //
+	function calcCashByModel($table, $modelo)
+	{	
+		$this->db->select_sum('VALOR_TOTAL_PRODUTO_DOLAR');
+		$this->db->from($table);
+		$this->db->where_in('Modelo',$modelo);
+		$query = $this->db->get();
+		
+		return $query->result();
+	}		
+
 }
 
 ?>

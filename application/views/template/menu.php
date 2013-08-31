@@ -86,7 +86,7 @@
                             </a>
                             <ul class="dropdown-menu">
 
-                                <li><?php echo anchor('analise/listAll','Análise por ano');?></li>
+                                <li><?php echo anchor('analyze/listAll','Análise por ano');?></li>
 
                                 <!-- <li><?php echo anchor('analise/analiseMarcaAno','Análise por marca');?></li> -->
 
