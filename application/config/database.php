@@ -51,11 +51,6 @@ $active_record = TRUE;
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
 $db['default']['password'] = 'lockinet';
-
-// $db['default']['hostname'] = '127.8.207.2';
-// $db['default']['username'] = 'adminmif4HSI';
-// $db['default']['password'] = 'trIzxb6TZhF3';
-
 $db['default']['database'] = DATABASE;
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

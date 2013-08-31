@@ -1,6 +1,6 @@
-<?php $this->load->view("template/header"); ?>
-
 <?php 
+
+	$this->load->view("template/header");
 
 	$tipo 	 = $this->session->userdata('usuarioTipo');
 	
@@ -10,9 +10,8 @@
 		case USER_ADMIN:
 			$this->load->view("template/menu"); 
 			break;
-		
+
 		case USER_USUARIO:
-			
 			$this->load->view("template/menu_usuario"); 
 			break;
 
@@ -20,8 +19,9 @@
 			# code...
 			break;
 	}
+
+	$this->load->view($main_content);
+
+	$this->load->view("template/footer"); 
+
 ?>
-
-<?php $this->load->view($main_content); ?>
-
-<?php $this->load->view("template/footer"); ?>

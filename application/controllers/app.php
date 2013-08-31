@@ -10,56 +10,7 @@ class App extends CI_Controller {
 
 	}
 
-	/**
-	 * 
-	 * Apresenta view principal do sistema
-	 *
-	 */
-	public function home()
-	{
-		$data['main_content'] = 'home/home_view';
-		$this->load->view('template',$data);
-	}
-	
-	
-	/**
-	 *
-	 * Apresenta view do SQAP do sistema
-	 *
-	 */
-	public function SQAP()
-	{
-		$data['main_content'] = 'SQAP/SQAP_view';
-		$this->load->view('template',$data);
-	}
-
-	
-	/**
-	 *
-	 * Apresenta view do SQAP do sistema
-	 *
-	 */
-	public function Workflow()
-	{
-		$data['main_content'] = 'Workflow/Workflow_view';
-		$this->load->view('template',$data);
-	}
-	
-	/**
-	 *
-	 * Apresenta view do SQAP do sistema
-	 *
-	 */
-	public function DOCS()
-	{
-		$data['main_content'] = 'DOCS/DOCS_view';
-		$this->load->view('template',$data);
-	}
-	
-	
-	/**
-	 * Verifica se o usuario está logado
-	 */
+	// Verifica se o usuario está logado //
 	public function logged()
 	{
 		$logged = $this->session->userdata('logged');
@@ -68,8 +19,14 @@ class App extends CI_Controller {
 		{	
 			redirect('login','refresh');
 		}		
-	}	
+	}
 
+	// Apresenta view principal do sistema //
+	public function home()
+	{
+		$data['main_content'] = 'home/home_view';
+		$this->load->view('template', $data);
+	}
 
 }
 

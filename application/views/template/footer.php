@@ -1,43 +1,44 @@
-</div>
-
-<!-- Footer -->
-   
-<div id="">
-	<br><br>
-    <p class="muted credit" align="center">MIDI - Monitoramento Intelbras de Dados de Importações<br>
-    	Developed by
-    	<a href="http://www.linkedin.com/pub/vitor-atair/49/606/572">Vitor Atair</a>.
-    </p>
-</div>  
-  
-
-<!-- javascript -->
-<!-- Placed at the end of the document so the pages load faster -->
+<!--=== Copyright ===-->
+<div class="copyright">
+    <div class="container">
+            <div class="span8">                     
+                <p align="">MIDI &copy; Monitoramento Intelbras de Dados de Importações </p>
+            </div>
+    </div><!--/container--> 
+</div><!--/copyright--> 
+<!--=== End Copyright ===-->
 
 
-<script src="<?php echo base_url();?>js/jquery.validate.js"></script>
-<script src="<?php echo base_url();?>js/highcharts.js"></script>
-<script src="<?php echo base_url();?>js/exporting.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap-dropdown.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap-alert.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap-modal.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap-button.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap-collapse.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap-datepicker.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap-popover.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap-scrollspy.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap-tab.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap-tooltip.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap-transition.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap-typeahead.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap.js"></script>
-<script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
-<script src="<?php echo base_url();?>js/misc.js"></script>
-<script src="<?php echo base_url();?>js/valida.js"></script>
-<script src="<?php echo base_url();?>js/combobox.js"></script>
-<script src="<?php echo base_url();?>js/relatAuditoria.js"></script>
-<script src="<?php echo base_url();?>js/relatNc.js"></script>
-<script src="<?php echo base_url();?>js/relatAc.js"></script>
+<!-- JS Global Compulsory -->           
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/modernizr.custom.js"></script>        
+<script type="text/javascript" src="<?php echo base_url();?>assets/plugins/bootstrap/js/bootstrap.min.js"></script> 
+<!-- JS Implementing Plugins -->           
+<script type="text/javascript" src="<?php echo base_url();?>assets/plugins/flexslider/jquery.flexslider-min.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/plugins/parallax-slider/js/modernizr.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/plugins/parallax-slider/js/jquery.cslider.js"></script> 
+<script type="text/javascript" src="<?php echo base_url();?>assets/plugins/back-to-top.js"></script>
+<!-- JS Page Level -->           
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/app.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/pages/index.js"></script>
+<!-- JS para validar formulário -->           
+<script src="<?php echo base_url();?>assets/js/jquery.validate.js"></script>
+<script src="<?php echo base_url();?>assets/js/valida.js"></script>
+<script src="<?php echo base_url();?>assets/js/post.js"></script>
+<!-- JS bootstrap -->           
+<script src="<?php echo base_url();?>assets/js/bootstrap-popover.js"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        App.init();
+        App.initSliders();
+        Index.initParallaxSlider();
+    });
+</script>
+<!--[if lt IE 9]>
+    <script src="assets/js/respond.js"></script>
+<![endif]-->
 
 </body>
-</html>
+</html> 
+
