@@ -555,7 +555,17 @@ class ncm_model extends CI_Model
 		$this->db->update($table, $dados);
 	}
 
-
+	// Retorna todas as NCMs de uma categoria //
+	public function listNcmByCategory($id)
+	{
+		$this->db->select('NNome');
+		$this->db->from('NCM_has_Categoria');
+		$this->db->where('Categoria_CID', $id);
+		$this->db->join('NCM','NCM_NID = NID');
+		$query = $this->db->get();
+		
+		return $query->result();
+	}
 
 
 }
