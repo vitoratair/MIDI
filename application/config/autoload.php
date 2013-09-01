@@ -58,8 +58,7 @@ $autoload['libraries'] = array(
 					'parser',
 					'form_validation',
 					'others',
-					'pagination',
-					'analizeCalc'
+					'pagination'
 					);
 
 

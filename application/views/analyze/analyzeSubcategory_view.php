@@ -107,6 +107,22 @@
 
 <!-- Java scrip para criação do gráfico -->
 <script type="text/javascript">
+
+    function enviar(categoria, ano)
+    {    
+
+        var url = '<?php echo base_url();?>index.php/analyze/yearAnalyze';
+        var form = $('<form action="' + url + '" method="POST">' +
+          '<input type="hidden" name="categoria" value="' + categoria + '" />' +
+          '<input type="hidden" name="ano" value="' + ano + '" />' +
+          '<input type="hidden" name="subcategorias" value="' + <?php echo $postSubcategorias;?> + '" />' +
+          '</form>');
+        $('body').append(form);
+        $(form).submit();
+
+
+    }
+
     $(function () {
         $('#analyze_1').highcharts({
             chart:
@@ -197,7 +213,8 @@
             }, {
                 name: 'Dinheiro',
                 color: '#89A54E',
-                type: 'spline',
+                // type: 'spline',
+                type: 'column',
                 
                 data: [{dataCash}],
 

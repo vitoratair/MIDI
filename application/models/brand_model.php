@@ -115,6 +115,47 @@ class Brand_model extends CI_Model
 		return $query->result();		
 	}	
 
+	// Retorna todas as marcas com um array de modelos //
+	function listBrandByArrayModel($table, $modelos)
+	{
+		$this->db->select('DISTINCT(`Marca`)');
+		$this->db->select('MANome');
+		$this->db->from($table);
+		$this->db->join('Marca','Marca = MAID');
+		$this->db->where_in('Modelo', $modelos);
+		$query = $this->db->get();
+		
+		return $query->result();
+	}
+
+	// Retorna as peças importadas de uma marca //
+	function sumPartsYearByBrand($table, $marca, $categoria, $modelo)
+	// function calcUnidadesAnoByMarca($table, $marca, $categoria, $modelo)
+	{
+		$this->db->select_sum('QUANTIDADE_COMERCIALIZADA_PRODUTO');
+		$this->db->from($table);
+		$this->db->where('Marca',$marca);
+		$this->db->where('Categoria', $categoria);
+		$this->db->where_in('Modelo',$modelo);
+		$query = $this->db->get();
+
+		return $query->result();
+
+	}
+
+	// Retorna o volu financeiro $$$ de importações feita por uma marca //
+	function sumCashYearByBrand($table, $marca, $categoria, $modelo)
+	{
+		$this->db->select_sum('VALOR_TOTAL_PRODUTO_DOLAR');
+		$this->db->from($table);
+		$this->db->where('Marca',$marca);
+		$this->db->where('Categoria',$categoria);
+		$this->db->where_in('Modelo',$modelo);
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
 }
 
 ?>
