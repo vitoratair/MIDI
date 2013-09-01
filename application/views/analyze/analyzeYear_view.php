@@ -14,14 +14,13 @@
 <div class="container">
 				
 
-<!--     <?php
+    <?php
         $atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align' => 'right', 'method'=>'POST');
         echo form_open('analise/listAll', $atributos); 
     ?>
-    <input type="hidden" name="categoria" value="{categoria}">
-    <a class="btn" onclick="enviar(6);" href="#"><i class="icon-search"></i> Gráfico</a>
-    <button type="submit" class="btn btn"><i class="icon-arrow-left"></i> Voltar</button>
-    </form> -->
+        <input type="hidden" name="categoria" value="{categoria}">
+        <a class="btn-u" onclick="enviar(6);" href="#"><i class="icon-search"></i> Gráfico</a>
+    </form>
 
     <table class='table table-bordered table-hover' align="right">
             
