@@ -592,7 +592,32 @@ class ncm_model extends CI_Model
 		return $query->result();
 	}
 
-
+	// Retorna a lista de importações de uma marca //
+	public function getDataDetails($table, $modelos, $marca, $categoria)
+	{
+		if (empty($marca))
+		{
+			$this->db->select('IDN, DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome, MES');
+			$this->db->from($table);
+			$this->db->join('Marca', 'MAID = Marca');
+			$this->db->join('Modelo', 'MOID = Modelo');
+			$this->db->where('Categoria', $categoria);
+			$this->db->where_in('Modelo', $modelos);
+			$query = $this->db->get();
+		}
+		else
+		{
+			$this->db->select('IDN, DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome, MES');
+			$this->db->from($table);
+			$this->db->join('Marca', 'MAID = Marca');
+			$this->db->join('Modelo', 'MOID = Modelo');
+			$this->db->where('Marca', $marca);			
+			$this->db->where_in('Modelo', $modelos);
+			$query = $this->db->get();			
+		}
+		
+		return $query->result();
+	}
 }
 
 ?>

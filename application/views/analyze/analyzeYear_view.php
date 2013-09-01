@@ -110,7 +110,7 @@
         }
         else if(id == 3)
         {
-            var url = '<?php echo base_url();?>index.php/analyze/analiseMarcaDetalhe';
+            var url = '<?php echo base_url();?>index.php/analyze/analizeBrandDetails';
             var form = $('<form action="' + url + '" method="POST">' +
               '<input type="hidden" name="marca" value="' + marca + '" />' +
               '<input type="hidden" name="categoria" value="' + <?php echo $categoria;?> + '" />' +
