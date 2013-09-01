@@ -212,6 +212,59 @@ class Analyze extends CI_Controller
 		return FALSE;		
 	}
 
+	// Lista detalhada de importações feitas em um período por uma marca //	
+	public function analizeBrandDetails()
+	{		
+		// Recebendo dados via POST //
+		$marca 		= $this->input->post('marca');
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc1 		= $this->input->post('subcategorias');		
+		$sc 		= explode(",", $sc1);
+
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listYear();
+		$data['ncm']			= $this->listNcmYearByCategory($categoria);		
+		$data['titulos']		= $this->category_model->listTitle($categoria);
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+
+			// Recebe as opções de detalhes de NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{
+				$aux[$key]	= $this->brandDetailsByYear($table, $categoria, $sc, $marca);
+			}
+			
+			$aux 			= $this->mergeTable($aux);
+			$aux 			= $this->orderTable($aux, 'unidades');
+			$data['dados'] 	= $this->others->formatarDados(6, $aux);
+			
+		}
+		
+		$data['categoria'] 		= $categoria;	
+		$categoria 				= $this->category_model->getCategory($categoria);
+		$data['categoriaNome'] 	= $categoria[0]->CNome;
+		$data['ano'] 			= $ano;
+		$data['marcaNome'] 		= $this->brand_model->getBrand($marca);
+		$data['marcaNome'] 		= $data['marcaNome'][0]->MANome;
+		$data['postSubcategorias'] 	= $sc1;
+
+		$data['main_content'] 	= 'analyze/brandDetails_view';
+		$this->parser->parse('template', $data);		
+	}
+
+
 	// Realiza o calculo para o share inicial de cada NCM -->
 	function getDataFirstShare($table, $categoria, $sc)
 	{
@@ -491,6 +544,51 @@ class Analyze extends CI_Controller
 		return $dados;
 	}
 
+	// Busca as informações detalhadas de cada NCM //
+	function brandDetailsByYear($table, $categoria, $sc, $marca)
+	{
+
+		$modelos	= array();
+		$marcas		= array();
+		$ano 		= explode('_', $table);
+		$ncm 		= $ano[0];
+		$ano 		= $ano[1];		
+
+		// Verifica os modelos da categoria //
+		$modelo 	= $this->model_model->listAllModelByCategory($categoria, $sc);			
+		
+		// Formata o query para a clausula IN //
+		foreach ($modelo as $key => $value)
+		{
+			array_push($modelos, $value->MOID);	
+		}		
+
+		// Listando as marcas que tem modelos com as categorias especificadas //
+
+		if (empty($marca))
+		{
+			$dados = $this->ncm_model->getDataDetails($table, $modelos, NULL, $categoria);	
+		}
+		else
+		{
+			$dados = $this->ncm_model->getDataDetails($table, $modelos, $marca, $categoria);
+		}
+		
+		foreach ($dados as $key => $value)
+		{
+			$data[$key]['idn']	 		= $value->IDN;
+			$data[$key]['ncm']	 		= $ncm;
+			$data[$key]['ano']	 		= $ano;			
+			$data[$key]['descricao']	= $value->DESCRICAO_DETALHADA_PRODUTO;
+			$data[$key]['fob'] 			= $value->VALOR_UNIDADE_PRODUTO_DOLAR;
+			$data[$key]['unidades'] 	= $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+			$data[$key]['marca'] 		= $value->MANome;
+			$data[$key]['modelo'] 		= $value->MNome;
+			$data[$key]['mes'] 			= $value->MES;
+		}
+
+		return $data;
+	}
 
 }
 
