@@ -98,6 +98,85 @@ class Analyze extends CI_Controller
 		$this->parser->parse('template', $data);
 	}	
 
+	// Análise de um ano //
+	public function yearAnalyze()
+	{
+		// Recebendo dados via POST //
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc1 		= $this->input->post('subcategorias');
+		$sc 		= explode(",", $sc1);
+
+		// Zerando contadores
+		$outros['unidades'] = 0;
+		$outros['volume'] = 0;
+
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listYear();
+		$data['ncm']			= $this->listNcmYearByCategory($categoria);		
+		$data['titulos']		= $this->category_model->listTitle($categoria);
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+
+			// Verficar os valores de unidades e volumes de cada NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{				
+				$aux[$key] 			= $this->getDataByYear($table, $categoria, $sc);
+				$outros['unidades'] += $aux[$key][0]['outros'][0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+				$outros['volume'] 	+= $aux[$key][0]['outros'][0]->VALOR_TOTAL_PRODUTO_DOLAR;
+			}
+
+			// Montando estrutura de array para parser com a view //
+			$aux 				= $this->mergeTable($aux);
+			$data['dados'] 		= $this->mergebrand($aux);
+			$data['dados'] 		= $this->orderTable($data['dados'], 'unidades');
+			
+			// Verficando e deletando o último elemento caso seja 0 //			
+			$ultimo = sizeof($data['dados']) - 1;
+			
+			foreach ($data['dados'] as $key => $value)
+			{
+				if (($value['volume']) == 0)
+				{
+					unset($data['dados'][$key]);	
+				}
+			}
+			
+			// unset($data['dados'][sizeof($data['dados']) - 1]);
+			$data['dados'] 		= $this->changeBrandIdToName($data['dados']);			
+			$data['dados'] 		= $this->calcFob($data['dados']);			
+			$data['total'][0] 	= $this->calcTotal($data['dados']);					
+			$data['dados'] 		= $this->calcularShare(1, $data['dados'], $data['total'][0]);			
+			$data['outros'][0] 	= $outros;
+			
+			// Formatando os dados com as devidas casa decimais //
+			$data['total'][0] 	= $this->others->formatarDados(7, $data['total'][0]);
+			$data['dados'] 		= $this->others->formatarDados(2, $data['dados']);
+			$data['outros'][0] 	= $this->others->formatarDados(3, $data['outros'][0]);
+
+		}		
+		$data['categoriaNome'] 		= $this->category_model->getCategory($categoria);
+		$data['categoriaNome'] 		= $data['categoriaNome'][0]->CNome;
+		$data['ano'] 				= $ano;
+		$data['categoria'] 			= $categoria;
+		$data['postSubcategorias'] 	= json_encode($sc);
+
+		$data['main_content'] 	= 'analyze/analyzeYear_view';
+		$this->parser->parse('template', $data);
+
+	}
+
 	// Verifica quais as NCMs / anos pertencente a uma categoria //
 	function listNcmYearByCategory($categoria)
 	{
@@ -253,6 +332,164 @@ class Analyze extends CI_Controller
 		return $data;
 	}
 
+	// Busca as informações de unidades e $$ por ano //
+	function getDataByYear($table, $categoria, $sc)
+	{
+
+		$modelos	= array();
+		$marcas		= array();
+		$ano 		= explode('_', $table);
+		$ano 		= $ano[1];		
+
+		// Verifica os modelos da categoria //
+		$modelo 	= $this->model_model->listAllModelByCategory($categoria, $sc);			
+		
+		// Formata o query para a clausula IN //
+		foreach ($modelo as $key => $value)
+		{
+			array_push($modelos, $value->MOID);	
+		}		
+
+		// Listando as marcas que tem modelos com as categorias especificadas //
+		$marca = $this->brand_model->listBrandByArrayModel($table, $modelos);
+				
+		foreach ($marca as $key => $value)
+		{
+			array_push($marcas, $value->Marca);	
+		}		
+
+		if (!empty($marcas))
+		{
+			foreach ($marcas as $key => $value)
+			{
+				$array[$key]['marca'] 		= $marca[$key]->Marca;
+				$unidades 					= $this->brand_model->sumPartsYearByBrand($table, $array[$key]['marca'], $categoria, $modelos);		
+				$volume 					= $this->brand_model->sumCashYearByBrand($table, $array[$key]['marca'], $categoria, $modelos);
+				$array[$key]['unidades'] 	= $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+				$array[$key]['volume'] 		= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+			}			
+		}
+		$array[0]['outros']	= $this->ncm_model->sumOthersByYear($table, $categoria, $sc);
+		return $array;
+
+	}
+
+	// Merge de todas as NCMs em um único array //
+	function mergeTable($dados)
+	{
+		$result = array();
+
+		for ($i=0; $i < sizeof($dados); $i++)
+		{ 
+			if (!empty($dados[$i]))
+			{
+				$result = array_merge($result, $dados[$i]);	
+			}
+		}
+			
+		return $result;
+	}
+
+	// Merge das marcas iguais //
+	function mergeBrand($result)
+	{
+		$count = sizeof($result);
+		for ($i=0; $i < $count; $i++)		// compara o primeira posição do vetor com todas as outras
+		{		
+			for ($j=1; $j < $count; $j++)
+			{					
+				if ($result[$i]['marca'] == $result[$j]['marca'])
+				{					
+					if ($i != $j)
+					{				
+						$result[$i]['unidades'] = $result[$i]['unidades'] + $result[$j]['unidades'];
+						$result[$i]['volume'] 	= $result[$i]['volume'] + $result[$j]['volume'];
+						unset($result[$j]);
+					}
+				}					
+				
+			} 				
+		}
+
+		return $result;		
+	}
+
+	/**
+	 * Ordenação do array
+	 */
+	function orderTable($data, $op)
+	{	
+		
+		if (sizeof($data) > 1)
+		{
+			foreach ($data as $key => $row)
+			{
+			   $filtro[$key] = $row[$op];
+			}
+			array_multisort($filtro, SORT_DESC, $data);			
+		}
+		return $data;
+	}
+
+	// Altera o código da marca pelo nome da marca //
+	function changeBrandIdToName($dados)
+	{
+		foreach ($dados as $key => $value)
+		{
+			$aux = $this->brand_model->getBrand($value['marca']);
+			$dados[$key]['nomeMarca'] = $aux[0]->MANome;
+		}
+			
+		return $dados;
+	}
+
+
+	// Calcula o FOB	//
+	function calcFob($dados)
+	{
+		foreach ($dados as $key => $value)
+		{
+			$dados[$key]['fob'] = ($value['volume'] / $value['unidades']);		
+		}
+
+		return $dados;
+	}
+
+	// Calcula o total da pesquisa //
+	function calcTotal($dados)
+	{
+		$total['totalunidades'] = 0;
+		$total['totalvolume'] = 0;
+
+		foreach ($dados as $key => $value)
+		{
+			$total['totalunidades']	+= $value['unidades'];
+			$total['totalvolume'] 	+= $value['volume'];
+		}
+		return $total;
+	}		
+
+	/**
+	 * Calcula o share
+	 */	
+	function calcularShare($id, $dados, $total)
+	{
+		// Calcula share de marca
+		if ($id == 1)
+		{
+			$totalUnidades 	= $total['totalunidades'];
+			$totalVolume 	= $total['totalvolume'];
+			
+			foreach ($dados as $key => $value)
+			{
+				$dados[$key]['shareUnidades'] 	= (($value['unidades'] / $totalUnidades) * 100);
+				$dados[$key]['shareVolume'] 	= (($value['volume'] / $totalVolume) * 100);
+			
+			}
+		}
+
+		return $dados;
+	}
 
 
 }

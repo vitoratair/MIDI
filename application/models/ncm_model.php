@@ -567,6 +567,31 @@ class ncm_model extends CI_Model
 		return $query->result();
 	}
 
+	// Retorna os dados de importações do tipo outras //
+	function sumOthersByYear($table, $categoria, $subcategoria)
+	{
+		$this->db->select_sum('QUANTIDADE_COMERCIALIZADA_PRODUTO');
+		$this->db->select_sum('VALOR_TOTAL_PRODUTO_DOLAR');
+		$this->db->from($table);
+		$this->db->where('Categoria',$categoria);
+		$this->db->where('Modelo','1');
+		$this->db->where('Marca','1');
+		
+		foreach ($subcategoria as $key => $value)
+		{
+			$coluna = "SubCategoria". ($key + 1) ."_SCID";
+			if (!empty($value) && ($value != 'false'))
+			{
+				$this->db->where($coluna,$value);
+			}
+		}
+				
+		$query = $this->db->get();
+
+	
+		return $query->result();
+	}
+
 
 }
 

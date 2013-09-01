@@ -86,6 +86,53 @@ class Others
 				$dados[$key]->QUANTIDADE_COMERCIALIZADA_PRODUTO = number_format($value->QUANTIDADE_COMERCIALIZADA_PRODUTO,0,",",".");
 			}			
 		}
+		elseif($id == 2)
+		{
+			foreach ($dados as $key => $value)
+			{
+				$dados[$key]['unidades']		= number_format($value['unidades'],0,",",".");
+				$dados[$key]['volume'] 			= number_format($value['volume'],0,",",".");
+				$dados[$key]['fob'] 			= number_format($value['fob'],2,",",".");
+				$dados[$key]['shareUnidades'] 	= number_format($value['shareUnidades'],2,",",".");
+				$dados[$key]['shareVolume'] 	= number_format($value['shareVolume'],2,",",".");				
+			}			
+		}
+		elseif ($id == 3)
+		{
+			$dados['unidades'] 	= number_format($dados['unidades'],0,",",".");
+			$dados['volume'] 	= number_format($dados['volume'],2,",",".");			
+		}	
+		elseif ($id == 4)
+		{
+			$dados['fob'] 	= number_format($dados['fob'],2,",",".");
+			$dados['unidades'] 	= number_format($dados['unidades'],0,",",".");			
+		}
+		elseif ($id == 5)
+		{
+			foreach ($dados as $key => $value)
+			{
+				$dados[$key]['unidades']		= number_format($value['unidades'],0,",",".");
+				$dados[$key]['volume'] 			= number_format($value['volume'],0,",",".");
+				$dados[$key]['fob'] 			= number_format($value['fob'],2,",",".");
+				$dados[$key]['descricao'] 		= wordwrap($value['descricao'], 15, "\n", true);
+			}			
+		}
+		elseif ($id == 6)
+		{
+			foreach ($dados as $key => $value)
+			{
+				$dados[$key]['descricao'] 		= wordwrap($value['descricao'], 15, "\n", true);
+				$dados[$key]['fob'] 			= number_format($value['fob'],2,",",".");
+				$dados[$key]['unidades']		= number_format($value['unidades'],0,",",".");				
+			}			
+		}
+		elseif ($id == 7) // ERA O ID 1 //
+		{
+			$dados['totalunidades'] = number_format($dados['totalunidades'],0,",",".");
+			$dados['totalvolume'] 	= number_format($dados['totalvolume'],0,",",".");			
+		}		
+
+
 
 		return $dados;
 	}		
