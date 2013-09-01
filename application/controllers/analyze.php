@@ -29,8 +29,7 @@ class Analyze extends CI_Controller
 		$volume 	= NULL;
 
 		// Busca informações vinda do POST //
-		// $categoria 	= $this->input->post('categoria');
-		$categoria = 2;
+		$categoria 	= $this->input->post('categoria');
 
 		for ($i=1; $i <= 8; $i++)
 		{ 
@@ -89,12 +88,12 @@ class Analyze extends CI_Controller
 			}
 			else
 			{
-				$data['main_content'] 	= 'analise/analise_view_empty';
+				$data['main_content'] 	= 'analyze/analise_view_empty';
 			}
 		}
 		else
 		{
-			$data['main_content'] 	= 'analise/analise_view_empty';
+			$data['main_content'] 	= 'analyze/analise_view_empty';
 		}
 		$this->parser->parse('template', $data);
 	}	
@@ -217,6 +216,7 @@ class Analyze extends CI_Controller
 		$data['categories'] 	= NULL;
 		$data['categories']		= NULL;
 		$data['dataUnidades'] 	= 0;
+		$data['dataCash'] 		= 0;
 
 		for ($i=0; $i < sizeof($data['titulos']); $i++)
 		{ 
@@ -234,22 +234,22 @@ class Analyze extends CI_Controller
 		{
 			$data['categories'] 	= $data['categories'] 	. "," . "'" . $value['ano'] . "'";
 			$data['dataUnidades']	= $data['dataUnidades'] . "," . $value['unidades'];
+			$data['dataCash']		= $data['dataCash'] . "," . 	$value['volume'];
 		}
 
 		$data['categories'] 	= substr($data['categories'], 1);
 		$data['dataUnidades'] 	= substr($data['dataUnidades'], 2);
-
+		$data['dataCash'] 		= substr($data['dataCash'], 2);
 
 		$data['categoria'] 		= $this->category_model->getCategory($categoria);
 		$data['categoria']		= "'" . $data['categoria'][0]->CNome . "'";			
 
 		foreach ($data['dados'] as $key => $value)
 		{
-			
 			$data['dados'][$key]['unidades'] 	= number_format($data['dados'][$key]['unidades'],0,",",".");
 			$data['dados'][$key]['volume'] 		= number_format($data['dados'][$key]['volume'],0,",",".");
 		}
-		
+
 		return $data;
 	}
 

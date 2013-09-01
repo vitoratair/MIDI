@@ -20,7 +20,7 @@
             <td>                
                 <?php
                     $atributos = array('form class'=>' form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
-                    echo form_open('analise/listAll', $atributos); 
+                    echo form_open('analyze/listAll', $atributos); 
                 ?>
                     <div align="left">
                         <select id="categoria"  name="categoria" class="span3" onchange="this.form.submit()">                   
@@ -36,7 +36,7 @@
 
                 <?php
                     $atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
-                    echo form_open('analise/listAll', $atributos); 
+                    echo form_open('analyze/listAll', $atributos); 
                 ?>
 
                 {subcategorias}
@@ -105,75 +105,112 @@
 </div>
 
 
-
+<!-- Java scrip para criação do gráfico -->
 <script type="text/javascript">
-$(function () {
-    $('#analyze_1').highcharts({
-        chart: {
-            type: 'column'
-        },
-        title: {
-
-            text: 'Análise de importações'
-        },
-        subtitle: {
-            text: {categoria}
-        },
-        xAxis: {
-
-            categories:
-            [
-                {categories}
-            ]
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: 'Total de peças importadas'
+    $(function () {
+        $('#analyze_1').highcharts({
+            chart:
+            {
+                zoomType: 'xy'
             },
-            stackLabels: {
-                enabled: true,
-                style: {
-                    fontWeight: 'bold',
-                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+            title:
+            {
+                text: 'Análise de importações'
+            },
+            subtitle:
+            {
+                text: 'TESTE'
+            },
+            xAxis:
+            {
+                categories:[ {categories} ]
+            },            
+            yAxis: [ // Primary yAxis
+            { 
+                labels:
+                {
+                    format: '{value} ',                
+                    style:
+                    {
+                        color: '#89A54E'
+                    }
+                },
+                opposite: true,
+                title:
+                {
+                    text: 'Volume fincanceiro',
+                    style:
+                    {
+                        color: '#89A54E'
+                    }
                 }
-            }                
-        },
-        legend: {
-            align: 'center',
-            x: 0,
-            verticalAlign: 'bottom',
-            y: 10,
-            floating: false,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
-            borderColor: '#CCC',
-            borderWidth: 1,
-            shadow: false
-        },           
-        tooltip: {
-            shared: true,
-            valueDecimals: 0,
-            valuePrefix: '',
-            valueSuffix: ''                 
-        },
-        plotOptions: {
-            column: {
-                
-                dataLabels: {
-                    enabled: true,
-                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
-                }
-            }
-        },
-        series: [{
-            name: 'Unidades',
-            data: [{dataUnidades}]
+            }, 
 
-        }]
+            { // Secondary yAxis
+                title: 
+                {
+                    text: 'Unidades',
+                    style:
+                    {
+                        color: '#4572A7'
+                    }
+                },
+                labels:
+                {
+                    style:
+                    {
+                        color: '#4572A7'
+                    }
+                },                
+            }],
+            tooltip:
+            {
+                shared: true,
+                valueDecimals: 2,
+                valuePrefix: '$',
+                valueSuffix: ''                 
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                x: 120,
+                verticalAlign: 'top',
+                y: 100,
+                floating: true,
+                backgroundColor: '#FFFFFF'
+            },
+            series: [{
+                name: 'Unidades',
+                color: '#4572A7',
+                type: 'column',
+                yAxis: 1,
+                
+                data: [{dataUnidades}], 
+                
+                tooltip: {
+                shared: false,
+                valueDecimals: 0,
+                valuePrefix: '',
+                valueSuffix: '' 
+                }
+    
+            }, {
+                name: 'Dinheiro',
+                color: '#89A54E',
+                type: 'spline',
+                
+                data: [{dataCash}],
+
+                tooltip: {
+                    shared: true,
+                    valueDecimals: 0,
+                    valuePrefix: '$',
+                    valueSuffix: ''                    
+                }
+            }]
+        });
     });
-});
-</script>   
- 
+</script>
 
 
 
