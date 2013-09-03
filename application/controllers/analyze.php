@@ -349,7 +349,7 @@ class Analyze extends CI_Controller
 
 		$data['categoria'] 			= $categoria[0]->CID;
 		$data['ano'] 				= $ano;
-		$data['postSubcategorias'] 	= json_encode($sc1);
+		$data['postSubcategorias'] 	= json_encode($sc1	);
 
 		$data['main_content'] 	= 'analyze/modelByBrand_view';
 		$this->parser->parse('template', $data);
@@ -471,16 +471,16 @@ class Analyze extends CI_Controller
 
 		}
 
-		$data['modelo'] 	= $modelo;
-		$data['modeloNome'] = $this->model_model->getModel($modelo);
-		$data['modeloNome'] = $data['modeloNome'][0]->MNome;
-		$data['ano'] 		= $ano;
-		$data['categoria']	= $categoria;
-		$data['marca']		= $this->brand_model->getBrandByModel($modelo);
-		$data['marca'] 		= $data['marca'][0]->MAID;	
+		$data['modelo'] 			= $modelo;
+		$data['modeloNome'] 		= $this->model_model->getModel($modelo);
+		$data['modeloNome'] 		= $data['modeloNome'][0]->MNome;
+		$data['ano'] 				= $ano;
+		$data['categoria']			= $categoria;
+		$data['marca']				= $this->brand_model->getBrandByModel($modelo);
+		$data['marca'] 				= $data['marca'][0]->MAID;	
 		$data['postSubcategorias'] 	= $sc1;
 
-		$data['main_content'] 	= 'analyze/modelDetails_view';
+		$data['main_content'] 		= 'analyze/modelDetails_view';
 		$this->parser->parse('template', $data);		
 
 	}

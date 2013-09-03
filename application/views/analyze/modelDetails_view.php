@@ -4,7 +4,7 @@
         <h1 class="pull-left">{modeloNome}  <small>importados no ano de {ano}</small></h1>
         <ul class="pull-right breadcrumb">
             <li><a href="<?php echo base_url();?>index.php/app/home">Home</a> <span class="divider"> / </span></li>
-            <li><a href="<?php echo base_url();?>index.php/analyze/listAll">Análise</a> <span class="divider"> / </span></li>
+            <li><a href="#" onclick="enviar(1)">Análise</a> <span class="divider"> / </span></li>
             <li class="active">Análise por ano</li>
         </ul>
     </div><!--/container-->
@@ -25,6 +25,9 @@
 	    <button type="submit" class="btn"><i class="icon-arrow-left"></i> Voltar</button>
     </form> -->
 
+    <p align="right">
+    	<button class="btn-u" onclick="location.reload();">Refrehs <i class="icon-refresh"></i></button>
+    </p>
 
     <table class='table table-bordered table-hover' align="right">
     <thead>
@@ -54,3 +57,27 @@
     </table>
 
 </div>
+
+
+
+<script type="text/javascript">
+    function enviar(id)
+    {              
+        if (id == 1)
+        {
+            var url = '<?php echo base_url();?>index.php/analyze/analyzeModel';
+            var form = $('<form action="' + url + '" method="POST">' +								
+				'<input type="hidden" name="categoria" value="' + {categoria} + '" />' +
+				'<input type="hidden" name="ano" value="' + {ano} + '" />' +	
+              	'<input type="hidden" name="marca" value="' + {marca} + '" />' +
+              	'<input type="hidden" name="subcategorias" value="' + {postSubcategorias} + '"/>' +
+              '</form>');
+            $('body').append(form);
+            $(form).submit();
+        }      
+
+    }
+</script>
+
+
+
