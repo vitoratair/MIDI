@@ -85,9 +85,9 @@
         <a href="#">
         <div class="span4">
             <div class="service clearfix">
-                <i class="icon-heart"></i>
+                <i class="icon-book"></i>
                 <div class="desc">
-                    <h4>Clientes</h4>
+                    <h4>Documentação</h4>
                     <p>                        
                         texto textotexto textotexto textotexto texto
                         texto textotexto textotexto texto                        
