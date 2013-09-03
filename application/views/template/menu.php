@@ -57,6 +57,9 @@
                                 <li><?php echo anchor('category/listAll','Categoria');?></li>                      
 
                                 <li><?php echo anchor('ncm/listAll','NCM');?></li>
+
+                                <li><?php echo anchor('user/listAll','Usuário');?></li>                                
+                                
                             </ul>
                             
                             <b class="caret-out"></b>                        
@@ -73,8 +76,7 @@
                                 <li><?php echo anchor('brand/listAll','Marca');?></li>
                                 
                                 <li><?php echo anchor('model/listAll','Modelo');?></li>
-
-                                <li><?php echo anchor('user/listAll','Usuário');?></li>
+                                
                             </ul>
                             
                             <b class="caret-out"></b>                        
