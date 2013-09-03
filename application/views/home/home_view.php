@@ -17,7 +17,7 @@
         </div>
         <div class="da-slide">
             <h2><i>Utilizando </i> <br /> <i>soluções com </i> <br /> <i>HTML5/CSS3</i></h2>
-            <p><i>Desfrute de um portal feito com</i> <br /> <i> as melhores tecnologias</i> <br /> <i> para WEB </i></p>
+            <!-- <p><i>Desfrute de um portal feito com</i> <br /> <i> as melhores tecnologias</i> <br /> <i> para WEB </i></p> -->
             <div class="da-img"><img src="<?php echo base_url();?>assets/plugins/parallax-slider/img/html5andcss3.png" alt="image01" /></div>
         </div>
         <nav class="da-arrows">
@@ -33,10 +33,9 @@
     <div class="container">
         <div class="span9">
             
-            <span>Pesquisas de importações com qualidade!</span>
+            <span>Pesquisas de importações!!!</span>
             <p>
-                Se você pretende entrar em um novo mercado, ou saber sua participação em um mercado que já atue, começe a utilizar
-                as pesquisas de mercado <i> DJV - Market Research</i>.    
+                Pesquisas de importações <i> MIDI - Monitoramento Intelbras de Dados de Importações</i>.    
             </p>
 
         </div>
@@ -89,9 +88,7 @@
                 <i class="icon-heart"></i>
                 <div class="desc">
                     <h4>Clientes</h4>
-                    <p>
-                        Clientes que já utilizam os serviços DJV
-
+                    <p>                        
                         texto textotexto textotexto textotexto texto
                         texto textotexto textotexto texto                        
                     </p>
