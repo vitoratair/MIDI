@@ -257,6 +257,28 @@ class Model_model extends CI_Model
 		return $query->result();
 	}		
 
+
+	// Retorna a lista de todos modelos de uma determinada marca //
+	function listAllModelByBrand($categoria, $subcategoria, $marca)
+	{
+		$this->db->select('DISTINCT(`MOID`)');
+		$this->db->from('Modelo');
+		$this->db->where('Categoria_CID',$categoria);
+		$this->db->where('Marca_MAID',$marca);
+		
+		foreach ($subcategoria as $key => $value)
+		{
+			$coluna = "SubCategoria". ($key + 1) ."_SCID";
+			if (!empty($value) && ($value != 'false'))
+			{
+				$this->db->where($coluna,$value);
+			}
+		}
+		$query = $this->db->get();
+
+		return $query->result();
+	}	
+
 }
 
 ?>

@@ -618,6 +618,27 @@ class ncm_model extends CI_Model
 		
 		return $query->result();
 	}
+	
+	// Retorna a lista de importações detalhadas de um modelo //
+	public function getDataModelDetails($table, $modelo)
+	{
+		$this->db->select('IDN, DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome, MES');
+		$this->db->from($table);
+		$this->db->join('Marca', 'MAID = Marca');
+		$this->db->join('Modelo', 'MOID = Modelo');
+		$this->db->where('Modelo', $modelo);			
+		$query = $this->db->get();
+		
+		return $query->result();
+	}	
+
+
+
+
+
+
+
+
 }
 
 ?>

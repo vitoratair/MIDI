@@ -157,7 +157,7 @@ class Analyze extends CI_Controller
 			$data['dados'] 		= $this->changeBrandIdToName($data['dados']);			
 			$data['dados'] 		= $this->calcFob($data['dados']);			
 			$data['total'][0] 	= $this->calcTotal($data['dados']);					
-			$data['dados'] 		= $this->calcularShare(1, $data['dados'], $data['total'][0]);			
+			$data['dados'] 		= $this->calcShare(1, $data['dados'], $data['total'][0]);			
 			$data['outros'][0] 	= $outros;
 			
 			// Formatando os dados com as devidas casa decimais //
@@ -175,41 +175,6 @@ class Analyze extends CI_Controller
 		$data['main_content'] 	= 'analyze/analyzeYear_view';
 		$this->parser->parse('template', $data);
 
-	}
-
-	// Verifica quais as NCMs / anos pertencente a uma categoria //
-	function listNcmYearByCategory($categoria)
-	{
-		// Constante contendo a string "Tables_in + DATABASE" //
-		$table = TABLE;
-
-		$aux 			= array();
-		$ncms			= $this->ncm_model->listAllNcm();
-		$ncmCategoria 	= $this->ncm_model->listNcmByCategory($categoria);		
-		
-		foreach ($ncms as $key => $value)
-		{			
-			$ncm = explode('_', $value->$table);
-			foreach ($ncmCategoria as $key1 => $value1)
-			{	
-				if (in_array($value1->NNome, $ncm))
-				{ 							
-					array_push($aux, $ncm);
-
-				}				
-			}
-		}
-
-		if (!empty($aux))
-		{
-			foreach ($aux as $key => $value)
-			{
-				$result[$key] = $value;
-			}			
-			return $result;		
-		}
-
-		return FALSE;		
 	}
 
 	// Lista detalhada de importações feitas em um período por uma marca //	
@@ -264,6 +229,261 @@ class Analyze extends CI_Controller
 		$this->parser->parse('template', $data);		
 	}
 
+	// Gráfico de evolução de marcas //
+	public function analizeBrandEvolution()
+	{
+		
+		$unidades = NULL;
+		$fob = NULL;
+		// Recebendo dados via POST //
+		$marca 		= $this->input->post('marca');
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc1 		= $this->input->post('subcategorias');		
+		$sc 		= explode(",", $sc1);
+
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listYear();
+		$data['ncm']			= $this->listNcmYearByCategory($categoria);		
+		$data['titulos']		= $this->category_model->listTitle($categoria);
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+
+			// Recebe as opções de detalhes de NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{
+				$aux[$key]	= $this->brandDetailsByYear($table, $categoria, $sc, $marca);
+			}
+			
+			$aux 	= $this->mergeTable($aux);
+			$aux	= $this->mergeMonth($aux);	
+		}
+		
+		foreach ($aux as $key => $value)
+		{
+			$unidades 	= $unidades . ", " . $value['unidades'];
+			$fob 		= $fob . ", " . $value['fob'];
+		}
+		
+		$data['categoria']		= $categoria;
+		$data['categoriaNome']	= $this->category_model->getCategory($categoria);
+		$data['categoriaNome']	= $data['categoriaNome'][0]->CNome;
+		$data['marca']			= $marca;
+		$data['marcaNome']		= $this->brand_model->getBrand($marca);
+		$data['marcaNome'] 		= $data['marcaNome'][0]->MANome;
+		$data['ano']			= $ano;
+		$data['sc']				= $sc1;
+		$data['unidades'] 		= substr($unidades, 1);
+		$data['fob'] 			= substr($fob, 1);
+
+		$data['main_content'] 	= 'analyze/brandEvolution_view';
+		$this->parser->parse('template', $data);        
+	
+	}
+
+	// Análise de modelos //
+	public function analyzeModel()
+	{
+
+		// Recebendo dados via POST //
+		$marca 		= $this->input->post('marca');
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc1 		= $this->input->post('subcategorias');		
+		$sc 		= explode(",", $sc1);
+		
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listYear();
+		$data['ncm']			= $this->listNcmYearByCategory($categoria);		
+		$data['titulos']		= $this->category_model->listTitle($categoria);
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+
+			// Recebe as opções de detalhes de NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{
+				$aux[$key]	= $this->getDataModel($table, $categoria, $sc, $marca);
+			}
+			
+			$aux 					= $this->mergeTable($aux);			
+			$data['dados'] 			= $this->mergeModel($aux);						
+			$data['dados'] 			= $this->calcFob($data['dados']);
+			$data['total'][0] 		= $this->calcTotal($data['dados']);		
+			$data['dados'] 			= $this->calcShare(1, $data['dados'], $data['total'][0]);						
+			$data['dados'] 			= $this->orderTable($data['dados'], 'unidades');
+
+			// Formatando os dados com as devidas casa decimais //			
+			$data['total'][0] 		= $this->others->formatarDados(7, $data['total'][0]);
+
+			$data['dados'] 			= $this->others->formatarDados(2, $data['dados']);
+
+			$marca 					= $this->brand_model->getBrand($marca);
+			$data['marca'] 			= $marca[0]->MANome;
+			$data['marcaID'] 		= $marca[0]->MAID;
+			$data['ano']			= $ano;
+			$categoria 				= $this->category_model->getCategory($categoria);
+			$data['categoriaNome'] 	= $categoria[0]->CNome;
+		}
+
+		$data['categoria'] 			= $categoria[0]->CID;
+		$data['ano'] 				= $ano;
+		$data['postSubcategorias'] 	= json_encode($sc1);
+
+		$data['main_content'] 	= 'analyze/modelByBrand_view';
+		$this->parser->parse('template', $data);
+
+	}
+
+	// Montar array para ser exibido no gráfico em javascript
+	public function yearAnalyzeShareModel()
+	{
+
+		$dados = NULL;
+		// Recebendo dados via POST //
+		$marca 		= $this->input->post('marca');
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc1 		= $this->input->post('subcategorias');
+		$sc 		= explode(",", $sc1);
+		$valor 		= $this->input->post('valor');
+
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listYear();
+		$data['ncm']			= $this->listNcmYearByCategory($categoria);		
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+			// Verficar os valores de unidades e volumes de cada NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{
+				$aux[$key] = $this->getDataModel($table, $categoria, $sc, $marca);
+			}
+
+			$aux 	= $this->mergeTable($aux);			
+			$aux 	= $this->mergeModel($aux);
+			$aux 	= $this->orderTable($aux, 'unidades');
+			$data['maximo'] = sizeof($aux);
+			
+			if (empty($valor))
+			{
+				$valor = $data['maximo'];
+			}
+
+			$data['valor'] = $valor;
+
+			// exclui as entradas acima do valor especificado no segundo argumento //
+			$aux 	= $this->mountOthers($aux, $valor, $data['maximo']);			
+		
+			foreach ($aux as $key => $value)
+			{
+				$dados 	= $dados . "," . "['" . $value['modeloNome'] . "'," . $value['unidades'] . "]";
+			}			
+
+			$dados 			= substr($dados, 1);
+			$data['dados'] 	= $dados;
+
+		}
+
+		$data['categoriaNome'] 		= $this->category_model->getCategory($categoria);
+		$data['categoriaNome'] 		= $data['categoriaNome'][0]->CNome;
+		$data['ano'] 				= $ano;
+		$data['categoria'] 			= $categoria;
+		$data['marca'] 				= $marca;
+		$data['marcaNome'] 			= $this->brand_model->getBrand($marca);
+		$data['marcaNome'] 			= $data['marcaNome'][0]->MANome;
+		$data['postSubcategorias'] 	= $sc1;
+
+		// print_r($data['marcaNome']);
+		$data['main_content'] 		= 'analyze/yearAnalyzeShareModel_view';
+		$this->parser->parse('template', $data);
+	}
+
+	// Lista detalhada de importações feitas em um período por um modelo //	
+	public function analyzeModelDetails()
+	{
+
+		// Recebendo dados via POST //
+		$modelo 	= $this->input->post('modelo');
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc1 		= $this->input->post('subcategorias');		
+		$sc 		= explode(",", $sc1);
+
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listYear();
+		$data['ncm']			= $this->listNcmYearByCategory($categoria);		
+		$data['titulos']		= $this->category_model->listTitle($categoria);
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+
+			// Recebe as opções de detalhes de NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{
+				$aux[$key]	= $this->getDataModelDetails($table, $modelo);
+			}
+			
+			$aux = $this->mergeTable($aux);
+			$data['dados'] = $this->orderTable($aux, 'unidades');
+			$data['dados'] = $this->others->formatarDados(6, $data['dados']);
+
+		}
+
+		$data['modelo'] 	= $modelo;
+		$data['modeloNome'] = $this->model_model->getModel($modelo);
+		$data['modeloNome'] = $data['modeloNome'][0]->MNome;
+		$data['ano'] 		= $ano;
+		$data['categoria']	= $categoria;
+		$data['marca']		= $this->brand_model->getBrandByModel($modelo);
+		$data['marca'] 		= $data['marca'][0]->MAID;	
+		$data['postSubcategorias'] 	= $sc1;
+
+		$data['main_content'] 	= 'analyze/modelDetails_view';
+		$this->parser->parse('template', $data);		
+
+	}
 
 	// Realiza o calculo para o share inicial de cada NCM -->
 	function getDataFirstShare($table, $categoria, $sc)
@@ -525,7 +745,7 @@ class Analyze extends CI_Controller
 	/**
 	 * Calcula o share
 	 */	
-	function calcularShare($id, $dados, $total)
+	function calcShare($id, $dados, $total)
 	{
 		// Calcula share de marca
 		if ($id == 1)
@@ -588,6 +808,244 @@ class Analyze extends CI_Controller
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Merge das meses iguais
+	 */	
+	function mergeMonth($result)
+	{
+		for ($i=0; $i < 12 ; $i++)
+		{ 
+			$array[$i]['mes'] 		= $i + 1;
+			$array[$i]['unidades'] 	= 0;
+			$array[$i]['fob'] 		= 0;
+		}
+
+		foreach ($result as $key => $value)
+		{
+			switch ($value['mes'])
+			{
+				case '1':
+					$array[0]['unidades'] 	+= $value['unidades'];
+					$array[0]['fob'] 		+= $value['fob'];
+					break;			
+				case '2':
+					$array[1]['unidades'] 	+= $value['unidades'];
+					$array[1]['fob'] 		+= $value['fob'];
+					break;
+				case '3':
+					$array[2]['unidades'] 	+= $value['unidades'];
+					$array[2]['fob'] 		+= $value['fob'];
+					break;					
+				case '4':
+					$array[3]['unidades'] 	+= $value['unidades'];
+					$array[3]['fob'] 		+= $value['fob'];
+					break;	
+				case '5':
+					$array[4]['unidades'] 	+= $value['unidades'];
+					$array[4]['fob'] 		+= $value['fob'];
+					break;	
+				case '6':
+					$array[5]['unidades'] 	+= $value['unidades'];
+					$array[5]['fob'] 		+= $value['fob'];
+					break;	
+				case '7':
+					$array[6]['unidades'] 	+= $value['unidades'];
+					$array[6]['fob'] 		+= $value['fob'];
+					break;					
+				case '8':
+					$array[7]['unidades'] 	+= $value['unidades'];
+					$array[7]['fob'] 		+= $value['fob'];
+					break;	
+				case '9':
+					$array[8]['unidades'] 	+= $value['unidades'];
+					$array[8]['fob'] 		+= $value['fob'];
+					break;	
+				case '10':
+					$array[9]['unidades'] 	+= $value['unidades'];
+					$array[9]['fob'] 		+= $value['fob'];
+					break;
+				case '11':
+					$array[10]['unidades'] 	+= $value['unidades'];
+					$array[10]['fob'] 		+= $value['fob'];
+					break;
+				case '12':
+					$array[11]['unidades'] 	+= $value['unidades'];
+					$array[11]['fob'] 		+= $value['fob'];
+					break;
+				default:
+					# code...
+					break;
+			}
+		}
+		
+		return $array;		
+	}	
+
+	// Verifica quais as NCMs / anos pertencente a uma categoria //
+	function listNcmYearByCategory($categoria)
+	{
+		// Constante contendo a string "Tables_in + DATABASE" //
+		$table = TABLE;
+
+		$aux 			= array();
+		$ncms			= $this->ncm_model->listAllNcm();
+		$ncmCategoria 	= $this->ncm_model->listNcmByCategory($categoria);		
+		
+		foreach ($ncms as $key => $value)
+		{			
+			$ncm = explode('_', $value->$table);
+			foreach ($ncmCategoria as $key1 => $value1)
+			{	
+				if (in_array($value1->NNome, $ncm))
+				{ 							
+					array_push($aux, $ncm);
+
+				}				
+			}
+		}
+
+		if (!empty($aux))
+		{
+			foreach ($aux as $key => $value)
+			{
+				$result[$key] = $value;
+			}			
+			return $result;		
+		}
+
+		return FALSE;		
+	}
+	
+	// Busca as informações de unidades e $$ por ano de um modelo //
+	function getDataModel($table, $categoria, $sc, $marca)
+	{
+
+		$modelos	= array();
+		$marcas		= array();
+		$ano 		= explode('_', $table);
+		$ano 		= $ano[1];		
+
+		// Verifica os modelos da categoria e marca //
+		$modelo 	= $this->model_model->listAllModelByBrand($categoria, $sc, $marca);			
+
+		// Formata o query para a clausula IN //
+		foreach ($modelo as $key => $value)
+		{
+			array_push($modelos, $value->MOID);	
+		}		
+
+		if (!empty($modelos))
+		{
+			foreach ($modelos as $key => $value)
+			{
+				$dados 						= $this->sumDataModelByYear($table, $value, $categoria);
+				$array[$key]['modelo'] 		= $value;
+				$array[$key]['modeloNome'] 	= $this->model_model->getModel($value);
+				$array[$key]['modeloNome']	= $array[$key]['modeloNome'][0]->MNome;
+				$array[$key]['unidades'] 	= $dados[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+				$array[$key]['volume'] 		= $dados[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+			}			
+		}
+		
+		return $array;
+	}	
+
+	// Calcula o peças referente a uma NCM e um modelo //
+	function sumDataModelByYear($table, $modelo, $categoria)
+	{
+
+		$this->db->select_sum('QUANTIDADE_COMERCIALIZADA_PRODUTO');
+		$this->db->select_sum('VALOR_TOTAL_PRODUTO_DOLAR');
+		$this->db->select_sum('VALOR_UNIDADE_PRODUTO_DOLAR');
+		$this->db->from($table);
+		$this->db->where('Modelo',$modelo);
+		$this->db->where('Categoria', $categoria);
+		$query = $this->db->get();
+
+		return $query->result();
+
+	}
+
+	// Merge de modelos //
+	function mergeModel($result)
+	{
+
+		for ($i=0; $i<sizeof($result); $i++)		// compara o primeira posição do vetor com todas as outras
+		{
+			for ($j=1; $j<sizeof($result); $j++)
+			{	
+				if ($result[$i]['modelo'] == $result[$j]['modelo'])
+				{					
+					if ($i != $j)
+					{
+						$result[$i]['unidades'] = $result[$i]['unidades'] + $result[$j]['unidades'];
+						$result[$i]['volume'] 	= $result[$i]['volume'] + $result[$j]['volume'];					
+						unset($result[$j]);
+					}
+				}					
+				
+			} 				
+		}
+
+		// Exclui resultados em branco
+		foreach ($result as $key => $value)
+		{
+			if($value['unidades'] < 1)
+			{
+				unset($result[$key]);
+			}
+		}
+		return $result;		
+	}
+
+	// Montar array somente com os valore de OUTROS //
+	public function mountOthers($dados, $valor, $maximo)
+	{
+		$outros = NULL;
+
+		for ($i=$valor; $i < $maximo; $i++)
+		{ 
+			$outros = $outros + $dados[$i]['unidades'];
+			unset($dados[$i]);
+		}
+		
+		$last = sizeof($dados) + 1;
+
+		$dados[$last]['marcaNome'] 		= 0;
+		$dados[$last]['modeloNome'] 	= 'Outros';
+		$dados[$last]['marcaNome'] 	= 'Outros';
+		$dados[$last]['unidades'] 		= $outros;
+
+		return $dados;
+	}
+
+	// Busca as informações de importações detalhadas de um modelo //
+	function getDataModelDetails($table, $modelo)
+	{
+
+		$ano 		= explode('_', $table);
+		$ncm 		= $ano[0];
+		$ano 		= $ano[1];
+
+		// buscando as informações de importações de modelos //
+		$dados = $this->ncm_model->getDataModelDetails($table, $modelo);
+		
+		foreach ($dados as $key => $value)
+		{
+			$data[$key]['ncm']	 		= $ncm;
+			$data[$key]['ano']	 		= $ano;
+			$data[$key]['idn']	 		= $value->IDN;
+			$data[$key]['descricao']	= $value->DESCRICAO_DETALHADA_PRODUTO;
+			$data[$key]['fob'] 			= $value->VALOR_UNIDADE_PRODUTO_DOLAR;
+			$data[$key]['unidades'] 	= $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+			$data[$key]['marca'] 		= $value->MANome;
+			$data[$key]['modelo'] 		= $value->MNome;
+			$data[$key]['mes'] 			= $value->MES;
+		}
+		return $data;
+
 	}
 
 }
