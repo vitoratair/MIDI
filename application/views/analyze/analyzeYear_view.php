@@ -4,7 +4,7 @@
         <h1 class="pull-left">{categoriaNome}  <small>importados no ano de {ano}</small></h1>
         <ul class="pull-right breadcrumb">
             <li><a href="<?php echo base_url();?>index.php/app/home">Home</a> <span class="divider"> / </span></li>
-            <li><a href="<?php echo base_url();?>index.php/analyze/listAll">Análise</a> <span class="divider"> / </span></li>
+            <li><a href="#" onclick="enviar(7)">Análise</a> <span class="divider"> / </span></li>
             <li class="active">Análise por ano</li>
         </ul>
     </div><!--/container-->
@@ -130,7 +130,16 @@
         else if(id == 6)
         {
             document.write('<form action="analiseAnoParticipacao" name="Myform" method="POST">')
-        }                
+        }        
+        else if(id == 7)
+        {
+            var url = '<?php echo base_url();?>index.php/analyze/listAll';
+            var form = $('<form action="' + url + '" method="POST">' +
+              '<input type="hidden" name="categoria" value="' + {categoria} + '" />' +
+              '</form>');
+            $('body').append(form);
+            $(form).submit();            
+        }        
         
 
 

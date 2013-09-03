@@ -64,8 +64,17 @@
     {    
         if (id == 1)
         {
-            document.write('<form action="analiseModeloEvolucao" name="Myform" method="POST">')
-            document.write('<input type="hidden" name="modelo" value="'+modelo+'">');            
+            var url = '<?php echo base_url();?>index.php/analyze/analyzeModelEvolution';
+            var form = $('<form action="' + url + '" method="POST">' +
+              '<input type="hidden" name="modelo" value="' + modelo + '" />' +
+              '<input type="hidden" name="categoria" value="' + <?php echo $categoria;?> + '" />' +
+              '<input type="hidden" name="ano" value="' + <?php echo $ano;?> + '" />' +
+              '<input type="hidden" name="subcategorias" value="' + <?php echo $postSubcategorias;?> + '" />' +
+              '</form>');
+            $('body').append(form);
+            $(form).submit();
+
+
         }            
         else if (id == 2)
         {

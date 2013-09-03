@@ -485,6 +485,76 @@ class Analyze extends CI_Controller
 
 	}
 
+
+	/**
+	 * Evolução de marcas
+	 */		
+	public function analyzeModelEvolution()
+	{
+		
+		$unidades = NULL;
+		$fob = NULL;
+		// Recebendo dados via POST //
+		$modelo 	= $this->input->post('modelo');
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc1 		= $this->input->post('subcategorias');		
+		$sc 		= explode(",", $sc1);
+
+
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listYear();
+		$data['ncm']			= $this->listNcmYearByCategory($categoria);		
+		$data['titulos']		= $this->category_model->listTitle($categoria);
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+
+			// Recebe as opções de detalhes de NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{
+				$aux[$key]	= $this->getDataModelDetails($table, $modelo);
+			}
+			
+			$aux 	= $this->mergeTable($aux);
+			$aux	= $this->mergeMonth($aux);	
+
+		}
+		
+
+		foreach ($aux as $key => $value)
+		{
+			$unidades 	= $unidades . ", " . $value['unidades'];
+			$fob 		= $fob . ", " . $value['fob'];
+		}
+
+		
+		$data['categoria']	= $categoria;
+		$data['modelo']		= $modelo;
+		$data['modeloNome']	= $this->model_model->getModel($modelo);
+		$data['modeloNome'] = $data['modeloNome'][0]->MNome;
+		$data['ano']		= $ano;
+		$data['sc']			= $sc1;
+		$marca 				= $this->brand_model->getBrandByModel($modelo);
+		$data['marca'] 		= $marca[0]->MAID;		
+		$data['unidades'] 	= substr($unidades, 1);
+		$data['fob'] 		= substr($fob, 1);
+
+		$data['main_content'] 	= 'analyze/analyzeModelEvolution_view';
+		$this->parser->parse('template', $data);        
+	
+	}	
+
 	// Realiza o calculo para o share inicial de cada NCM -->
 	function getDataFirstShare($table, $categoria, $sc)
 	{
