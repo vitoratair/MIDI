@@ -1,23 +1,40 @@
-<br><br>
-<br>
+<!--=== Breadcrumbs ===-->
+<div class="row-fluid breadcrumbs margin-bottom-40">
+    <div class="container">
+        <h1 class="pull-left"><small></small></h1>
+        <ul class="pull-right breadcrumb">
+            <li><a href="<?php echo base_url();?>index.php/app/home">Home</a> <span class="divider"> / </span></li>
+            <li><a href="#" onclick="enviar()" >Análise</a> <span class="divider"> / </span></li>
+            <li class="active">Análise por ano</li>
+        </ul>
+    </div><!--/container-->
+</div><!--/breadcrumbs-->
+
+
 <!-- Estrutura -->
 <div class="container">	
-
-    <?php
-        $atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'method'=>'POST');
-        echo form_open('analyze/yearAnalyze', $atributos); 
-    ?>
-	    <input type="hidden" name="categoria" value="{categoria}">
-	    <input type="hidden" name="ano" value="{ano}">
-	    <input type="hidden" name="subcategorias" value="{sc}">
-	    <input type="hidden" name="marca" value="{marca}">
-	    <p align="right"><button type="submit" class="btn-u"><i class="icon-arrow-left"></i> Voltar</button></p>
-    </form>
 
 	<div class="" id="evolucao_marca" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 
 </div>
-				
+		
+
+<!-- Java script para botão voltar -->
+<script type="text/javascript">
+    
+    function enviar()
+    {
+        var url = '<?php echo base_url();?>index.php/analyze/yearAnalyze';
+        var form = $('<form action="' + url + '" method="POST">' +
+            '<input type="hidden" name="categoria" value="' + {categoria} + '" />' +
+            '<input type="hidden" name="ano" value="' + {ano} + '" />' +
+            '<input type="hidden" name="subcategorias" value="' + {sc} + '" />' +
+            '</form>'); 
+        $('body').append(form);
+        $(form).submit();
+    }      
+</script>
+
 <!-- Java scrip para criação do gráfico -->
 <script type="text/javascript">
     $(function () {
