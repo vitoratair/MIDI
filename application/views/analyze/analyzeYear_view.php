@@ -16,10 +16,10 @@
 
     <?php
         $atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align' => 'right', 'method'=>'POST');
-        echo form_open('analise/listAll', $atributos); 
+        echo form_open('analyze/listAll', $atributos); 
     ?>
         <input type="hidden" name="categoria" value="{categoria}">
-        <a class="btn-u" onclick="enviar(6);" href="#"><i class="icon-search"></i> Gráfico</a>
+        <p align="right"><a class="btn-u" onclick="enviar(6);" href="#"><i class="icon-search"></i> Gráfico</a></p>
     </form>
 
     <table class='table table-bordered table-hover' align="right">
@@ -85,7 +85,7 @@
     {    
         if (id == 1)
         {            
-            var url = '<?php echo base_url();?>index.php/analyze/analiseModelo';
+            var url = '<?php echo base_url();?>index.php/analyze/analyzeModel';
             var form = $('<form action="' + url + '" method="POST">' +
               '<input type="hidden" name="marca" value="' + marca + '" />' +
               '<input type="hidden" name="categoria" value="' + <?php echo $categoria;?> + '" />' +
@@ -97,7 +97,7 @@
         }
         else if (id == 2)
         {                
-            var url = '<?php echo base_url();?>index.php/analyze/analiseMarcaEvolucao';
+            var url = '<?php echo base_url();?>index.php/analyze/analizeBrandEvolution';
             var form = $('<form action="' + url + '" method="POST">' +
               '<input type="hidden" name="marca" value="' + marca + '" />' +
               '<input type="hidden" name="categoria" value="' + <?php echo $categoria;?> + '" />' +
