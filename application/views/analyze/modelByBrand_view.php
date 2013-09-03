@@ -4,7 +4,7 @@
         <h1 class="pull-left">{categoriaNome}  <small>{marca} importados no ano de {ano}</small></h1>
         <ul class="pull-right breadcrumb">
             <li><a href="<?php echo base_url();?>index.php/app/home">Home</a> <span class="divider"> / </span></li>
-            <li><a href="<?php echo base_url();?>index.php/analyze/listAll">Análise</a> <span class="divider"> / </span></li>
+            <li><a href="#" onclick="enviar(4)" >Análise</a> <span class="divider"> / </span></li>
             <li class="active">Análise por ano</li>
         </ul>
     </div><!--/container-->
@@ -94,16 +94,29 @@
         else if (id == 3)
         {
 
-	        var url = '<?php echo base_url();?>index.php/analyze/yearAnalyzeShareModel';
-	        var form = $('<form action="' + url + '" method="POST">' +
-	          '<input type="hidden" name="marca" value="' + {marcaID} + '" />' +
-	          '<input type="hidden" name="categoria" value="' + <?php echo $categoria;?> + '" />' +
-	          '<input type="hidden" name="ano" value="' + <?php echo $ano;?> + '" />' +
-	          '<input type="hidden" name="subcategorias" value="' + <?php echo $postSubcategorias;?> + '" />' +
-	          '</form>');
-	        $('body').append(form);
-	        $(form).submit();
-        }            
+            var url = '<?php echo base_url();?>index.php/analyze/yearAnalyzeShareModel';
+            var form = $('<form action="' + url + '" method="POST">' +
+              '<input type="hidden" name="marca" value="' + {marcaID} + '" />' +
+              '<input type="hidden" name="categoria" value="' + <?php echo $categoria;?> + '" />' +
+              '<input type="hidden" name="ano" value="' + <?php echo $ano;?> + '" />' +
+              '<input type="hidden" name="subcategorias" value="' + <?php echo $postSubcategorias;?> + '" />' +
+              '</form>');
+            $('body').append(form);
+            $(form).submit();
+        } 
+        else if (id == 4)
+        {
+
+            var url = '<?php echo base_url();?>index.php/analyze/yearAnalyze';
+            var form = $('<form action="' + url + '" method="POST">' +
+                '<input type="hidden" name="categoria" value="' + <?php echo $categoria;?> + '" />' +
+                '<input type="hidden" name="ano" value="' + <?php echo $ano;?> + '" />' +
+                '<input type="hidden" name="subcategorias" value="' + <?php echo $postSubcategorias;?> + '" />' +
+                '</form>'); 
+            $('body').append(form);
+            $(form).submit();
+        } 
+
 
         // document.write('<input type="hidden" name="categoria" value="'+<?php echo $categoria;?>+'">');
         // document.write('<input type="hidden" name="ano" value="'+<?php echo $ano;?>+'">');

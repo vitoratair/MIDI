@@ -4,7 +4,7 @@
         <h1 class="pull-left">{categoriaNome}  <small>da marca {marcaNome} importados no ano de {ano}</small></h1>
         <ul class="pull-right breadcrumb">
             <li><a href="<?php echo base_url();?>index.php/app/home">Home</a> <span class="divider"> / </span></li>
-            <li><a href="<?php echo base_url();?>index.php/analyze/listAll">Análise</a> <span class="divider"> / </span></li>
+            <li><a href="#" onclick="enviar()" >Análise</a> <span class="divider"> / </span></li>
             <li class="active">Análise por ano</li>
         </ul>
     </div><!--/container-->
@@ -42,4 +42,27 @@
     </table>
 
 </div>
+
+<!-- Java script para botão voltar -->
+<script type="text/javascript">
+    
+    function enviar()
+    {
+        var url = '<?php echo base_url();?>index.php/analyze/yearAnalyze';
+        var form = $('<form action="' + url + '" method="POST">' +
+            '<input type="hidden" name="categoria" value="' + {categoria} + '" />' +
+            '<input type="hidden" name="ano" value="' + {ano} + '" />' +
+            '<input type="hidden" name="subcategorias" value="' + {postSubcategorias} + '" />' +
+            '</form>'); 
+        $('body').append(form);
+        $(form).submit();
+    }      
+</script>
+
+
+
+
+
+
+
 
