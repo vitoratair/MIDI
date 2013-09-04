@@ -424,8 +424,7 @@ class Analyze extends CI_Controller
 		$data['marcaNome'] 			= $this->brand_model->getBrand($marca);
 		$data['marcaNome'] 			= $data['marcaNome'][0]->MANome;
 		$data['postSubcategorias'] 	= $sc1;
-
-		// print_r($data['marcaNome']);
+		
 		$data['main_content'] 		= 'analyze/yearAnalyzeShareModel_view';
 		$this->parser->parse('template', $data);
 	}
@@ -554,6 +553,88 @@ class Analyze extends CI_Controller
 		$this->parser->parse('template', $data);        
 	
 	}	
+
+	// Exibe o gráfico de share de marcas no ano //
+	public function analyzeYearShare()
+	{
+		$dados = NULL;
+		// Recebendo dados via POST //
+		$categoria 	= $this->input->post('categoria');
+		$ano 		= $this->input->post('ano');
+		$sc1 		= $this->input->post('subcategorias');
+		$sc 		= explode(",", $sc1);
+		$valor 		= $this->input->post('valor');
+
+		// Lista todas as opções //
+		$data['anos']			= $this->ncm_model->listYear();
+		$data['ncm']			= $this->listNcmYearByCategory($categoria);		
+
+		if (!empty($data['ncm']))
+		{
+			$i = 0;
+			foreach ($data['ncm'] as $key => $value)
+			{
+				if ($value[1] == $ano)
+				{
+					$ncms[$i] = $value[0] . "_" . $value[1];	
+					$i++;
+				}			
+			}		
+
+			// Verficar os valores de unidades e volumes de cada NCM //
+			$i= 0;
+			foreach ($ncms as $key => $table)
+			{
+				$aux[$key] 	= $this->getDataByYear($table, $categoria, $sc);
+			}
+
+			$aux 			= $this->mergeTable($aux);
+			$aux 			= $this->mergeBrand($aux);
+			$aux 			= $this->orderTable($aux, 'unidades');
+			$data['maximo'] = sizeof($aux);
+			
+			
+			if (empty($valor))
+			{
+				$valor = 10;
+			}
+
+			$data['valor'] = $valor;
+
+			// exclui as entradas acima do valor especificado no segundo argumento //
+			$aux 	= $this->mountOthers($aux, $valor, $data['maximo']);
+		
+
+			foreach ($aux as $key => $value)
+			{
+				$dados 	= $dados . "," . "['" . $value['marcaNome'] . "'," . $value['unidades'] . "]";
+			}			
+
+			if (substr($dados,0,1) == ",")
+			{
+				$dados = substr($dados, 1);
+			}
+			else
+			{
+				$dados = substr($dados, 1, -7);	
+			}
+
+			$data['dados'] 	= $dados;
+			
+
+		}
+
+		$data['categoriaNome'] 		= $this->category_model->getCategory($categoria);
+		$data['categoriaNome'] 		= $data['categoriaNome'][0]->CNome;
+		$data['ano'] 				= $ano;
+		$data['categoria'] 			= $categoria;
+		$data['postSubcategorias'] 	= $sc1;
+
+		$data['main_content'] 		= 'analyze/shareYear_view';
+		$this->parser->parse('template', $data);
+
+	}
+
 
 	// Realiza o calculo para o share inicial de cada NCM -->
 	function getDataFirstShare($table, $categoria, $sc)
@@ -706,6 +787,7 @@ class Analyze extends CI_Controller
 			foreach ($marcas as $key => $value)
 			{
 				$array[$key]['marca'] 		= $marca[$key]->Marca;
+				$array[$key]['marcaNome'] 	= $marca[$key]->MANome;
 				$unidades 					= $this->brand_model->sumPartsYearByBrand($table, $array[$key]['marca'], $categoria, $modelos);		
 				$volume 					= $this->brand_model->sumCashYearByBrand($table, $array[$key]['marca'], $categoria, $modelos);
 				$array[$key]['unidades'] 	= $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
@@ -1085,8 +1167,16 @@ class Analyze extends CI_Controller
 
 		$dados[$last]['marcaNome'] 		= 0;
 		$dados[$last]['modeloNome'] 	= 'Outros';
-		$dados[$last]['marcaNome'] 	= 'Outros';
-		$dados[$last]['unidades'] 		= $outros;
+		$dados[$last]['marcaNome'] 		= 'Outros';
+		if (empty($outros))
+		{
+			$dados[$last]['unidades']	= 0;
+		}
+		else
+		{
+			$dados[$last]['unidades'] 	= $outros;
+		}
+		
 
 		return $dados;
 	}

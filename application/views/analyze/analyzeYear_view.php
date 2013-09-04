@@ -129,7 +129,16 @@
         } 
         else if(id == 6)
         {
-            document.write('<form action="analiseAnoParticipacao" name="Myform" method="POST">')
+            var url = '<?php echo base_url();?>index.php/analyze/analyzeYearShare';
+            var form = $('<form action="' + url + '" method="POST">' +
+              '<input type="hidden" name="categoria" value="' + <?php echo $categoria;?> + '" />' +
+              '<input type="hidden" name="ano" value="' + <?php echo $ano;?> + '" />' +
+              '<input type="hidden" name="subcategorias" value="' + <?php echo $postSubcategorias;?> + '" />' +
+              '</form>');
+            $('body').append(form);
+            $(form).submit();
+
+
         }        
         else if(id == 7)
         {
