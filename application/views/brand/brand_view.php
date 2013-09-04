@@ -23,12 +23,10 @@
 			$atributos = array('form class'=>'form-search',  'align'=>'right', 'method'=>'POST');
 			echo form_open('brand/listAll', $atributos); 
 		?>		
-
-			<div class="input-prepend">
-				<input type="text" class="span2 search-query" placeholder="Busca de marca..." name="buscaMarca">
-				<button type="submit" class="btn-u">				
-				<i class="icon-search icon-white"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Buscar</button>
-			</div>		
+					
+		<input type="text" class="span2 search-query" placeholder="Busca de marca..." name="buscaMarca">
+		<button type="submit" class="btn-u">				
+		<i class="icon-search icon-white"></i>&nbsp;&nbsp;Buscar</button>			
 		
 		</form>
 										
