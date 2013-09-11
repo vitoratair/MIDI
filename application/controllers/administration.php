@@ -62,32 +62,33 @@ class Administration extends CI_Controller
 
 		if(!empty($table))
 		{
-			// Busca os detalhes mensais da NCM desejada //
-			for ($i=1; $i <= 12; $i++)
-			{ 			
-				$data['dados'][$i]['mesID'] 			= $i;
-				$data['dados'][$i]['mes'] 				= $this->others->buscaMes($i);
-				$data['dados'][$i]['total'] 			= $this->ncm_model->statistics(1, 	$table, $i);
-				$data['dados'][$i]['marcaEncontrada'] 	= $this->ncm_model->statistics(2, 	$table, $i);
-				$data['dados'][$i]['modeloEncontrado'] 	= $this->ncm_model->statistics(3, 	$table, $i);
-				$data['dados'][$i]['marca_modelo'] 		= $this->ncm_model->statistics(4, 	$table, $i);
-				$data['dados'][$i]['outros'] 			= $this->ncm_model->statistics(5, 	$table, $i);
+			if ($this->ncm_model->checkNcm($table))
+			{
+				// Busca os detalhes mensais da NCM desejada //
+				for ($i=1; $i <= 12; $i++)
+				{ 			
+					$data['dados'][$i]['mesID'] 			= $i;
+					$data['dados'][$i]['mes'] 				= $this->others->buscaMes($i);
+					$data['dados'][$i]['total'] 			= $this->ncm_model->statistics(1, 	$table, $i);
+					$data['dados'][$i]['marcaEncontrada'] 	= $this->ncm_model->statistics(2, 	$table, $i);
+					$data['dados'][$i]['modeloEncontrado'] 	= $this->ncm_model->statistics(3, 	$table, $i);
+					$data['dados'][$i]['marca_modelo'] 		= $this->ncm_model->statistics(4, 	$table, $i);
+					$data['dados'][$i]['outros'] 			= $this->ncm_model->statistics(5, 	$table, $i);
+				}
+
+				$data['total'] 				= $this->ncm_model->statistics(6, 	$table, NULL);
+				$data['marcaEncontrada'] 	= $this->ncm_model->statistics(7, 	$table, NULL);
+				$data['modeloEncontrado'] 	= $this->ncm_model->statistics(8, 	$table, NULL);
+				$data['marca_modelo'] 		= $this->ncm_model->statistics(9, 	$table, NULL);
+				$data['outros'] 			= $this->ncm_model->statistics(10, 	$table, NULL); 
+		
+				$data['main_content'] = 'administration/processing_view';	
 			}
-
-			$data['total'] 				= $this->ncm_model->statistics(6, 	$table, NULL);
-			$data['marcaEncontrada'] 	= $this->ncm_model->statistics(7, 	$table, NULL);
-			$data['modeloEncontrado'] 	= $this->ncm_model->statistics(8, 	$table, NULL);
-			$data['marca_modelo'] 		= $this->ncm_model->statistics(9, 	$table, NULL);
-			$data['outros'] 			= $this->ncm_model->statistics(10, 	$table, NULL); 
-		}
-
-		if (!empty($table))
-		{
-			$data['main_content'] = 'administration/processing_view';	
-		}
-		else
-		{
-			$data['main_content'] = 'administration/processingEmpty_view';	
+			else
+			{
+				
+				$data['main_content'] = 'administration/processingEmpty_view';	
+			}			
 		}
 
 		$this->parser->parse('template', $data);
