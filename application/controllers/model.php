@@ -243,7 +243,7 @@ class Model extends CI_Controller
 		{
 			foreach ($data['titulos'] as $key => $value)
 			{
-				$data['titulos'][$key]->SubCategoriaID 	= $this->category_model->listTitleByModel($id, $value->TColuna);
+				$data['titulos'][$key]->SubCategoriaID 	= $this->category_model->listTitleByModel($id, $value->TColuna);				
 				$data['titulos'][$key]->SubCategoria 	= $this->category_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
 			}					
 		}
@@ -267,6 +267,7 @@ class Model extends CI_Controller
 			
 		if ($this->input->post('controle') != 1)
 		{
+			$data['MNome0'] 			= $this->input->post('nomeModelo0');
 			$data['MNome'] 				= $this->input->post('nomeModelo');
 			$data['MNome1'] 			= $this->input->post('nomeModelo1');
 			$data['MNome2'] 			= $this->input->post('nomeModelo2');
@@ -381,6 +382,7 @@ class Model extends CI_Controller
 	{
 		// Recebe os dados do FORM //			
 		$id						= $this->input->post('id');
+		$data['MNome0']			= $this->input->post('nomeModelo0');
 		$data['MNome']			= $this->input->post('nomeModelo');
 		$data['MNome1']			= $this->input->post('nomeModelo1');
 		$data['MNome2']			= $this->input->post('nomeModelo2');

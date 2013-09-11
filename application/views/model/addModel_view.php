@@ -22,7 +22,10 @@
 
             <div class="controls">    
                 <label>Modelo <span class="color-red">*</span></label>
-				<input type="text" class="span12" id="nomeModelo" placeholder="" name="nomeModelo">
+				<input type="text" class="span12" id="nomeModelo0" placeholder="" name="nomeModelo0">
+
+                <label>Sinônimo <span class="color-red">*</span></label>
+				<input type="text" class="span12" id="nomeModelo" placeholder="" name="nomeModelo">				
                 
 				<label>Sinônimo</label>
 				<input type="text" class="span12" id="nomeModelo1" name="nomeModelo1">

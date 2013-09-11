@@ -24,7 +24,10 @@
 				
             <div class="controls">    
                 <label>Modelo <span class="color-red">*</span></label>
-				<input type="text" class="span12" id="nomeModelo" value="{MNome}" name="nomeModelo">
+				<input type="text" class="span12" id="nomeModelo0" value="{MNome0}" name="nomeModelo0">
+
+                <label>Sinônimo <span class="color-red">*</span></label>
+				<input type="text" class="span12" id="nomeModelo" value="{MNome}" name="nomeModelo">				
                 
 				<label>Sinônimo</label>
 				<input type="text" class="span12" id="nomeModelo" value="{MNome1}" name="nomeModelo1">
