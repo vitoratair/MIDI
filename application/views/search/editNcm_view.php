@@ -26,11 +26,8 @@
 			<tr class="">				
 				<td width="4%"><b>ID</b></td>
 				<td width="8%"><b>NCM</td>
-				<td width=""><b>Descrição</td>
-				<td width="%"><b>Unidades</td>
-				<td width=""><b>Categoria</td>
-				<td width="%"><b>Marca</td>
-				<td width="%"><b>Modelo</td>				
+				<td width="%"><b>Descrição</td>
+				<td width="%"><b>Unidades</td>				
 			</tr>			
 			
 			<tr class="table-condensed">	
@@ -38,11 +35,34 @@
 				<td>{ncm}</td>				
 				<td>{DESCRICAO_DETALHADA_PRODUTO}</td>
 				<td>{QUANTIDADE_COMERCIALIZADA_PRODUTO}</td>
+				
+			</tr>			
+	</table>
+
+	<table class='table table-bordered table-striped'>
+			
+			<tr class="">				
+				<td width=""><b>Categoria</td>
+				<td width="%"><b>Marca</td>
+				<td width="%"><b>Modelo</td>
+				<td width="%"><b>PAIS_ORIGEM</b></td>
+				<td width="%"><b>PAIS_AQUISICAO</td>
+				<td width="%"><b>UNIDADE_COMERCIALIZACAO</td>
+				<td width="%"><b>PESO_LIQUIDO_KG</td>				
+			</tr>			
+			
+			<tr class="table-condensed">	
 				<td><a href="#categoriaAlterar" data-toggle="modal">{CNome}</a></td>
 				<td><a href="#marcaAlterar" data-toggle="modal">{MANome}</a></td>
 				<td><a href="#modeloAlterar" data-toggle="modal">{MNome}</a></td>				
+				<td>{PAIS_ORIGEM}</td>
+				<td>{PAIS_AQUISICAO}</td>				
+				<td>{UNIDADE_COMERCIALIZACAO}</td>
+				<td>{PESO_LIQUIDO_KG}</td>		
 			</tr>			
 	</table>
+
+
 
 	
 

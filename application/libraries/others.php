@@ -130,7 +130,17 @@ class Others
 		{
 			$dados['totalunidades'] = number_format($dados['totalunidades'],0,",",".");
 			$dados['totalvolume'] 	= number_format($dados['totalvolume'],0,",",".");			
-		}		
+		}
+		elseif($id == 8)
+		{
+			
+			foreach ($dados as $key => $value)
+			{
+				$dados[$key]->QUANTIDADE_COMERCIALIZADA_PRODUTO = number_format($value->QUANTIDADE_COMERCIALIZADA_PRODUTO,0,",",".");
+				$dados[$key]->PESO_LIQUIDO_KG = number_format($value->PESO_LIQUIDO_KG,0,",",".");
+			}			
+		}	
+
 
 
 
