@@ -315,7 +315,15 @@ class Model extends CI_Controller
 		}
 		if ($this->input->post('categoria') != 0)
 		{
-			$data['Categoria_CID'] 	= $this->input->post('categoria');	
+			$data['Categoria_CID'] 		= $this->input->post('categoria');	
+			$data['SubCategoria1_SCID'] = 1;
+			$data['SubCategoria2_SCID'] = 1;
+			$data['SubCategoria3_SCID'] = 1;
+			$data['SubCategoria4_SCID'] = 1;
+			$data['SubCategoria5_SCID'] = 1;
+			$data['SubCategoria6_SCID'] = 1;
+			$data['SubCategoria7_SCID'] = 1;
+			$data['SubCategoria8_SCID'] = 1;
 		}
 		
 		$this->model_model->updateModel($data);
