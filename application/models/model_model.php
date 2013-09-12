@@ -279,6 +279,13 @@ class Model_model extends CI_Model
 		return $query->result();
 	}	
 
+	// Deleta a referencia do item da tabela modelo //
+	function updateItemForModel($id, $categoria, $table)
+	{
+		$this->db->query("UPDATE `Modelo` SET `$table` = 1 WHERE Categoria_CID  = '$categoria' AND `$table` = $id");
+	}
+
+
 }
 
 ?>

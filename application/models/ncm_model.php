@@ -632,9 +632,11 @@ class ncm_model extends CI_Model
 		return $query->result();
 	}	
 
-
-
-
+	// Deleta a referencia da categoria das tabelas NCMs //
+	function updateItemForNcm($data, $id, $table, $categoria)
+	{
+		$this->db->query("UPDATE `$data` SET `$table` = 1 WHERE Categoria  = '$categoria' AND `$table` = $id");
+	}
 
 
 

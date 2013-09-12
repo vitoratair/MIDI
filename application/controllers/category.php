@@ -306,6 +306,37 @@ class Category extends CI_Controller
 
 	}
 
+	// Deleta itens e suas referencias em outras tabelas //
+	public function deleteItem($id,$coluna,$categoria,$subcategoria)
+	{
+
+		// Constante contendo a string "Tables_in + DATABASE" //
+		$varTable = TABLE;
+
+		$table  = "SubCategoria".$coluna."_SCID";
+		$table1 = "SubCategoria".$coluna ;
+
+		// pegar todas as tabelas de NCMs do sistema
+		$data = $this->ncm_model->listAllNcm();
+
+		// Loop para apagar a referencia da categoria em todas as NCMs
+		foreach ($data as $key => $value)
+		{
+			$this->ncm_model->updateItemForNcm($value->$varTable, $id, $table, $categoria);
+		}
+
+		// Deleta a refêrencia do item na tabela Modelo //
+		$this->model_model->updateItemForModel($id, $categoria, $table);
+
+		// Deleta o item //
+		$this->category_model->deleteItem($id, $table1);			
+		
+		redirect("category/addItem/$subcategoria/$categoria/$coluna");
+
+	}	
+
+
+
 }
 
 ?>
