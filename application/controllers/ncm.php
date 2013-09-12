@@ -138,7 +138,7 @@ class ncm extends CI_Controller
 			}
 
 			$data['dados']	 	= $this->ncm_model->listDataNcm($table, $idn);
-			$data['dados'] 		= $this->others->formatarDados(1, $data['dados']);
+			$data['dados'] 		= $this->others->formatarDados(8, $data['dados']);
 			
 			// // Envia os dados para a view //
 			$data['ncm'] 	= $ncm; 
@@ -176,7 +176,7 @@ class ncm extends CI_Controller
 				}			
 
 				$data['dados']	 	= $this->ncm_model->listDataNcm($table, $idn);
-				$data['dados'] 		= $this->others->formatarDados(1, $data['dados']);
+				$data['dados'] 		= $this->others->formatarDados(8, $data['dados']);
 				
 				// Envia os dados para a view //
 				$data['categoriaNome'] 	= NULL;
