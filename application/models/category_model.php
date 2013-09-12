@@ -252,6 +252,17 @@ class Category_model extends CI_Model
 	{		
 		return $this->db->insert($table, $data);
 	}
+
+	// Deleta o item //
+	function deleteItem($id, $table)
+	{
+		$this->db->where('SCID',$id);
+		$this->db->delete($table);
+	}
+
+
+
+
 }
 
 ?>
