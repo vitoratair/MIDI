@@ -86,10 +86,13 @@ class Administration extends CI_Controller
 			}
 			else
 			{
-				
 				$data['main_content'] = 'administration/processingEmpty_view';	
 			}			
 		}
+		else
+		{
+			$data['main_content'] = 'administration/processingEmpty_view';	
+		}		
 
 		$this->parser->parse('template', $data);
 	 
