@@ -228,6 +228,40 @@ class Category_model extends CI_Model
 
 	}	
 
+	// Busca um item //
+	function getItem($table, $id)
+	{
+		$this->db->select('*');
+		$this->db->from($table);
+		$this->db->where('SCID',$id);
+		$query = $this->db->get();
+		
+		return $query->result();	
+	}
+
+	// Update de um item //
+	function updateItem($table, $data) 
+	{		
+		$id = $data['SCID'];
+		$this->db->where('SCID', $id);
+		$this->db->update($table, $data);
+	}	
+
+	// Insere o item da subcategoria  //
+	function saveItem($table, $data) 
+	{		
+		return $this->db->insert($table, $data);
+	}
+
+	// Deleta o item //
+	function deleteItem($id, $table)
+	{
+		$this->db->where('SCID',$id);
+		$this->db->delete($table);
+	}
+
+
+
 
 }
 
