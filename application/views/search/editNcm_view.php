@@ -124,12 +124,12 @@
 
 			</div>
 		<div class="modal-footer">
+			<a href="<?php echo base_url();?>index.php/category/listAll" target="_blank" class="btn">Outros</a>
 			<a href="" class="btn" data-dismiss="modal">Não</a>
 			<button type="submit" class="btn btn-danger">Sim</button>
 			<input type="hidden" name="ncm" value="{ncm}">
 			<input type="hidden" name="year" value="{year}">
 			<input type="hidden" name="idn" value="{IDN}">
-
 		</div>	
 	</div>
 
@@ -151,12 +151,12 @@
 
 			</div>
 		<div class="modal-footer">
+			<a href="<?php echo base_url();?>index.php/brand/setBrandView" target="_blank" class="btn">Outros</a>
 			<a href="" class="btn" data-dismiss="modal">Não</a>
 			<button type="submit" class="btn btn-danger">Sim</button>
 			<input type="hidden" name="ncm" value="{ncm}">
 			<input type="hidden" name="year" value="{year}">
 			<input type="hidden" name="idn" value="{IDN}">
-
 		</div>	
 	</div>
 
@@ -175,9 +175,9 @@
 {modelos}
 			<input type="radio" id ="modelo" name="modelo" value="{MOID}"> {MNome}<br>
 {/modelos}
-
 			</div>
 		<div class="modal-footer">
+			<a href="<?php echo base_url();?>index.php/model/addModel" target="_blank" class="btn">Outros</a>
 			<a href="" class="btn" data-dismiss="modal">Não</a>
 			<button type="submit" class="btn btn-danger">Sim</button>
 			<input type="hidden" name="ncm" value="{ncm}">
