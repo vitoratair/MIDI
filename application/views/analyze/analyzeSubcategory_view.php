@@ -137,7 +137,7 @@
                                         <tr>
                                             <td width="10%"><b>Ano</b></td>
                                             <td width="10%"><b>Unidades</td>
-                                            <td width="10%"><b>Volume</td>
+                                            <td width="10%"><b>Valor</td>
                                             <td width="10%"><b>Detalhes</td>
                                         </tr>           
 
