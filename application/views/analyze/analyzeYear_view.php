@@ -31,7 +31,7 @@
                 <td width=""><b>Volume</b></td>
                 <td width=""><b>FOB</b></td>
                 <td width=""><b>% Unidades</b></td>
-                <td width=""><b>% Volume</b></td>
+                <td width=""><b>% Valor</b></td>
                 <td width=""><b>Modelos</b></td>
                 <td width=""><b>Evolução</b></td>
                 <td width=""><b>Detalhes</b></td>

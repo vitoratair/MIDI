@@ -58,6 +58,8 @@
 
                                 <li><?php echo anchor('ncm/listAll','NCM');?></li>
 
+                                <li><?php echo anchor('model/addModel','Modelo');?></li>                                
+
                                 <li><?php echo anchor('user/listAll','Usuário');?></li>                                
                                 
                             </ul>
