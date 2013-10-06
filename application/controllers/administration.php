@@ -118,27 +118,33 @@ class Administration extends CI_Controller
 
 		if(!empty($table))
 		{
-			// Busca os detalhes da NCM desejada por Mês//
-			for ($i=1; $i <= 12; $i++)
-			{ 			
-				$data['dados'][$i]['mes'] 				= $this->others->buscaMes($i);
-				$data['dados'][$i]['total'] 			= $this->ncm_model->statistics(1, 	$table, $i);
-				$data['dados'][$i]['marcaEncontrada'] 	= $this->ncm_model->statistics(2, 	$table, $i);
-				$data['dados'][$i]['modeloEncontrado'] 	= $this->ncm_model->statistics(3, 	$table, $i);
-				$data['dados'][$i]['marca_modelo'] 		= $this->ncm_model->statistics(4, 	$table, $i);
-				$data['dados'][$i]['outros'] 			= $this->ncm_model->statistics(5, 	$table, $i);
-				$categorias 							= $this->ncm_model->statistics(11, 	$table, $i);			
-				$data['dados'][$i]['categorias']	 	= $this->others->formataCategorias($categorias);
+			if ($this->ncm_model->checkNcm($table))
+			{
+				// Busca os detalhes da NCM desejada por Mês//
+				for ($i=1; $i <= 12; $i++)
+				{ 			
+					$data['dados'][$i]['mes'] 				= $this->others->buscaMes($i);
+					$data['dados'][$i]['total'] 			= $this->ncm_model->statistics(1, 	$table, $i);
+					$data['dados'][$i]['marcaEncontrada'] 	= $this->ncm_model->statistics(2, 	$table, $i);
+					$data['dados'][$i]['modeloEncontrado'] 	= $this->ncm_model->statistics(3, 	$table, $i);
+					$data['dados'][$i]['marca_modelo'] 		= $this->ncm_model->statistics(4, 	$table, $i);
+					$data['dados'][$i]['outros'] 			= $this->ncm_model->statistics(5, 	$table, $i);
+					$categorias 							= $this->ncm_model->statistics(11, 	$table, $i);			
+					$data['dados'][$i]['categorias']	 	= $this->others->formataCategorias($categorias);
 
+				}
+				$data['total'] 				= $this->ncm_model->statistics(6, $table, NULL);
+				$data['marcaEncontrada'] 	= $this->ncm_model->statistics(7, $table, NULL);
+				$data['modeloEncontrado'] 	= $this->ncm_model->statistics(8, $table, NULL);
+				$data['marca_modelo'] 		= $this->ncm_model->statistics(9, $table, NULL);
+				$data['outros'] 			= $this->ncm_model->statistics(10, $table, NULL); 
+
+				$data['main_content'] = 'administration/statistics_view';				
 			}
-
-			$data['total'] 				= $this->ncm_model->statistics(6, $table, NULL);
-			$data['marcaEncontrada'] 	= $this->ncm_model->statistics(7, $table, NULL);
-			$data['modeloEncontrado'] 	= $this->ncm_model->statistics(8, $table, NULL);
-			$data['marca_modelo'] 		= $this->ncm_model->statistics(9, $table, NULL);
-			$data['outros'] 			= $this->ncm_model->statistics(10, $table, NULL); 
-
-			$data['main_content'] = 'administration/statistics_view';
+			else
+			{
+				$data['main_content'] = 'administration/statisticsEmpty_view';
+			}
 		}
 		else
 		{
