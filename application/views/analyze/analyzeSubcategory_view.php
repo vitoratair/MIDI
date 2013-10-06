@@ -24,7 +24,7 @@
                 <div align="left">
                     <select id="categoria"  name="categoria" class="span3">                   
                         
-                        <option value=""> Selecione uma categoria </option>                 
+                        <option value="{categoriaID}"> {categoriaNome} </option>                 
                         {categorias}    
                             <option value="{CID}">{CNome}</option>
                         {/categorias}
@@ -38,7 +38,7 @@
                 <div align="right">
                     <select id="dataInicial"  name="dataInicial" class="span3">                   
                         
-                        <option value="1"> Data inicial </option>                 
+                        <option value="{dataInicial}"> {dataInicialName} </option>                 
 
                             <option value="1">Janeiro</option>
                             <option value="2">Fevereiro</option>
@@ -61,9 +61,9 @@
                 <div align="left">
                     <select id="dataFinal"  name="dataFinal" class="span3" onchange="this.form.submit()">                   
                         
-                        <option value="1"> Data Final </option>                 
+                        <option value="{dataFinal}"> {dataFinalName} </option>                 
 
-                            <option value="12">Janeiro</option>
+                            <option value="1">Janeiro</option>
                             <option value="2">Fevereiro</option>
                             <option value="3">Março</option>
                             <option value="4">Abril</option>
@@ -108,6 +108,8 @@
                 {/subcategorias}   
 
                     <input type="hidden" name="categoria" value="{categoriaID}">
+                    <input type="hidden" name="dataInicial" value="{dataInicial}">
+                    <input type="hidden" name="dataFinal" value="{dataFinal}">
                     <button type="submit" class="btn btn-success"><i class=""></i> Pesquisa</button>
                 </form>
             </td>

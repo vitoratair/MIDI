@@ -61,9 +61,9 @@
                     <div align="left">
                         <select id="dataFinal"  name="dataFinal" class="span3" onchange="this.form.submit()">                   
                             
-                            <option value="1"> Data Final </option>                 
+                            <option value="12"> Data Final </option>                 
 
-                                <option value="12">Janeiro</option>
+                                <option value="1">Janeiro</option>
                                 <option value="2">Fevereiro</option>
                                 <option value="3">Março</option>
                                 <option value="4">Abril</option>
