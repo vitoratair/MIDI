@@ -293,19 +293,14 @@ class Model_model extends CI_Model
 		$this->db->where('Categoria', $categoria);
 		$this->db->where("MES BETWEEN $dataInicial AND $dataFinal");			
 		$query = $this->db->get();
-
-<<<<<<< HEAD
 		return $query->result();
 	}
-=======
+
 	// Deleta a referencia do item da tabela modelo //
 	function updateItemForModel($id, $categoria, $table)
 	{
 		$this->db->query("UPDATE `Modelo` SET `$table` = 1 WHERE Categoria_CID  = '$categoria' AND `$table` = $id");
 	}
-
-
->>>>>>> b11dcda403eb9518dcabeac136a7d2393392c0c2
 }
 
 ?>
