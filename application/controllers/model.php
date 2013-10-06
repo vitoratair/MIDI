@@ -243,7 +243,7 @@ class Model extends CI_Controller
 		{
 			foreach ($data['titulos'] as $key => $value)
 			{
-				$data['titulos'][$key]->SubCategoriaID 	= $this->category_model->listTitleByModel($id, $value->TColuna);
+				$data['titulos'][$key]->SubCategoriaID 	= $this->category_model->listTitleByModel($id, $value->TColuna);				
 				$data['titulos'][$key]->SubCategoria 	= $this->category_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
 			}					
 		}
@@ -267,6 +267,7 @@ class Model extends CI_Controller
 			
 		if ($this->input->post('controle') != 1)
 		{
+			$data['MNome0'] 			= $this->input->post('nomeModelo0');
 			$data['MNome'] 				= $this->input->post('nomeModelo');
 			$data['MNome1'] 			= $this->input->post('nomeModelo1');
 			$data['MNome2'] 			= $this->input->post('nomeModelo2');
@@ -314,7 +315,15 @@ class Model extends CI_Controller
 		}
 		if ($this->input->post('categoria') != 0)
 		{
-			$data['Categoria_CID'] 	= $this->input->post('categoria');	
+			$data['Categoria_CID'] 		= $this->input->post('categoria');	
+			$data['SubCategoria1_SCID'] = 1;
+			$data['SubCategoria2_SCID'] = 1;
+			$data['SubCategoria3_SCID'] = 1;
+			$data['SubCategoria4_SCID'] = 1;
+			$data['SubCategoria5_SCID'] = 1;
+			$data['SubCategoria6_SCID'] = 1;
+			$data['SubCategoria7_SCID'] = 1;
+			$data['SubCategoria8_SCID'] = 1;
 		}
 		
 		$this->model_model->updateModel($data);
@@ -381,6 +390,7 @@ class Model extends CI_Controller
 	{
 		// Recebe os dados do FORM //			
 		$id						= $this->input->post('id');
+		$data['MNome0']			= $this->input->post('nomeModelo0');
 		$data['MNome']			= $this->input->post('nomeModelo');
 		$data['MNome1']			= $this->input->post('nomeModelo1');
 		$data['MNome2']			= $this->input->post('nomeModelo2');

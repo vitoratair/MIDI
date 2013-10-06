@@ -241,8 +241,102 @@ class Category extends CI_Controller
 	}
 
 
+	// Apresenta a view para adicionar um item na subcategoria //
+	public function addItem($idSubcategoria, $idCategoria, $coluna)
+	{		
+		$table = "SubCategoria".$coluna;
+		
+		$data['idCategoria']	= $idCategoria;
+		$data['idSubcategoria']	= $idSubcategoria;
+		$data['coluna']			= $coluna;		
+		$data['itens']			= $this->category_model->listElement($table, $idCategoria);
 
+		$data['main_content'] 	= 'category/addItem_view';
+		$this->parser->parse('template', $data);
+
+	}
+
+	// Recupera as informações de itens  //
+	public function editItem($id, $coluna, $subcategoria)
+	{
+		$table 					= "SubCategoria".$coluna;
+
+		// busca as informações da subcategoria
+		$data['itens'] 			= $this->category_model->getItem($table, $id); 
+		$data['coluna'] 		= $coluna;
+		$data['subcategoria'] 	= $subcategoria;
+
+		$data['main_content'] 	= 'category/editItem_view';	
+		$this->parser->parse('template',$data);
 	
+	}
+
+	// update item no banco
+	public function updateItem()
+	{
+		// Recebe os dados do FORM //			
+		$data['SCID'] 				= $this->input->post('id');
+		$data['SCNome'] 			= $this->input->post('subcategoriaitem');
+		$data['Categoria_CID'] 		= $this->input->post('idCategoria');
+		$subCategoria 				= $this->input->post('subcategoria');
+		$categoria 					= $data['Categoria_CID'];
+		$coluna 					= $this->input->post('coluna');
+		$table 						= "SubCategoria".$coluna; 
+
+		$this->category_model->updateItem($table, $data);				
+		
+		redirect("category/addItem/$subCategoria/$categoria/$coluna");
+
+	}
+
+	// Setar nova subcategoria no banco //
+	public function setItem()
+	{
+		// Recebe os dados do FORM //			
+		$data['SCNome'] 			= $this->input->post('subcategoriaitem');
+		$data['Categoria_CID'] 		= $this->input->post('idCategoria');
+		$subCategoria 				= $this->input->post('idSubcategoria');
+		$coluna 					= $this->input->post('coluna');
+		$table 						= "SubCategoria".$coluna; 
+		$categoria 					= $data['Categoria_CID'];
+
+		$this->category_model->saveItem($table, $data);					
+		
+		redirect("category/addItem/$subCategoria/$categoria/$coluna");
+
+	}
+
+	// Deleta itens e suas referencias em outras tabelas //
+	public function deleteItem($id,$coluna,$categoria,$subcategoria)
+	{
+
+		// Constante contendo a string "Tables_in + DATABASE" //
+		$varTable = TABLE;
+
+		$table  = "SubCategoria".$coluna."_SCID";
+		$table1 = "SubCategoria".$coluna ;
+
+		// pegar todas as tabelas de NCMs do sistema
+		$data = $this->ncm_model->listAllNcm();
+
+		// Loop para apagar a referencia da categoria em todas as NCMs
+		foreach ($data as $key => $value)
+		{
+			$this->ncm_model->updateItemForNcm($value->$varTable, $id, $table, $categoria);
+		}
+
+		// Deleta a refêrencia do item na tabela Modelo //
+		$this->model_model->updateItemForModel($id, $categoria, $table);
+
+		// Deleta o item //
+		$this->category_model->deleteItem($id, $table1);			
+		
+		redirect("category/addItem/$subcategoria/$categoria/$coluna");
+
+	}	
+
+
+
 }
 
 ?>
