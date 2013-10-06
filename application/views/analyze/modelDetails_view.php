@@ -68,7 +68,9 @@
             var url = '<?php echo base_url();?>index.php/analyze/analyzeModel';
             var form = $('<form action="' + url + '" method="POST">' +								
 				'<input type="hidden" name="categoria" value="' + {categoria} + '" />' +
-				'<input type="hidden" name="ano" value="' + {ano} + '" />' +	
+				'<input type="hidden" name="ano" value="' + {ano} + '" />' +
+                '<input type="hidden" name="dataInicial" value="' + <?php echo $dataInicial;?> + '" />' +
+                '<input type="hidden" name="dataFinal" value="' + <?php echo $dataFinal;?> + '" />' +                  
               	'<input type="hidden" name="marca" value="' + {marca} + '" />' +
               	'<input type="hidden" name="subcategorias" value="' + {postSubcategorias} + '"/>' +
               '</form>');

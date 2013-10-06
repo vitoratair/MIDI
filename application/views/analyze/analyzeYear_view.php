@@ -153,6 +153,8 @@
             var url = '<?php echo base_url();?>index.php/analyze/listAll';
             var form = $('<form action="' + url + '" method="POST">' +
               '<input type="hidden" name="categoria" value="' + {categoria} + '" />' +
+              '<input type="hidden" name="dataInicial" value="' + <?php echo $dataInicial;?> + '" />' +
+              '<input type="hidden" name="dataFinal" value="' + <?php echo $dataFinal;?> + '" />' +              
               '</form>');
             $('body').append(form);
             $(form).submit();            

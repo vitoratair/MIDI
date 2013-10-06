@@ -123,7 +123,8 @@
             <td>                
                 <div class="row-fluid">
                     <div class="span12">
-                        <div class="row-fluid">                      
+                        <div class="row-fluid"> 
+
                             <div class="span8">                        
                                 <div id="analyze_1" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
                             </div>
@@ -196,7 +197,7 @@
             },
             subtitle:
             {
-                text: 'TESTE'
+                text: {categoria}
             },
             xAxis:
             {

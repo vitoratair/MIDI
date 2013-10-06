@@ -243,15 +243,17 @@ class Analyze extends CI_Controller
 			
 		}
 		
-		$data['categoria'] 		= $categoria;	
-		$categoria 				= $this->category_model->getCategory($categoria);
-		$data['categoriaNome'] 	= $categoria[0]->CNome;
-		$data['ano'] 			= $ano;
-		$data['marcaNome'] 		= $this->brand_model->getBrand($marca);
-		$data['marcaNome'] 		= $data['marcaNome'][0]->MANome;
+		$data['categoria'] 			= $categoria;	
+		$categoria 					= $this->category_model->getCategory($categoria);
+		$data['categoriaNome'] 		= $categoria[0]->CNome;
+		$data['ano'] 				= $ano;
+		$data['dataInicial']		= $dataInicial;
+		$data['dataFinal']			= $dataFinal;			
+		$data['marcaNome'] 			= $this->brand_model->getBrand($marca);
+		$data['marcaNome'] 			= $data['marcaNome'][0]->MANome;
 		$data['postSubcategorias'] 	= $sc1;
 
-		$data['main_content'] 	= 'analyze/brandDetails_view';
+		$data['main_content'] 		= 'analyze/brandDetails_view';
 		$this->parser->parse('template', $data);		
 	}
 
@@ -304,7 +306,7 @@ class Analyze extends CI_Controller
 			$unidades 	= $unidades . ", " . $value['unidades'];
 			$fob 		= $fob . ", " . $value['fob'];
 		}
-		print_r($fob);
+
 		$data['categoria']		= $categoria;
 		$data['categoriaNome']	= $this->category_model->getCategory($categoria);
 		$data['categoriaNome']	= $data['categoriaNome'][0]->CNome;
@@ -312,6 +314,8 @@ class Analyze extends CI_Controller
 		$data['marcaNome']		= $this->brand_model->getBrand($marca);
 		$data['marcaNome'] 		= $data['marcaNome'][0]->MANome;
 		$data['ano']			= $ano;
+		$data['dataInicial']		= $dataInicial;
+		$data['dataFinal']			= $dataFinal;			
 		$data['sc']				= $sc1;
 		$data['unidades'] 		= substr($unidades, 1);
 		$data['fob'] 			= substr($fob, 1);
@@ -394,13 +398,16 @@ class Analyze extends CI_Controller
 	{
 
 		$dados = NULL;
+
 		// Recebendo dados via POST //
-		$marca 		= $this->input->post('marca');
-		$categoria 	= $this->input->post('categoria');
-		$ano 		= $this->input->post('ano');
-		$sc1 		= $this->input->post('subcategorias');
-		$sc 		= explode(",", $sc1);
-		$valor 		= $this->input->post('valor');
+		$marca 			= $this->input->post('marca');
+		$categoria 		= $this->input->post('categoria');
+		$ano 			= $this->input->post('ano');
+		$dataInicial 	= $this->input->post('dataInicial');
+		$dataFinal 		= $this->input->post('dataFinal');		
+		$sc1 			= $this->input->post('subcategorias');
+		$sc 			= explode(",", $sc1);
+		$valor 			= $this->input->post('valor');
 
 		// Lista todas as opções //
 		$data['anos']			= $this->ncm_model->listYear();
@@ -452,6 +459,8 @@ class Analyze extends CI_Controller
 		$data['categoriaNome'] 		= $this->category_model->getCategory($categoria);
 		$data['categoriaNome'] 		= $data['categoriaNome'][0]->CNome;
 		$data['ano'] 				= $ano;
+		$data['dataInicial']		= $dataInicial;
+		$data['dataFinal']			= $dataFinal;			
 		$data['categoria'] 			= $categoria;
 		$data['marca'] 				= $marca;
 		$data['marcaNome'] 			= $this->brand_model->getBrand($marca);
@@ -509,6 +518,8 @@ class Analyze extends CI_Controller
 		$data['modeloNome'] 		= $this->model_model->getModel($modelo);
 		$data['modeloNome'] 		= $data['modeloNome'][0]->MNome;
 		$data['ano'] 				= $ano;
+		$data['dataInicial']		= $dataInicial;
+		$data['dataFinal']			= $dataFinal;			
 		$data['categoria']			= $categoria;
 		$data['marca']				= $this->brand_model->getBrandByModel($modelo);
 		$data['marca'] 				= $data['marca'][0]->MAID;	
@@ -575,16 +586,20 @@ class Analyze extends CI_Controller
 		}
 
 		
-		$data['categoria']	= $categoria;
-		$data['modelo']		= $modelo;
-		$data['modeloNome']	= $this->model_model->getModel($modelo);
-		$data['modeloNome'] = $data['modeloNome'][0]->MNome;
-		$data['ano']		= $ano;
-		$data['sc']			= $sc1;
-		$marca 				= $this->brand_model->getBrandByModel($modelo);
-		$data['marca'] 		= $marca[0]->MAID;		
-		$data['unidades'] 	= substr($unidades, 1);
-		$data['fob'] 		= substr($fob, 1);
+		$data['categoria']		= $categoria;
+		$data['modelo']			= $modelo;
+		$data['modeloNome']		= $this->model_model->getModel($modelo);
+		$data['modeloNome'] 	= $data['modeloNome'][0]->MNome;
+		$data['ano']			= $ano;
+		$data['dataInicial']	= $dataInicial;
+		$data['dataFinal']		= $dataFinal;			
+		$data['sc']				= $sc1;
+		$marca 					= $this->brand_model->getBrandByModel($modelo);
+		$data['marca'] 			= $marca[0]->MAID;
+		$data['marcaNome'] 		= $this->brand_model->getBrand($data['marca']);
+		$data['marcaNome'] 		= $data['marcaNome'][0]->MANome;
+		$data['unidades'] 		= substr($unidades, 1);
+		$data['fob'] 			= substr($fob, 1);
 
 		$data['main_content'] 	= 'analyze/analyzeModelEvolution_view';
 		$this->parser->parse('template', $data);        
@@ -709,16 +724,7 @@ class Analyze extends CI_Controller
 
 		$result['unidades'] = $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
 		$result['volume']	= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
-
-		// if(!empty($array[0]['outros']->QUANTIDADE_COMERCIALIZADA_PRODUTO))
-		// 	$result['unidades'] += $array[0]['outros']->QUANTIDADE_COMERCIALIZADA_PRODUTO;
-
-		// if(!empty($array[0]['outros']->VALOR_TOTAL_PRODUTO_DOLAR))
-		// 	$result['volume'] 	+= $array[0]['outros']->VALOR_TOTAL_PRODUTO_DOLAR;
-		
 		$result['ano'] 		= $ano;	
-
-
 		return $result;		
 	}
 
