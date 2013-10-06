@@ -18,10 +18,12 @@
         echo form_open('analyze/analyzeYearShare', $atributos); 
     ?>
         
-        <input id="" onchange="this.form.submit()" class="slider slider-horizontal slider-track" type="range" min="1" max="{maximo}" step="1" value="{valor}" name="valor" onchange="updateSlider(this.value)">
+        <input id="" onchange="this.form.submit()" class="" type="range" min="1" max="{maximo}" step="1" value="{valor}" name="valor" onchange="updateSlider(this.value)">
         <input type="hidden" name="categoria" value="{categoria}">
         <input type="hidden" name="ano" value="{ano}">
         <input type="hidden" name="subcategorias" value="{postSubcategorias}">
+        <input type="hidden" name="dataInicial" value="{dataInicial}">
+        <input type="hidden" name="dataFinal" value="{dataFinal}">
         </form>
     
     <br>
