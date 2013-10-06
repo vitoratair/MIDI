@@ -20,6 +20,7 @@ body {
     font-size:13px;
     line-height:1.6;
 	background:#fff;
+	height: 100%;
 }
 
 p, a, li { 
@@ -381,7 +382,7 @@ blockquote:hover {
 
 /*Footer*/
 .footer {
-	margin-top:40px;
+	width: 100%;
 	padding:20px 10px;
 	background:#585f69;
 	color:#dadada;
@@ -452,6 +453,9 @@ blockquote:hover {
 
 /*Copyright*/
 .copyright {
+/*	bottom:0;
+	position:absolute;*/
+	width: 100%;	
 	font-size:12px;
 	padding:5px 10px;
 	background:#3e4753;
