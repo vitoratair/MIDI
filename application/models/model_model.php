@@ -236,22 +236,24 @@ class Model_model extends CI_Model
 	}
 
 	// Retorna a soma de todas as importações de um modelos dentro de uma NCM //
-	function calcPartsByModel($table, $modelo)
+	function calcPartsByModel($table, $modelo, $dataIncial, $dataFinal)
 	{
 		$this->db->select_sum('QUANTIDADE_COMERCIALIZADA_PRODUTO');
 		$this->db->from($table);
 		$this->db->where_in('Modelo',$modelo);
+		$this->db->where("MES BETWEEN $dataIncial AND $dataFinal");
 		$query = $this->db->get();			
 	
 		return $query->result();
 	}
 
 	// Calcula o volume referente a uma NCM //
-	function calcCashByModel($table, $modelo)
+	function calcCashByModel($table, $modelo, $dataIncial, $dataFinal)
 	{	
 		$this->db->select_sum('VALOR_TOTAL_PRODUTO_DOLAR');
 		$this->db->from($table);
 		$this->db->where_in('Modelo',$modelo);
+		$this->db->where("MES BETWEEN $dataIncial AND $dataFinal");
 		$query = $this->db->get();
 		
 		return $query->result();

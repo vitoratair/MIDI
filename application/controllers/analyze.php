@@ -29,7 +29,9 @@ class Analyze extends CI_Controller
 		$volume 	= NULL;
 
 		// Busca informações vinda do POST //
-		$categoria 	= $this->input->post('categoria');
+		$categoria 		= $this->input->post('categoria');
+		$dataInicial 	= $this->input->post('dataInicial');
+		$dataFinal 		= $this->input->post('dataFinal');
 
 		for ($i=1; $i <= 8; $i++)
 		{ 
@@ -57,15 +59,14 @@ class Analyze extends CI_Controller
 			$i= 0;
 			foreach ($ncms as $key => $table)
 			{
-				
-				$aux = $this->getDataFirstShare($table, $categoria, $sc);				
+				$aux = $this->getDataFirstShare($table, $categoria, $sc, $dataInicial, $dataFinal);				
 				if ($aux['unidades'] > 0)
 				{
 					$dados[$i] = $aux;
 					$i++;
 				}				
 			}			
-		
+	
 			if (!empty($dados))
 			{
 				// Somar os array com aos iguais //
@@ -74,6 +75,13 @@ class Analyze extends CI_Controller
 				
 				$data['dados'] 			= $resultado;
 				$data['categoriaID']	= $categoria;
+				$data['categoriaNome'] 		= $this->category_model->getCategory($categoria);
+				$data['categoriaNome'] 		= $data['categoriaNome'][0]->CNome;
+				$data['dataInicial']	= $dataInicial;
+				$data['dataFinal']		= $dataFinal;
+				$data['dataInicialName']	= $this->others->buscaMes($dataInicial);
+				$data['dataFinalName']		= $this->others->buscaMes($dataFinal);
+
 
 				$data = $this->mountArrayJavascript($data, $categoria);				
 				if (empty($data['titulos']))
@@ -637,7 +645,7 @@ class Analyze extends CI_Controller
 
 
 	// Realiza o calculo para o share inicial de cada NCM -->
-	function getDataFirstShare($table, $categoria, $sc)
+	function getDataFirstShare($table, $categoria, $sc, $dataInicial, $dataFinal)
 	{
 		$modelos	= array();
 		$ano 		= explode('_', $table);
@@ -656,11 +664,12 @@ class Analyze extends CI_Controller
 		}
 
 		// Calcula as unidades referente a uma NCM //
-		$unidades 			= $this->model_model->calcPartsByModel($table, $modelos);
-		$volume 			= $this->model_model->calcCashByModel($table, $modelos);
+		$unidades 			= $this->model_model->calcPartsByModel($table, $modelos, $dataInicial, $dataFinal);
+		$volume 			= $this->model_model->calcCashByModel($table, $modelos, $dataInicial, $dataFinal);
 		$result['unidades'] = $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
 		$result['volume']	= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
 		$result['ano'] 		= $ano;	
+
 
 		return $result;		
 	}
