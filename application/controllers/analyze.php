@@ -33,6 +33,11 @@ class Analyze extends CI_Controller
 		$dataInicial 	= $this->input->post('dataInicial');
 		$dataFinal 		= $this->input->post('dataFinal');
 
+		if (empty($dataInicial))
+			$dataInicial = 1;
+		if (empty($dataFinal))
+			$dataFinal = 12;
+
 		for ($i=1; $i <= 8; $i++)
 		{ 
 			$varPost 	= "SubCategoria" . $i;
@@ -73,12 +78,12 @@ class Analyze extends CI_Controller
 				$resultado = $this->sumSameYear($dados);
 				$resultado = $this->orderTableByYear($resultado);
 				
-				$data['dados'] 			= $resultado;
-				$data['categoriaID']	= $categoria;
+				$data['dados'] 				= $resultado;
+				$data['categoriaID']		= $categoria;
 				$data['categoriaNome'] 		= $this->category_model->getCategory($categoria);
 				$data['categoriaNome'] 		= $data['categoriaNome'][0]->CNome;
-				$data['dataInicial']	= $dataInicial;
-				$data['dataFinal']		= $dataFinal;
+				$data['dataInicial']		= $dataInicial;
+				$data['dataFinal']			= $dataFinal;
 				$data['dataInicialName']	= $this->others->buscaMes($dataInicial);
 				$data['dataFinalName']		= $this->others->buscaMes($dataFinal);
 
@@ -110,14 +115,21 @@ class Analyze extends CI_Controller
 	public function yearAnalyze()
 	{
 		// Recebendo dados via POST //
-		$categoria 	= $this->input->post('categoria');
-		$ano 		= $this->input->post('ano');
-		$sc1 		= $this->input->post('subcategorias');
-		$sc 		= explode(",", $sc1);
+		$categoria 		= $this->input->post('categoria');
+		$dataInicial 	= $this->input->post('dataInicial');
+		$dataFinal 		= $this->input->post('dataFinal');
+		$ano 			= $this->input->post('ano');
+		$sc1 			= $this->input->post('subcategorias');
+		$sc 			= explode(",", $sc1);
 
 		// Zerando contadores
 		$outros['unidades'] = 0;
 		$outros['volume'] = 0;
+
+		if (empty($dataInicial))
+			$dataInicial = 1;
+		if (empty($dataFinal))
+			$dataFinal = 12;
 
 		// Lista todas as opções //
 		$data['anos']			= $this->ncm_model->listYear();
@@ -140,7 +152,7 @@ class Analyze extends CI_Controller
 			$i= 0;
 			foreach ($ncms as $key => $table)
 			{				
-				$aux[$key] 			= $this->getDataByYear($table, $categoria, $sc);
+				$aux[$key] 			= $this->getDataByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
 				$outros['unidades'] += $aux[$key][0]['outros'][0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
 				$outros['volume'] 	+= $aux[$key][0]['outros'][0]->VALOR_TOTAL_PRODUTO_DOLAR;
 			}
@@ -173,11 +185,15 @@ class Analyze extends CI_Controller
 			$data['dados'] 		= $this->others->formatarDados(2, $data['dados']);
 			$data['outros'][0] 	= $this->others->formatarDados(3, $data['outros'][0]);
 
-		}		
+		}	
+
+		
 		$data['categoriaNome'] 		= $this->category_model->getCategory($categoria);
 		$data['categoriaNome'] 		= $data['categoriaNome'][0]->CNome;
 		$data['ano'] 				= $ano;
 		$data['categoria'] 			= $categoria;
+		$data['dataInicial']		= $dataInicial;
+		$data['dataFinal']			= $dataFinal;		
 		$data['postSubcategorias'] 	= json_encode($sc);
 
 		$data['main_content'] 	= 'analyze/analyzeYear_view';
@@ -189,11 +205,13 @@ class Analyze extends CI_Controller
 	public function analizeBrandDetails()
 	{		
 		// Recebendo dados via POST //
-		$marca 		= $this->input->post('marca');
-		$categoria 	= $this->input->post('categoria');
-		$ano 		= $this->input->post('ano');
-		$sc1 		= $this->input->post('subcategorias');		
-		$sc 		= explode(",", $sc1);
+		$marca 			= $this->input->post('marca');
+		$categoria 		= $this->input->post('categoria');
+		$ano 			= $this->input->post('ano');
+		$dataInicial 	= $this->input->post('dataInicial');
+		$dataFinal 		= $this->input->post('dataFinal');		
+		$sc1 			= $this->input->post('subcategorias');		
+		$sc 			= explode(",", $sc1);
 
 		// Lista todas as opções //
 		$data['anos']			= $this->ncm_model->listYear();
@@ -216,7 +234,7 @@ class Analyze extends CI_Controller
 			$i= 0;
 			foreach ($ncms as $key => $table)
 			{
-				$aux[$key]	= $this->brandDetailsByYear($table, $categoria, $sc, $marca);
+				$aux[$key]	= $this->brandDetailsByYear($table, $categoria, $sc, $marca, $dataInicial, $dataFinal);
 			}
 			
 			$aux 			= $this->mergeTable($aux);
@@ -241,14 +259,17 @@ class Analyze extends CI_Controller
 	public function analizeBrandEvolution()
 	{
 		
-		$unidades = NULL;
-		$fob = NULL;
+		$unidades 	= NULL;
+		$fob 		= NULL;
+
 		// Recebendo dados via POST //
-		$marca 		= $this->input->post('marca');
-		$categoria 	= $this->input->post('categoria');
-		$ano 		= $this->input->post('ano');
-		$sc1 		= $this->input->post('subcategorias');		
-		$sc 		= explode(",", $sc1);
+		$marca 			= $this->input->post('marca');
+		$categoria 		= $this->input->post('categoria');
+		$ano 			= $this->input->post('ano');
+		$dataInicial 	= $this->input->post('dataInicial');
+		$dataFinal 		= $this->input->post('dataFinal');			
+		$sc1 			= $this->input->post('subcategorias');		
+		$sc 			= explode(",", $sc1);
 
 		// Lista todas as opções //
 		$data['anos']			= $this->ncm_model->listYear();
@@ -271,7 +292,7 @@ class Analyze extends CI_Controller
 			$i= 0;
 			foreach ($ncms as $key => $table)
 			{
-				$aux[$key]	= $this->brandDetailsByYear($table, $categoria, $sc, $marca);
+				$aux[$key]	= $this->brandDetailsByYear($table, $categoria, $sc, $marca, $dataInicial, $dataFinal);
 			}
 			
 			$aux 	= $this->mergeTable($aux);
@@ -283,7 +304,7 @@ class Analyze extends CI_Controller
 			$unidades 	= $unidades . ", " . $value['unidades'];
 			$fob 		= $fob . ", " . $value['fob'];
 		}
-		
+		print_r($fob);
 		$data['categoria']		= $categoria;
 		$data['categoriaNome']	= $this->category_model->getCategory($categoria);
 		$data['categoriaNome']	= $data['categoriaNome'][0]->CNome;
@@ -305,11 +326,13 @@ class Analyze extends CI_Controller
 	{
 
 		// Recebendo dados via POST //
-		$marca 		= $this->input->post('marca');
-		$categoria 	= $this->input->post('categoria');
-		$ano 		= $this->input->post('ano');
-		$sc1 		= $this->input->post('subcategorias');		
-		$sc 		= explode(",", $sc1);
+		$marca 			= $this->input->post('marca');
+		$categoria 		= $this->input->post('categoria');
+		$ano 			= $this->input->post('ano');
+		$dataInicial 	= $this->input->post('dataInicial');
+		$dataFinal 		= $this->input->post('dataFinal');		
+		$sc1 			= $this->input->post('subcategorias');		
+		$sc 			= explode(",", $sc1);
 		
 		// Lista todas as opções //
 		$data['anos']			= $this->ncm_model->listYear();
@@ -332,7 +355,7 @@ class Analyze extends CI_Controller
 			$i= 0;
 			foreach ($ncms as $key => $table)
 			{
-				$aux[$key]	= $this->getDataModel($table, $categoria, $sc, $marca);
+				$aux[$key]	= $this->getDataModel($table, $categoria, $sc, $marca, $dataInicial, $dataFinal);
 			}
 			
 			$aux 					= $this->mergeTable($aux);			
@@ -357,6 +380,8 @@ class Analyze extends CI_Controller
 
 		$data['categoria'] 			= $categoria[0]->CID;
 		$data['ano'] 				= $ano;
+		$data['dataInicial'] 		= $dataInicial;
+		$data['dataFinal'] 			= $dataFinal;
 		$data['postSubcategorias'] 	= json_encode($sc1	);
 
 		$data['main_content'] 	= 'analyze/modelByBrand_view';
@@ -396,7 +421,7 @@ class Analyze extends CI_Controller
 			$i= 0;
 			foreach ($ncms as $key => $table)
 			{
-				$aux[$key] = $this->getDataModel($table, $categoria, $sc, $marca);
+				$aux[$key] = $this->getDataModel($table, $categoria, $sc, $marca, $dataInicial, $dataFinal);
 			}
 
 			$aux 	= $this->mergeTable($aux);			
@@ -442,11 +467,13 @@ class Analyze extends CI_Controller
 	{
 
 		// Recebendo dados via POST //
-		$modelo 	= $this->input->post('modelo');
-		$categoria 	= $this->input->post('categoria');
-		$ano 		= $this->input->post('ano');
-		$sc1 		= $this->input->post('subcategorias');		
-		$sc 		= explode(",", $sc1);
+		$modelo 		= $this->input->post('modelo');
+		$categoria 		= $this->input->post('categoria');
+		$ano 			= $this->input->post('ano');
+		$dataInicial 	= $this->input->post('dataInicial');
+		$dataFinal 		= $this->input->post('dataFinal');
+		$sc1 			= $this->input->post('subcategorias');		
+		$sc 			= explode(",", $sc1);
 
 		// Lista todas as opções //
 		$data['anos']			= $this->ncm_model->listYear();
@@ -469,7 +496,7 @@ class Analyze extends CI_Controller
 			$i= 0;
 			foreach ($ncms as $key => $table)
 			{
-				$aux[$key]	= $this->getDataModelDetails($table, $modelo);
+				$aux[$key]	= $this->getDataModelDetails($table, $modelo, $dataInicial, $dataFinal);
 			}
 			
 			$aux = $this->mergeTable($aux);
@@ -499,15 +526,17 @@ class Analyze extends CI_Controller
 	public function analyzeModelEvolution()
 	{
 		
-		$unidades = NULL;
-		$fob = NULL;
-		// Recebendo dados via POST //
-		$modelo 	= $this->input->post('modelo');
-		$categoria 	= $this->input->post('categoria');
-		$ano 		= $this->input->post('ano');
-		$sc1 		= $this->input->post('subcategorias');		
-		$sc 		= explode(",", $sc1);
+		$unidades 	= NULL;
+		$fob 		= NULL;
 
+		// Recebendo dados via POST //
+		$modelo 		= $this->input->post('modelo');
+		$categoria 		= $this->input->post('categoria');
+		$ano 			= $this->input->post('ano');
+		$dataInicial 	= $this->input->post('dataInicial');
+		$dataFinal 		= $this->input->post('dataFinal');		
+		$sc1 			= $this->input->post('subcategorias');		
+		$sc 			= explode(",", $sc1);
 
 		// Lista todas as opções //
 		$data['anos']			= $this->ncm_model->listYear();
@@ -530,7 +559,7 @@ class Analyze extends CI_Controller
 			$i= 0;
 			foreach ($ncms as $key => $table)
 			{
-				$aux[$key]	= $this->getDataModelDetails($table, $modelo);
+				$aux[$key]	= $this->getDataModelDetails($table, $modelo, $dataInicial, $dataFinal);
 			}
 			
 			$aux 	= $this->mergeTable($aux);
@@ -567,8 +596,16 @@ class Analyze extends CI_Controller
 	{
 		$dados = NULL;
 		// Recebendo dados via POST //
-		$categoria 	= $this->input->post('categoria');
-		$ano 		= $this->input->post('ano');
+		$categoria 		= $this->input->post('categoria');
+		$ano 			= $this->input->post('ano');
+		$dataInicial 	= $this->input->post('dataInicial');
+		$dataFinal  	= $this->input->post('dataFinal'); 
+
+		if (empty($dataInicial))
+			$dataInicial = 1;
+		if (empty($dataFinal))
+			$dataFinal = 12;
+
 		$sc1 		= $this->input->post('subcategorias');
 		$sc 		= explode(",", $sc1);
 		$valor 		= $this->input->post('valor');
@@ -593,7 +630,7 @@ class Analyze extends CI_Controller
 			$i= 0;
 			foreach ($ncms as $key => $table)
 			{
-				$aux[$key] 	= $this->getDataByYear($table, $categoria, $sc);
+				$aux[$key] 	= $this->getDataByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
 			}
 
 			$aux 			= $this->mergeTable($aux);
@@ -635,6 +672,8 @@ class Analyze extends CI_Controller
 		$data['categoriaNome'] 		= $this->category_model->getCategory($categoria);
 		$data['categoriaNome'] 		= $data['categoriaNome'][0]->CNome;
 		$data['ano'] 				= $ano;
+		$data['dataInicial']		= $dataInicial;
+		$data['dataFinal']			= $dataFinal;
 		$data['categoria'] 			= $categoria;
 		$data['postSubcategorias'] 	= $sc1;
 
@@ -666,8 +705,17 @@ class Analyze extends CI_Controller
 		// Calcula as unidades referente a uma NCM //
 		$unidades 			= $this->model_model->calcPartsByModel($table, $modelos, $dataInicial, $dataFinal);
 		$volume 			= $this->model_model->calcCashByModel($table, $modelos, $dataInicial, $dataFinal);
+		$array[0]['outros']	= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
+
 		$result['unidades'] = $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
 		$result['volume']	= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+
+		// if(!empty($array[0]['outros']->QUANTIDADE_COMERCIALIZADA_PRODUTO))
+		// 	$result['unidades'] += $array[0]['outros']->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+
+		// if(!empty($array[0]['outros']->VALOR_TOTAL_PRODUTO_DOLAR))
+		// 	$result['volume'] 	+= $array[0]['outros']->VALOR_TOTAL_PRODUTO_DOLAR;
+		
 		$result['ano'] 		= $ano;	
 
 
@@ -766,7 +814,7 @@ class Analyze extends CI_Controller
 	}
 
 	// Busca as informações de unidades e $$ por ano //
-	function getDataByYear($table, $categoria, $sc)
+	function getDataByYear($table, $categoria, $sc, $dataInicial, $dataFinal)
 	{
 
 		$modelos	= array();
@@ -797,13 +845,13 @@ class Analyze extends CI_Controller
 			{
 				$array[$key]['marca'] 		= $marca[$key]->Marca;
 				$array[$key]['marcaNome'] 	= $marca[$key]->MANome;
-				$unidades 					= $this->brand_model->sumPartsYearByBrand($table, $array[$key]['marca'], $categoria, $modelos);		
-				$volume 					= $this->brand_model->sumCashYearByBrand($table, $array[$key]['marca'], $categoria, $modelos);
+				$unidades 					= $this->brand_model->sumPartsYearByBrand($table, $array[$key]['marca'], $categoria, $modelos, $dataInicial, $dataFinal);
+				$volume 					= $this->brand_model->sumCashYearByBrand($table, $array[$key]['marca'], $categoria, $modelos, $dataInicial, $dataFinal);
 				$array[$key]['unidades'] 	= $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
 				$array[$key]['volume'] 		= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
 			}			
 		}
-		$array[0]['outros']	= $this->ncm_model->sumOthersByYear($table, $categoria, $sc);
+		$array[0]['outros']	= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
 		return $array;
 
 	}
@@ -926,7 +974,7 @@ class Analyze extends CI_Controller
 	}
 
 	// Busca as informações detalhadas de cada NCM //
-	function brandDetailsByYear($table, $categoria, $sc, $marca)
+	function brandDetailsByYear($table, $categoria, $sc, $marca, $dataInicial, $dataFinal)
 	{
 
 		$modelos	= array();
@@ -948,11 +996,11 @@ class Analyze extends CI_Controller
 
 		if (empty($marca))
 		{
-			$dados = $this->ncm_model->getDataDetails($table, $modelos, NULL, $categoria);	
+			$dados = $this->ncm_model->getDataDetails($table, $modelos, NULL, $categoria, $dataInicial, $dataFinal);	
 		}
 		else
 		{
-			$dados = $this->ncm_model->getDataDetails($table, $modelos, $marca, $categoria);
+			$dados = $this->ncm_model->getDataDetails($table, $modelos, $marca, $categoria, $dataInicial, $dataFinal);
 		}
 		
 		foreach ($dados as $key => $value)
@@ -961,8 +1009,10 @@ class Analyze extends CI_Controller
 			$data[$key]['ncm']	 		= $ncm;
 			$data[$key]['ano']	 		= $ano;			
 			$data[$key]['descricao']	= $value->DESCRICAO_DETALHADA_PRODUTO;
-			$data[$key]['fob'] 			= $value->VALOR_UNIDADE_PRODUTO_DOLAR;
 			$data[$key]['unidades'] 	= $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+			$data[$key]['volume'] 		= $value->VALOR_TOTAL_PRODUTO_DOLAR;
+			// $data[$key]['fob'] 			= $value->VALOR_TOTAL_PRODUTO_DOLAR / $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;						
+			$data[$key]['fob'] 			= $value->VALOR_UNIDADE_PRODUTO_DOLAR;						
 			$data[$key]['marca'] 		= $value->MANome;
 			$data[$key]['modelo'] 		= $value->MNome;
 			$data[$key]['mes'] 			= $value->MES;
@@ -1080,7 +1130,7 @@ class Analyze extends CI_Controller
 	}
 	
 	// Busca as informações de unidades e $$ por ano de um modelo //
-	function getDataModel($table, $categoria, $sc, $marca)
+	function getDataModel($table, $categoria, $sc, $marca, $dataInicial, $dataFinal)
 	{
 
 		$modelos	= array();
@@ -1101,7 +1151,7 @@ class Analyze extends CI_Controller
 		{
 			foreach ($modelos as $key => $value)
 			{
-				$dados 						= $this->sumDataModelByYear($table, $value, $categoria);
+				$dados 						= $this->model_model->sumDataModelByYear($table, $value, $categoria, $dataInicial, $dataFinal);
 				$array[$key]['modelo'] 		= $value;
 				$array[$key]['modeloNome'] 	= $this->model_model->getModel($value);
 				$array[$key]['modeloNome']	= $array[$key]['modeloNome'][0]->MNome;
@@ -1112,22 +1162,6 @@ class Analyze extends CI_Controller
 		
 		return $array;
 	}	
-
-	// Calcula o peças referente a uma NCM e um modelo //
-	function sumDataModelByYear($table, $modelo, $categoria)
-	{
-
-		$this->db->select_sum('QUANTIDADE_COMERCIALIZADA_PRODUTO');
-		$this->db->select_sum('VALOR_TOTAL_PRODUTO_DOLAR');
-		$this->db->select_sum('VALOR_UNIDADE_PRODUTO_DOLAR');
-		$this->db->from($table);
-		$this->db->where('Modelo',$modelo);
-		$this->db->where('Categoria', $categoria);
-		$query = $this->db->get();
-
-		return $query->result();
-
-	}
 
 	// Merge de modelos //
 	function mergeModel($result)
@@ -1191,7 +1225,7 @@ class Analyze extends CI_Controller
 	}
 
 	// Busca as informações de importações detalhadas de um modelo //
-	function getDataModelDetails($table, $modelo)
+	function getDataModelDetails($table, $modelo, $dataInicial, $dataFinal)
 	{
 
 		$ano 		= explode('_', $table);
@@ -1199,7 +1233,7 @@ class Analyze extends CI_Controller
 		$ano 		= $ano[1];
 
 		// buscando as informações de importações de modelos //
-		$dados = $this->ncm_model->getDataModelDetails($table, $modelo);
+		$dados = $this->ncm_model->getDataModelDetails($table, $modelo, $dataInicial, $dataFinal);
 		
 		foreach ($dados as $key => $value)
 		{

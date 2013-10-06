@@ -90,6 +90,8 @@
               '<input type="hidden" name="marca" value="' + marca + '" />' +
               '<input type="hidden" name="categoria" value="' + <?php echo $categoria;?> + '" />' +
               '<input type="hidden" name="ano" value="' + <?php echo $ano;?> + '" />' +
+              '<input type="hidden" name="dataInicial" value="' + <?php echo $dataInicial;?> + '" />' +
+              '<input type="hidden" name="dataFinal" value="' + <?php echo $dataFinal;?> + '" />' +
               '<input type="hidden" name="subcategorias" value="' + <?php echo $postSubcategorias;?> + '" />' +
               '</form>');
             $('body').append(form);
@@ -102,6 +104,8 @@
               '<input type="hidden" name="marca" value="' + marca + '" />' +
               '<input type="hidden" name="categoria" value="' + <?php echo $categoria;?> + '" />' +
               '<input type="hidden" name="ano" value="' + <?php echo $ano;?> + '" />' +
+              '<input type="hidden" name="dataInicial" value="' + <?php echo $dataInicial;?> + '" />' +
+              '<input type="hidden" name="dataFinal" value="' + <?php echo $dataFinal;?> + '" />' +              
               '<input type="hidden" name="subcategorias" value="' + <?php echo $postSubcategorias;?> + '" />' +
               '</form>');
             $('body').append(form);
@@ -114,6 +118,8 @@
               '<input type="hidden" name="marca" value="' + marca + '" />' +
               '<input type="hidden" name="categoria" value="' + <?php echo $categoria;?> + '" />' +
               '<input type="hidden" name="ano" value="' + <?php echo $ano;?> + '" />' +
+              '<input type="hidden" name="dataInicial" value="' + <?php echo $dataInicial;?> + '" />' +
+              '<input type="hidden" name="dataFinal" value="' + <?php echo $dataFinal;?> + '" />' +
               '<input type="hidden" name="subcategorias" value="' + <?php echo $postSubcategorias;?> + '" />' +
               '</form>');
             $('body').append(form);
@@ -121,11 +127,11 @@
         }
         else if(id == 4)
         {
-            document.write('<form action="analiseMarcaDetalhe" name="Myform" method="POST">')
+
         }        
         else if(id == 5)
         {
-            document.write('<form action="analiseOutrosDetalhe" name="Myform" method="POST">')
+            
         } 
         else if(id == 6)
         {
@@ -133,6 +139,8 @@
             var form = $('<form action="' + url + '" method="POST">' +
               '<input type="hidden" name="categoria" value="' + <?php echo $categoria;?> + '" />' +
               '<input type="hidden" name="ano" value="' + <?php echo $ano;?> + '" />' +
+              '<input type="hidden" name="dataInicial" value="' + <?php echo $dataInicial;?> + '" />' +
+              '<input type="hidden" name="dataFinal" value="' + <?php echo $dataFinal;?> + '" />' +
               '<input type="hidden" name="subcategorias" value="' + <?php echo $postSubcategorias;?> + '" />' +
               '</form>');
             $('body').append(form);

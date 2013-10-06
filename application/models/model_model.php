@@ -236,24 +236,24 @@ class Model_model extends CI_Model
 	}
 
 	// Retorna a soma de todas as importações de um modelos dentro de uma NCM //
-	function calcPartsByModel($table, $modelo, $dataIncial, $dataFinal)
+	function calcPartsByModel($table, $modelo, $dataInicial, $dataFinal)
 	{
 		$this->db->select_sum('QUANTIDADE_COMERCIALIZADA_PRODUTO');
 		$this->db->from($table);
 		$this->db->where_in('Modelo',$modelo);
-		$this->db->where("MES BETWEEN $dataIncial AND $dataFinal");
+		$this->db->where("MES BETWEEN $dataInicial AND $dataFinal");
 		$query = $this->db->get();			
 	
 		return $query->result();
 	}
 
 	// Calcula o volume referente a uma NCM //
-	function calcCashByModel($table, $modelo, $dataIncial, $dataFinal)
+	function calcCashByModel($table, $modelo, $dataInicial, $dataFinal)
 	{	
 		$this->db->select_sum('VALOR_TOTAL_PRODUTO_DOLAR');
 		$this->db->from($table);
 		$this->db->where_in('Modelo',$modelo);
-		$this->db->where("MES BETWEEN $dataIncial AND $dataFinal");
+		$this->db->where("MES BETWEEN $dataInicial AND $dataFinal");
 		$query = $this->db->get();
 		
 		return $query->result();
@@ -280,7 +280,22 @@ class Model_model extends CI_Model
 
 		return $query->result();
 	}	
+	
+	// Calcula o peças referente a uma NCM e um modelo //
+	function sumDataModelByYear($table, $modelo, $categoria, $dataInicial, $dataFinal)
+	{
 
+		$this->db->select_sum('QUANTIDADE_COMERCIALIZADA_PRODUTO');
+		$this->db->select_sum('VALOR_TOTAL_PRODUTO_DOLAR');
+		$this->db->select_sum('VALOR_UNIDADE_PRODUTO_DOLAR');
+		$this->db->from($table);
+		$this->db->where('Modelo',$modelo);
+		$this->db->where('Categoria', $categoria);
+		$this->db->where("MES BETWEEN $dataInicial AND $dataFinal");			
+		$query = $this->db->get();
+
+		return $query->result();
+	}
 }
 
 ?>

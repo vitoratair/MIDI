@@ -1,11 +1,11 @@
-<!--=== Breadcrumbs ===-->
+    <!--=== Breadcrumbs ===-->
 <div class="row-fluid breadcrumbs margin-bottom-40">
     <div class="container">
-        <h1 class="pull-left">Processamento  <small>de dados</small></h1>
+        <h1 class="pull-left">Pesquisa  <small>de importações</small></h1>
         <ul class="pull-right breadcrumb">
             <li><a href="<?php echo base_url();?>index.php/app/home">Home</a> <span class="divider"> / </span></li>
-            <li>Administração <span class="divider"> / </span></li>
-            <li class="active">Processamento</li>
+            <li>Análise <span class="divider"> / </span></li>
+            <li class="active">Pesquisa</li>
         </ul>
     </div><!--/container-->
 </div><!--/breadcrumbs-->
@@ -172,6 +172,10 @@
         var form = $('<form action="' + url + '" method="POST">' +
           '<input type="hidden" name="categoria" value="' + categoria + '" />' +
           '<input type="hidden" name="ano" value="' + ano + '" />' +
+
+          '<input type="hidden" name="dataInicial" value="' + <?php echo $dataInicial;?> + '" />' +
+          '<input type="hidden" name="dataFinal" value="' + <?php echo $dataFinal;?> + '" />' +
+
           '<input type="hidden" name="subcategorias" value="' + <?php echo $postSubcategorias;?> + '" />' +
           '</form>');
         $('body').append(form);
