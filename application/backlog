@@ -6,13 +6,11 @@ Backlog
 	- Possibilidade de exportar dados para excel;
 	- Categorizar por palavra-chave;
 	- Possibilidade de inserir dados de produção nacional e estimativas.
-	- Comparar períodos de anos diferentes
 	- No comparativo inicial entre os anos por categoria, adicionar o percentual de variação entre um ano e outro;
 	- Exibir data da última atualização;
 
 In Progress
-	- Ter opção "outros" no momento de alterar os dados (abrir uma caixinha para inserir manualmente), para possibilitar a inclusão de novos modelos e marcas;
-	- Colocar marca/modelo/ano em cima dos gráficos de evolução (falta colocar o ano, e nas de modelo só tem o nome do modelo, não de que marca esse modelo é).	
+
 
 Done
 
@@ -23,3 +21,6 @@ Done
 	- Trocar "volume" por "valor" (dar a ideia de $);
 	- Mostrar gráfico por valor (volume monetário) no início, juntamente com o gráfico de unidades;
 	- Possibilidade de ver detalhamento das entradas (itens como peso, país de origem) quando necessário;
+	- Colocar marca/modelo/ano em cima dos gráficos de evolução (falta colocar o ano, e nas de modelo só tem o nome do modelo, não de que marca esse modelo é).
+	- Ter opção "outros" no momento de alterar os dados (abrir uma caixinha para inserir manualmente), para possibilitar a inclusão de novos modelos e marcas;
+	- Comparar períodos de anos diferentes

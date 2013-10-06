@@ -4,7 +4,7 @@
         <h1 class="pull-left">Exibição  <small>de {valor} marcas de {categoriaNome}</small></h1>
         <ul class="pull-right breadcrumb">
             <li><a href="<?php echo base_url();?>index.php/app/home">Home</a> <span class="divider"> / </span></li>
-            <li><a href="#" onclick="enviar(7)">Análise</a> <span class="divider"> / </span></li>
+            <li><a href="#" onclick="enviar()">Análise</a> <span class="divider"> / </span></li>
             <li class="active">Análise por ano</li>
         </ul>
     </div><!--/container-->
@@ -49,7 +49,7 @@ $(function () {
                 text: 'Análise de importação'
             },
             subtitle:{
-	          text: '{categoriaNome}'  
+	          text: '{categoriaNome} - {ano}'  
             },
             tooltip: {
 	            pointFormat: "Value: {point.y:,.0f}"	         
@@ -92,6 +92,8 @@ $(function () {
         var form = $('<form action="' + url + '" method="POST">' +
             '<input type="hidden" name="categoria" value="' + {categoria} + '" />' +
             '<input type="hidden" name="ano" value="' + {ano} + '" />' +
+              '<input type="hidden" name="dataInicial" value="' + <?php echo $dataInicial;?> + '" />' +
+              '<input type="hidden" name="dataFinal" value="' + <?php echo $dataFinal;?> + '" />' +              
             '<input type="hidden" name="subcategorias" value="' + {postSubcategorias} + '" />' +
             '</form>'); 
         $('body').append(form);
