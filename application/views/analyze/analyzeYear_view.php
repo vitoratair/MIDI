@@ -127,11 +127,20 @@
         }
         else if(id == 4)
         {
-
+            var url = '<?php echo base_url();?>index.php/analyze/analizeBrandDetails';
+            var form = $('<form action="' + url + '" method="POST">' +
+              '<input type="hidden" name="categoria" value="' + <?php echo $categoria;?> + '" />' +
+              '<input type="hidden" name="ano" value="' + <?php echo $ano;?> + '" />' +
+              '<input type="hidden" name="dataInicial" value="' + <?php echo $dataInicial;?> + '" />' +
+              '<input type="hidden" name="dataFinal" value="' + <?php echo $dataFinal;?> + '" />' +
+              '<input type="hidden" name="subcategorias" value="' + <?php echo $postSubcategorias;?> + '" />' +
+              '</form>');
+            $('body').append(form);
+            $(form).submit();
         }        
         else if(id == 5)
         {
-            
+           
         } 
         else if(id == 6)
         {

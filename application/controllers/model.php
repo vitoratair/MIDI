@@ -21,70 +21,13 @@ class Model extends CI_Controller
 
 	// Apresenta a view com todos os modelos cadastrados no sistema //
 	public function listAll()
-	{
-
-		// Constante contendo a string "Tables_in + DATABASE" //
-		$table = TABLE;
-
-		// Recebe os dados do FORM //			
-		$search	= $this->input->post('buscaModelo');		
+	{		
 
 		// Busca as categorias //
 		$data['categorias'] = $this->category_model->listCategory();
-		$data['marcas'] 		= $this->brand_model->listAllBrand();		
+		$data['marcas'] 	= $this->brand_model->listAllBrand();		
 
-		if (empty($search))
-		{
-	        $config["base_url"] 	= base_url() . "index.php/model/listAll";
-	        $config["total_rows"] 	= $this->model_model->countModel();
-		    $config["per_page"] 	= 20;
-
-	        $this->pagination->initialize($config);
-	        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-	        
-	        $data["modelos"] 		= $this->model_model->listModel($config["per_page"], $page);
-	        $data["links"] 			= $this->pagination->create_links();
-		}
-		else
-		{
-			$data["modelos"] = $this->model_model->listModelSearch($search);
-			$data["links"] 			= NULL;
-		}
-
-		// pegar todas as tabelas de NCMs do sistema
-		$ncms = $this->ncm_model->listAllNcm();
-		
-		// Verfica se o modelo encontra-se em alguma NCM //
-		foreach ($data['modelos'] as $key1 => $value1)
-		{
-			
-			$check = FALSE;
-
-			// Loop para percorrer as NCMs
-			foreach ($ncms as $key => $value)
-			{
-				$countModelos = $this->model_model->findModel($value->$table, $value1->MOID);
-				$countModelos = $countModelos[0]->IDN;
-
-				if ($countModelos != 0)
-				{
-					$check = TRUE;
-					break;
-				}				
-			}			
-
-			if ($check == TRUE)
-			{
-				$value1->CHECK = 'icon-ok';
-			}
-			else
-			{
-				$value1->CHECK = 'icon-remove';	
-			}
-
-		}
-
-		$data['main_content'] = 'model/model_view';		
+		$data['main_content'] = 'model/modelEmpty_view';		
 		$this->parser->parse('template', $data);
 
 	}
