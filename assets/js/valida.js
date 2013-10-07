@@ -90,7 +90,15 @@ $(document).ready(function(){
 				required: true,
 				minlength: 2,				
 				maxlength: 45
-			},		
+			},	
+
+			/* Valida modelo */
+			nomeModelo0:
+			{
+				required: true,
+				minlength: 2,				
+				maxlength: 45
+			},					
 
 			/* Valida modelo */
 			nomeModelo1:
@@ -240,6 +248,12 @@ $(document).ready(function(){
 				minlength:"O modelo deve ser maior que 3 caracteres ",
 				maxlength:"O modelo deve ser menor que 45 caracteres ",
 			},
+
+			nomeModelo0:{
+				required: "Informe o modelo",
+				minlength:"O modelo deve ser maior que 3 caracteres ",
+				maxlength:"O modelo deve ser menor que 45 caracteres ",
+			},			
 
 			nomeModelo1:{
 				minlength:"O modelo deve ser maior que 3 caracteres ",

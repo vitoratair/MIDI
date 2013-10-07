@@ -12,7 +12,7 @@
             </p>
 
         </div>
-        <a href="<?php echo base_url();?>index.php/analyze/listAll" class="btn-buy hover-effect">Faça um Tour</a>
+        <a href="<?php echo base_url();?>index.php/analyze/listAll" class="btn-buy hover-effect"> Inicie aqui </a>
     </div>
 </div><!--/row-fluid-->
 <!-- End Purchase Block -->

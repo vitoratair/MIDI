@@ -63,7 +63,6 @@
 	</form>
 	
 	<table class='table table-bordered table-hover' id="idTabela">
-			
 			<tr class="">				
 				<td width="5%"><b>ID</b></td>
 				<td width=""><b>Modelo</td>
@@ -74,57 +73,10 @@
 				<td width="8%"><b>Encontrado</td>
 				<td width="8%"><b>Editar</b></td>
 				<td width="8%"><b>Excluir</b></td>
-			</tr>			
-
-			{modelos}
-			
-			<tr class="table-condensed">	
-				<td>{MOID}</td>
-				<td>{MNome0}</td>
-				<td>{MNome1}</td>
-				<td>{MNome2}</td>
-				<td>{MANome}</td>
-				<td>{CNome}</td>			
-				<td><i class="{CHECK}"></i></td>				
-				<td><a href="<?php echo base_url();?>index.php/model/editModel/{MOID}" class='icon-edit'> <a/></td>
-				<td><a onclick='Remove("{MOID}")' data-toggle="modal" href="#myModal" class='icon-trash'></a></td>
 			</tr>
-
-			{/modelos}
-	
 	</table> 
-	
-	<div align="center">
-		{links}
-	</div>
 
 </div>
 
-<div class="modal hide" id="myModal">
-		<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">×</button>
-			<h3>Exclusão de modelo</h3>
-		</div>
-
-		<div class="modal-body">
-		<p>Deseja realmente excluir o modelo?</p>
-		</div>
-
-		 <div class="modal-footer">
-		<a href="" class="btn" data-dismiss="modal">Não</a>
-		<a href="" class="btn btn-danger" id="Excluir">Sim</a>
-	 	</div>
-</div>
-
-<script type="text/javascript">
-
-function Remove(id){
-
-	document.getElementById("Excluir");
-	document.getElementById('Excluir').href="<?php echo base_url();?>index.php/model/deleteModel/"+id;
-
-}	
-
-</script>
 
 

@@ -196,7 +196,7 @@ class Analyze extends CI_Controller
 		$data['dataFinal']			= $dataFinal;		
 		$data['postSubcategorias'] 	= json_encode($sc);
 
-		$data['main_content'] 	= 'analyze/analyzeYear_view';
+		$data['main_content'] 		= 'analyze/analyzeYear_view';
 		$this->parser->parse('template', $data);
 
 	}
@@ -230,13 +230,12 @@ class Analyze extends CI_Controller
 				}			
 			}		
 
-			// Recebe as opções de detalhes de NCM //
-			$i= 0;
+			// Recebe as opções de detalhes de NCM //	
 			foreach ($ncms as $key => $table)
 			{
 				$aux[$key]	= $this->brandDetailsByYear($table, $categoria, $sc, $marca, $dataInicial, $dataFinal);
-			}
-			
+			}				
+		
 			$aux 			= $this->mergeTable($aux);
 			$aux 			= $this->orderTable($aux, 'unidades');
 			$data['dados'] 	= $this->others->formatarDados(6, $aux);
@@ -249,11 +248,22 @@ class Analyze extends CI_Controller
 		$data['ano'] 				= $ano;
 		$data['dataInicial']		= $dataInicial;
 		$data['dataFinal']			= $dataFinal;			
-		$data['marcaNome'] 			= $this->brand_model->getBrand($marca);
-		$data['marcaNome'] 			= $data['marcaNome'][0]->MANome;
 		$data['postSubcategorias'] 	= $sc1;
 
-		$data['main_content'] 		= 'analyze/brandDetails_view';
+		if (empty($marca)) 
+		{
+			$data['main_content'] 	= 'analyze/yearDetails_view';
+		}
+		// Não exibe o nome da marca no HTML //
+		else
+		{
+			$data['marcaNome'] 		= $this->brand_model->getBrand($marca);
+			$data['marcaNome'] 		= $data['marcaNome'][0]->MANome;
+			$data['main_content'] 	= 'analyze/brandDetails_view';
+		}
+
+
+		
 		$this->parser->parse('template', $data);		
 	}
 
