@@ -640,8 +640,32 @@ class ncm_model extends CI_Model
 		$this->db->query("UPDATE `$data` SET `$table` = 1 WHERE Categoria  = '$categoria' AND `$table` = $id");
 	}
 
+	// Retorna o Mês do último dado cadastrado //
+	function getLastData($table)
+	{
 
+		$this->db->select('MES');
+		$this->db->from($table);
+		$this->db->order_by('MES', "desc");
+		$this->db->limit('1');
+		$query = $this->db->get();
+		
+		return $query->result();
+	}
 
+	// Retorna o Mês do último processamento //
+	function getLastProcessing($table)
+	{
+
+		$this->db->select('MES');
+		$this->db->from($table);
+		$this->db->where('Modelo != 1');
+		$this->db->order_by('MES', "desc");
+		$this->db->limit('1');
+		$query = $this->db->get();
+		
+		return $query->result();
+	}	
 
 }
 

@@ -1,16 +1,15 @@
 Backlog
 	
 	- Selecionar mais de um item de uma subcategoria para análise (ex.: selecionar switches de 54, 150 e 300 Mbps de velocidade);
-	- Ajustar cadastros de modelos e marcas para base única (usuários não visualizam a base de modelos e marcas né? Não seria bom eles visualizarem? Para conferências...);
 	- No gráfico evolução da marca ter a opção de comparar com os dados da Intelbras e poder filtrar por categoria;
-	- Possibilidade de exportar dados para excel;
-	- Categorizar por palavra-chave;
 	- Possibilidade de inserir dados de produção nacional e estimativas.
 	- No comparativo inicial entre os anos por categoria, adicionar o percentual de variação entre um ano e outro;
-	- Exibir data da última atualização;
+	- Alterar todos
+	- Possibilidade de exportar dados para excel;
 
 In Progress
 
+	
 
 Done
 
@@ -24,3 +23,5 @@ Done
 	- Colocar marca/modelo/ano em cima dos gráficos de evolução (falta colocar o ano, e nas de modelo só tem o nome do modelo, não de que marca esse modelo é).
 	- Ter opção "outros" no momento de alterar os dados (abrir uma caixinha para inserir manualmente), para possibilitar a inclusão de novos modelos e marcas;
 	- Comparar períodos de anos diferentes
+	- Ajustar cadastros de modelos e marcas para base única (usuários não visualizam a base de modelos e marcas né? Não seria bom eles visualizarem? Para conferências...);
+	- Exibir data da última atualização por categoria;

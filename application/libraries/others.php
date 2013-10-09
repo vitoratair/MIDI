@@ -57,7 +57,7 @@ class Others
 				break;
 
 			default:
-				# code...
+				return " - ";
 				break;
 		}
 	
@@ -140,9 +140,6 @@ class Others
 				$dados[$key]->PESO_LIQUIDO_KG = number_format($value->PESO_LIQUIDO_KG,0,",",".");
 			}			
 		}	
-
-
-
 
 		return $dados;
 	}		
