@@ -11,6 +11,7 @@
 </div><!--/breadcrumbs-->
 
 <div class="container">	
+	
 	<blockquote class="">
 		
 		<!-- Formulário para combobox sem botão submit -->
@@ -53,5 +54,28 @@
 		</form>	
 	</blockquote>
 
-	<br><br><br><br><br><br><br><br><br>
+	<table class="table table-bordered">
+		<thead>
+			<tr class="">				
+				<td width="10%r"><b>NCM</td>
+				<td width=""><b>Ano</td>
+				<td width=""><b>Última atualização</td>
+				<td width=""><b>Último processamento</td>
+			</tr>			
+		</thead>
+
+		{dados}	
+			<tr class="table-condensed">	
+				<td>{ncm}</td>
+				<td>{anos}</td>
+				<td>{lastUpdate}</td>	
+				<td>{lastProcessing}</td>		
+			</tr>
+		{/dados}
+	</table>
+
+
+
+		
+
 </div>
