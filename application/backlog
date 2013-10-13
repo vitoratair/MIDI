@@ -10,7 +10,6 @@ Backlog
 
 In Progress
 
-	- No gráfico evolução da marca ter a opção de comparar com os dados da Intelbras e poder filtrar por categoria;	
 	- Verificar valores diferentes no primeiro gráfico para a análise por ano.	
 
 Bugs
@@ -34,3 +33,4 @@ Done
 	- Ajustar cadastros de modelos e marcas para base única (usuários não visualizam a base de modelos e marcas né? Não seria bom eles visualizarem? Para conferências...);
 	- Exibir data da última atualização por categoria;
 	- Alterar todos
+	- No gráfico evolução da marca ter a opção de comparar com os dados da Intelbras e poder filtrar por categoria;		

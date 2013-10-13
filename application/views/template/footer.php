@@ -16,18 +16,6 @@
             </div><!--/span4-->
 
             <div class="span4">
-                <!-- About -->
-                <div class="headline"><h3>Intelbras</h3></div>  
-                    <dl class="dl-horizontal">
-                        <!-- <dt><a href="#"><img src="assets/img/sliders/elastislide/6.jpg" alt="" /></a></dt> -->
-                        <!-- <dd> -->
-                            <p><a href="http://www.intelbras.com.br">Desenvolvendo soluções de comunicação e integração que potencializam e valorizam a experiência humana.</a></p> 
-                        <!-- </dd>  -->
-                    </dl>
-                                  
-            </div><!--/span4-->            
-
-            <div class="span4">
                 <!-- Monthly Newsletter -->
                 <div class="headline"><h3>Contato</h3></div> 
                 <address>
@@ -37,6 +25,21 @@
                 Email: <a href="mailto:mayara@intelbras.com.br" class="">mayara@intelbras.com.br</a>
                 </address>
             </div><!--/span4-->
+
+            <div class="span4">
+                <!-- Monthly Newsletter -->
+                <div class="headline"><h3>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </h3></div> 
+                <address>
+                Vitor Atair <br/>
+                EAG Banda Larga - INET <br />
+                55 (48) 3281-9440 <br />
+                Email: <a href="mailto:vitor.atair@intelbras.com.br" class="">vitor.atair@intelbras.com.br</a>
+                </address>
+            </div><!--/span4-->
+
         </div><!--/row-fluid--> 
     </div><!--/container--> 
 </div><!--/footer-->    
