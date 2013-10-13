@@ -4573,7 +4573,7 @@ input[type="submit"].btn.btn-mini {
 }
 
 .navbar-fixed-top {
-  top: 0;
+  top: 0px;
 }
 
 .navbar-fixed-top .navbar-inner,
@@ -5180,7 +5180,7 @@ input[type="submit"].btn.btn-mini {
   position: fixed;
   top: 0;
   right: 0;
-  bottom: 0;
+  bottom: 10;
   left: 0;
   z-index: 1040;
   background-color: #000000;

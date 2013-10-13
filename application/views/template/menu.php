@@ -8,11 +8,11 @@
 <!--=== Header ===-->
 <div class="header">               
     <div class="container"> 
+                                    
         <!-- Logo -->       
         <div class="logo">                                             
             <a href="<?php echo base_url();?>index.php/app/home"><img id="logo-header" width="300px" src="<?php echo base_url();?>assets/img/Logo_MIDI.jpg" alt="Logo"></a>
         </div><!-- /logo -->        
-                                    
         <!-- Menu -->       
         <div class="navbar">                                
             <div class="navbar-inner">                                  

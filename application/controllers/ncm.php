@@ -267,13 +267,37 @@ class ncm extends CI_Controller
 				}				
 				break;
 
+			case 'CategoriaAll':
+				$categoria 	= $this->input->post('categoria');
+				$ids 		= $this->input->post('ids');
+
+				if (!empty($categoria))
+				{
+					$this->ncm_model->update(4, $table, $id, $ids, $categoria);	
+				}	
+
+				redirect("search/ncm/");			
+				
+				break;
+
 			case 'Marca':
 				$marca = $this->input->post('marca');
 				if (!empty($marca))
 				{
 					$this->ncm_model->update(2, $table, $id, $idn, $marca);
 				}
-				break;	
+				break;
+
+			case 'MarcaAll':
+				$marca = $this->input->post('marca');
+				$ids 		= $this->input->post('ids');
+
+				if (!empty($marca))
+				{
+					$this->ncm_model->update(5, $table, $id, $ids, $marca);
+				}
+				redirect("search/ncm/");
+				break;
 
 			case 'Modelo':
 				$modelo = $this->input->post('modelo');
