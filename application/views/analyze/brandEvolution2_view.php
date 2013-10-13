@@ -64,9 +64,71 @@
 </script>
 
 <!-- Java scrip para criação do gráfico -->
+
+<script type="text/javascript">
+$(function () {
+        $('#evolucao_marca').highcharts({
+            chart: {
+                zoomType: 'xy'
+            },
+            title: {
+                text: 'Análise de importações'
+            },
+            subtitle: {
+                text: '{marcaNome} - {ano}'
+            },
+            xAxis: {
+                categories: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+            },
+            yAxis:
+            {
+                min: 0,
+                title:
+                {
+                    text: 'Unidades'
+                }
+            },
+            tooltip:
+            {
+                shared: true,
+                valueDecimals: 0,
+                valuePrefix: '',
+                valueSuffix: '' 
+            },          
+            plotOptions:
+            {
+                column:
+                {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series:
+            [
+                {
+                    name: '{marcaNome}',
+                    type: 'column',
+                    data: [{unidades}]
+        
+                },
+                {
+                    name: '{marcaNome2}',
+                    type: 'column',
+                    data: [{unidades2}]
+        
+                }
+            ]
+        });
+    });
+</script>
+
+<br><br>
+
+
 <script type="text/javascript">
     $(function () {
-        $('#evolucao_marca').highcharts({
+        $('#evolucao_marca1').highcharts({
             chart: {
                 zoomType: 'xy'
             },
@@ -82,20 +144,6 @@
             }],
             yAxis: [{ // Primary yAxis
                 labels: {
-                    format: '{value} ',                
-                    style: {
-                        color: '#89A54E'
-                    }
-                },
-                title: {
-                    text: 'FOB',
-                    style: {
-                        color: '#89A54E'
-                    }
-                }
-            },
-            { // Secondary yAxis
-                labels: {
                     style: {
                         color: '#4572A7'
                     }
@@ -106,9 +154,12 @@
                     style: {
                         color: '#4572A7'
                     }
-                },
-                opposite: true                    
+                }, 
+            },
+            { // Secondary yAxis
+                   
             }],
+
             tooltip: {
                 shared: true,
                 valueDecimals: 2,
@@ -124,8 +175,9 @@
                 floating: true,
                 backgroundColor: '#FFFFFF'
             },
-            series: [{
-                name: 'Unidades',
+            series: [
+            {
+                name: 'Unidades - {marcaNome}',
                 color: '#4572A7',
                 type: 'column',
                 yAxis: 1,
@@ -140,22 +192,20 @@
                 }
             },
             {
-                name: 'FOB',
-                color: '#89A54E',
-                type: 'spline',
+                name: 'Unidades2',
+                color: '#4572A7',
+                type: 'column',
+                yAxis: 1,
                 
-                data: [{fob}],
-
-
+                data: [{unidades}], 
+                
                 tooltip: {
-                    valueSuffix: ''
+                shared: true,
+                valueDecimals: 0,
+                valuePrefix: '',
+                valueSuffix: '' 
                 }
             }]
         });
     });
 </script>
-
-<br><br>
-
-
-

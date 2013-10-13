@@ -216,7 +216,7 @@
                 opposite: true,
                 title:
                 {
-                    text: 'Volume fincanceiro',
+                    text: 'Valor',
                     style:
                     {
                         color: '#89A54E'
@@ -273,14 +273,15 @@
                 }
     
             }, {
-                name: 'Dinheiro',
+                name: 'Valor',
                 color: '#89A54E',
                 // type: 'spline',
                 type: 'column',
                 
                 data: [{dataCash}],
 
-                tooltip: {
+                tooltip:
+                {
                     shared: true,
                     valueDecimals: 0,
                     valuePrefix: '$',
