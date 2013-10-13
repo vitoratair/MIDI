@@ -43,7 +43,10 @@
 <!--=== Content Part ===-->
 <div class="container">     
     <div class="row-fluid page-404">
-        <p><i>404</i> <span>Página não encontrada</span></p>
+        <p align="center">
+            <img src="<?php echo base_url();?>assets/img/hommer.gif">
+        </p>        
+        <!-- <p><i>404</i> <span>Página não encontrada</span></p> -->
     </div><!--/row-fluid-->        
 </div><!--/container-->     
 <!--=== End Content Part ===-->
