@@ -1,11 +1,10 @@
 Backlog
 	
+	- No comparativo inicial entre os anos por categoria, adicionar o percentual de variação entre um ano e outro;
 	- Selecionar mais de um item de uma subcategoria para análise (ex.: selecionar switches de 54, 150 e 300 Mbps de velocidade);
 	- No gráfico evolução da marca ter a opção de comparar com os dados da Intelbras e poder filtrar por categoria;
-	- Possibilidade de inserir dados de produção nacional e estimativas.
-	- No comparativo inicial entre os anos por categoria, adicionar o percentual de variação entre um ano e outro;
-	- Alterar todos
 	- Possibilidade de exportar dados para excel;
+	- Possibilidade de inserir dados de produção nacional e estimativas.
 
 In Progress
 
@@ -25,3 +24,4 @@ Done
 	- Comparar períodos de anos diferentes
 	- Ajustar cadastros de modelos e marcas para base única (usuários não visualizam a base de modelos e marcas né? Não seria bom eles visualizarem? Para conferências...);
 	- Exibir data da última atualização por categoria;
+	- Alterar todos

@@ -14,10 +14,10 @@
     <meta name="author" content="">
 
     <!-- CSS Global Compulsory-->
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/headers/header1.css">
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/bootstrap/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/bootstrap/css/bootstrap-responsive.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style_responsive.css">
     <!-- <link rel="shortcut icon" href="<?php echo base_url();?>/assets/img/favicon.ico">         -->
     <!-- CSS Implementing Plugins -->    

@@ -28,14 +28,15 @@ class Search extends CI_Controller
 		$year 			= $this->input->post('ano');	
 		$brand 			= $this->input->post('marca');
 		$model 			= $this->input->post('modelo');
-		$search 			= $this->input->post('search');
+		$search 		= $this->input->post('search');
 		$unSearch 		= $this->input->post('unSearch');
 		$control 		= $this->input->post('controle');
 
 		// Carrega os dados necessários da model //
-		$data['ncms'] 	= $this->ncm_model->listNcm();
-		$data['anos'] 	= $this->ncm_model->listYear();					
-		$data['marcas'] = $this->brand_model->listAllBrand();	
+		$data['ncms'] 		= $this->ncm_model->listNcm();
+		$data['anos'] 		= $this->ncm_model->listYear();					
+		$data['categorias'] = $this->category_model->listCategory();
+		$data['marcas1'] 	= $this->brand_model->listAllBrand();	
 
 		// Caso a variável ncm esteja vazia, recebe os dados que estão em sessão //
 		if (empty($ncm))
@@ -225,8 +226,24 @@ class Search extends CI_Controller
 					$data["links"] = $this->pagination->create_links();	
 				}
 			}
-			$data['dados'] = $this->others->formatarDados(1, $data['dados']);		
-			$data['main_content'] = 'search/ncm_view';	
+
+			$data['dados'] 			= $this->others->formatarDados(1, $data['dados']);		
+			$data['ids'] 			= $this->getIdsSearch($data['dados']);
+			
+			// verifica se todas as marcas são iguais
+			$equalBrand 	= $this->checkEqualBrand($data['dados']);
+			$equalCategory 	= $this->checkEqualCategory($data['dados']);
+			
+			if(($equalCategory != NULL) AND ($equalBrand != NULL))
+			{
+				$data['modelos1'] = $this->model_model->getModelByBrand($equalBrand, $equalCategory);
+			}
+			// if ($this->checkEqualBrand($data['dados']))
+			// 	$data['modelos'] = $this->model_model->getModelByBrand($this->checkEqualBrand($data['dados']),3);
+
+
+
+			$data['main_content'] 	= 'search/ncm_view';	
 		}
 		else
 		{
@@ -286,6 +303,56 @@ class Search extends CI_Controller
 
 
 	}
+
+	// retorna todos os IDs da pesquisa realizada para botão alterar todos //
+	function getIdsSearch($data)
+	{
+		$ids = NULL;
+		foreach ($data as $key => $value)
+		{
+			$ids = $ids . ", " . $value->IDN;
+		}
+		$ids = substr($ids, 2);
+
+		return $ids;
+	}
+
+	// Verifica se todas as marcas são iguais //
+	function checkEqualBrand($data)
+	{
+		$aux = FALSE;
+
+		foreach ($data as $key => $value)
+		{
+			if ($data[0]->Marca != $value->Marca)
+				$aux = TRUE;		
+		}
+
+		if ($aux)
+			return NULL;
+		else
+			return $data[0]->Marca;
+
+	}
+
+	// Verifica se todas as marcas são iguais //
+	function checkEqualCategory($data)
+	{
+		$aux = FALSE;
+
+		foreach ($data as $key => $value)
+		{
+			if ($data[0]->Categoria != $value->Categoria)
+				$aux = TRUE;		
+		}
+
+		if ($aux)
+			return NULL;
+		else
+			return $data[0]->Categoria;
+
+	}	
+
 
 
 
