@@ -92,7 +92,7 @@
 
                                 <li><?php echo anchor('analyze/listAll','Análise por ano');?></li>
 
-                                <!-- <li><?php echo anchor('analise/analiseMarcaAno','Análise por marca');?></li> -->
+                                <li><?php echo anchor('analyzeBrand/listAll','Análise por marca');?></li>
 
                                 <!-- <li><?php echo anchor('analise/listAll','Comparativo');?></li> -->
 
