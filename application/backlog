@@ -2,7 +2,6 @@ Backlog
 	
 	- No comparativo inicial entre os anos por categoria, adicionar o percentual de variação entre um ano e outro;
 	- Selecionar mais de um item de uma subcategoria para análise (ex.: selecionar switches de 54, 150 e 300 Mbps de velocidade);
-	- Possibilidade de exportar dados para excel;
 	- Possibilidade de inserir dados de produção nacional e estimativas.
 	- Importar modelos
 	- Importar marcas
@@ -10,12 +9,13 @@ Backlog
 
 In Progress
 
-	- Verificar valores diferentes no primeiro gráfico para a análise por ano.	
+	- Possibilidade de exportar dados para excel;	
 
 Bugs
 	
 	- Exclusão de modelos já catalogados pelo sistema.
 	- FOB com valor muito baixo. EX. 0,0003 é cadastrado como 0 no sistema
+	- Gráficos com botão do tipo "range" estão instáveis
 
 
 Done
@@ -34,3 +34,4 @@ Done
 	- Exibir data da última atualização por categoria;
 	- Alterar todos
 	- No gráfico evolução da marca ter a opção de comparar com os dados da Intelbras e poder filtrar por categoria;		
+	- Verificar valores diferentes no primeiro gráfico para a análise por ano.
