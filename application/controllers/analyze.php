@@ -270,12 +270,16 @@ class Analyze extends CI_Controller
 	// Gráfico de evolução de marcas //
 	public function analizeBrandEvolution()
 	{
-		
+		error_reporting(E_ERROR);
 		$unidades 	= NULL;
 		$fob 		= NULL;
+		$unidades2 	= NULL;
+		$fob2 		= NULL;
 
 		// Recebendo dados via POST //
 		$marca 			= $this->input->post('marca');
+		$marca2 		= $this->input->post('marca2');
+		$control 		= $this->input->post('controle');
 		$categoria 		= $this->input->post('categoria');
 		$ano 			= $this->input->post('ano');
 		$dataInicial 	= $this->input->post('dataInicial');
@@ -287,6 +291,7 @@ class Analyze extends CI_Controller
 		$data['anos']			= $this->ncm_model->listYear();
 		$data['ncm']			= $this->listNcmYearByCategory($categoria);		
 		$data['titulos']		= $this->category_model->listTitle($categoria);
+		$data['marcas']			= $this->brand_model->listAllBrand();
 
 		if (!empty($data['ncm']))
 		{
@@ -301,20 +306,63 @@ class Analyze extends CI_Controller
 			}		
 
 			// Recebe as opções de detalhes de NCM //
-			$i= 0;
-			foreach ($ncms as $key => $table)
+			if (empty($marca2))
 			{
-				$aux[$key]	= $this->brandDetailsByYear($table, $categoria, $sc, $marca, $dataInicial, $dataFinal);
+				$i= 0;
+				foreach ($ncms as $key => $table)
+				{
+					$aux[$key]	= $this->brandDetailsByYear($table, $categoria, $sc, $marca, $dataInicial, $dataFinal);
+				}
+				
+				$aux 	= $this->mergeTable($aux);
+				$aux	= $this->mergeMonth($aux);	
+
+				foreach ($aux as $key => $value)
+				{
+					$unidades 	= $unidades . ", " . $value['unidades'];
+					$fob 		= $fob . ", " . $value['fob'];
+				}								
 			}
-			
-			$aux 	= $this->mergeTable($aux);
-			$aux	= $this->mergeMonth($aux);	
-		}
-		
-		foreach ($aux as $key => $value)
-		{
-			$unidades 	= $unidades . ", " . $value['unidades'];
-			$fob 		= $fob . ", " . $value['fob'];
+			else
+			{
+				$i= 0;
+				foreach ($ncms as $key => $table)
+				{
+					$aux[$key]	= $this->brandDetailsByYear($table, $categoria, $sc, $marca, $dataInicial, $dataFinal);
+					$aux2[$key]	= $this->brandDetailsByYear($table, $categoria, $sc, $marca2, $dataInicial, $dataFinal);
+				}
+
+				$aux 	= $this->mergeTable($aux);				
+				$aux	= $this->mergeMonth($aux);
+				
+				foreach ($aux as $key => $value)
+				{
+					$unidades 	= $unidades . ", " . $value['unidades'];
+					$fob 		= $fob . ", " . $value['fob'];
+				}
+
+				$aux2 	= $this->mergeTable($aux2);
+
+				if (!empty($aux2))
+				{
+					$aux2	= $this->mergeMonth($aux2);				
+
+					foreach ($aux2 as $key => $value)
+					{
+						$unidades2 	= $unidades2 . ", " . $value['unidades'];
+						$fob2 		= $fob2 . ", " . $value['fob'];
+					}				
+
+					$data['unidades2'] 		= substr($unidades2, 1);
+					$data['fob2'] 			= substr($fob2, 1);	
+
+				}	
+				else
+				{
+					$data['unidades2'] 		= "0,0,0,0,0,0,0,0,0,0,0,0";
+				}			
+			}
+
 		}
 
 		$data['categoria']		= $categoria;
@@ -322,15 +370,27 @@ class Analyze extends CI_Controller
 		$data['categoriaNome']	= $data['categoriaNome'][0]->CNome;
 		$data['marca']			= $marca;
 		$data['marcaNome']		= $this->brand_model->getBrand($marca);
-		$data['marcaNome'] 		= $data['marcaNome'][0]->MANome;
+		$data['marcaNome'] 		= $data['marcaNome'][0]->MANome;				
+
 		$data['ano']			= $ano;
-		$data['dataInicial']		= $dataInicial;
-		$data['dataFinal']			= $dataFinal;			
+		$data['dataInicial']	= $dataInicial;
+		$data['dataFinal']		= $dataFinal;			
 		$data['sc']				= $sc1;
 		$data['unidades'] 		= substr($unidades, 1);
 		$data['fob'] 			= substr($fob, 1);
 
-		$data['main_content'] 	= 'analyze/brandEvolution_view';
+		if (empty($marca2))
+		{
+			$data['main_content'] 	= 'analyze/brandEvolution_view';
+		}
+		else
+		{		
+			$data['marca2']			= $marca2;
+			$data['marcaNome2']		= $this->brand_model->getBrand($marca2);
+			$data['marcaNome2'] 	= $data['marcaNome2'][0]->MANome;			
+			$data['main_content'] 	= 'analyze/brandEvolution2_view';			
+		}
+			
 		$this->parser->parse('template', $data);        
 	
 	}
