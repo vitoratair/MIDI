@@ -65,6 +65,8 @@ class Analyze extends CI_Controller
 			foreach ($ncms as $key => $table)
 			{
 				$aux = $this->getDataFirstShare($table, $categoria, $sc, $dataInicial, $dataFinal);				
+				// print_r($aux);
+				// echo "<br>";
 				if ($aux['unidades'] > 0)
 				{
 					$dados[$i] = $aux;
@@ -788,8 +790,8 @@ class Analyze extends CI_Controller
 		}
 
 		// Calcula as unidades referente a uma NCM //
-		$unidades 			= $this->model_model->calcPartsByModel($table, $modelos, $dataInicial, $dataFinal);
-		$volume 			= $this->model_model->calcCashByModel($table, $modelos, $dataInicial, $dataFinal);
+		$unidades 			= $this->model_model->calcPartsByModel($table, $categoria, $modelos, $dataInicial, $dataFinal);
+		$volume 			= $this->model_model->calcCashByModel($table, $categoria, $modelos, $dataInicial, $dataFinal);
 		$array[0]['outros']	= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
 
 		$result['unidades'] = $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
