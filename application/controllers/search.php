@@ -23,6 +23,9 @@ class Search extends CI_Controller
 	// Apresenta a view com todos as opções para o usuário //
 	public function ncm()
 	{
+		// Retorna o tio de usuário//
+		$userType 	= $this->session->userdata('usuarioTipo');
+
 		// Verifica se existe dados de formulário //
 		$ncm 			= $this->input->post('ncm');
 		$year 			= $this->input->post('ano');	
@@ -238,12 +241,12 @@ class Search extends CI_Controller
 			{
 				$data['modelos1'] = $this->model_model->getModelByBrand($equalBrand, $equalCategory);
 			}
-			// if ($this->checkEqualBrand($data['dados']))
-			// 	$data['modelos'] = $this->model_model->getModelByBrand($this->checkEqualBrand($data['dados']),3);
 
-
-
-			$data['main_content'] 	= 'search/ncm_view';	
+			// Verificar se o usuário é administrador //
+			if ($userType == 1)
+				$data['main_content'] 	= 'search/ncm_view';	
+			elseif ($userType == 2)
+				$data['main_content'] 	= 'search/ncmUser_view';	
 		}
 		else
 		{

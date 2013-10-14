@@ -8,11 +8,11 @@
 <!--=== Header ===-->
 <div class="header">               
     <div class="container"> 
+                                    
         <!-- Logo -->       
         <div class="logo">                                             
-            <a href="<?php echo base_url();?>index.php/app/home"><img id="logo-header" src="<?php echo base_url();?>assets/img/djv.png" alt="Logo"></a>
+            <a href="<?php echo base_url();?>index.php/app/home"><img id="logo-header" width="300px" src="<?php echo base_url();?>assets/img/Logo_MIDI.jpg" alt="Logo"></a>
         </div><!-- /logo -->        
-                                    
         <!-- Menu -->       
         <div class="navbar">                                
             <div class="navbar-inner">                                  
@@ -48,7 +48,7 @@
                             <b class="caret-out"></b>                        
                         </li>
 
-<!--                         <li>
+<!--                    <li>
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">Cadastro
                                 <b class="caret"></b>                            
                             </a>
@@ -57,11 +57,16 @@
                                 <li><?php echo anchor('category/listAll','Categoria');?></li>                      
 
                                 <li><?php echo anchor('ncm/listAll','NCM');?></li>
+
+                                <li><?php echo anchor('model/addModel','Modelo');?></li>                                
+
+                                <li><?php echo anchor('user/listAll','Usuário');?></li>                                
+                                
                             </ul>
-                            
+  
                             <b class="caret-out"></b>                        
                         </li>
- -->
+-->                           
                         <li>
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">Pesquisas
                                 <b class="caret"></b>                            
@@ -73,8 +78,7 @@
                                 <li><?php echo anchor('brand/listAll','Marca');?></li>
                                 
                                 <li><?php echo anchor('model/listAll','Modelo');?></li>
-
-                                <li><?php echo anchor('user/listAll','Usuário');?></li>
+                                
                             </ul>
                             
                             <b class="caret-out"></b>                        
@@ -88,7 +92,7 @@
 
                                 <li><?php echo anchor('analyze/listAll','Análise por ano');?></li>
 
-                                <!-- <li><?php echo anchor('analise/analiseMarcaAno','Análise por marca');?></li> -->
+                                <!-- <li><?php echo anchor('analyzeBrand/listAll','Análise por marca');?></li> -->
 
                                 <!-- <li><?php echo anchor('analise/listAll','Comparativo');?></li> -->
 
@@ -103,7 +107,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><?php echo anchor("user/perfil/$usuario",'Perfil');?></li>
-                                <!-- <li><?php echo anchor("request/listAll",'Requisições');?></li> -->
+                                <li><?php echo anchor("request/listAll",'Requisições');?></li>
                                 <li><?php echo anchor('login/logout','Logout');?></li>
                             </ul>
                             <b class="caret-out"></b>                        
