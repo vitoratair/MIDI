@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/headers/header1.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/bootstrap/css/bootstrap-responsive.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style_responsive.css">
-    <!-- <link rel="shortcut icon" href="<?php echo base_url();?>/assets/img/favicon.ico">         -->
+    <link rel="shortcut icon"   href="<?php echo base_url();?>assets/img/favicon.ico">
     <!-- CSS Implementing Plugins -->    
     <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/flexslider/flexslider.css" type="text/css" media="screen">      
