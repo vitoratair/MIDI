@@ -23,7 +23,7 @@
 <div class="container"> 
     <!-- Service Blocks -->    
     <div class="row-fluid">
-        <a href="#">
+        <a href="<?php echo base_url();?>index.php/app/methodology">
         <div class="span4">
             <div class="service clearfix">
                 <i class="icon-cogs"></i>
@@ -37,7 +37,7 @@
         </div>
         </a>
 
-        <a href="#">
+        <a href="<?php echo base_url();?>index.php/app/newSearch">
         <div class="span4">
             <div class="service clearfix">
                 <i class="icon-question-sign"></i>
@@ -51,7 +51,7 @@
         </div>
         </a>
 
-        <a href="#">
+        <a href="<?php echo base_url();?>index.php/app/documentation">
         <div class="span4">
             <div class="service clearfix">
                 <i class="icon-book"></i>
