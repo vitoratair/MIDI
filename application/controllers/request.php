@@ -47,7 +47,7 @@ class Request extends CI_Controller
 				$data['dados'] 	= $this->parserInData(2, $data['dados']);
 				$data['dados']	= $this->others->mergeTableNcm($data['dados']);
 
-				// // Juntando os arrays //
+				// Juntando os arrays //
 				$data['dados'] 	= $this->joinArray($data['dados'], $data['dadosRequisicao']);					
 
 				$data['categorias'] = $this->category_model->listCategory();
