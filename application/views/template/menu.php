@@ -38,7 +38,7 @@
 
                                 <li><?php echo anchor('administration/statistic','Estatísticas');?></li>
 
-                                <!-- <li><?php echo anchor('app/home','Upload NCM');?></li> -->
+                                <li><?php echo anchor('upload/fileUpload','Importar arquivos');?></li>
 
                                 <!-- <li><?php echo anchor('app/home','Upload Marcas');?></li> -->
 

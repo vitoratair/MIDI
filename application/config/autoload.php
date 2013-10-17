@@ -58,7 +58,8 @@ $autoload['libraries'] = array(
 					'parser',
 					'form_validation',
 					'others',
-					'pagination'
+					'pagination',
+					'Spreadsheet_Excel_Reader'
 					);
 
 
@@ -71,7 +72,10 @@ $autoload['libraries'] = array(
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url');
+$autoload['helper'] = array(
+					'url',
+					'form'
+					);
 
 
 /*
@@ -122,7 +126,8 @@ $autoload['model'] = array(
 					'category_model',
 					'brand_model',
 					'model_model',
-					'request_model'
+					'request_model',
+					'upload_model'
 					);
 
 
