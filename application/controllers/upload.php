@@ -46,15 +46,16 @@ class Upload extends CI_Controller
 	/* Realiza o upload para o diret´orio /uploads */	
 	function do_upload()
 	{		
-		
+		/* Busca as informações de POST */
+		$id = $this->input->post('id');
+
 		/* Realiza o upload para o diret´orio /uploads */
 		$uploaddir = '/uploads/';
 		$uploadfile = $uploaddir . $_FILES['userfile']['name'];
 
-		$nameFile = explode('/', $uploadfile);
+		$nameFile = explode('.', $uploadfile);
+		$nameFile = explode('/', $nameFile[0]);
 		$nameFile = $nameFile[2];
-		$nameFile = explode('.', $nameFile);
-		$nameFile = $nameFile[0];
 
 		/* Array com as extensões permitidas */
 		$_OP['extensoes'] = array('xls');
@@ -65,88 +66,82 @@ class Upload extends CI_Controller
 		{
 			$this->showError('Verifique a extensão do arquivo');
 		}
-		else /* Extensão válida*/
+		else
 		{
-			/* Verifica se ja existe uma tabela no banco com o mesmo nome */
+			if ($id == 'ncmImport')
+			{
+				/* Verifica se ja existe uma tabela no banco com o mesmo nome */
+				if ($this->upload_model->checkTable($nameFile))
+				{
+					$this->showError("Tabela <i>" . $nameFile . "</i> já existe na base de dados");
+					return;
+				}
 
-			if ($this->upload_model->checkTable($nameFile))
+				/* Move o arquivo do TMP para o diretório /uploads */
+				if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploaddir . $_FILES['userfile']['name']))
+				{
+					$this->openFile($uploadfile, 1);
+				}
+				else
+				{
+					$this->showError('Não foi possível fazer upload do arquivo, por-favor tende novamente.');
+					return;
+				}				
+			}
+			elseif ($id == 'ncmUpdate')
 			{
-				$this->showError("Tabela <i>" . $nameFile . "</i> já existe na base de dados");
+				/* Verifica se ja existe uma tabela no banco com o mesmo nome */
+				if (!$this->upload_model->checkTable($nameFile))
+				{
+					$this->showError("Tabela <i>" . $nameFile . "</i> não existe na base de dados");
+					return;
+				}	
+
+				/* Move o arquivo do TMP para o diretório /uploads */
+				if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploaddir . $_FILES['userfile']['name']))
+				{
+					$this->openFile($uploadfile, 2);
+				}
+				else
+				{
+					$this->showError('Não foi possível fazer upload do arquivo, por-favor tende novamente.');
+					return;
+				}							
 			}
 
-			if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploaddir . $_FILES['userfile']['name']))
-			{
-				$this->openFile($uploadfile);
-			}
-			else
-			{
-				$this->showError('Não foi possível fazer upload do arquivo, por-favor tende novamente.');
-			}
 		}
 
 	}
 
-	function openFile($pathFile)
+	function openFile($pathFile, $id)
 	{
 		error_reporting(E_ALL ^ E_NOTICE); 		/* Não reporta erro do tipo Notice */
-		/* SETA constantantes da planilha para comparação */
 		
+		/* Parser para o nome do arquivo enviado */
 		$nameFile = explode('/', $pathFile);
 		$nameFile = $nameFile[2];
 		$nameFile = explode('.', $nameFile);
 		$nameFile = $nameFile[0];
-
-		$_OP = array
-		(
-			'MAX_SHEETS' => '1',		
-			'MAX_COL' 	=> '21',			
-			'NAME_COL' 	=> array
-					(
-						'1' => 'IDN1',
-						'2' => 'MES',
-						'3' => 'PAIS_ORIGEM',
-						'4' => 'PAIS_AQUISICAO',
-						'5' => 'UNIDADE_COMERCIALIZACAO',
-						'6' => 'DESCRICAO_DETALHADA_PRODUTO',
-						'7' => 'PESO_LIQUIDO_KG',
-						'8' => 'VALOR_UNIDADE_PRODUTO_DOLAR',
-						'9' => 'QUANTIDADE_COMERCIALIZADA_PRODUTO',
-						'10' => 'VALOR_TOTAL_PRODUTO_DOLAR',
-						'11' => 'Categoria',
-						'12' => 'Marca',
-						'13' => 'Modelo',
-						'14' => 'SubCategoria1_SCID',
-						'15' => 'SubCategoria2_SCID',
-						'16' => 'SubCategoria3_SCID',
-						'17' => 'SubCategoria4_SCID',
-						'18' => 'SubCategoria5_SCID',
-						'19' => 'SubCategoria6_SCID',
-						'20' => 'SubCategoria7_SCID',
-						'21' => 'SubCategoria8_SCID'
-					)
-		);
 		
 		/* Carrega a primeira aba do excel na variável $sheet */
 		$data 	= new Spreadsheet_Excel_Reader($pathFile, true);
 		$sheet 	= $data->sheets[0];
 
-		/* Cria a tabela no mysql */
-		$result = $this->upload_model->createTable($nameFile);
-		
-		/* Verifica o número de colunas */
-		if (sizeof($sheet['cells'][1]) != $_OP['MAX_COL'])
+		/* Verifica se o arquivo esta com o template correto */
+		if (!$this->checkErro($sheet))
+			return;
+
+		if ($id == 1)
 		{
-			$this->showError('O número de colunas esta incorreto');
+			/* Cria a tabela no mysql */
+			$result = $this->upload_model->createTable($nameFile);		
+			$msg = "Arquivo importado com sucesso";
 		}
-		
-		/* Verifica se os nomes das colunas estão corretos */
-		foreach ($sheet['cells'][1] as $key => $value)
+		elseif ($id == 2)
 		{
-			if ($value != $_OP['NAME_COL'][$key])
-			{
-				$this->showError("Nome da coluna " . $key . " esta errado");
-			}
+			$msg = "Arquivo atualizado com sucesso";	
 		}
+
 
 		/* Montando o array para inserção de dados */
 		$i = 0;
@@ -181,10 +176,63 @@ class Upload extends CI_Controller
 		/* Inserindo dados na tabela */
 		$this->upload_model->insertTable($nameFile, $dataInsert);
 		
-		$this->showSuccess('Arquivo importado com sucesso');
+		$this->showSuccess($msg);	
 
 		return;
 	}
+
+	function checkErro($sheet)
+	{
+
+		$_OP = array
+		(
+			'MAX_SHEETS' => '1',		
+			'MAX_COL' 	=> '21',			
+			'NAME_COL' 	=> array
+					(
+						'1' => 'IDN',
+						'2' => 'MES',
+						'3' => 'PAIS_ORIGEM',
+						'4' => 'PAIS_AQUISICAO',
+						'5' => 'UNIDADE_COMERCIALIZACAO',
+						'6' => 'DESCRICAO_DETALHADA_PRODUTO',
+						'7' => 'PESO_LIQUIDO_KG',
+						'8' => 'VALOR_UNIDADE_PRODUTO_DOLAR',
+						'9' => 'QUANTIDADE_COMERCIALIZADA_PRODUTO',
+						'10' => 'VALOR_TOTAL_PRODUTO_DOLAR',
+						'11' => 'Categoria',
+						'12' => 'Marca',
+						'13' => 'Modelo',
+						'14' => 'SubCategoria1_SCID',
+						'15' => 'SubCategoria2_SCID',
+						'16' => 'SubCategoria3_SCID',
+						'17' => 'SubCategoria4_SCID',
+						'18' => 'SubCategoria5_SCID',
+						'19' => 'SubCategoria6_SCID',
+						'20' => 'SubCategoria7_SCID',
+						'21' => 'SubCategoria8_SCID'
+					)
+		);
+
+		/* Verifica o número de colunas */
+		if (sizeof($sheet['cells'][1]) != $_OP['MAX_COL'])
+		{
+			$this->showError("O número de colunas esta incorreto");
+			return FALSE;
+		}
+		
+		/* Verifica se os nomes das colunas estão corretos */
+		foreach ($sheet['cells'][1] as $key => $value)
+		{
+			if ($value != $_OP['NAME_COL'][$key])
+			{
+				$this->showError("Nome da coluna " . $key . " esta errada, o valor correto é <i> ". $value ." </i>");
+				return FALSE;
+			}
+		}
+		return TRUE;
+	}
+
 }
 
 ?>

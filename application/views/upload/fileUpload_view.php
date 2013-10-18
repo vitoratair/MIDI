@@ -21,7 +21,7 @@
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapseOne1">
-          <h3>Importar planilha de NCM</h3>
+          <h4>Importar planilha de NCM</h4>
         </a>
       </div>
       <div id="collapseOne1" class="accordion-body collapse" style="height: 0px;">
@@ -58,7 +58,7 @@
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseTwo1">
-          <h3>Atualizar planilha de NCM</h3>
+          <h4>Atualizar planilha de NCM</h4>
         </a>
       </div>
       <div id="collapseTwo1" class="accordion-body collapse" style="height: 0px;">
@@ -95,7 +95,7 @@
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseTwo2">
-          <h3>Atualizar planilha de modelos</h3>
+          <h4>Atualizar planilha de modelos</h4>
         </a>
       </div>
       <div id="collapseTwo2" class="accordion-body collapse" style="height: 0px;">
@@ -109,7 +109,7 @@
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseTwo3">
-          <h3>Atualizar planilha de marcas</h3>
+          <h4>Atualizar planilha de marcas</h4>
         </a>
       </div>
       <div id="collapseTwo3" class="accordion-body collapse" style="height: 0px;">

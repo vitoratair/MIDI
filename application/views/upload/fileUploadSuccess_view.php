@@ -13,7 +13,7 @@
 
 <div class="container">
 
-  <div class="alert alert-error">
+  <div class="alert alert-success">
   
   <h2>
     {success}
@@ -21,6 +21,6 @@
 
   </div>
 
-  <meta http-equiv="refresh" content="4; url=<?php echo base_url();?>index.php/upload/fileUpload">
+  <meta http-equiv="refresh" content="2; url=<?php echo base_url();?>index.php/upload/fileUpload">
 
 </div>
