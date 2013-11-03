@@ -51,7 +51,6 @@ class Analyze extends CI_Controller
 		$data['anos']			= $this->ncm_model->listYear();
 		$data['ncm']			= $this->listNcmYearByCategory($categoria);		
 		$data['titulos']		= $this->category_model->listTitle($categoria);
-
 		
 		if (!empty($data['ncm']))
 		{		
@@ -64,14 +63,17 @@ class Analyze extends CI_Controller
 			$i= 0;
 			foreach ($ncms as $key => $table)
 			{
-				$aux = $this->getDataFirstShare($table, $categoria, $sc, $dataInicial, $dataFinal);				
-				if ($aux['unidades'] > 0)
+				if ($this->ncm_model->checkNcm($table))
 				{
-					$dados[$i] = $aux;
-					$i++;
-				}				
+					
+					$aux = $this->getDataFirstShare($table, $categoria, $sc, $dataInicial, $dataFinal);					
+					if ($aux['unidades'] > 0)
+					{
+						$dados[$i] = $aux;
+						$i++;
+					}				
+				}	
 			}			
-	
 			if (!empty($dados))
 			{
 				// Somar os array com aos iguais //
@@ -795,34 +797,39 @@ class Analyze extends CI_Controller
 		$modelos	= array();
 		$ano 		= explode('_', $table);
 		$ano 		= $ano[1];
-
+		
 		// Verifica os modelos da categoria //
 		$modelo 	= $this->model_model->listAllModelByCategory($categoria, $sc);
-
+		
 		if (!empty($modelo))
 		{
 			// Formata o query para a clausula IN //
 			foreach ($modelo as $key => $value)
 			{
 				array_push($modelos, $value->MOID);	
-			}			
+			}	
+
+			// Calcula as unidades referente a uma NCM //
+			$unidades 			= $this->model_model->calcPartsByModel($table, $categoria, $modelos, $dataInicial, $dataFinal);
+			$volume 			= $this->model_model->calcCashByModel($table, $categoria, $modelos, $dataInicial, $dataFinal);
+			$outros				= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
+
+			$result['unidades'] = $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+			$result['volume']	= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+			
+			// Soma o valor com os Outros //
+			$result['unidades'] += $outros[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+			$result['volume'] 	+= $outros[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+
+			$result['ano'] 		= $ano;
+
+			return $result;
+		}
+		else
+		{
+			return NULL;
 		}
 
-		// Calcula as unidades referente a uma NCM //
-		$unidades 			= $this->model_model->calcPartsByModel($table, $categoria, $modelos, $dataInicial, $dataFinal);
-		$volume 			= $this->model_model->calcCashByModel($table, $categoria, $modelos, $dataInicial, $dataFinal);
-		$outros				= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
-
-		$result['unidades'] = $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
-		$result['volume']	= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
-		
-		// Soma o valor com os Outros //
-		$result['unidades'] += $outros[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
-		$result['volume'] 	+= $outros[0]->VALOR_TOTAL_PRODUTO_DOLAR;
-
-		$result['ano'] 		= $ano;	
-
-		return $result;		
 	}
 
 	// Soma os arrays com os anos repetidos //
