@@ -307,9 +307,7 @@ class Model extends CI_Controller
 	// Apresenta a view para adicionar modelo //
 	public function addModel()
 	{
-		
-
-		// // Recebendo ID do modelo //
+		// Recebendo ID do modelo //
 		$data['modeloID']		= $this->model_model->getNextID();
 		$data['modeloID']		= $data['modeloID'][0]->Auto_increment;
 		
@@ -339,15 +337,23 @@ class Model extends CI_Controller
 	public function setModel()
 	{
 		// Recebe os dados do FORM //			
-		$id						= $this->input->post('id');
-		$data['MNome0']			= $this->input->post('nomeModelo0');
-		$data['MNome']			= $this->input->post('nomeModelo');
-		$data['MNome1']			= $this->input->post('nomeModelo1');
-		$data['MNome2']			= $this->input->post('nomeModelo2');
-		$data['MNome3']			= $this->input->post('nomeModelo3');
-		$data['MNome4']			= $this->input->post('nomeModelo4');		
-		$data['Marca_MAID']		= $this->input->post('marca');
-		$data['Categoria_CID']	= $this->input->post('categoria');		
+		$id							= $this->input->post('id');
+		$data['MNome0']				= $this->input->post('nomeModelo0');
+		$data['MNome']				= $this->input->post('nomeModelo');
+		$data['MNome1']				= $this->input->post('nomeModelo1');
+		$data['MNome2']				= $this->input->post('nomeModelo2');
+		$data['MNome3']				= $this->input->post('nomeModelo3');
+		$data['MNome4']				= $this->input->post('nomeModelo4');		
+		$data['Marca_MAID']			= $this->input->post('marca');
+		$data['Categoria_CID']		= $this->input->post('categoria');
+		$data['SubCategoria1_SCID']	= 1;		
+		$data['SubCategoria2_SCID']	= 1;		
+		$data['SubCategoria3_SCID']	= 1;		
+		$data['SubCategoria4_SCID']	= 1;		
+		$data['SubCategoria5_SCID']	= 1;		
+		$data['SubCategoria6_SCID']	= 1;		
+		$data['SubCategoria7_SCID']	= 1;		
+		$data['SubCategoria8_SCID']	= 1;		
 
 		// Chama o model responsável pela inserção no banco //
 		$this->model_model->save($data);
