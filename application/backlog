@@ -8,7 +8,7 @@ Backlog
 	- Importar NCMs
 	- Possibilidade de exportar dados para excel;
 
-	- Não é possível abrir os “Detalhes” do “Outros”, na Análise/Análise por ano, escolhendo uma categoria e ano específico;
+	
 	- No gráfico inicial da Análise/Análise por ano, não está sendo contabilizado o “Outros”, tanto em quantidade quanto em valor;
 	- Na Análise/Análise por ano, em uma categoria e ano específicos, nos “Detalhes” de qualquer marca o valor FOB está sem os números depois da vírgula, são zero zero;
 	- Na Análise/Análise por ano, em uma categoria e ano específicos, na “Evolução” o gráfico está somando os valores FOB das entradas, não fazendo média ponderado pelas quantidades;
@@ -45,4 +45,8 @@ Done
 	- Verificar valores diferentes no primeiro gráfico para a análise por ano.
 	- Em Pesquisa não consigo filtrar por Marca. Ex.: escolhi a NCM 85171891/2013 e quando clico pra escolher a marca não aparecem opções, só {MANome}. Seria bom se tivesse como filtrar por categoria também;		
 	- No cadastro de novos modelos ele não dá a opção de escolher a subcategoria. Depois de inserido o modelo tenho que ir no php e editar por lá;	
-	- Na página de edição de modelos, quando modifico o nome e clico em “atualizar” ele apaga a subcategoria (que aparece embaixo do quadro de edição), substitui a subcategoria anterior por “-“.			
+	- Na página de edição de modelos, quando modifico o nome e clico em “atualizar” ele apaga a subcategoria (que aparece embaixo do quadro de edição), substitui a subcategoria anterior por “-“.	
+	- Não é possível abrir os “Detalhes” do “Outros”, na Análise/Análise por ano, escolhendo uma categoria e ano específico;	
+
+
+
