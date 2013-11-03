@@ -8,13 +8,8 @@ Backlog
 	- Importar NCMs
 	- Possibilidade de exportar dados para excel;
 
-
-	- Na Análise/Análise por ano, em uma categoria e ano específicos, na “Evolução” o gráfico está somando os valores FOB das entradas, não fazendo média ponderado pelas quantidades;
-
-
 In Progress
 
-	- Na Análise/Análise por ano, em uma categoria e ano específicos, nos “Detalhes” de qualquer marca o valor FOB está sem os números depois da vírgula, são zero zero;	  
 	- Análise das categorias
 
 Bugs
@@ -47,6 +42,8 @@ Done
 	- Não é possível abrir os “Detalhes” do “Outros”, na Análise/Análise por ano, escolhendo uma categoria e ano específico;	
 	- No gráfico inicial da Análise/Análise por ano, não está sendo contabilizado o “Outros”, tanto em quantidade quanto em valor;
 	- Análise por marca	
+	- - Perguntar para Mayara {Na Análise/Análise por ano, em uma categoria e ano específicos, nos “Detalhes” de qualquer marca o valor FOB está sem os números depois da vírgula, são zero zero}
+	- Na Análise/Análise por ano, em uma categoria e ano específicos, na “Evolução” o gráfico está somando os valores FOB das entradas, não fazendo média ponderado pelas quantidades;	  	
 
 
 

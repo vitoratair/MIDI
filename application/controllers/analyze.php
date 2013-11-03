@@ -335,15 +335,14 @@ class Analyze extends CI_Controller
 				{
 					$aux[$key]	= $this->brandDetailsByYear($table, $categoria, $sc, $marca, $dataInicial, $dataFinal);
 				}
-				
-				$aux 	= $this->mergeTable($aux);
+				$aux 	= $this->mergeTable($aux);				
 				$aux	= $this->mergeMonth($aux);	
-
+				
 				foreach ($aux as $key => $value)
 				{
 					$unidades 	= $unidades . ", " . $value['unidades'];
 					$fob 		= $fob . ", " . $value['fob'];
-				}								
+				}							
 			}
 			else
 			{
@@ -1172,6 +1171,7 @@ class Analyze extends CI_Controller
 			$array[$i]['mes'] 		= $i + 1;
 			$array[$i]['unidades'] 	= 0;
 			$array[$i]['fob'] 		= 0;
+			$array[$i]['volume'] 	= 0;
 		}
 
 		foreach ($result as $key => $value)
@@ -1180,56 +1180,64 @@ class Analyze extends CI_Controller
 			{
 				case '1':
 					$array[0]['unidades'] 	+= $value['unidades'];
-					$array[0]['fob'] 		+= $value['fob'];
+					$array[0]['volume'] 	+= $value['volume'];
 					break;			
 				case '2':
 					$array[1]['unidades'] 	+= $value['unidades'];
-					$array[1]['fob'] 		+= $value['fob'];
+					$array[1]['volume'] 	+= $value['volume'];
 					break;
 				case '3':
 					$array[2]['unidades'] 	+= $value['unidades'];
-					$array[2]['fob'] 		+= $value['fob'];
+					$array[2]['volume'] 	+= $value['volume'];
 					break;					
 				case '4':
 					$array[3]['unidades'] 	+= $value['unidades'];
-					$array[3]['fob'] 		+= $value['fob'];
+					$array[3]['volume'] 	+= $value['volume'];
 					break;	
 				case '5':
 					$array[4]['unidades'] 	+= $value['unidades'];
-					$array[4]['fob'] 		+= $value['fob'];
+					$array[4]['volume'] 	+= $value['volume'];
 					break;	
 				case '6':
 					$array[5]['unidades'] 	+= $value['unidades'];
-					$array[5]['fob'] 		+= $value['fob'];
+					$array[5]['volume'] 	+= $value['volume'];
 					break;	
 				case '7':
 					$array[6]['unidades'] 	+= $value['unidades'];
-					$array[6]['fob'] 		+= $value['fob'];
+					$array[6]['volume'] 	+= $value['volume'];
 					break;					
 				case '8':
 					$array[7]['unidades'] 	+= $value['unidades'];
-					$array[7]['fob'] 		+= $value['fob'];
+					$array[7]['volume'] 	+= $value['volume'];
 					break;	
 				case '9':
 					$array[8]['unidades'] 	+= $value['unidades'];
-					$array[8]['fob'] 		+= $value['fob'];
+					$array[8]['volume'] 	+= $value['volume'];
 					break;	
 				case '10':
 					$array[9]['unidades'] 	+= $value['unidades'];
-					$array[9]['fob'] 		+= $value['fob'];
+					$array[9]['volume'] 	+= $value['volume'];
 					break;
 				case '11':
 					$array[10]['unidades'] 	+= $value['unidades'];
-					$array[10]['fob'] 		+= $value['fob'];
+					$array[10]['volume'] 	+= $value['volume'];
 					break;
 				case '12':
 					$array[11]['unidades'] 	+= $value['unidades'];
-					$array[11]['fob'] 		+= $value['fob'];
+					$array[11]['volume'] 	+= $value['volume'];
 					break;
 				default:
 					# code...
 					break;
 			}
+		}
+
+		for ($i=0; $i < 12 ; $i++)
+		{ 
+			if (!empty($array[$i]['volume']))
+			{
+				$array[$i]['fob'] = $array[$i]['volume'] / $array[$i]['unidades'];	
+			}			
 		}
 		
 		return $array;		
