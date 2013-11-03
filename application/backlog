@@ -16,7 +16,6 @@ Backlog
 
 In Progress
 	
-	- Em Pesquisa não consigo filtrar por Marca. Ex.: escolhi a NCM 85171891/2013 e quando clico pra escolher a marca não aparecem opções, só {MANome}. Seria bom se tivesse como filtrar por categoria também;	
 	- No cadastro de novos modelos ele não dá a opção de escolher a subcategoria. Depois de inserido o modelo tenho que ir no php e editar por lá;	
 	- Na página de edição de modelos, quando modifico o nome e clico em “atualizar” ele apaga a subcategoria (que aparece embaixo do quadro de edição), substitui a subcategoria anterior por “-“.	
 	
@@ -47,3 +46,4 @@ Done
 	- Alterar todos
 	- No gráfico evolução da marca ter a opção de comparar com os dados da Intelbras e poder filtrar por categoria;		
 	- Verificar valores diferentes no primeiro gráfico para a análise por ano.
+	- Em Pesquisa não consigo filtrar por Marca. Ex.: escolhi a NCM 85171891/2013 e quando clico pra escolher a marca não aparecem opções, só {MANome}. Seria bom se tivesse como filtrar por categoria também;		

@@ -24,7 +24,7 @@ class Search extends CI_Controller
 	public function ncm()
 	{
 		// Retorna o tio de usuário//
-		$userType 	= $this->session->userdata('usuarioTipo');
+		$userType 		= $this->session->userdata('usuarioTipo');
 
 		// Verifica se existe dados de formulário //
 		$ncm 			= $this->input->post('ncm');
@@ -68,7 +68,8 @@ class Search extends CI_Controller
 		{
 			$session['brand'] = $brand;
 			$this->session->set_userdata($session);	
-		}		
+		}	
+
 		if (empty($model) && (empty($control)))
 		{
 			if (!empty($this->session->userdata['model']))
@@ -81,6 +82,7 @@ class Search extends CI_Controller
 			$session['model'] = $model;
 			$this->session->set_userdata($session);	
 		}
+
 		if (empty($search) && (empty($control)) && (empty($unSearch)))
 		{
 			if (!empty($this->session->userdata['search']))
@@ -125,7 +127,6 @@ class Search extends CI_Controller
 		// Verfica se a tabela possui 13 caracteres, um valor menor que 13 significa que a tabela não possui ou a ncm ou o ano //
 		if ($this->ncm_model->checkNcm($table))
 		{
-			
 	        // Configurando a url base para paginação //
 	        $config["base_url"] 	= base_url() . "index.php/search/ncm";
 			
@@ -180,11 +181,9 @@ class Search extends CI_Controller
 				$data["links"] 	= $this->pagination->create_links();								
 
 			}
-
-			// Pesquisando por marca
+			// Pesquisando por NCM e ANO sem filtros
 			elseif (empty($brand))
 			{
-				
 				// Configurando paginação //
 		        $config["total_rows"] 	= $this->ncm_model->countData($table, '1', NULL, NULL, NULL, NULL, NULL);
 		        $config["per_page"] 	= 20;
@@ -194,11 +193,11 @@ class Search extends CI_Controller
 
 				// Carrega os dados somente com ano e ncm //
 				$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, '1', NULL, NULL, NULL, NULL, NULL);
-				$data["links"] 	= $this->pagination->create_links();				
-
+				$data["links"] 	= $this->pagination->create_links();
 			}
 			else
 			{				
+				// Pesquisando por Marca
 				if (empty($model))
 				{
 					// Carrega todos os modelos da marca selecionada //
@@ -214,39 +213,53 @@ class Search extends CI_Controller
 					$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, '2', $brand, NULL, NULL, NULL, NULL);
 					$data["links"] = $this->pagination->create_links();									
 				}
-				else
+				else 				
 				{
-					// Carrega todos os modelos da marca selecionada //
+					// Pesquisando por modelo
 					$data['modelos'] 		= $this->model_model->getModelByBrand($brand, NULL);			
 			        $config["total_rows"] 	= $this->ncm_model->countData($table, '3', $brand, $model, NULL, NULL, NULL);
-			        $config["per_page"] 	= 20;
 			        
-			        $this->pagination->initialize($config);
-			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-					// Carrega os dados somente com ano e ncm //
-					$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, '3', $brand, $model, NULL, NULL, NULL);
-					$data["links"] = $this->pagination->create_links();	
+			        if ($config["total_rows"] != 0)
+			        {				        
+				        $config["per_page"] 	= 20;
+				        $this->pagination->initialize($config);
+				        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+						// Carrega os dados somente com ano e ncm //
+						$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, '3', $brand, $model, NULL, NULL, NULL);
+						$data["links"] = $this->pagination->create_links();				       		
+			       	}
 				}
 			}
 
-			$data['dados'] 			= $this->others->formatarDados(1, $data['dados']);		
-			$data['ids'] 			= $this->getIdsSearch($data['dados']);
-			
-			// verifica se todas as marcas são iguais
-			$equalBrand 	= $this->checkEqualBrand($data['dados']);
-			$equalCategory 	= $this->checkEqualCategory($data['dados']);
-			
-			if(($equalCategory != NULL) AND ($equalBrand != NULL))
+			if (!empty($data['dados']))
 			{
-				$data['modelos1'] = $this->model_model->getModelByBrand($equalBrand, $equalCategory);
+				$data['dados'] 			= $this->others->formatarDados(1, $data['dados']);		
+				$data['ids'] 			= $this->getIdsSearch($data['dados']);
+				
+				// verifica se todas as marcas são iguais
+				$equalBrand 	= $this->checkEqualBrand($data['dados']);
+				$equalCategory 	= $this->checkEqualCategory($data['dados']);
+
+				if(($equalCategory != NULL) AND ($equalBrand != NULL))
+				{
+					$data['modelos1'] = $this->model_model->getModelByBrand($equalBrand, $equalCategory);
+				}				
 			}
 
-			// Verificar se o usuário é administrador //
-			if ($userType == 1)
-				$data['main_content'] 	= 'search/ncm_view';	
-			elseif ($userType == 2)
-				$data['main_content'] 	= 'search/ncmUser_view';	
+			if ($config["total_rows"] != 0)
+			{				
+				// Verificar se o usuário é administrador //
+				if ($userType == 1)
+					$data['main_content'] 	= 'search/ncm_view';					
+				elseif ($userType == 2)
+					$data['main_content'] 	= 'search/ncmUser_view';	
+			}
+			else
+			{
+				$data['main_content'] 	= 'search/ncmFilterEmpty_view';
+			}	
 		}
 		else
 		{
@@ -254,10 +267,9 @@ class Search extends CI_Controller
 			$data['main_content'] = 'search/ncmEmpty_view';
 		}
 
-		$this->parser->parse('template', $data);
-
+    	$this->parser->parse('template', $data);	
+		
 	}
-
 
 	// Visualizar NCM por Mês, para debug //
 	public function visualizeNcmByMonth()
