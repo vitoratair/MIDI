@@ -210,6 +210,7 @@ class Analyze extends CI_Controller
 		$marca 			= $this->input->post('marca');
 		$categoria 		= $this->input->post('categoria');
 		$ano 			= $this->input->post('ano');
+		$outros 		= $this->input->post('outros');
 		$dataInicial 	= $this->input->post('dataInicial');
 		$dataFinal 		= $this->input->post('dataFinal');		
 		$sc1 			= $this->input->post('subcategorias');		
@@ -232,39 +233,61 @@ class Analyze extends CI_Controller
 				}			
 			}		
 
-			// Recebe as opções de detalhes de NCM //	
-			foreach ($ncms as $key => $table)
+			if ($outros == TRUE)
 			{
-				$aux[$key]	= $this->brandDetailsByYear($table, $categoria, $sc, $marca, $dataInicial, $dataFinal);
-			}				
+				// Recebe as opções de detalhes de NCM //	
+				foreach ($ncms as $key => $table)
+				{
+					$aux[$key]	= $this->othersDetailsByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
+				}
+			}
+			else
+			{
+				// Recebe as opções de detalhes de NCM //	
+				foreach ($ncms as $key => $table)
+				{
+					$aux[$key]	= $this->brandDetailsByYear($table, $categoria, $sc, $marca, $dataInicial, $dataFinal);
+				}
+			}
 		
-			$aux 			= $this->mergeTable($aux);
-			$aux 			= $this->orderTable($aux, 'unidades');
-			$data['dados'] 	= $this->others->formatarDados(6, $aux);
+			if (!empty($aux))
+			{
+				$aux 			= $this->mergeTable($aux);
+				$aux 			= $this->orderTable($aux, 'unidades');
+				$data['dados'] 	= $this->others->formatarDados(6, $aux);
+
+				$data['categoria'] 			= $categoria;	
+				$categoria 					= $this->category_model->getCategory($categoria);
+				$data['categoriaNome'] 		= $categoria[0]->CNome;
+				$data['ano'] 				= $ano;
+				$data['dataInicial']		= $dataInicial;
+				$data['dataFinal']			= $dataFinal;			
+				$data['postSubcategorias'] 	= $sc1;
+
+			}
+
 			
 		}
 		
-		$data['categoria'] 			= $categoria;	
-		$categoria 					= $this->category_model->getCategory($categoria);
-		$data['categoriaNome'] 		= $categoria[0]->CNome;
-		$data['ano'] 				= $ano;
-		$data['dataInicial']		= $dataInicial;
-		$data['dataFinal']			= $dataFinal;			
-		$data['postSubcategorias'] 	= $sc1;
-
+		// Não exibe o nome da marca no HTML //
 		if (empty($marca)) 
 		{
-			$data['main_content'] 	= 'analyze/yearDetails_view';
+			if (empty($data['dados']))
+			{
+				
+				$data['main_content'] 	= 'analyze/yearDetailsEmpty_view';
+			}
+			else
+			{
+				$data['main_content'] 	= 'analyze/yearDetails_view';	
+			}			
 		}
-		// Não exibe o nome da marca no HTML //
 		else
 		{
 			$data['marcaNome'] 		= $this->brand_model->getBrand($marca);
 			$data['marcaNome'] 		= $data['marcaNome'][0]->MANome;
 			$data['main_content'] 	= 'analyze/brandDetails_view';
 		}
-
-
 		
 		$this->parser->parse('template', $data);		
 	}
@@ -272,7 +295,7 @@ class Analyze extends CI_Controller
 	// Gráfico de evolução de marcas //
 	public function analizeBrandEvolution()
 	{
-		error_reporting(E_ERROR);
+		#error_reporting(E_ERROR);
 		$unidades 	= NULL;
 		$fob 		= NULL;
 		$unidades2 	= NULL;
@@ -1096,7 +1119,44 @@ class Analyze extends CI_Controller
 			$data[$key]['mes'] 			= $value->MES;
 		}
 
-		return $data;
+		if (empty($data))
+			return NULL;
+		else
+			return $data;
+	}
+
+	// Busca as informações detalhadas de cada NCM  sem marcas e nem modelos //
+	function othersDetailsByYear($table, $categoria, $sc, $dataInicial, $dataFinal)
+	{
+
+		$modelos	= array();
+		$marcas		= array();
+		$ano 		= explode('_', $table);
+		$ncm 		= $ano[0];
+		$ano 		= $ano[1];		
+
+		$dados = $this->ncm_model->getDataDetails($table, NULL, NULL, $categoria, $dataInicial, $dataFinal);	
+		
+		foreach ($dados as $key => $value)
+		{
+			$data[$key]['idn']	 		= $value->IDN;
+			$data[$key]['ncm']	 		= $ncm;
+			$data[$key]['ano']	 		= $ano;			
+			$data[$key]['descricao']	= $value->DESCRICAO_DETALHADA_PRODUTO;
+			$data[$key]['unidades'] 	= $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+			$data[$key]['volume'] 		= $value->VALOR_TOTAL_PRODUTO_DOLAR;
+			// $data[$key]['fob'] 			= $value->VALOR_TOTAL_PRODUTO_DOLAR / $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;						
+			$data[$key]['fob'] 			= $value->VALOR_UNIDADE_PRODUTO_DOLAR;						
+			$data[$key]['marca'] 		= $value->MANome;
+			$data[$key]['modelo'] 		= $value->MNome;
+			$data[$key]['mes'] 			= $value->MES;
+		}
+
+		if (empty($data))
+			return NULL;
+		else
+			return $data;
+		
 	}
 
 	/**
