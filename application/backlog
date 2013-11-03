@@ -8,16 +8,14 @@ Backlog
 	- Importar NCMs
 	- Possibilidade de exportar dados para excel;
 
-	
-	- No gráfico inicial da Análise/Análise por ano, não está sendo contabilizado o “Outros”, tanto em quantidade quanto em valor;
-	- Na Análise/Análise por ano, em uma categoria e ano específicos, nos “Detalhes” de qualquer marca o valor FOB está sem os números depois da vírgula, são zero zero;
+
 	- Na Análise/Análise por ano, em uma categoria e ano específicos, na “Evolução” o gráfico está somando os valores FOB das entradas, não fazendo média ponderado pelas quantidades;
 
 
 In Progress
-	
-	- Análise por marca
-	  - Análise das categorias
+
+	- Na Análise/Análise por ano, em uma categoria e ano específicos, nos “Detalhes” de qualquer marca o valor FOB está sem os números depois da vírgula, são zero zero;	  
+	- Análise das categorias
 
 Bugs
 	
@@ -47,6 +45,8 @@ Done
 	- No cadastro de novos modelos ele não dá a opção de escolher a subcategoria. Depois de inserido o modelo tenho que ir no php e editar por lá;	
 	- Na página de edição de modelos, quando modifico o nome e clico em “atualizar” ele apaga a subcategoria (que aparece embaixo do quadro de edição), substitui a subcategoria anterior por “-“.	
 	- Não é possível abrir os “Detalhes” do “Outros”, na Análise/Análise por ano, escolhendo uma categoria e ano específico;	
+	- No gráfico inicial da Análise/Análise por ano, não está sendo contabilizado o “Outros”, tanto em quantidade quanto em valor;
+	- Análise por marca	
 
 
 

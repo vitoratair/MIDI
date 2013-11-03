@@ -65,8 +65,6 @@ class Analyze extends CI_Controller
 			foreach ($ncms as $key => $table)
 			{
 				$aux = $this->getDataFirstShare($table, $categoria, $sc, $dataInicial, $dataFinal);				
-				// print_r($aux);
-				// echo "<br>";
 				if ($aux['unidades'] > 0)
 				{
 					$dados[$i] = $aux;
@@ -89,8 +87,8 @@ class Analyze extends CI_Controller
 				$data['dataInicialName']	= $this->others->buscaMes($dataInicial);
 				$data['dataFinalName']		= $this->others->buscaMes($dataFinal);
 
+				$data = $this->mountArrayJavascript($data, $categoria);
 
-				$data = $this->mountArrayJavascript($data, $categoria);				
 				if (empty($data['titulos']))
 				{
 					$data['main_content'] 	= 'analyze/analise_view';						
@@ -99,7 +97,6 @@ class Analyze extends CI_Controller
 				{
 					$data['main_content'] 	= 'analyze/analyzeSubcategory_view';					
 				}				
-
 			}
 			else
 			{
@@ -815,11 +812,17 @@ class Analyze extends CI_Controller
 		// Calcula as unidades referente a uma NCM //
 		$unidades 			= $this->model_model->calcPartsByModel($table, $categoria, $modelos, $dataInicial, $dataFinal);
 		$volume 			= $this->model_model->calcCashByModel($table, $categoria, $modelos, $dataInicial, $dataFinal);
-		$array[0]['outros']	= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
+		$outros				= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
 
 		$result['unidades'] = $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
 		$result['volume']	= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+		
+		// Soma o valor com os Outros //
+		$result['unidades'] += $outros[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+		$result['volume'] 	+= $outros[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+
 		$result['ano'] 		= $ano;	
+
 		return $result;		
 	}
 
