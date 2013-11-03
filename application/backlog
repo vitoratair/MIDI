@@ -1,5 +1,6 @@
 Backlog
 	
+	- Na página de pesquisa de modelos, hoje é tem filtros para buscar um modelo por categoria e marca, criar uma função que busque por um nome de modelo em todas as categorias.
 	- No comparativo inicial entre os anos por categoria, adicionar o percentual de variação entre um ano e outro;
 	- Selecionar mais de um item de uma subcategoria para análise (ex.: selecionar switches de 54, 150 e 300 Mbps de velocidade);
 	- Possibilidade de inserir dados de produção nacional e estimativas.

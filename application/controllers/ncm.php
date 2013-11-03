@@ -305,7 +305,18 @@ class ncm extends CI_Controller
 				{
 					$this->ncm_model->update(1, $table, $id, $idn, $modelo);					
 				}				
-				break;							
+				break;
+			
+			case 'ModeloAll':
+				$modelo = $this->input->post('modelo');
+				$ids 	= $this->input->post('ids');
+
+				if (!empty($modelo))
+				{
+					$this->ncm_model->update(6, $table, $id, $ids, $modelo);
+				}
+				redirect("search/ncm/");
+				break;											
 			
 			case 'SubCategoria':
 				$subcategoria = $this->input->post('subcategoria');

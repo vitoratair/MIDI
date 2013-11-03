@@ -34,12 +34,12 @@ class Search extends CI_Controller
 		$search 		= $this->input->post('search');
 		$unSearch 		= $this->input->post('unSearch');
 		$control 		= $this->input->post('controle');
-
+				
 		// Carrega os dados necessários da model //
 		$data['ncms'] 		= $this->ncm_model->listNcm();
 		$data['anos'] 		= $this->ncm_model->listYear();					
 		$data['categorias'] = $this->category_model->listCategory();
-		$data['marcas1'] 	= $this->brand_model->listAllBrand();	
+		$data['marcas'] 	= $this->brand_model->listAllBrand();	
 
 		// Caso a variável ncm esteja vazia, recebe os dados que estão em sessão //
 		if (empty($ncm))
@@ -266,7 +266,7 @@ class Search extends CI_Controller
 			// Exibe uma view vazia //
 			$data['main_content'] = 'search/ncmEmpty_view';
 		}
-
+		
     	$this->parser->parse('template', $data);	
 		
 	}

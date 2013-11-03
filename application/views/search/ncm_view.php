@@ -144,9 +144,11 @@
 			</tr>	
 		</table>
 	</blockquote>
-	<hr>
+	
 	<!-- Legenda da pesquisa -->
-	<h3 align="center"><small>Pesquisa na NCM </small><b>{ncm}</b><small> no ano de </small>{year}</h3>								
+	<div class="headline" align="center">
+		<h3 align="center"><small>Pesquisa na NCM </small><b>{ncm}</b><small> no ano de </small>{year}</h3>
+	</div>	
 	
 	<p align="right">
 		<a href="<?php echo base_url();?>index.php/search/ncm" class="btn-u">Refrehs <i class="icon-refresh"></i></a>		
@@ -249,9 +251,9 @@
 		</div>	
 		<div class="modal-body">			
 
-{marcas1}
+{marcas}
 			<input type="radio" id ="marca" name="marca" value="{MAID}"> {MANome}<br>
-{/marcas1}
+{/marcas}
 
 			</div>
 		<div class="modal-footer">
@@ -268,7 +270,7 @@
 </form>
 
 <!-- Modal para alteração do Modelo -->
-<form action="<?php echo base_url();?>index.php/ncm/update/Modelo/" method="POST">	
+<form action="<?php echo base_url();?>index.php/ncm/update/ModeloAll/" method="POST">	
 	
 	<div class="modal hide" id="modeloAlterar">
 		<div class="modal-header">
@@ -288,7 +290,7 @@
 			<input type="hidden" name="ncm" value="{ncm}">
 			<input type="hidden" name="year" value="{year}">
 			<input type="hidden" name="idn" value="{IDN}">
-
+			<input type="hidden" name="ids" value="{ids}">
 		</div>	
 	</div>
 

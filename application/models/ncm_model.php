@@ -474,12 +474,16 @@ class ncm_model extends CI_Model
 		}
 		elseif ($id == 4)
 		{					
-			$this->db->query("UPDATE $table SET Categoria = $item WHERE IDN IN ($idn)");	
+			$this->db->query("UPDATE $table SET Categoria = $item , Modelo = 1, Marca = 1 WHERE IDN IN ($idn)");	
 		}		
 		elseif ($id == 5)
 		{					
-			$this->db->query("UPDATE $table SET Marca = $item WHERE IDN IN ($idn)");	
+			$this->db->query("UPDATE $table SET Marca = $item , Modelo = 1 WHERE IDN IN ($idn)");	
 		}				
+		elseif ($id == 6)
+		{					
+			$this->db->query("UPDATE $table SET Modelo = $item WHERE IDN IN ($idn)");
+		}			
 	}	
 
 	// Update da NCM com modelo = 1 //
