@@ -303,6 +303,18 @@ class Model_model extends CI_Model
 	{
 		$this->db->query("UPDATE `Modelo` SET `$table` = 1 WHERE Categoria_CID  = '$categoria' AND `$table` = $id");
 	}
+
+	// Retorna a categoria de um modelo //
+	function getCategoryByModel($id)
+	{
+		$this->db->select('Categoria_CID');
+		$this->db->FROM('Modelo');
+		$this->db->where('MOID',$id);
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
 }
 
 ?>
