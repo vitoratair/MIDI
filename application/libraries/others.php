@@ -137,7 +137,9 @@ class Others
 			foreach ($dados as $key => $value)
 			{
 				$dados[$key]->QUANTIDADE_COMERCIALIZADA_PRODUTO = number_format($value->QUANTIDADE_COMERCIALIZADA_PRODUTO,0,",",".");
-				$dados[$key]->PESO_LIQUIDO_KG = number_format($value->PESO_LIQUIDO_KG,0,",",".");
+				$dados[$key]->PESO_LIQUIDO_KG 					= number_format($value->PESO_LIQUIDO_KG,0,",",".");
+				$dados[$key]->VALOR_UNIDADE_PRODUTO_DOLAR 		= number_format($value->VALOR_UNIDADE_PRODUTO_DOLAR,3,",",".");
+				
 			}			
 		}	
 

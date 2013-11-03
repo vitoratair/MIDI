@@ -27,6 +27,7 @@
 				<td width="4%"><b>ID</b></td>
 				<td width="8%"><b>NCM</td>
 				<td width="%"><b>Descrição</td>
+				<td width="%"><b>FOB</td>
 				<td width="%"><b>Unidades</td>				
 			</tr>			
 			
@@ -34,6 +35,7 @@
 				<td>{IDN}</td>
 				<td>{ncm}</td>				
 				<td>{DESCRICAO_DETALHADA_PRODUTO}</td>
+				<td>{VALOR_UNIDADE_PRODUTO_DOLAR}</td>
 				<td>{QUANTIDADE_COMERCIALIZADA_PRODUTO}</td>
 				
 			</tr>			
