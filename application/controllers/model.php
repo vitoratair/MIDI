@@ -207,70 +207,77 @@ class Model extends CI_Controller
 	{
 		$id 			= $this->input->post('id');
 		$data['MOID'] 	= $id;
-			
-		if ($this->input->post('controle') != 1)
+		$control 		= $this->input->post('controle');
+
+		if ($control == 2)
 		{
 			$data['MNome0'] 			= $this->input->post('nomeModelo0');
 			$data['MNome'] 				= $this->input->post('nomeModelo');
 			$data['MNome1'] 			= $this->input->post('nomeModelo1');
 			$data['MNome2'] 			= $this->input->post('nomeModelo2');
 			$data['MNome3'] 			= $this->input->post('nomeModelo3');
-			$data['MNome4'] 			= $this->input->post('nomeModelo4');			
-		}
+			$data['MNome4'] 			= $this->input->post('nomeModelo4');	
 
+			if ($this->input->post('marca') != 0)
+			{
+				$data['Marca_MAID'] = $this->input->post('marca');
+			}			
+			
+			$oldCategory 				= $this->model_model->getCategoryByModel($id); 			
+			$oldCategory 				= $oldCategory[0]->Categoria_CID;
+
+			if ($this->input->post('categoria') != $oldCategory)
+			{
+				$data['Categoria_CID'] 		= $this->input->post('categoria');	
+				$data['SubCategoria1_SCID'] = 1;
+				$data['SubCategoria2_SCID'] = 1;
+				$data['SubCategoria3_SCID'] = 1;
+				$data['SubCategoria4_SCID'] = 1;
+				$data['SubCategoria5_SCID'] = 1;
+				$data['SubCategoria6_SCID'] = 1;
+				$data['SubCategoria7_SCID'] = 1;
+				$data['SubCategoria8_SCID'] = 1;
+			}			
+
+		}
+		elseif ($control == 1)
+		{
+			if ($this->input->post('subcategoria1'))
+			{
+				$data['SubCategoria1_SCID'] = $this->input->post('subcategoria1');
+			}
+			elseif ($this->input->post('subcategoria2'))
+			{
+				$data['SubCategoria2_SCID'] = $this->input->post('subcategoria2');
+			}
+			elseif ($this->input->post('subcategoria3'))
+			{
+				$data['SubCategoria3_SCID'] = $this->input->post('subcategoria3');
+			}
+			elseif ($this->input->post('subcategoria4'))
+			{
+				$data['SubCategoria4_SCID'] = $this->input->post('subcategoria4');
+			}
+			elseif ($this->input->post('subcategoria5'))
+			{
+				$data['SubCategoria5_SCID'] = $this->input->post('subcategoria5');
+			}								
+			elseif ($this->input->post('subcategoria6'))
+			{
+				$data['SubCategoria6_SCID'] = $this->input->post('subcategoria6');
+			}						
+			elseif ($this->input->post('subcategoria7'))
+			{
+				$data['SubCategoria7_SCID'] = $this->input->post('subcategoria7');
+			}						
+			elseif ($this->input->post('subcategoria8'))
+			{
+				$data['SubCategoria8_SCID'] = $this->input->post('subcategoria8');
+			}				
+		}		
+
+		$this->model_model->updateModel($data);		
 		
-		if ($this->input->post('subcategoria1'))
-		{
-			$data['SubCategoria1_SCID'] = $this->input->post('subcategoria1');
-		}
-		elseif ($this->input->post('subcategoria2'))
-		{
-			$data['SubCategoria2_SCID'] = $this->input->post('subcategoria2');
-		}
-		elseif ($this->input->post('subcategoria3'))
-		{
-			$data['SubCategoria3_SCID'] = $this->input->post('subcategoria3');
-		}
-		elseif ($this->input->post('subcategoria4'))
-		{
-			$data['SubCategoria4_SCID'] = $this->input->post('subcategoria4');
-		}
-		elseif ($this->input->post('subcategoria5'))
-		{
-			$data['SubCategoria5_SCID'] = $this->input->post('subcategoria5');
-		}								
-		elseif ($this->input->post('subcategoria6'))
-		{
-			$data['SubCategoria6_SCID'] = $this->input->post('subcategoria6');
-		}						
-		elseif ($this->input->post('subcategoria7'))
-		{
-			$data['SubCategoria7_SCID'] = $this->input->post('subcategoria7');
-		}						
-		elseif ($this->input->post('subcategoria8'))
-		{
-			$data['SubCategoria8_SCID'] = $this->input->post('subcategoria8');
-		}										
-
-		if ($this->input->post('marca') != 0)
-		{
-			$data['Marca_MAID'] = $this->input->post('marca');
-		}
-		if ($this->input->post('categoria') != 0)
-		{
-			$data['Categoria_CID'] 		= $this->input->post('categoria');	
-			$data['SubCategoria1_SCID'] = 1;
-			$data['SubCategoria2_SCID'] = 1;
-			$data['SubCategoria3_SCID'] = 1;
-			$data['SubCategoria4_SCID'] = 1;
-			$data['SubCategoria5_SCID'] = 1;
-			$data['SubCategoria6_SCID'] = 1;
-			$data['SubCategoria7_SCID'] = 1;
-			$data['SubCategoria8_SCID'] = 1;
-		}
-		
-		$this->model_model->updateModel($data);
-
 		redirect("model/editModel/$id");				
 	}
 

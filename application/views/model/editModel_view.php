@@ -58,7 +58,7 @@
                 <div class="span6">
                     <label>Categoria <span class="color-red">*</span></label>
 
-					<select id="categoria"  name="categoria" class="span12">					
+					<select id="categoria"  name="categoria" class="span12" onchange="this.form.submit()">					
 						{categoria}
 							<option value="{CID}"> {CNome}</option>					
 						{/categoria}
@@ -70,40 +70,33 @@
                 </div>
             </div>
 
+            <hr>
 
+{titulos}
+           <div class="controls">
+                
+                <div class="span6">
+                    <label>{TNome}</label>
+                </div>
+
+                <div class="span6" align="right">
+                    <label><a href="#subcategoria{TColuna}" data-toggle="modal">{SubCategoria}</a></label>
+                </div>                
+
+            </div>            
+{/titulos}			
+		
             <div class="controls form-inline">
             	<input type="hidden" value="{MOID}" name="id">
+            	<input type="hidden" value="2" name="controle">
                 <button class="btn-u pull-right" type="submit">Atualizar</button>
             </div>
             <br><br>
-            <hr />
+            <hr/>
 			
         </form>
-</div>
-	<br>
-	<hr>
-	<br>
-	<!-- subcategorias -->
-	<h3 align="center"><small>Edição das subcategorias do modelo </small><strong>{MNome}</strong></h3><br>
-		
-	<!-- Tabela com a lista dos categoria do sistema -->
-	<table class='table table-bordered table-hover'>			
-		<thead>
-			<tr>				
-				<td width="5%"><b>ID</b></td>
-				<td width="47%"><b>Subcategoria</b></td>
-				<td width="47%"><b>Item</b></td>
-			</tr>			
-		</thead>	
-	{titulos}
-			<tr class="table-condensed">	
-				<td>{TColuna}</td>
-				<td>{TNome}</td> 
-				<td><a href="#subcategoria{TColuna}" data-toggle="modal">{SubCategoria}</a></td>				
-			</tr>
-	{/titulos}
-	
-	</table>
+	</div>
+
 </div>	
 
 <!-- Java Script com modal para alteração da marca -->
@@ -128,9 +121,7 @@
   </div>
 </div>
 
-
-
-
+<!-- ============================================================================================================== -->
 <!-- 
 	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		++ Janela Modal para alteração das subcategorias ++
