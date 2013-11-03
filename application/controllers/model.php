@@ -39,10 +39,8 @@ class Model extends CI_Controller
 		$table = TABLE;
 
 		// Recebe os dados do form //
-		$categoria 				= $this->input->post('categoria');		
-		$marca 					= $this->input->post('marca');
-
-
+		$categoria 					= $this->input->post('categoria');		
+		$marca 						= $this->input->post('marca');
 
 		$session['idCategoria'] 	= $categoria;
 		$session['idMarca'] 		= $marca;
@@ -149,11 +147,18 @@ class Model extends CI_Controller
 			}
 
 		}
-		$data['marcaNome'] 		= $this->brand_model->getBrand($marca);
-		$data['marcaNome'] 		= $data['marcaNome'][0]->MANome;
 
-		$data['categoriaNome'] = $this->category_model->getCategory($categoria);
-		$data['categoriaNome'] = $data['categoriaNome'][0]->CNome;
+		if (!empty($marca))
+		{
+			$data['marcaNome'] 		= $this->brand_model->getBrand($marca);
+			$data['marcaNome'] 		= $data['marcaNome'][0]->MANome;			
+		}
+
+		if (!empty($categoria))
+		{
+			$data['categoriaNome'] = $this->category_model->getCategory($categoria);
+			$data['categoriaNome'] = $data['categoriaNome'][0]->CNome;			
+		}
 
 		$data['main_content'] = 'model/model_view';
 		$this->parser->parse('template', $data);
