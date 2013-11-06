@@ -137,7 +137,7 @@ class Administration extends CI_Controller
 				
 			}
 
-			$data['main_content'] = 'administration/statisticsCategory_view';
+			$data['main_content'] = 'administration/statistics_view';
 
 		}
 		else

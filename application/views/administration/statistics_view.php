@@ -16,7 +16,7 @@
 		<!-- Formulário para combobox sem botão submit -->
 		<?php
 			$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align'=> 'right',  'method'=>'POST');
-			echo form_open('administration/processing', $atributos); 
+			echo form_open('administration/statistic', $atributos); 
 		?>		
 			
 			<select id="ncm" name="ncm" class="span2">
