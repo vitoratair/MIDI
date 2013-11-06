@@ -1091,15 +1091,6 @@ class Analyze extends CI_Controller
 		$ncm 		= $ano[0];
 		$ano 		= $ano[1];		
 
-		// Verifica os modelos da categoria //
-		// $modelo 	= $this->model_model->listAllModelByCategory($categoria, $sc);			
-		
-		// // Formata o query para a clausula IN //
-		// foreach ($modelo as $key => $value)
-		// {
-		// 	array_push($modelos, $value->MOID);	
-		// }		
-
 		// Listando as marcas que tem modelos com as categorias especificadas //
 
 		if (empty($marca))
@@ -1119,7 +1110,6 @@ class Analyze extends CI_Controller
 			$data[$key]['descricao']	= $value->DESCRICAO_DETALHADA_PRODUTO;
 			$data[$key]['unidades'] 	= $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;
 			$data[$key]['volume'] 		= $value->VALOR_TOTAL_PRODUTO_DOLAR;
-			// $data[$key]['fob'] 			= $value->VALOR_TOTAL_PRODUTO_DOLAR / $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;						
 			$data[$key]['fob'] 			= $value->VALOR_UNIDADE_PRODUTO_DOLAR;						
 			$data[$key]['marca'] 		= $value->MANome;
 			$data[$key]['modelo'] 		= $value->MNome;
