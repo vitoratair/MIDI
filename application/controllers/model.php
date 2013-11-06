@@ -27,7 +27,15 @@ class Model extends CI_Controller
 		$data['categorias'] = $this->category_model->listCategory();
 		$data['marcas'] 	= $this->brand_model->listAllBrand();		
 
-		$data['main_content'] = 'model/modelEmpty_view';		
+		if ($this->session->userdata('usuarioTipo') == 2)
+		{
+			$data['main_content'] = 'model/modelEmptyUser_view';
+		}
+		else
+		{
+			$data['main_content'] = 'model/modelEmpty_view';
+		}		
+
 		$this->parser->parse('template', $data);
 
 	}
@@ -160,7 +168,15 @@ class Model extends CI_Controller
 			$data['categoriaNome'] = $data['categoriaNome'][0]->CNome;			
 		}
 
-		$data['main_content'] = 'model/model_view';
+		if ($this->session->userdata('usuarioTipo') == 2)
+		{
+			$data['main_content'] = 'model/modelUser_view';
+		}
+		else
+		{
+			$data['main_content'] = 'model/model_view';
+		}
+
 		$this->parser->parse('template', $data);
 	}
 
