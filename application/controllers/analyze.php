@@ -162,6 +162,7 @@ class Analyze extends CI_Controller
 			// Montando estrutura de array para parser com a view //
 			$aux 				= $this->mergeTable($aux);
 			$data['dados'] 		= $this->mergebrand($aux);
+
 			$data['dados'] 		= $this->orderTable($data['dados'], 'unidades');
 			
 			// Verficando e deletando o último elemento caso seja 0 //			
@@ -801,40 +802,88 @@ class Analyze extends CI_Controller
 	// Realiza o calculo para o share inicial de cada NCM -->
 	function getDataFirstShare($table, $categoria, $sc, $dataInicial, $dataFinal)
 	{
+		$control 	= True;
 		$modelos	= array();
 		$ano 		= explode('_', $table);
 		$ano 		= $ano[1];
 		
-		// Verifica os modelos da categoria //
-		$modelo 	= $this->model_model->listAllModelByCategory($categoria, $sc);
-		
-		if (!empty($modelo))
+		foreach ($sc as $key => $value)
 		{
-			// Formata o query para a clausula IN //
-			foreach ($modelo as $key => $value)
+			if (!empty($value))
 			{
-				array_push($modelos, $value->MOID);	
-			}	
+				$control = False;
+				break;
+			}
+		}
 
-			// Calcula as unidades referente a uma NCM //
-			$unidades 			= $this->model_model->calcPartsByModel($table, $categoria, $modelos, $dataInicial, $dataFinal);
-			$volume 			= $this->model_model->calcCashByModel($table, $categoria, $modelos, $dataInicial, $dataFinal);
-			$outros				= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
-
-			$result['unidades'] = $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
-			$result['volume']	= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+		if ($control)		// Não foi escolhido uma subcategoria
+		{
 			
-			// Soma o valor com os Outros //
-			$result['unidades'] += $outros[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
-			$result['volume'] 	+= $outros[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+			$marcas = [];
+			// Listando todas as marcas //
+			$marca = $this->brand_model->listBrandByNcm($table);
 
-			$result['ano'] 		= $ano;
+			if (!empty($marca))
+			{
+				// Formata o query para a clausula IN //
+				foreach ($marca as $key => $value)
+				{
+					array_push($marcas, $value->Marca);	
+				}	
+				// Calcula as unidades referente a uma NCM //
+				$unidades           = $this->brand_model->sumPartsYearByBrand($table, $marcas, $categoria, $dataInicial, $dataFinal);
+				$volume           	= $this->brand_model->sumCashYearByBrand($table, $marcas, $categoria, $dataInicial, $dataFinal);
+				$outros				= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
 
-			return $result;
+				$result['unidades'] = $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+				$result['volume']	= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+				
+				// Soma o valor com os Outros //
+				$result['unidades'] += $outros[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+				$result['volume'] 	+= $outros[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+
+				$result['ano'] 		= $ano;
+
+				return $result;
+			}
+			else
+			{
+				return NULL;
+			}
 		}
 		else
 		{
-			return NULL;
+			// Verifica os modelos da categoria //
+			$modelo 	= $this->model_model->listAllModelByCategory($categoria, $sc);
+			
+			if (!empty($modelo))
+			{
+				// Formata o query para a clausula IN //
+				foreach ($modelo as $key => $value)
+				{
+					array_push($modelos, $value->MOID);	
+				}	
+
+				// Calcula as unidades referente a uma NCM //
+				$unidades 			= $this->model_model->calcPartsByModel($table, $categoria, $modelos, $dataInicial, $dataFinal);
+				$volume 			= $this->model_model->calcCashByModel($table, $categoria, $modelos, $dataInicial, $dataFinal);
+				$outros				= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
+
+				$result['unidades'] = $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+				$result['volume']	= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+				
+				// Soma o valor com os Outros //
+				$result['unidades'] += $outros[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+				$result['volume'] 	+= $outros[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+
+				$result['ano'] 		= $ano;
+
+				return $result;
+			}
+			else
+			{
+				return NULL;
+			}
 		}
 
 	}
@@ -934,33 +983,88 @@ class Analyze extends CI_Controller
 	function getDataByYear($table, $categoria, $sc, $dataInicial, $dataFinal)
 	{
 
+		$control 	= true;
 		$marcas		= array();
+		$modelos	= array();
 		$ano 		= explode('_', $table);
 		$ano 		= $ano[1];				
-
-		// Listando todas as marcas //
-		$marca = $this->brand_model->listBrandByNcm($table);
-				
-		foreach ($marca as $key => $value)
+		
+		foreach ($sc as $key => $value)
 		{
-			array_push($marcas, $value->Marca);	
-		}		
-
-		if (!empty($marcas))
-		{
-			foreach ($marcas as $key => $value)
+			if (!$value == "false")
 			{
-				
-				$array[$key]['marca'] 		= $marca[$key]->Marca;
-				$array[$key]['marcaNome'] 	= $marca[$key]->MANome;
-				$unidades 					= $this->brand_model->sumPartsYearByBrand($table, $array[$key]['marca'], $categoria, $dataInicial, $dataFinal);
-				$volume 					= $this->brand_model->sumCashYearByBrand($table, $array[$key]['marca'], $categoria, $dataInicial, $dataFinal);
-				$array[$key]['unidades'] 	= $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
-				$array[$key]['volume'] 		= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
-			}			
+				$control = false;
+				break;
+			}
 		}
-		$array[0]['outros']	= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
-		return $array;
+
+		if ($control)		// Foi escolhido uma subcategoria
+		{
+
+			// Verifica os modelos da categoria //
+            $modelo         = $this->model_model->listAllModelByCategory($categoria, $sc);                        
+            
+            // Formata o query para a clausula IN //
+            foreach ($modelo as $key => $value)
+            {
+                    array_push($modelos, $value->MOID);        
+            }                
+
+            // Listando as marcas que tem modelos com as categorias especificadas //
+            $marca = $this->brand_model->listBrandByArrayModel($table, $modelos);
+                            
+            foreach ($marca as $key => $value)
+            {
+                    array_push($marcas, $value->Marca);        
+            }                
+
+            if (!empty($marcas))
+            {
+                foreach ($marcas as $key => $value)
+                {
+                    $unidades 					= $this->model_model->sumPartsYearByModel($table, $marca[$key]->Marca, $categoria, $modelos, $dataInicial, $dataFinal);
+                    $volume 					= $this->model_model->sumCashYearByModel($table, $marca[$key]->Marca, $categoria, $modelos, $dataInicial, $dataFinal);
+                    $array[$key]['marca']		= $marca[$key]->Marca;
+                    $array[$key]['marcaNome']	= $marca[$key]->MANome;
+
+                    $array[$key]['unidades']	= $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+                    $array[$key]['volume']		= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+                }                        
+            }
+            $array[0]['outros']	= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
+			return $array;
+
+		}
+		else
+		{
+			// Listando todas as marcas //
+			$marca = $this->brand_model->listBrandByNcm($table);
+			
+
+			foreach ($marca as $key => $value)
+			{
+				array_push($marcas, $value->Marca);	
+			}		
+
+			if (!empty($marcas))
+			{
+				foreach ($marcas as $key => $value)
+				{
+					
+					$array[$key]['marca'] 		= $marca[$key]->Marca;
+					$array[$key]['marcaNome'] 	= $marca[$key]->MANome;
+					$unidades 					= $this->brand_model->sumPartsYearByBrand($table, $array[$key]['marca'], $categoria, $dataInicial, $dataFinal);
+					$volume 					= $this->brand_model->sumCashYearByBrand($table, $array[$key]['marca'], $categoria, $dataInicial, $dataFinal);
+					$array[$key]['unidades'] 	= $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+					$array[$key]['volume'] 		= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+				}			
+			}
+
+			$array[0]['outros']	= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);			
+			return $array;
+		}
+
+		
 
 	}
 
