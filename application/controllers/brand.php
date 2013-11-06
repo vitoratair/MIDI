@@ -29,7 +29,6 @@ class Brand extends CI_Controller
 
 		if (empty($search))
 		{
-
 	        $config["base_url"] 	= base_url() . "index.php/brand/listAll";
 	        $config["total_rows"] 	= $this->brand_model->countBrand();
 		    $config["per_page"] 	= 20;

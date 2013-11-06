@@ -194,7 +194,9 @@ class Analyze extends CI_Controller
 		$data['ano'] 				= $ano;
 		$data['categoria'] 			= $categoria;
 		$data['dataInicial']		= $dataInicial;
-		$data['dataFinal']			= $dataFinal;		
+		$data['dataFinal']			= $dataFinal;
+		$data['mesInicial']			= $this->others->buscaMes($dataInicial);
+		$data['mesFinal']			= $this->others->buscaMes($dataFinal);		
 		$data['postSubcategorias'] 	= json_encode($sc);
 
 		$data['main_content'] 		= 'analyze/analyzeYear_view';
@@ -260,12 +262,12 @@ class Analyze extends CI_Controller
 				$data['categoriaNome'] 		= $categoria[0]->CNome;
 				$data['ano'] 				= $ano;
 				$data['dataInicial']		= $dataInicial;
-				$data['dataFinal']			= $dataFinal;			
+				$data['dataFinal']			= $dataFinal;
+				$data['mesInicial']			= $this->others->buscaMes($dataInicial);
+				$data['mesFinal']			= $this->others->buscaMes($dataFinal);						
 				$data['postSubcategorias'] 	= $sc1;
 
 			}
-
-			
 		}
 		
 		// Não exibe o nome da marca no HTML //
@@ -479,6 +481,8 @@ class Analyze extends CI_Controller
 		$data['ano'] 				= $ano;
 		$data['dataInicial'] 		= $dataInicial;
 		$data['dataFinal'] 			= $dataFinal;
+		$data['mesInicial']			= $this->others->buscaMes($dataInicial);
+		$data['mesFinal']			= $this->others->buscaMes($dataFinal);			
 		$data['postSubcategorias'] 	= json_encode($sc1	);
 
 		$data['main_content'] 	= 'analyze/modelByBrand_view';
@@ -613,6 +617,8 @@ class Analyze extends CI_Controller
 		$data['ano'] 				= $ano;
 		$data['dataInicial']		= $dataInicial;
 		$data['dataFinal']			= $dataFinal;			
+		$data['mesInicial']			= $this->others->buscaMes($dataInicial);
+		$data['mesFinal']			= $this->others->buscaMes($dataFinal);		
 		$data['categoria']			= $categoria;
 		$data['marca']				= $this->brand_model->getBrandByModel($modelo);
 		$data['marca'] 				= $data['marca'][0]->MAID;	
@@ -1399,6 +1405,7 @@ class Analyze extends CI_Controller
 			$data[$key]['descricao']	= $value->DESCRICAO_DETALHADA_PRODUTO;
 			$data[$key]['fob'] 			= $value->VALOR_UNIDADE_PRODUTO_DOLAR;
 			$data[$key]['unidades'] 	= $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+			$data[$key]['volume'] 		= $value->VALOR_TOTAL_PRODUTO_DOLAR;
 			$data[$key]['marca'] 		= $value->MANome;
 			$data[$key]['modelo'] 		= $value->MNome;
 			$data[$key]['mes'] 			= $value->MES;

@@ -146,8 +146,10 @@
 	</blockquote>
 	<hr>
 	<!-- Legenda da pesquisa -->
-	<h3 align="center"><small>Pesquisa na NCM </small><b>{ncm}</b><small> no ano de </small>{year}</h3>								
-	
+	<div class="headline" align="center">
+		<h3 align="center"><small>Pesquisa na NCM </small><b>{ncm}</b><small> no ano de </small>{year}</h3>								
+	</div>
+
 	<p align="right">
 		<a href="<?php echo base_url();?>index.php/search/ncm" class="btn-u">Refrehs <i class="icon-refresh"></i></a>		
 	</p>
@@ -156,7 +158,7 @@
 	<table class='table table-bordered table-hover'>
 		<thead>
 			<tr class="">				
-				<td width="4%"><b>ID</b></td>
+				<td width="4%"><b>Mês</b></td>
 				<td width="8%"><b>NCM</b></td>
 				<td width=""><b>Descrição</b></td>
 				<td width="%"><b>Unidades</b></td>
@@ -169,7 +171,7 @@
 
 		{dados}
 			<tr>	
-				<td>{IDN}</td>
+				<td>{MES}</td>
 				<td>{ncm}</td>				
 				<td>{DESCRICAO_DETALHADA_PRODUTO}</td>
 				<td>{QUANTIDADE_COMERCIALIZADA_PRODUTO}</td>

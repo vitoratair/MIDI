@@ -94,6 +94,7 @@ class Administration extends CI_Controller
 			$data['main_content'] = 'administration/processingEmpty_view';	
 		}		
 
+		
 		$this->parser->parse('template', $data);
 	 
 	 } 

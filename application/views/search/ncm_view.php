@@ -159,6 +159,7 @@
 		<thead>
 			<tr class="">				
 				<td width="4%"><b>ID</b></td>
+				<td width="4%"><b>Mês</b></td>
 				<td width="8%"><b>NCM</b></td>
 				<td width=""><b>Descrição</b></td>
 				<td width="%"><b>Unidades</b></td>
@@ -172,6 +173,7 @@
 		{dados}
 			<tr>	
 				<td>{IDN}</td>
+				<td>{MES}</td>
 				<td>{ncm}</td>				
 				<td>{DESCRICAO_DETALHADA_PRODUTO}</td>
 				<td>{QUANTIDADE_COMERCIALIZADA_PRODUTO}</td>
@@ -184,14 +186,14 @@
 		
 		<thead>
 			<tr>	
-				<td colspan=8></td>
+				<td colspan=9></td>
 			</tr>
 		</thead>
 
 		<!-- Alterar todas as NCMs visíveis na tela -->
 		<thead>
 			<tr class="">
-				<td colspan=4><p align="center">Alterar todas as entradas acima</p></td>
+				<td colspan=5><p align="center">Alterar todas as entradas acima</p></td>
 				<td><a href="#categoriaAlterar" class="" data-toggle="modal">Categoria</a></td>
 				<td><a href="#marcaAlterar" data-toggle="modal">Marca</a></td>
 				<td><a href="#modeloAlterar" data-toggle="modal">Modelo</a></td>
