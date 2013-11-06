@@ -314,6 +314,34 @@ class Model_model extends CI_Model
 
 		return $query->result();
 	}
+    
+    // Retorna as peças importadas de uma lista de modelos //
+    function sumPartsYearByModel($table, $marca, $categoria, $modelo, $dataInicial, $dataFinal)
+    {
+        $this->db->select_sum('QUANTIDADE_COMERCIALIZADA_PRODUTO');
+        $this->db->from($table);
+        $this->db->where('Marca',$marca);
+        $this->db->where('Categoria', $categoria);        
+        $this->db->where_in('Modelo',$modelo);
+        $this->db->where("MES BETWEEN $dataInicial AND $dataFinal");                
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    // Retorna o volume financeiro $$$ de importações feita por uma lista de modelos //
+    function sumCashYearByModel($table, $marca, $categoria, $modelo, $dataInicial, $dataFinal)
+    {
+        $this->db->select_sum('VALOR_TOTAL_PRODUTO_DOLAR');
+        $this->db->from($table);
+        $this->db->where('Marca',$marca);
+        $this->db->where('Categoria',$categoria);
+        $this->db->where("MES BETWEEN $dataInicial AND $dataFinal");                
+        $this->db->where_in('Modelo',$modelo);
+        $query = $this->db->get();
+
+        return $query->result();
+    }
 
 }
 
