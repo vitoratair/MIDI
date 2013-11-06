@@ -7,6 +7,7 @@ class Analyze extends CI_Controller
 	{
 		parent::__construct();
 		$this->logged();
+		error_reporting(E_ALL ^(E_NOTICE | E_WARNING));
 	}
 
 	// Verifica se o usuário está logado //
@@ -933,22 +934,12 @@ class Analyze extends CI_Controller
 	function getDataByYear($table, $categoria, $sc, $dataInicial, $dataFinal)
 	{
 
-		$modelos	= array();
 		$marcas		= array();
 		$ano 		= explode('_', $table);
-		$ano 		= $ano[1];		
+		$ano 		= $ano[1];				
 
-		// Verifica os modelos da categoria //
-		$modelo 	= $this->model_model->listAllModelByCategory($categoria, $sc);			
-		
-		// Formata o query para a clausula IN //
-		foreach ($modelo as $key => $value)
-		{
-			array_push($modelos, $value->MOID);	
-		}		
-
-		// Listando as marcas que tem modelos com as categorias especificadas //
-		$marca = $this->brand_model->listBrandByArrayModel($table, $modelos);
+		// Listando todas as marcas //
+		$marca = $this->brand_model->listBrandByNcm($table);
 				
 		foreach ($marca as $key => $value)
 		{
@@ -959,10 +950,11 @@ class Analyze extends CI_Controller
 		{
 			foreach ($marcas as $key => $value)
 			{
+				
 				$array[$key]['marca'] 		= $marca[$key]->Marca;
 				$array[$key]['marcaNome'] 	= $marca[$key]->MANome;
-				$unidades 					= $this->brand_model->sumPartsYearByBrand($table, $array[$key]['marca'], $categoria, $modelos, $dataInicial, $dataFinal);
-				$volume 					= $this->brand_model->sumCashYearByBrand($table, $array[$key]['marca'], $categoria, $modelos, $dataInicial, $dataFinal);
+				$unidades 					= $this->brand_model->sumPartsYearByBrand($table, $array[$key]['marca'], $categoria, $dataInicial, $dataFinal);
+				$volume 					= $this->brand_model->sumCashYearByBrand($table, $array[$key]['marca'], $categoria, $dataInicial, $dataFinal);
 				$array[$key]['unidades'] 	= $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
 				$array[$key]['volume'] 		= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
 			}			
@@ -1100,23 +1092,23 @@ class Analyze extends CI_Controller
 		$ano 		= $ano[1];		
 
 		// Verifica os modelos da categoria //
-		$modelo 	= $this->model_model->listAllModelByCategory($categoria, $sc);			
+		// $modelo 	= $this->model_model->listAllModelByCategory($categoria, $sc);			
 		
-		// Formata o query para a clausula IN //
-		foreach ($modelo as $key => $value)
-		{
-			array_push($modelos, $value->MOID);	
-		}		
+		// // Formata o query para a clausula IN //
+		// foreach ($modelo as $key => $value)
+		// {
+		// 	array_push($modelos, $value->MOID);	
+		// }		
 
 		// Listando as marcas que tem modelos com as categorias especificadas //
 
 		if (empty($marca))
 		{
-			$dados = $this->ncm_model->getDataDetails($table, $modelos, NULL, $categoria, $dataInicial, $dataFinal);	
+			$dados = $this->ncm_model->getDataDetails($table, NULL, NULL, $categoria, $dataInicial, $dataFinal);	
 		}
 		else
 		{
-			$dados = $this->ncm_model->getDataDetails($table, $modelos, $marca, $categoria, $dataInicial, $dataFinal);
+			$dados = $this->ncm_model->getDataDetails($table, NULL, $marca, $categoria, $dataInicial, $dataFinal);
 		}
 		
 		foreach ($dados as $key => $value)
