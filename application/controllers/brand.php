@@ -54,7 +54,15 @@ class Brand extends CI_Controller
 			$data["links"] 			= $this->pagination->create_links();			
 		}
 
-		$data['main_content'] 	= 'brand/brand_view';
+		if ($this->session->userdata('usuarioTipo') == 2)
+		{
+			$data['main_content'] 	= 'brand/brandUser_view';
+		}
+		else
+		{
+			$data['main_content'] 	= 'brand/brand_view';
+		}
+
 		$this->parser->parse('template', $data);
 
 	}				
