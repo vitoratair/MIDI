@@ -129,15 +129,27 @@ class Brand_model extends CI_Model
 		return $query->result();
 	}
 
+	// Retorna todas as marcas com uma NCM //
+	function listBrandByNcm($table)
+	{
+		$this->db->select('DISTINCT(`Marca`)');
+		$this->db->select('MANome');
+		$this->db->from($table);
+		$this->db->join('Marca','Marca = MAID');
+		$this->db->where('MAID != 1');
+		$query = $this->db->get();
+		
+		return $query->result();
+	}
+
 	// Retorna as peças importadas de uma marca //
-	function sumPartsYearByBrand($table, $marca, $categoria, $modelo, $dataInicial, $dataFinal)
+	function sumPartsYearByBrand($table, $marca, $categoria, $dataInicial, $dataFinal)
 	// function calcUnidadesAnoByMarca($table, $marca, $categoria, $modelo)
 	{
 		$this->db->select_sum('QUANTIDADE_COMERCIALIZADA_PRODUTO');
 		$this->db->from($table);
 		$this->db->where('Marca',$marca);
 		$this->db->where('Categoria', $categoria);	
-		$this->db->where_in('Modelo',$modelo);
 		$this->db->where("MES BETWEEN $dataInicial AND $dataFinal");		
 		$query = $this->db->get();
 
@@ -146,14 +158,13 @@ class Brand_model extends CI_Model
 	}
 
 	// Retorna o volu financeiro $$$ de importações feita por uma marca //
-	function sumCashYearByBrand($table, $marca, $categoria, $modelo, $dataInicial, $dataFinal)
+	function sumCashYearByBrand($table, $marca, $categoria, $dataInicial, $dataFinal)
 	{
 		$this->db->select_sum('VALOR_TOTAL_PRODUTO_DOLAR');
 		$this->db->from($table);
 		$this->db->where('Marca',$marca);
 		$this->db->where('Categoria',$categoria);
-		$this->db->where("MES BETWEEN $dataInicial AND $dataFinal");		
-		$this->db->where_in('Modelo',$modelo);
+		$this->db->where("MES BETWEEN $dataInicial AND $dataFinal");
 		$query = $this->db->get();
 
 		return $query->result();
