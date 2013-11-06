@@ -17,6 +17,7 @@
     <table class='table table-bordered table-hover' id="idTabela" align="right">
     <thead>
             <tr>
+                <td width="5%"><b>Mês</b></td>
                 <td width="5%"><b>NCM</b></td>
                 <td width="50%"><b>Descrição</b></td>
                 <td width="7%"><b>FOB</b></td>
@@ -28,6 +29,7 @@
 	</thead>
     {dados}    
             <tr class="table-condensed">
+                <td>{mes}</td>
                 <td>{ncm}</td>
                 <td>{descricao}</td>
                 <td>$ {fob}</td>
