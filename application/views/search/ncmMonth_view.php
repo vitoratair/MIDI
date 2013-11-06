@@ -11,6 +11,12 @@
 </div><!--/breadcrumbs-->
 
 <div class="container">
+	
+	<!-- Legenda da pesquisa -->
+	<div class="headline" align="center">
+		<h3 align="center"><small>Pesquisa na NCM </small><b>{ncm}</b><small> em </small>{mes}<small> de </small>{ano}</h3>
+	</div>
+
 	<!-- Tabela com a lista de linhas de NCMs -->
 	<table class='table table-bordered table-striped table-hover'>
 			

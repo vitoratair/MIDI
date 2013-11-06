@@ -33,6 +33,7 @@ class Brand_model extends CI_Model
 		$this->db->limit($limit, $start);
 		$this->db->select('*');
 		$this->db->from('Marca');
+		$this->db->where('MAID != 1');
 		$query = $this->db->get();
 
 		return $query->result();

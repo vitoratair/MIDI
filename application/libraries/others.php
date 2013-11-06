@@ -79,6 +79,8 @@ class Others
 	// Formata os dados unidades e o volume das importações //
 	function formatarDados($id, $dados)
 	{	
+		error_reporting(E_ALL ^ E_NOTICE);
+		
 		if($id == 1)
 		{
 			foreach ($dados as $key => $value)
@@ -104,7 +106,7 @@ class Others
 		}	
 		elseif ($id == 4)
 		{
-			$dados['fob'] 	= number_format($dados['fob'],2,",",".");
+			$dados['fob'] 		= number_format($dados['fob'],2,",",".");
 			$dados['unidades'] 	= number_format($dados['unidades'],0,",",".");			
 		}
 		elseif ($id == 5)
@@ -136,9 +138,20 @@ class Others
 			
 			foreach ($dados as $key => $value)
 			{
-				$dados[$key]->QUANTIDADE_COMERCIALIZADA_PRODUTO = number_format($value->QUANTIDADE_COMERCIALIZADA_PRODUTO,0,",",".");
-				$dados[$key]->PESO_LIQUIDO_KG 					= number_format($value->PESO_LIQUIDO_KG,0,",",".");
-				$dados[$key]->VALOR_UNIDADE_PRODUTO_DOLAR 		= number_format($value->VALOR_UNIDADE_PRODUTO_DOLAR,3,",",".");
+				if ($value->QUANTIDADE_COMERCIALIZADA_PRODUTO > 0)
+					$dados[$key]->QUANTIDADE_COMERCIALIZADA_PRODUTO = number_format($value->QUANTIDADE_COMERCIALIZADA_PRODUTO,0,",",".");
+				else
+					$dados[$key]->QUANTIDADE_COMERCIALIZADA_PRODUTO = $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+
+				if ($value->PESO_LIQUIDO_KG > 0)
+					$dados[$key]->PESO_LIQUIDO_KG 				= number_format($value->PESO_LIQUIDO_KG,0,",",".");
+				else
+					$dados[$key]->PESO_LIQUIDO_KG 				= $value->PESO_LIQUIDO_KG;
+				
+				if ($value->VALOR_UNIDADE_PRODUTO_DOLAR > 0)
+					$dados[$key]->VALOR_UNIDADE_PRODUTO_DOLAR 		= number_format($value->VALOR_UNIDADE_PRODUTO_DOLAR,2,",",".");
+				else
+					$dados[$key]->VALOR_UNIDADE_PRODUTO_DOLAR 		= $value->VALOR_UNIDADE_PRODUTO_DOLAR;
 				
 			}			
 		}	

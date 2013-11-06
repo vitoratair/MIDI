@@ -18,8 +18,9 @@
 	{dados}
 
 	<!-- Legenda da pesquisa -->
-	<h3 align="center"><small>Visualização do id </small><strong>{IDN}</strong><small> na NCM </small><b>{ncm}</b><small> no ano de </small>{year}</h3><br>
-		
+	<div class="headline" align="center">
+		<h3 align="center"><small>Visualização da na NCM </small><b>{ncm}</b><small> no ano de </small>{year}</h3><br>
+	</div>
 	<!-- Tabela com a lista de linhas de NCMs -->
 	<table class='table table-bordered table-striped'>
 			

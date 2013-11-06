@@ -22,7 +22,7 @@
                 Mayara Gielow <br />
                 Inteligência Competitiva <br />
                 55 (48) 3281-9889 <br />
-                Email: <a href="mailto:mayara@intelbras.com.br" class="">mayara@intelbras.com.br</a>
+                Email: <a href="mailto:mayara.gielow@intelbras.com.br" class="">mayara.gielow@intelbras.com.br</a>
                 </address>
             </div><!--/span4-->
 
@@ -34,7 +34,7 @@
                 </h3></div> 
                 <address>
                 Vitor Atair <br/>
-                EAG Banda Larga - INET <br />
+                Banda Larga sem Fio - INET <br />
                 55 (48) 3281-9440 <br />
                 Email: <a href="mailto:vitor.atair@intelbras.com.br" class="">vitor.atair@intelbras.com.br</a>
                 </address>
