@@ -41,14 +41,14 @@
 		    
 		    &nbsp;&nbsp;&nbsp;
 
-			<select id="categoria" name="categoria" class="span3" onchange="this.form.submit()">
+<!-- 			<select id="categoria" name="categoria" class="span3" onchange="this.form.submit()">
 				
 				<option value="">Selecione uma categoria</option>
 				{categorias}		
 					<option value="{CID}">{CNome}</option>
 				{/categorias}
 				
-		    </select>			    
+		    </select>	 -->		    
 
 		</form>	
 	</blockquote>
