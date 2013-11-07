@@ -819,7 +819,6 @@ class Analyze extends CI_Controller
 		if ($control)		// Não foi escolhido uma subcategoria
 		{
 			
-			$marcas = [];
 			// Listando todas as marcas //
 			$marca = $this->brand_model->listBrandByNcm($table);
 
