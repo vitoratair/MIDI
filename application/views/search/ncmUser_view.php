@@ -11,13 +11,12 @@
     </div><!--/container-->
 </div><!--/breadcrumbs-->
 
-
 <div class="container">			
 
 	<blockquote>
 		<table class="" width="100%" border="0" width="100%" >		
 			<tr>			
-				<td width="12%" valign="top">
+				<td width="16%" valign="top">
 					
 					<!-- Formulário para combobox sem botão submit -->
 					<?php
@@ -41,8 +40,8 @@
 						</fieldset>
 
 				</td>
-				
-				<td valign="top">
+
+				<td colspan="2" width="12%" valign="top">
 					
 						<fieldset>
 								<div class="control-group">
@@ -61,7 +60,10 @@
 
 					</form>				
 
-				</td>		
+				</td>
+
+				<td></td>
+
 
 				<td rowspan="2" align="">
 
@@ -93,8 +95,32 @@
 			</tr>
 
 			<tr>
-				
+
 				<td>
+					<!-- Formulário para combobox sem botão submit -->
+					<?php
+						$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
+						echo form_open('search/ncm', $atributos); 
+					?>		
+							
+						<fieldset>
+							<div class="control-group">
+								<div class="controls">
+									<select id="categoria" name="categoria" class="span2" onchange="this.form.submit()">
+										<option value="">Categoria</option>	
+										{categorias}		
+											<option value="{CID}">{CNome}</option>
+										{/categorias}								
+								    </select>
+								    <input type="hidden" name="controle" value="4">						
+								</div>
+							</div>
+						</fieldset>
+					</form>			
+
+				</td>				
+				<td width="20px" valign="top" align="left"><h4> - </h4></td>
+				<td width="16%">
 					<!-- Formulário para combobox sem botão submit -->
 					<?php
 						$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
@@ -106,11 +132,11 @@
 								<div class="controls">
 									<select id="marca" name="marca" class="span2" onchange="this.form.submit()">
 										<option value="">Marca</option>	
-										{marcas}		
+										{marcas1}		
 											<option value="{MAID}">{MANome}</option>
-										{/marcas}								
+										{/marcas1}								
 								    </select>
-								    <input type="hidden" name="controle" value="2">						
+								    <input type="hidden" name="controle" value="5">						
 								</div>
 							</div>
 						</fieldset>
@@ -118,7 +144,8 @@
 
 				</td>
 
-				<td colspan="">
+
+				<td>
 					<!-- Formulário para combobox sem botão submit -->
 					<?php
 						$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
@@ -133,6 +160,7 @@
 											<option value="{MOID}">{MNome}</option>
 										{/modelos}								
 								    </select>
+								    <input type="hidden" name="controle" value="6">
 								</div>
 							</div>
 						</fieldset>
@@ -143,13 +171,15 @@
 
 			</tr>	
 		</table>
+
+
 	</blockquote>
-	<hr>
+	
 	<!-- Legenda da pesquisa -->
 	<div class="headline" align="center">
-		<h3 align="center"><small>Pesquisa na NCM </small><b>{ncm}</b><small> no ano de </small>{year}</h3>								
-	</div>
-
+		<h3 align="center"><small>Pesquisa na NCM </small><b>{ncm}</b><small> no ano de </small>{year}</h3>
+	</div>	
+	
 	<p align="right">
 		<a href="<?php echo base_url();?>index.php/search/ncm" class="btn-u">Refrehs <i class="icon-refresh"></i></a>		
 	</p>
@@ -158,6 +188,7 @@
 	<table class='table table-bordered table-hover'>
 		<thead>
 			<tr class="">				
+				<td width="4%"><b>ID</b></td>
 				<td width="4%"><b>Mês</b></td>
 				<td width="8%"><b>NCM</b></td>
 				<td width=""><b>Descrição</b></td>
@@ -171,6 +202,7 @@
 
 		{dados}
 			<tr>	
+				<td>{IDN}</td>
 				<td>{MES}</td>
 				<td>{ncm}</td>				
 				<td>{DESCRICAO_DETALHADA_PRODUTO}</td>
@@ -184,14 +216,14 @@
 		
 		<thead>
 			<tr>	
-				<td colspan=8></td>
+				<td colspan=9></td>
 			</tr>
 		</thead>
 
 		<!-- Alterar todas as NCMs visíveis na tela -->
 <!-- 		<thead>
 			<tr class="">
-				<td colspan=4><p align="center">Alterar todas as entradas acima</p></td>
+				<td colspan=5><p align="center">Alterar todas as entradas acima</p></td>
 				<td><a href="#categoriaAlterar" class="" data-toggle="modal">Categoria</a></td>
 				<td><a href="#marcaAlterar" data-toggle="modal">Marca</a></td>
 				<td><a href="#modeloAlterar" data-toggle="modal">Modelo</a></td>
@@ -251,9 +283,9 @@
 		</div>	
 		<div class="modal-body">			
 
-{marcas1}
+{marcas}
 			<input type="radio" id ="marca" name="marca" value="{MAID}"> {MANome}<br>
-{/marcas1}
+{/marcas}
 
 			</div>
 		<div class="modal-footer">
@@ -270,7 +302,7 @@
 </form>
 
 <!-- Modal para alteração do Modelo -->
-<form action="<?php echo base_url();?>index.php/ncm/update/Modelo/" method="POST">	
+<form action="<?php echo base_url();?>index.php/ncm/update/ModeloAll/" method="POST">	
 	
 	<div class="modal hide" id="modeloAlterar">
 		<div class="modal-header">
@@ -290,10 +322,8 @@
 			<input type="hidden" name="ncm" value="{ncm}">
 			<input type="hidden" name="year" value="{year}">
 			<input type="hidden" name="idn" value="{IDN}">
-
+			<input type="hidden" name="ids" value="{ids}">
 		</div>	
 	</div>
 
 </form>
-
-
