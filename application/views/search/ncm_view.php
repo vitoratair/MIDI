@@ -11,13 +11,12 @@
     </div><!--/container-->
 </div><!--/breadcrumbs-->
 
-
 <div class="container">			
 
 	<blockquote>
 		<table class="" width="100%" border="0" width="100%" >		
 			<tr>			
-				<td width="12%" valign="top">
+				<td width="16%" valign="top">
 					
 					<!-- Formulário para combobox sem botão submit -->
 					<?php
@@ -41,8 +40,8 @@
 						</fieldset>
 
 				</td>
-				
-				<td valign="top">
+
+				<td colspan="2" width="12%" valign="top">
 					
 						<fieldset>
 								<div class="control-group">
@@ -61,7 +60,10 @@
 
 					</form>				
 
-				</td>		
+				</td>
+
+				<td></td>
+
 
 				<td rowspan="2" align="">
 
@@ -93,8 +95,32 @@
 			</tr>
 
 			<tr>
-				
+
 				<td>
+					<!-- Formulário para combobox sem botão submit -->
+					<?php
+						$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
+						echo form_open('search/ncm', $atributos); 
+					?>		
+							
+						<fieldset>
+							<div class="control-group">
+								<div class="controls">
+									<select id="categoria" name="categoria" class="span2" onchange="this.form.submit()">
+										<option value="">Categoria</option>	
+										{categorias}		
+											<option value="{CID}">{CNome}</option>
+										{/categorias}								
+								    </select>
+								    <input type="hidden" name="controle" value="4">						
+								</div>
+							</div>
+						</fieldset>
+					</form>			
+
+				</td>				
+				<td width="20px" valign="top" align="left"><h4> - </h4></td>
+				<td width="16%">
 					<!-- Formulário para combobox sem botão submit -->
 					<?php
 						$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
@@ -110,7 +136,7 @@
 											<option value="{MAID}">{MANome}</option>
 										{/marcas1}								
 								    </select>
-								    <input type="hidden" name="controle" value="2">						
+								    <input type="hidden" name="controle" value="5">						
 								</div>
 							</div>
 						</fieldset>
@@ -118,7 +144,8 @@
 
 				</td>
 
-				<td colspan="">
+
+				<td>
 					<!-- Formulário para combobox sem botão submit -->
 					<?php
 						$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
@@ -133,6 +160,7 @@
 											<option value="{MOID}">{MNome}</option>
 										{/modelos}								
 								    </select>
+								    <input type="hidden" name="controle" value="6">
 								</div>
 							</div>
 						</fieldset>
@@ -143,6 +171,8 @@
 
 			</tr>	
 		</table>
+
+
 	</blockquote>
 	
 	<!-- Legenda da pesquisa -->
@@ -297,5 +327,3 @@
 	</div>
 
 </form>
-
-

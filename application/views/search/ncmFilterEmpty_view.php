@@ -42,7 +42,7 @@
 
 				</td>
 				
-				<td valign="top">
+				<td width="12%" valign="top">
 					
 						<fieldset>
 								<div class="control-group">
@@ -62,6 +62,8 @@
 					</form>				
 
 				</td>		
+
+				<td></td>
 
 				<td rowspan="2" align="">
 
@@ -93,7 +95,31 @@
 			</tr>
 
 			<tr>
-				
+
+				<td>
+					<!-- Formulário para combobox sem botão submit -->
+					<?php
+						$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
+						echo form_open('search/ncm', $atributos); 
+					?>		
+							
+						<fieldset>
+							<div class="control-group">
+								<div class="controls">
+									<select id="categoria" name="categoria" class="span2" onchange="this.form.submit()">
+										<option value="">Categoria</option>	
+										{categorias}		
+											<option value="{CID}">{CNome}</option>
+										{/categorias}								
+								    </select>
+								    <input type="hidden" name="controle" value="3">						
+								</div>
+							</div>
+						</fieldset>
+					</form>			
+
+				</td>
+
 				<td>
 					<!-- Formulário para combobox sem botão submit -->
 					<?php

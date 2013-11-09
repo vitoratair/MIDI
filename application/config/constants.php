@@ -41,6 +41,19 @@ define('TITLE', 								'MIDI - Monitoramento Intelbras de Dados de Importaçõe
 define('USER_ADMIN', 							1);
 define('USER_USUARIO', 							2);
 
+define('WITHOUT_FILTER',						1);
+define('SEARCH',								3);
+
+define('CATEGORY',								4);
+define('BRAND',									5);
+define('MODEL',									6);
+
+define('SEARCH_SEARCH',							7);
+define('SEARCH_UNSEARCH',						8);
+define('SEARCH_SEARCH_UNSEARCH',				9);
+
+
+	
 define('DATABASE', 								'midi');
 define('TABLE', 								'Tables_in_midi');
 

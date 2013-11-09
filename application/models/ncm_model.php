@@ -172,7 +172,7 @@ class ncm_model extends CI_Model
 	}
 
 	// COUNT dos dados para paginação //
-	function countData($table, $id, $brand, $model, $search, $unSearch, $mes)
+	function countData($table, $id, $brand, $model, $search, $unSearch, $mes, $categoria)
 	{
 		// count total
 		if($id == 1) 
@@ -254,10 +254,23 @@ class ncm_model extends CI_Model
 			
 			return $this->db->count_all_results();					
 		}	
+		// count por categoria
+		elseif ($id == 8) 
+		{
+			$this->db->select('COUNT(`IDN`)');
+			$this->db->from($table);
+			$this->db->join('Categoria','Categoria.CID = Categoria');
+			$this->db->join('Marca','Marca.MAID = Marca');
+			$this->db->join('Modelo','Modelo.MOID = Modelo');
+			$this->db->where('Categoria', $categoria);
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
+			
+			return $this->db->count_all_results();					
+		}		
 	}
 
 	// Busca os dados de improtações de acordo com os filtros do usuário //
-	function getData($limit, $start, $table, $id, $brand, $model, $search, $unSearch, $mes)
+	function getData($limit, $start, $table, $id, $brand, $model, $search, $unSearch, $mes, $categoria)
 	{
 		
 		if ($id == 1)
@@ -361,6 +374,20 @@ class ncm_model extends CI_Model
 
 			return $query->result();
 		}
+		elseif ($id == 8)
+		{
+			$this->db->limit($limit, $start);
+			$this->db->select('*');
+			$this->db->from($table);
+			$this->db->join('Categoria','Categoria.CID = Categoria');
+			$this->db->join('Marca','Marca.MAID = Marca');
+			$this->db->join('Modelo','Modelo.MOID = Modelo');
+			$this->db->where('Categoria', $categoria);
+			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
+			$query = $this->db->get();
+
+			return $query->result();
+		}		
 	}	
 
 	// Verifica se a NCM existe //

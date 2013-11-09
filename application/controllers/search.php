@@ -33,14 +33,28 @@ class Search extends CI_Controller
 		$model 			= $this->input->post('modelo');
 		$search 		= $this->input->post('search');
 		$unSearch 		= $this->input->post('unSearch');
+		$categoria 		= $this->input->post('categoria');
 		$control 		= $this->input->post('controle');
 				
 		// Carrega os dados necessários da model //
 		$data['ncms'] 		= $this->ncm_model->listNcm();
 		$data['anos'] 		= $this->ncm_model->listYear();					
 		$data['categorias'] = $this->category_model->listCategory();
-		$data['marcas'] 	= $this->brand_model->listAllBrand();	
+		$data['marcas1'] 	= $this->brand_model->listAllBrand();	
 
+		if (empty($control))
+		{
+			if (!empty($this->session->userdata['control']))
+			{
+				$control = $this->session->userdata['control'];	
+			}				
+		}
+		else
+		{
+			$session['control'] 	= $control;
+			$this->session->set_userdata($session);
+		}
+		
 		// Caso a variável ncm esteja vazia, recebe os dados que estão em sessão //
 		if (empty($ncm))
 		{
@@ -54,73 +68,115 @@ class Search extends CI_Controller
 		{
 			$session['ncm'] 	= $ncm;
 			$session['ano'] 	= $year;
+			$session['control'] = $control;			
 			$this->session->set_userdata($session);
 		}
-
-		if (empty($brand) && (empty($control)))
-		{
-			if (!empty($this->session->userdata['brand']))
+		
+		if ($control == CATEGORY)
+		{			
+			if (empty($categoria))
 			{
-				$brand = $this->session->userdata['brand'];
-			}
-		}
-		else
-		{
-			$session['brand'] = $brand;
-			$this->session->set_userdata($session);	
-		}	
-
-		if (empty($model) && (empty($control)))
-		{
-			if (!empty($this->session->userdata['model']))
-			{
-				$model = $this->session->userdata['model'];
-			}
-		}
-		else
-		{
-			$session['model'] = $model;
-			$this->session->set_userdata($session);	
-		}
-
-		if (empty($search) && (empty($control)) && (empty($unSearch)))
-		{
-			if (!empty($this->session->userdata['search']))
-			{
-				$search = $this->session->userdata['search'];
-			}	
-		}
-		else
-		{
-			$session['search'] = $search;
-			$this->session->set_userdata($session);	
-		}
-
-		if (empty($unSearch) && (empty($control)))
-		{
-			
-			if (empty($search))
-			{
-				if (!empty($this->session->userdata['unSearch']))
+				if (!empty($this->session->userdata['categoria']))
 				{
-					$unSearch = $this->session->userdata['unSearch'];
-				}
+					$categoria = $this->session->userdata['categoria'];				
+				}				
 			}
 			else
 			{
-				if (!empty($this->session->userdata['unSearch']))
-				{
-					$unSearch = $this->session->userdata['unSearch'];
-					$search = $this->session->userdata['search'];
-				}
-			}
-		}
-		else
-		{
-			$session['unSearch'] = $unSearch;
-			$this->session->set_userdata($session);
+				$session['categoria'] 	= $categoria;
+				$session['control'] 	= $control;
+				$this->session->set_userdata($session);
+			}	
 		}
 
+		elseif ($control == BRAND) 
+		{			
+			if (empty($brand))
+			{
+				if (!empty($this->session->userdata['brand']))
+				{
+					$brand = $this->session->userdata['brand'];
+				}				
+			}
+			else
+			{
+				$session['brand'] 	= $brand;
+				$session['control'] = $control;
+				$this->session->set_userdata($session);	
+			}
+		}	
+
+		elseif ($control == MODEL)
+		{
+			if (empty($model))
+			{
+				if (!empty($this->session->userdata['model']))
+				{
+					$model = $this->session->userdata['model'];
+				}				
+			}
+			else
+			{
+				$session['model'] 	= $model;
+				$session['control'] = $control;			
+				$this->session->set_userdata($session);					
+			}
+			if (empty($brand))
+			{
+				if (!empty($this->session->userdata['brand']))
+				{
+					$brand = $this->session->userdata['brand'];
+				}				
+			}
+			else
+			{
+				$session['brand'] 	= $brand;
+				$session['control'] = $control;
+				$this->session->set_userdata($session);	
+			}			
+		}
+		elseif ($control == SEARCH)
+		{
+			if (!empty($search) AND (empty($unSearch)))
+			{				
+				$session['search'] 		= $search;
+				$session['control'] 	= SEARCH_SEARCH;
+				$this->session->set_userdata($session);
+			}			
+			elseif (!empty($unSearch) AND (empty($search)))
+			{
+				$session['unSearch'] 	= $unSearch;
+				$session['control'] 	= SEARCH_UNSEARCH;
+				$this->session->set_userdata($session);
+			}
+			elseif (!empty($search) AND (!empty($unSearch)))
+			{
+				$session['unSearch'] 	= $unSearch;
+				$session['search'] 		= $search;
+				$session['control'] 	= SEARCH_SEARCH_UNSEARCH;
+				$this->session->set_userdata($session);
+			}			
+		}
+		elseif ($control == SEARCH_SEARCH)
+		{
+			$search 				= $this->session->userdata['search'];
+			$session['control'] 	= SEARCH_SEARCH;
+			$this->session->set_userdata($session);
+		}
+		elseif ($control == SEARCH_UNSEARCH)
+		{
+			$unSearch 				= $this->session->userdata['unSearch'];
+			$session['control'] 	= SEARCH_UNSEARCH;			
+			$this->session->set_userdata($session);
+		}
+		elseif ($control == SEARCH_SEARCH_UNSEARCH)
+		{
+			$unSearch 				= $this->session->userdata['unSearch'];
+			$search 				= $this->session->userdata['search'];
+			$session['control'] 	= SEARCH_SEARCH_UNSEARCH;			
+			$this->session->set_userdata($session);			
+		}
+		
 		// Montando a nome da tabela a ser procurada //
 		$table 	= $ncm . "_" . $year;
 		
@@ -135,102 +191,115 @@ class Search extends CI_Controller
 			$data['year'] 	= $year;
 
 			// Pesquisando por uma palavra chave
-			if (!empty($search))
+			if (!empty($search) AND (($control == SEARCH) OR ($control == SEARCH_SEARCH) OR ($control == SEARCH_SEARCH_UNSEARCH)))
 			{
 				// Pesquisando por uma palavra chave e retirando uma palavra chave
 				if (!empty($unSearch))
 				{
+					// echo "<br>SEARCH E UNSEARCH<br>";
 					// Configurando paginação //
-			        $config["total_rows"] 	= $this->ncm_model->countData($table, '5', NULL, NULL, $search, $unSearch, NULL);
+			        $config["total_rows"] 	= $this->ncm_model->countData($table, '5', NULL, NULL, $search, $unSearch, NULL, NULL);
 			        $config["per_page"] 	= 20;
 			        
 			        $this->pagination->initialize($config);
 			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 					// Carrega os dados somente com ano e ncm //
-					$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, '5', NULL, NULL, $search, $unSearch, NULL);
+					$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, '5', NULL, NULL, $search, $unSearch, NULL, NULL);
 					$data["links"] 	= $this->pagination->create_links();
 				}
 				// Pesquisando por uma palavra chave
 				else
 				{
+					// echo "<br>SEARCH<br>";
 					// Configurando paginação //
-			        $config["total_rows"] 	= $this->ncm_model->countData($table, '4', NULL, NULL, $search, NULL, NULL);
+			        $config["total_rows"] 	= $this->ncm_model->countData($table, '4', NULL, NULL, $search, NULL, NULL, NULL);
 			        $config["per_page"] 	= 20;
 			        
 			        $this->pagination->initialize($config);
 			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 					// Carrega os dados somente com ano e ncm //
-					$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, '4', NULL, NULL, $search, NULL, NULL);
+					$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, '4', NULL, NULL, $search, NULL, NULL, NULL);
 					$data["links"] 	= $this->pagination->create_links();
 				}
-			}
-			// Retirando uma palavra chave
-			elseif (!empty($unSearch))
+			}			
+			elseif (!empty($unSearch) AND (($control == SEARCH) OR ($control == SEARCH_UNSEARCH)))		// Retirando uma palavra chave
 			{
+				// echo "<br>UNSEARCH<br>";
 				// Configurando paginação //
-		        $config["total_rows"] 	= $this->ncm_model->countData($table, '6', NULL, NULL, NULL, $unSearch, NULL);
+		        $config["total_rows"] 	= $this->ncm_model->countData($table, '6', NULL, NULL, NULL, $unSearch, NULL, NULL);
 		        $config["per_page"] 	= 20;
 		        
 		        $this->pagination->initialize($config);
 		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 				// Carrega os dados somente com ano e ncm //
-				$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, '6', NULL, NULL, NULL, $unSearch, NULL);
+				$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, '6', NULL, NULL, NULL, $unSearch, NULL, NULL);
 				$data["links"] 	= $this->pagination->create_links();								
 
-			}
-			// Pesquisando por NCM e ANO sem filtros
-			elseif (empty($brand))
+			}			
+			elseif ($control == WITHOUT_FILTER)
 			{
+				// echo "<br>SEM FILTROS<br>";
 				// Configurando paginação //
-		        $config["total_rows"] 	= $this->ncm_model->countData($table, '1', NULL, NULL, NULL, NULL, NULL);
+		        $config["total_rows"] 	= $this->ncm_model->countData($table, '1', NULL, NULL, NULL, NULL, NULL, NULL);
 		        $config["per_page"] 	= 20;
 		        
 		        $this->pagination->initialize($config);
 		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 				// Carrega os dados somente com ano e ncm //
-				$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, '1', NULL, NULL, NULL, NULL, NULL);
+				$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, '1', NULL, NULL, NULL, NULL, NULL, NULL);
 				$data["links"] 	= $this->pagination->create_links();
 			}
-			else
-			{				
-				// Pesquisando por Marca
-				if (empty($model))
-				{
-					// Carrega todos os modelos da marca selecionada //
-					$data['modelos'] = $this->model_model->getModelByBrand($brand, NULL);			
+			elseif ($control == CATEGORY)
+			{
+		        // echo "<br>CATEGORIA<br>";
+		        $config["total_rows"] 	= $this->ncm_model->countData($table, '8', NULL, NULL, NULL, NULL, NULL, $categoria);
+		        $config["per_page"] 	= 20;
+		        
+		        $this->pagination->initialize($config);
+		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-			        $config["total_rows"] 	= $this->ncm_model->countData($table, '2', $brand, NULL, NULL, NULL, NULL);
+				// Carrega os dados somente com ano e ncm //
+				$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, '8', NULL, NULL, NULL, NULL, NULL, $categoria);
+				$data["links"] = $this->pagination->create_links();									
+			}			
+			elseif ($control == BRAND)
+			{				
+				// echo "<br>MARCA<br>";
+				// Carrega todos os modelos da marca selecionada //
+				$data['modelos'] = $this->model_model->getModelByBrand($brand, NULL);			
+
+		        $config["total_rows"] 	= $this->ncm_model->countData($table, '2', $brand, NULL, NULL, NULL, NULL, NULL);
+		        $config["per_page"] 	= 20;
+
+		        $this->pagination->initialize($config);
+		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+				// Carrega os dados somente com ano e ncm //
+				$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, '2', $brand, NULL, NULL, NULL, NULL, NULL);
+				$data["links"] = $this->pagination->create_links();	
+
+			}
+			elseif ($control == MODEL) // Pesquisando por modelo
+			{
+				// echo "<br>MODELO<br>";
+				// Pesquisando por modelo
+				$data['modelos'] 		= $this->model_model->getModelByBrand($brand, NULL);			
+		        $config["total_rows"] 	= $this->ncm_model->countData($table, '3', $brand, $model, NULL, NULL, NULL, NULL);
+
+		        if ($config["total_rows"] > 0)
+		        {				        
 			        $config["per_page"] 	= 20;
-			        
 			        $this->pagination->initialize($config);
 			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 					// Carrega os dados somente com ano e ncm //
-					$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, '2', $brand, NULL, NULL, NULL, NULL);
-					$data["links"] = $this->pagination->create_links();									
-				}
-				else 				
-				{
-					// Pesquisando por modelo
-					$data['modelos'] 		= $this->model_model->getModelByBrand($brand, NULL);			
-			        $config["total_rows"] 	= $this->ncm_model->countData($table, '3', $brand, $model, NULL, NULL, NULL);
-			        
-
-			        if ($config["total_rows"] != 0)
-			        {				        
-				        $config["per_page"] 	= 20;
-				        $this->pagination->initialize($config);
-				        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
-						// Carrega os dados somente com ano e ncm //
-						$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, '3', $brand, $model, NULL, NULL, NULL);
-						$data["links"] = $this->pagination->create_links();				       		
-			       	}
-				}
+					$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, '3', $brand, $model, NULL, NULL, NULL, NULL);
+					$data["links"] = $this->pagination->create_links();				       		
+		       	}
 			}
 
 			if (!empty($data['dados']))
@@ -248,7 +317,7 @@ class Search extends CI_Controller
 				}				
 			}
 
-			if ($config["total_rows"] != 0)
+			if (isset($config["total_rows"]))
 			{				
 				// Verificar se o usuário é administrador //
 				if ($userType == 1)
