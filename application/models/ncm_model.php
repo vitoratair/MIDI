@@ -631,9 +631,10 @@ class ncm_model extends CI_Model
 	}
 
 	// Retorna a lista de importações de uma marca //
-	public function getDataDetails($table, $modelos, $marca, $categoria, $dataInicial, $dataFinal)
+	public function getDataDetails($id, $table, $modelos, $marca, $categoria, $dataInicial, $dataFinal)
 	{
-		if (($marca == NULL) AND ($modelos == NULL))
+		
+		if ($id == 1)
 		{
 			$this->db->select('IDN, VALOR_TOTAL_PRODUTO_DOLAR, DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome, MES');
 			$this->db->from($table);
@@ -643,9 +644,20 @@ class ncm_model extends CI_Model
 			$this->db->where('Modelo', '1');
 			$this->db->where('Marca', '1');
 			$this->db->where("MES BETWEEN $dataInicial AND $dataFinal");					
-			$query = $this->db->get();			
+			$query = $this->db->get();
 		}
-		elseif (empty($marca))
+		elseif ($id == 2)
+		{
+			$this->db->select('IDN, VALOR_TOTAL_PRODUTO_DOLAR, DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome, MES');
+			$this->db->from($table);
+			$this->db->join('Marca', 'MAID = Marca');
+			$this->db->join('Modelo', 'MOID = Modelo');
+			$this->db->where('Marca', $marca);			
+			$this->db->where_in('Modelo', $modelos);
+			$this->db->where("MES BETWEEN $dataInicial AND $dataFinal");		
+			$query = $this->db->get();	
+		}
+		elseif ($id == 3)
 		{
 			$this->db->select('IDN, VALOR_TOTAL_PRODUTO_DOLAR, DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome, MES');
 			$this->db->from($table);
@@ -656,17 +668,18 @@ class ncm_model extends CI_Model
 			$this->db->where("MES BETWEEN $dataInicial AND $dataFinal");					
 			$query = $this->db->get();
 		}
-		else
+		elseif ($id == 4)
 		{
 			$this->db->select('IDN, VALOR_TOTAL_PRODUTO_DOLAR, DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome, MES');
 			$this->db->from($table);
 			$this->db->join('Marca', 'MAID = Marca');
-			$this->db->join('Modelo', 'MOID = Modelo');
-			$this->db->where('Marca', $marca);			
+			$this->db->join('Modelo', 'MOID = Modelo');		
 			$this->db->where_in('Modelo', $modelos);
 			$this->db->where("MES BETWEEN $dataInicial AND $dataFinal");		
-			$query = $this->db->get();			
+			$query = $this->db->get();
 		}
+
+		
 		
 		return $query->result();
 	}
