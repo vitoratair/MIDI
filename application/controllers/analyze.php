@@ -809,16 +809,15 @@ class Analyze extends CI_Controller
 		
 		foreach ($sc as $key => $value)
 		{
-			if (!empty($value))
+			if (preg_match ("/^([0-9]+)$/", $value))
 			{
 				$control = False;
-				break;
+			    break;
 			}
 		}
 
 		if ($control)		// Não foi escolhido uma subcategoria
 		{
-			
 			// Listando todas as marcas //
 			$marca = $this->brand_model->listBrandByNcm($table);
 
@@ -832,14 +831,14 @@ class Analyze extends CI_Controller
 				// Calcula as unidades referente a uma NCM //
 				$unidades           = $this->brand_model->sumPartsYearByBrand($table, $marcas, $categoria, $dataInicial, $dataFinal);
 				$volume           	= $this->brand_model->sumCashYearByBrand($table, $marcas, $categoria, $dataInicial, $dataFinal);
-				$outros				= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
+				#$outros				= $this->ncm_model->sumOthersByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
 
 				$result['unidades'] = $unidades[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
 				$result['volume']	= $volume[0]->VALOR_TOTAL_PRODUTO_DOLAR;
 				
 				// Soma o valor com os Outros //
-				$result['unidades'] += $outros[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
-				$result['volume'] 	+= $outros[0]->VALOR_TOTAL_PRODUTO_DOLAR;
+				#$result['unidades'] += $outros[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+				#$result['volume'] 	+= $outros[0]->VALOR_TOTAL_PRODUTO_DOLAR;
 
 				$result['ano'] 		= $ano;
 
@@ -982,31 +981,30 @@ class Analyze extends CI_Controller
 	function getDataByYear($table, $categoria, $sc, $dataInicial, $dataFinal)
 	{
 
-		$control 	= true;
+		$control 	= True;		
 		$marcas		= array();
 		$modelos	= array();
 		$ano 		= explode('_', $table);
 		$ano 		= $ano[1];				
-		
+
 		foreach ($sc as $key => $value)
 		{
-			if (!$value == "false")
+			if (preg_match ("/^([0-9]+)$/", $value))
 			{
-				$control = false;
-				break;
+				$control = False;
+			    break;
 			}
 		}
-
-		if ($control)		// Foi escolhido uma subcategoria
+		
+		if ($control == False) // Foi escolhido uma subcategoria
 		{
-
+			
 			// Verifica os modelos da categoria //
             $modelo         = $this->model_model->listAllModelByCategory($categoria, $sc);                        
-            
             // Formata o query para a clausula IN //
             foreach ($modelo as $key => $value)
             {
-                    array_push($modelos, $value->MOID);        
+				array_push($modelos, $value->MOID);        
             }                
 
             // Listando as marcas que tem modelos com as categorias especificadas //
@@ -1188,21 +1186,46 @@ class Analyze extends CI_Controller
 	function brandDetailsByYear($table, $categoria, $sc, $marca, $dataInicial, $dataFinal)
 	{
 
+		$control 	= True;
 		$modelos	= array();
 		$marcas		= array();
 		$ano 		= explode('_', $table);
 		$ncm 		= $ano[0];
 		$ano 		= $ano[1];		
 
-		// Listando as marcas que tem modelos com as categorias especificadas //
-
-		if (empty($marca))
+		foreach ($sc as $key => $value)
 		{
-			$dados = $this->ncm_model->getDataDetails($table, NULL, NULL, $categoria, $dataInicial, $dataFinal);	
+			if (preg_match ("/^([0-9]+)$/", $value))
+			{
+				$control = False;
+			    break;
+			}
+		}
+		
+		if ($control == False) // Foi escolhido uma subcategoria
+		{
+			// Verifica os modelos da categoria //
+            $modelo 	= $this->model_model->listAllModelByCategory($categoria, $sc);                        
+            
+            // Formata o query para a clausula IN //
+            foreach ($modelo as $key => $value)
+            {
+				array_push($modelos, $value->MOID);        
+            }        
+
+			$dados = $this->ncm_model->getDataDetails("4", $table, $modelos, NULL, $categoria, $dataInicial, $dataFinal);	
 		}
 		else
 		{
-			$dados = $this->ncm_model->getDataDetails($table, NULL, $marca, $categoria, $dataInicial, $dataFinal);
+			// Listando as marcas que tem modelos com as categorias especificadas //
+			if (empty($marca))
+			{
+				$dados = $this->ncm_model->getDataDetails("1", $table, NULL, NULL, $categoria, $dataInicial, $dataFinal);	
+			}
+			else
+			{
+				$dados = $this->ncm_model->getDataDetails("3", $table, NULL, $marca, $categoria, $dataInicial, $dataFinal);
+			}			
 		}
 		
 		foreach ($dados as $key => $value)
@@ -1235,7 +1258,7 @@ class Analyze extends CI_Controller
 		$ncm 		= $ano[0];
 		$ano 		= $ano[1];		
 
-		$dados = $this->ncm_model->getDataDetails($table, NULL, NULL, $categoria, $dataInicial, $dataFinal);	
+		$dados = $this->ncm_model->getDataDetails("1", $table, NULL, NULL, $categoria, $dataInicial, $dataFinal);	
 		
 		foreach ($dados as $key => $value)
 		{
