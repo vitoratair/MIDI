@@ -45,8 +45,15 @@ class Upload_model extends CI_Model
 	/* Insere as entradas de NCM no formato array */
 	function insertTable($tableName, $data) 
 	{		
-		return $this->db->insert_batch($tableName, $data);
+		return $this->db->insert($tableName, $data);
+		// return $this->db->insert_batch($tableName, $data);
 	}
+
+	/* Insere as entradas de NCM no formato array */
+	function insert($tableName, $data) 
+	{		
+		return $this->db->insert($tableName, $data);
+	}	
 
 	/* Verifica se a tabela já existe */
 	function checkTable($table)

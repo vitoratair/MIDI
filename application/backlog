@@ -9,6 +9,19 @@ Backlog
 	- Importar NCMs
 	- Possibilidade de exportar dados para excel;
 
+	
+	- Rever código para análise de subcategoria
+	- Rever exclussão de modelos {setar em 1 categoria, marca e modelo e subcategorias}
+	- Rever exclussão de marcas {setar em 1 marca, modelo }
+	- Rever exclussão de sc {setar em 1 subcategoria }	
+	- clicar 2 vezes no botão pesquisa.
+
+
+	- Importar NCM grandes
+	-  Adicionar uma flag para informa que n~ao se deve atualizar um modelos ao processar.
+
+
+
 In Progress
 
 	- Análise das categorias
