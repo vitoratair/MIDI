@@ -85,7 +85,7 @@ class Brand extends CI_Controller
 		redirect('brand/listAll');
 	}
 
-	// Deleta a categoria e suas referencias em outras tabelas //
+	// Deleta a marca e suas referencias em outras tabelas //
 	public function deleteBrand($id)
 	{
 		

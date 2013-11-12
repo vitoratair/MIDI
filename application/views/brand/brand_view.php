@@ -82,6 +82,16 @@
 	 	</div>
 </div>
 
+<script type="text/javascript">
+
+function Remove(id){
+
+	document.getElementById("Excluir");
+	document.getElementById('Excluir').href="<?php echo base_url();?>index.php/brand/deleteBrand/"+id;
+
+}	
+
+</script>
 
 
 
