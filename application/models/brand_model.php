@@ -66,23 +66,11 @@ class Brand_model extends CI_Model
 	{		
 		return $this->db->insert('Marca', $data);
 	}		
-
-	// Deleta a referência da marca da tabela Modelo //
-	function deleteBrandModel($id)
-	{
-		$this->db->query("UPDATE `Modelo` SET Marca_MAID = 1 WHERE Marca_MAID  = '$id'");
-	}	
 	
 	// Deleta a referência da marca das tabelas NCMs //
 	function deleteBrandNcm($data,$id)
 	{
 		$this->db->query("UPDATE `$data` SET Marca = 1, Modelo = 1 WHERE Marca  = '$id'");
-	}
-
-	// Deleta a marca //
-	function deleteBrand($id)
-	{
-		$this->db->query("DELETE FROM `Marca` WHERE MAID = '$id'");
 	}
 	
 	// Retorna informações de uma marca //
