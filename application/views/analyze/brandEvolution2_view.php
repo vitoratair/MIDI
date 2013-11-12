@@ -75,7 +75,7 @@ $(function () {
                 text: 'Análise de importações'
             },
             subtitle: {
-                text: '{marcaNome} - {ano}'
+                text: '{categoriaNome} importados entre {mesInicial} e {mesFinal} de {ano}'
             },
             xAxis: {
                 categories: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',

@@ -25,48 +25,8 @@
                 <div class="nav-collapse collapse">                                     
                     <ul class="nav top-2">
                         
-                        <li class="active"><?php echo anchor('app/home','Home');?></li>                        
-                        
-                        <li>
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Administração
-                                <b class="caret"></b>                            
-                            </a>
-                            
-                            <ul class="dropdown-menu">
-
-                                <!-- <li><?php echo anchor('administration/processing','Processamento');?></li> -->
-
-                                <li><?php echo anchor('administration/statistic','Estatísticas');?></li>
-
-                                <!-- <li><?php echo anchor('app/home','Upload NCM');?></li> -->
-
-                                <!-- <li><?php echo anchor('app/home','Upload Marcas');?></li> -->
-
-                                <!-- <li><?php echo anchor('app/home','Upload Modelos');?></li> -->
-                            </ul>
-                            
-                            <b class="caret-out"></b>                        
-                        </li>
-
-<!--                    <li>
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Cadastro
-                                <b class="caret"></b>                            
-                            </a>
-                            
-                            <ul class="dropdown-menu">
-                                <li><?php echo anchor('category/listAll','Categoria');?></li>                      
-
-                                <li><?php echo anchor('ncm/listAll','NCM');?></li>
-
-                                <li><?php echo anchor('model/addModel','Modelo');?></li>                                
-
-                                <li><?php echo anchor('user/listAll','Usuário');?></li>                                
-                                
-                            </ul>
-  
-                            <b class="caret-out"></b>                        
-                        </li>
--->                           
+                        <li class="active"><?php echo anchor('app/home','Home');?></li>                                                
+             
                         <li>
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">Pesquisas
                                 <b class="caret"></b>                            
@@ -78,6 +38,8 @@
                                 <li><?php echo anchor('brand/listAll','Marca');?></li>
                                 
                                 <li><?php echo anchor('model/listAll','Modelo');?></li>
+
+                                <li><?php echo anchor('administration/statistic','Categoria - NCM');?></li>
                                 
                             </ul>
                             

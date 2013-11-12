@@ -49,7 +49,7 @@
                 text: 'Análise de importações'
             },
             subtitle: {
-                text: '{marcaNome} - {modeloNome} - {ano}'
+                text: '{marcaNome} {modeloNome} importados entre {mesInicial} e {mesFinal} de {ano}'
             },
             xAxis: [{
                 categories: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',

@@ -94,7 +94,7 @@ class Analyze extends CI_Controller
 
 				if (empty($data['titulos']))
 				{
-					$data['main_content'] 	= 'analyze/analise_view';						
+					$data['main_content'] 	= 'analyze/analyze_view';						
 				}
 				else
 				{
@@ -103,12 +103,12 @@ class Analyze extends CI_Controller
 			}
 			else
 			{
-				$data['main_content'] 	= 'analyze/analise_view_empty';
+				$data['main_content'] 	= 'analyze/analyze_view_empty';
 			}
 		}
 		else
 		{
-			$data['main_content'] 	= 'analyze/analise_view_empty';
+			$data['main_content'] 	= 'analyze/analyze_view_empty';
 		}
 		$this->parser->parse('template', $data);
 	}	
@@ -402,6 +402,8 @@ class Analyze extends CI_Controller
 		$data['ano']			= $ano;
 		$data['dataInicial']	= $dataInicial;
 		$data['dataFinal']		= $dataFinal;			
+		$data['mesInicial']		= $this->others->buscaMes($dataInicial);
+		$data['mesFinal']		= $this->others->buscaMes($dataFinal);		
 		$data['sc']				= $sc1;
 		$data['unidades'] 		= substr($unidades, 1);
 		$data['fob'] 			= substr($fob, 1);
@@ -559,7 +561,9 @@ class Analyze extends CI_Controller
 		$data['categoriaNome'] 		= $data['categoriaNome'][0]->CNome;
 		$data['ano'] 				= $ano;
 		$data['dataInicial']		= $dataInicial;
-		$data['dataFinal']			= $dataFinal;			
+		$data['dataFinal']			= $dataFinal;	
+		$data['mesInicial']			= $this->others->buscaMes($dataInicial);
+		$data['mesFinal']			= $this->others->buscaMes($dataFinal);				
 		$data['categoria'] 			= $categoria;
 		$data['marca'] 				= $marca;
 		$data['marcaNome'] 			= $this->brand_model->getBrand($marca);
@@ -693,7 +697,9 @@ class Analyze extends CI_Controller
 		$data['modeloNome'] 	= $data['modeloNome'][0]->MNome;
 		$data['ano']			= $ano;
 		$data['dataInicial']	= $dataInicial;
-		$data['dataFinal']		= $dataFinal;			
+		$data['dataFinal']		= $dataFinal;
+		$data['mesInicial']			= $this->others->buscaMes($dataInicial);
+		$data['mesFinal']			= $this->others->buscaMes($dataFinal);
 		$data['sc']				= $sc1;
 		$marca 					= $this->brand_model->getBrandByModel($modelo);
 		$data['marca'] 			= $marca[0]->MAID;
@@ -792,7 +798,8 @@ class Analyze extends CI_Controller
 		$data['dataFinal']			= $dataFinal;
 		$data['categoria'] 			= $categoria;
 		$data['postSubcategorias'] 	= $sc1;
-
+		$data['mesInicial']			= $this->others->buscaMes($dataInicial);
+		$data['mesFinal']			= $this->others->buscaMes($dataFinal);
 		$data['main_content'] 		= 'analyze/shareYear_view';
 		$this->parser->parse('template', $data);
 

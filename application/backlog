@@ -1,40 +1,55 @@
 Backlog
-	
-	- Na página de pesquisa de modelos, hoje é tem filtros para buscar um modelo por categoria e marca, criar uma função que busque por um nome de modelo em todas as categorias.
-	- No comparativo inicial entre os anos por categoria, adicionar o percentual de variação entre um ano e outro;
+
+	{tenso +-}
+
 	- Selecionar mais de um item de uma subcategoria para análise (ex.: selecionar switches de 54, 150 e 300 Mbps de velocidade);
 	- Possibilidade de inserir dados de produção nacional e estimativas.
+++++++++++++++++++++++++++++
+
+	- Na página de pesquisa de modelos, hoje é tem filtros para buscar um modelo por categoria e marca, criar uma função que busque por um nome de modelo em todas as categorias.
+
+	- No comparativo inicial entre os anos por categoria, adicionar o percentual de variação entre um ano e outro;
+	- Possibilidade de inserir dados de produção nacional e estimativas.
+	
 	- Importar modelos
 	- Importar marcas
-	- Importar NCMs
 	- Possibilidade de exportar dados para excel;
-
 	
-	- Rever código para análise de subcategoria
-	- Rever exclussão de modelos {setar em 1 categoria, marca e modelo e subcategorias}
-	- Rever exclussão de marcas {setar em 1 marca, modelo }
-	- Rever exclussão de sc {setar em 1 subcategoria }	
-	- clicar 2 vezes no botão pesquisa.
+	- Não exibir dados na pesquisa de importações quando não houver dados
+	- Rever exclusão de sc {setar em 1 subcategoria }		
 
-
-	- Importar NCM grandes
-	-  Adicionar uma flag para informa que n~ao se deve atualizar um modelos ao processar.
+	- Adicionar uma flag para informa que não se deve atualizar um modelos ao processar.
+	- Análise das categorias
+	- deixar selecionado combobox escolhidos
+	
+	
 
 
 
 In Progress
 
-	- Análise das categorias
 
 Bugs
-	
-	- Exclusão de modelos já catalogados pelo sistema.
-	- FOB com valor muito baixo. EX. 0,0003 é cadastrado como 0 no sistema
+	- NCM com mais de 10.000 linhas	
 	- Gráficos com botão do tipo "range" estão instáveis
 
-
 Done
-
+	- Gráficos
+		
+		- Evolução marca {datas - categoria {rodapé - subcategorias}}
+		- Pizza por marca {datas {rodapé - subcategorias}}
+		- Pizza por modelo {datas {rodapé - subcategorias}}
+		- Evolução modelo {datas - categoria {rodapé - subcategorias}}	
+	- share inicial {Datas}
+	- Alterar a frase "Pesquisa de importações" para "Análise de importações" na página Análise
+	- ALterar "Volume" por "Valor"
+	- Importar NCMs
+	- FOB com valor muito baixo. EX. 0,0003 é cadastrado como 0 no sistema
+	- Exclusão de modelos já catalogados pelo sistema.
+	- clicar 2 vezes no botão pesquisa.
+	- Rever código para análise de subcategoria
+	- Rever exclusão de modelos {setar em 1 categoria, marca e modelo e subcategorias}
+	- Rever exclusão de marcas {setar em 1 marca, modelo }
 	- Não é possível editar as NCMs cadastradas no sistema (mensagem de erro);
 	- No processamento da NCM 85.21.9090 (2012) mesmo depois de limpar todos os meses, no total aparece 1 marca e 1 modelo encontrados.
 	- Incluir campo com nome do modelo sem que o software busque esse nome nas entradas;

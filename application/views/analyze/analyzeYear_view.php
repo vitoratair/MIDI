@@ -28,7 +28,7 @@
             <tr>
                 <td width=""><b>Marca</b></td>
                 <td width=""><b>Unidades</b></td>
-                <td width=""><b>Volume</b></td>
+                <td width=""><b>Valor</b></td>
                 <td width=""><b>FOB</b></td>
                 <td width=""><b>% Unidades</b></td>
                 <td width=""><b>% Valor</b></td>
