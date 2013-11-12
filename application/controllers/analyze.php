@@ -1216,15 +1216,14 @@ class Analyze extends CI_Controller
 			$dados = $this->ncm_model->getDataDetails("4", $table, $modelos, NULL, $categoria, $dataInicial, $dataFinal);	
 		}
 		else
-		{
-			// Listando as marcas que tem modelos com as categorias especificadas //
+		{			
 			if (empty($marca))
 			{
 				$dados = $this->ncm_model->getDataDetails("1", $table, NULL, NULL, $categoria, $dataInicial, $dataFinal);	
 			}
 			else
 			{
-				$dados = $this->ncm_model->getDataDetails("3", $table, NULL, $marca, $categoria, $dataInicial, $dataFinal);
+				$dados = $this->ncm_model->getDataDetails("5", $table, NULL, $marca, $categoria, $dataInicial, $dataFinal);
 			}			
 		}
 		

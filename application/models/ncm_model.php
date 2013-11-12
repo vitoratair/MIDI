@@ -678,6 +678,17 @@ class ncm_model extends CI_Model
 			$this->db->where("MES BETWEEN $dataInicial AND $dataFinal");		
 			$query = $this->db->get();
 		}
+		elseif ($id == 5)
+		{
+			$this->db->select('IDN, VALOR_TOTAL_PRODUTO_DOLAR, DESCRICAO_DETALHADA_PRODUTO, VALOR_UNIDADE_PRODUTO_DOLAR, QUANTIDADE_COMERCIALIZADA_PRODUTO, Marca, Modelo, MANome, MNome, MES');
+			$this->db->from($table);
+			$this->db->join('Marca', 'MAID = Marca');
+			$this->db->join('Modelo', 'MOID = Modelo');
+			$this->db->where('Marca', $marca);	
+			$this->db->where('Categoria', $categoria);
+			$this->db->where("MES BETWEEN $dataInicial AND $dataFinal");		
+			$query = $this->db->get();
+		}		
 
 		
 		
