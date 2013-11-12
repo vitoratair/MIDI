@@ -371,14 +371,14 @@ class Search extends CI_Controller
 		$data['mes'] 	= $this->others->buscaMes($mes);
 
 		$config["base_url"] 	= base_url() . "index.php/search/visualizeNcmByMonth";
-        $config["total_rows"] 	= $this->ncm_model->countData($table, '7', NULL, NULL, NULL, NULL, $mes);			        			      
+        $config["total_rows"] 	= $this->ncm_model->countData($table, '7', NULL, NULL, NULL, NULL, $mes, NULL);			        			      
         $config["per_page"] 	= 20;
 
         $this->pagination->initialize($config);
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 		// Carrega os dados somente com ano e ncm //
-		$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, '7', NULL, NULL, NULL, NULL, $mes);
+		$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, '7', NULL, NULL, NULL, NULL, $mes, NULL);
 		$data['dados'] = $this->others->formatarDados(1, $data['dados']);
 		$data["links"] = $this->pagination->create_links();			
 
