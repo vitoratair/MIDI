@@ -289,8 +289,8 @@ class ncm extends CI_Controller
 				break;
 
 			case 'MarcaAll':
-				$marca = $this->input->post('marca');
-				$ids 		= $this->input->post('ids');
+				$marca 	= $this->input->post('marca');
+				$ids 	= $this->input->post('ids');
 
 				if (!empty($marca))
 				{

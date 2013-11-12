@@ -37,10 +37,12 @@ class Search extends CI_Controller
 		$control 		= $this->input->post('controle');
 				
 		// Carrega os dados necessários da model //
-		$data['ncms'] 		= $this->ncm_model->listNcm();
-		$data['anos'] 		= $this->ncm_model->listYear();					
-		$data['categorias'] = $this->category_model->listCategory();
-		$data['marcas1'] 	= $this->brand_model->listAllBrand();	
+		$data['ncms'] 			= $this->ncm_model->listNcm();
+		$data['anos'] 			= $this->ncm_model->listYear();					
+		$data['categorias1'] 	= $this->category_model->listCategory();
+		$data['marcas1'] 		= $this->brand_model->listAllBrand();
+		$data['marcas2'] 		= $data['marcas1']; // Rever essa linha 
+
 
 		if (empty($control))
 		{
@@ -71,7 +73,7 @@ class Search extends CI_Controller
 			$session['control'] = $control;			
 			$this->session->set_userdata($session);
 		}
-		
+
 		if ($control == CATEGORY)
 		{			
 			if (empty($categoria))

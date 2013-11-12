@@ -71,7 +71,7 @@ class Brand_model extends CI_Model
 	function deleteBrandNcm($data,$id)
 	{
 		$this->db->query("UPDATE `$data` SET Marca = 1, Modelo = 1 WHERE Marca  = '$id'");
-	}
+	}	
 	
 	// Retorna informações de uma marca //
 	function getBrand($id)

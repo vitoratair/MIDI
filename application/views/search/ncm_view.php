@@ -255,9 +255,9 @@
 		</div>	
 		<div class="modal-body">			
 
-{categorias}
+{categorias1}
 			<input type="radio" id ="categoria" name="categoria" value="{CID}"> {CNome}<br>
-{/categorias}
+{/categorias1}
 
 			</div>
 		<div class="modal-footer">
@@ -283,9 +283,9 @@
 		</div>	
 		<div class="modal-body">			
 
-{marcas}
+{marcas2}
 			<input type="radio" id ="marca" name="marca" value="{MAID}"> {MANome}<br>
-{/marcas}
+{/marcas2}
 
 			</div>
 		<div class="modal-footer">
