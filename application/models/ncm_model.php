@@ -516,7 +516,7 @@ class ncm_model extends CI_Model
 	// Update da NCM com modelo = 1 //
 	function emptyModel($table, $id) 
 	{				
-		$this->db->query("UPDATE $table SET Modelo = 1 WHERE Modelo  = '$id'");
+		$this->db->query("UPDATE $table SET Modelo = 1, Marca = 1, Categoria = 1 WHERE Modelo  = '$id'");
 	}
 
 	// Trunc ncm //
