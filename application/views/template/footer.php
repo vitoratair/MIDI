@@ -9,7 +9,10 @@
                     <dl class="dl-horizontal">
                         <!-- <dt><a href="#"><img src="assets/img/sliders/elastislide/6.jpg" alt="" /></a></dt> -->
                         <!-- <dd> -->
-                            <p><a href="http://www.intelbras.com.br">Desenvolvendo soluções de comunicação e integração que potencializam e valorizam a experiência humana.</a></p> 
+                            <p><a href="http://www.intelbras.com.br">
+                                Inovação conectada à vida
+                                </a>
+                            </p> 
                         <!-- </dd>  -->
                     </dl>
                                   
@@ -21,7 +24,7 @@
                 <address>
                 Mayara Gielow <br />
                 Inteligência Competitiva <br />
-                55 (48) 3281-9889 <br />
+                55 (48) 3281-9821 <br />
                 Email: <a href="mailto:mayara.gielow@intelbras.com.br" class="">mayara.gielow@intelbras.com.br</a>
                 </address>
             </div><!--/span4-->
