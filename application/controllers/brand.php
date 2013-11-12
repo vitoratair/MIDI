@@ -85,31 +85,6 @@ class Brand extends CI_Controller
 		redirect('brand/listAll');
 	}
 
-	// Deleta a marca e suas referencias em outras tabelas //
-	public function deleteBrand($id)
-	{
-		
-		// Constante contendo a string "Tables_in + DATABASE" //
-		$table = TABLE;
-
-		// Recebe todas as tabelas de NCMs do sistema //
-		$data = $this->ncm_model->listAllNcm();
-
-		// Loop para apagar a referência da marca em todas as NCMs
-		foreach ($data as $key => $value)
-		{
-			 $this->brand_model->deleteBrandNcm($value->$table, $id);
-		}
-
-		// Deleta a referência da marca na tabela Modelo // 
-		$this->brand_model->deleteBrandModel($id);
-
-		// Deleta a marca do banco de dados //
-		$this->brand_model->deleteBrand($id);
-		
-		redirect('brand/listAll');
-	}
-
 	// Edição da marca //
 	public function editBrand($id)
 	{
