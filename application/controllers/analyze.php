@@ -1213,10 +1213,12 @@ class Analyze extends CI_Controller
 				array_push($modelos, $value->MOID);        
             }        
 
-			$dados = $this->ncm_model->getDataDetails("4", $table, $modelos, NULL, $categoria, $dataInicial, $dataFinal);	
+			$dados = $this->ncm_model->getDataDetails("2", $table, $modelos, $marca, $categoria, $dataInicial, $dataFinal);
+			
 		}
 		else
 		{			
+			
 			if (empty($marca))
 			{
 				$dados = $this->ncm_model->getDataDetails("1", $table, NULL, NULL, $categoria, $dataInicial, $dataFinal);	
