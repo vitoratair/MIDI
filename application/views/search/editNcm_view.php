@@ -21,6 +21,7 @@
 	<div class="headline" align="center">
 		<h3 align="center"><small>Visualização da na NCM </small><b>{ncm}</b><small> no ano de </small>{year}</h3><br>
 	</div>
+	
 	<!-- Tabela com a lista de linhas de NCMs -->
 	<table class='table table-bordered table-striped'>
 			
@@ -51,7 +52,8 @@
 				<td width="%"><b>PAIS_ORIGEM</b></td>
 				<td width="%"><b>PAIS_AQUISICAO</td>
 				<td width="%"><b>UNIDADE_COMERCIALIZACAO</td>
-				<td width="%"><b>PESO_LIQUIDO_KG</td>				
+				<td width="%"><b>PESO_LIQUIDO_KG</td>
+				<td width="%"><b>Flag</td>				
 			</tr>			
 			
 			<tr class="table-condensed">	
@@ -61,13 +63,15 @@
 				<td>{PAIS_ORIGEM}</td>
 				<td>{PAIS_AQUISICAO}</td>				
 				<td>{UNIDADE_COMERCIALIZACAO}</td>
-				<td>{PESO_LIQUIDO_KG}</td>		
+				<td>{PESO_LIQUIDO_KG}</td>
+				<?php
+					if ($flag == 1)
+						echo "<td><input id=\"flag\" type=\"checkbox\" checked onclick=\"Update({ncm}, {year}, {IDN})\"></td>";
+					else
+						echo "<td><input id=\"flag\" type=\"checkbox\" onclick=\"Update({ncm}, {year}, {IDN})\"></td>"
+				?>				
 			</tr>			
 	</table>
-
-
-
-	
 
 	<!-- subcategorias -->
 	<h3 align="center"><small>Subcategorias de </small><strong>{CNome}</strong></h3><br>
@@ -110,6 +114,24 @@
 		++ Janela Modal para alteração dos dados ++
 	+++++++++++++++++++++++++++++++++++++++++++++++++++
 -->
+
+<script type="text/javascript">
+
+    function Update(ncm, ano, idn)
+    {    
+
+    	alert(document.getElementById("flag").value);
+        // var url = '<?php echo base_url();?>index.php/ncm/update/Flag/';
+        // var form = $('<form action="' + url + '" method="POST">' +
+        //   '<input type="hidden" name="year" value="' + ano + '" />' +
+        //   '<input type="hidden" name="ncm" value="' + ncm + '" />' +
+        //   '<input type="hidden" name="idn" value="' + idn + '" />' +
+        //   '</form>');
+        // $('body').append(form);
+        // $(form).submit();
+
+    }
+</script>
 
 <!-- Modal para alteração da categoria -->
 <form action="<?php echo base_url();?>index.php/ncm/update/Categoria/" method="POST">	

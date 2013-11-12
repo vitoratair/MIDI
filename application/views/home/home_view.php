@@ -4,19 +4,18 @@
 <!--=== Purchase Block ===-->
 <div class="row-fluid purchase margin-bottom-30">
     <div class="container">
-        <div class="span9">
-            
-            <span>Pesquisas de importações!!!</span>
-            <p>
-                Pesquisas de importações <i> MIDI - Monitoramento Intelbras de Dados de Importações</i>.    
-            </p>
-
-        </div>
+        <div class="span12">
+    
+    <p align="center">
+        <h1 align="center">Consulte análises realizadas</h1>
+    </p>
+    <p align="center">            
         <a href="<?php echo base_url();?>index.php/analyze/listAll" class="btn-buy hover-effect"> Inicie aqui </a>
+        </p>
+        </div>
+        
     </div>
 </div><!--/row-fluid-->
-<!-- End Purchase Block -->
-
 <br><br>
 
 <!--=== Content Part ===-->
@@ -30,7 +29,7 @@
                 <div class="desc">
                     <h4>Metodologia</h4>
                     <p>
-                        Métodolia utilizada para elaboração das pesquisas                    
+                        Detalhamento de como são obtidos e processados os dados
                     </p>
                 </div>
             </div>  
@@ -58,13 +57,17 @@
                 <div class="desc">
                     <h4>Documentação</h4>
                     <p>                        
-                        Manual de utilização do sistema, mostrando as princiapais funções passo-a-passo                        
+                        Manual de utilização do sistema, princiapais funções passo-a-passo                        
                     </p>
                 </div>
             </div>  
         </div>              
         </a>
     </div><!--/row-fluid-->
+
+
+<!-- End Purchase Block -->
+
     <!-- //End Service Blokcs -->
 </div>
 

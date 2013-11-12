@@ -21,7 +21,7 @@
 			  	
 			  	<li class="span">
 			    	<div class="thumbnail" align = "center">
-			      		<img src="<?php echo base_url();?>assets/img/users.jpg"  alt="" width="150px">
+			      		<img src="<?php echo base_url();?>assets/img/perfil.jpg"  alt="" width="150px">
 						<p><small>{tipoNome}</small></p>
 		    		</div>
 		  		</li>

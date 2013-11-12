@@ -511,6 +511,10 @@ class ncm_model extends CI_Model
 		{					
 			$this->db->query("UPDATE $table SET Modelo = $item WHERE IDN IN ($idn)");
 		}			
+		elseif ($id == 7)
+		{					
+			$this->db->query("UPDATE $table SET Handle = $item WHERE IDN = '$idn'");
+		}		
 	}	
 
 	// Update da NCM com modelo = 1 //
@@ -741,6 +745,20 @@ class ncm_model extends CI_Model
 		
 		return $query->result();
 	}	
+
+	// Retorna a handle flag do ID //
+	function getHandleFlag($table, $idn)
+	{
+		$this->db->select('Handle');
+		$this->db->from($table);
+		$this->db->where('IDN', $idn);
+		$this->db->limit('1');
+		$query = $this->db->get();
+		
+		return $query->result();
+	}
+
+
 
 }
 

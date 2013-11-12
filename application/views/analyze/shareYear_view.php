@@ -49,7 +49,7 @@ $(function () {
                 text: 'Análise de importação'
             },
             subtitle:{
-	          text: '{categoriaNome} - {ano}'  
+	          text: '{categoriaNome} importados entre {mesInicial} e {mesFinal} de {ano}'  
             },
             tooltip: {
 	            pointFormat: "Value: {point.y:,.0f}"	         

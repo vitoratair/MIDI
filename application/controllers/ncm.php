@@ -143,6 +143,8 @@ class ncm extends CI_Controller
 			// // Envia os dados para a view //
 			$data['ncm'] 	= $ncm; 
 			$data['year'] 	= $year;
+			$data['flag']	= $this->ncm_model->getHandleFlag($table, $idn);
+			$data['flag']	= $data['flag'][0]->Handle;
 
 			$data['main_content'] = 'search/editNcm_view';
 			$this->parser->parse('template',$data);
@@ -253,6 +255,7 @@ class ncm extends CI_Controller
 		$year 	= $this->input->post('year');		
 		$idn 	= $this->input->post('idn');
 		$coluna = $this->input->post('coluna');
+		$flag 	= $this->input->post('flag');
 
 		$coluna = "SubCategoria".$coluna."_SCID";
 		$table 	=  $ncm . "_" . $year;
@@ -385,14 +388,21 @@ class ncm extends CI_Controller
 						 $this->request_model->addRequest(3, $user, $ncm, $year, $idn, $modelo);
 					}
 				}
-				break;									
+				break;
+
+			case 'Flag':
+				$this->ncm_model->update(7, $table, $id, $idn, 1);	
+				print_r($this->db->last_query());				
+			// print_r($flag);
+
+				break;													
 
 			default:
 				# code...
 				break;
 		}	
 
-		redirect("ncm/edit/$idn/$ncm/$year/$idn");
+		// redirect("ncm/edit/$idn/$ncm/$year/$idn");
 	}	
 
 	// Limpa uma determinada NCM, colocando 1 em todos os campos dinâmicos //

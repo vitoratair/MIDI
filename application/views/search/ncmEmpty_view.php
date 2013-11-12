@@ -176,7 +176,7 @@
 	
 	<!-- Legenda da pesquisa -->
 	<div class="headline" align="center">
-		<h3 align="center"><small>A NCM no ano escolhido não conta na base de dados</h3>
+		<h3 align="center"><small>A NCM no ano escolhido não consta na base de dados</h3>
 	</div>	
 
 </div>
