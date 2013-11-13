@@ -46,7 +46,6 @@ class Upload extends CI_Controller
 	/* Realiza o upload para o diret´orio /uploads */	
 	function do_upload()
 	{		
-		
 		/* Busca as informações de POST */
 		$id = $this->input->post('id');
 
@@ -58,7 +57,7 @@ class Upload extends CI_Controller
 		$nameFile = $nameFile[0];
 
 		/* Array com as extensões permitidas */
-		$_OP['extensoes'] = array('xls');
+		$_OP['extensoes'] = array('xls', 'jpg');
 
 		/* Faz a verificação da extensão do arquivo */
 		$extensao = strtolower(end(explode('.', $_FILES['userfile']['name'])));	
@@ -78,7 +77,17 @@ class Upload extends CI_Controller
 					return;
 				}
 
-				$this->openFile($uploadfile, $nameFile, 1);			
+				if (move_uploaded_file($_FILES['userfile']['tmp_name'], '/tmp/' . $_FILES['userfile']['name']))
+				{
+				    print "O arquivo é valido e foi carregado com sucesso. Aqui esta alguma informação:\n";
+				    // print_r($_FILES);
+				}
+				else
+				{
+				    print "Possivel ataque de upload! Aqui esta alguma informação:\n";
+				    print_r($_FILES['error']);
+				}
+				#$this->openFile($uploadfile, $nameFile, 1);			
 
 			}
 			elseif ($id == 'ncmUpdate')
@@ -100,7 +109,7 @@ class Upload extends CI_Controller
 
 	function openFile($pathFile, $nameFile, $id)
 	{
-		error_reporting(E_ALL ^ E_NOTICE); 		/* Não reporta erro do tipo Notice */
+		error_reporting(E_ALL ^ E_NOTICE); 		/* Não reporta erro do tipo Notice */	
 
 		/* Carrega a primeira aba do excel na variável $sheet */
 		if (!file_exists($pathFile))
@@ -112,6 +121,7 @@ class Upload extends CI_Controller
 		$data 	= new Spreadsheet_Excel_Reader($pathFile, true);
 		$sheet 	= $data->sheets[0];
 
+
 		/* Verifica se o arquivo esta com o template correto */
 		if (!$this->checkErro($sheet))
 			return;
@@ -119,14 +129,14 @@ class Upload extends CI_Controller
 		if ($id == 1)
 		{
 			/* Cria a tabela no mysql */
-			$result = $this->upload_model->createTable($nameFile);		
+			$result = $this->upload_model->createTable("TESTE");		
 			$msg = "Arquivo importado com sucesso";
 		}
 		elseif ($id == 2)
 		{
 			$msg = "Arquivo atualizado com sucesso";	
 		}
-		
+
 		/* Montando o array para inserção de dados */
 		$i = 0;
 		foreach ($sheet['cells'] as $key1 => $value)
@@ -153,7 +163,6 @@ class Upload extends CI_Controller
 				$dataInsert['SubCategoria6_SCID']					= $value[19];
 				$dataInsert['SubCategoria7_SCID']					= $value[20];
 				$dataInsert['SubCategoria8_SCID']					= $value[21];
-
 				if ($this->upload_model->insertTable($nameFile, $dataInsert) == false)
 				{					
 					print_r($i);
@@ -163,8 +172,7 @@ class Upload extends CI_Controller
 			}
 		}
 
-		/* Inserindo dados na tabela */
-		
+		/* Inserindo dados na tabela */		
 		$this->showSuccess($msg);	
 
 		return;
