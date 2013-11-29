@@ -59,7 +59,7 @@
 			<tr class="table-condensed">	
 				<td><a href="#categoriaAlterar" data-toggle="modal">{CNome}</a></td>
 				<td><a href="#marcaAlterar" data-toggle="modal">{MANome}</a></td>
-				<td><a href="#modeloAlterar" data-toggle="modal">{MNome}</a></td>				
+				<td><a href="#modeloAlterar" data-toggle="modal">{MNome0}</a></td>				
 				<td>{PAIS_ORIGEM}</td>
 				<td>{PAIS_AQUISICAO}</td>				
 				<td>{UNIDADE_COMERCIALIZACAO}</td>

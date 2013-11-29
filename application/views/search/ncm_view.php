@@ -108,9 +108,9 @@
 								<div class="controls">
 									<select id="categoria" name="categoria" class="span2" onchange="this.form.submit()">
 										<option value="">Categoria</option>	
-										{categorias1}		
+										{categorias2}		
 											<option value="{CID}">{CNome}</option>
-										{/categorias1}								
+										{/categorias2}								
 								    </select>
 								    <input type="hidden" name="controle" value="4">						
 								</div>

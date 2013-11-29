@@ -110,7 +110,6 @@ class ncm extends CI_Controller
 			{
 				$data['titulos']	= $this->category_model->listTitle($categoria[0]->Categoria);			
 			}
-
 			if (!empty($modelo))
 			{
 				if ($modelo[0]->Modelo != 1)
@@ -133,19 +132,18 @@ class ncm extends CI_Controller
 					{
 						$data['titulos'][$key]->SubCategoriaID 	= $this->ncm_model->listarSubcategoriasNcm($table, $value->TColuna, $idn);
 						$data['titulos'][$key]->SubCategoria 	= $this->ncm_model->getElementByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
-					}	
+					}
 				}				
 			}
 
 			$data['dados']	 	= $this->ncm_model->listDataNcm($table, $idn);
 			$data['dados'] 		= $this->others->formatarDados(8, $data['dados']);
 			
-			// // Envia os dados para a view //
+			// Envia os dados para a view //
 			$data['ncm'] 	= $ncm; 
 			$data['year'] 	= $year;
-			$data['flag']	= $this->ncm_model->getHandleFlag($table, $idn);
-			$data['flag']	= $data['flag'][0]->Handle;
-
+			#$data['flag']	= $this->ncm_model->getHandleFlag($table, $idn);
+			#$data['flag']	= $data['flag'][0]->Handle;
 			$data['main_content'] = 'search/editNcm_view';
 			$this->parser->parse('template',$data);
 		}	
@@ -402,7 +400,7 @@ class ncm extends CI_Controller
 				break;
 		}	
 
-		// redirect("ncm/edit/$idn/$ncm/$year/$idn");
+		redirect("ncm/edit/$idn/$ncm/$year/$idn");
 	}	
 
 	// Limpa uma determinada NCM, colocando 1 em todos os campos dinâmicos //
