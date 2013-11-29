@@ -50,7 +50,7 @@ class Upload extends CI_Controller
 		$id = $this->input->post('id');
 
 		/* Realiza o upload para o diretório /tmp */
-		$uploadfile = $_FILES['userfile']['tmp_name'];
+		$uploadfile = '/tmp/' . $_FILES['userfile']['name'];
 
 		$nameFile = $_FILES['userfile']['name'];
 		$nameFile = explode('.', $nameFile);
@@ -87,7 +87,7 @@ class Upload extends CI_Controller
 				    print "Possivel ataque de upload! Aqui esta alguma informação:\n";
 				    print_r($_FILES['error']);
 				}
-				#$this->openFile($uploadfile, $nameFile, 1);			
+				$this->openFile($uploadfile, $nameFile, 1);			
 
 			}
 			elseif ($id == 'ncmUpdate')
@@ -110,7 +110,7 @@ class Upload extends CI_Controller
 	function openFile($pathFile, $nameFile, $id)
 	{
 		error_reporting(E_ALL ^ E_NOTICE); 		/* Não reporta erro do tipo Notice */	
-
+		print_r($pathFile);
 		/* Carrega a primeira aba do excel na variável $sheet */
 		if (!file_exists($pathFile))
 		{
@@ -129,7 +129,7 @@ class Upload extends CI_Controller
 		if ($id == 1)
 		{
 			/* Cria a tabela no mysql */
-			$result = $this->upload_model->createTable("TESTE");		
+			$result = $this->upload_model->createTable($nameFile);		
 			$msg = "Arquivo importado com sucesso";
 		}
 		elseif ($id == 2)

@@ -57,7 +57,7 @@
                 <div class="desc">
                     <h4>Documentação</h4>
                     <p>                        
-                        Manual de utilização do sistema, princiapais funções passo-a-passo                        
+                        Manual de utilização do sistema, principais funções passo-a-passo                        
                     </p>
                 </div>
             </div>  

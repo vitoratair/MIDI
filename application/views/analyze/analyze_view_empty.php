@@ -23,7 +23,7 @@
             <td>                
                 <div align="left">
                     <select id="categoria"  name="categoria" class="span3">                   
-                                   
+                        <option value="">Selecione uma subcategoria</option>
                         {categorias}    
                             <option value="{CID}">{CNome}</option>
                         {/categorias}
@@ -36,6 +36,7 @@
             <td>
                 <div align="right">
                     <select id="dataInicial"  name="dataInicial" class="span3">                   
+                            <option value="1">Data Inicial</option>
                             <option value="1">Janeiro</option>
                             <option value="2">Fevereiro</option>
                             <option value="3">Março</option>
@@ -48,7 +49,6 @@
                             <option value="10">Outubro</option>
                             <option value="11">Novembro</option>
                             <option value="12">Dezembro</option>
-                        
                     </select>
                 </div>
             </td>
@@ -56,6 +56,7 @@
             <td>
                 <div align="left">
                     <select id="dataFinal"  name="dataFinal" class="span3" onchange="this.form.submit()">                                                   
+                            <option value="12">Data Final</option>
                             <option value="1">Janeiro</option>
                             <option value="2">Fevereiro</option>
                             <option value="3">Março</option>

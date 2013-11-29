@@ -37,7 +37,7 @@
 				<td>{DESCRICAO_DETALHADA_PRODUTO}</td>
 				<td><a href="#categoriaAlterar" data-toggle="modal">{CNome}</a></td>
 				<td><a href="#marcaAlterar" data-toggle="modal">{MANome}</a></td>
-				<td><a href="#modeloAlterar" data-toggle="modal">{MNome}</a></td>
+				<td><a href="#modeloAlterar" data-toggle="modal">{MNome0}</a></td>
 				<td>{QUANTIDADE_COMERCIALIZADA_PRODUTO}</td>				
 			</tr>
 		</tbody>

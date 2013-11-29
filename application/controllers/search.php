@@ -40,6 +40,7 @@ class Search extends CI_Controller
 		$data['ncms'] 			= $this->ncm_model->listNcm();
 		$data['anos'] 			= $this->ncm_model->listYear();					
 		$data['categorias1'] 	= $this->category_model->listCategory();
+		$data['categorias2'] 	= $data['categorias1']; 
 		$data['marcas1'] 		= $this->brand_model->listAllBrand();
 		$data['marcas2'] 		= $data['marcas1']; // Rever essa linha 
 
