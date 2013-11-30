@@ -110,19 +110,18 @@ class Administration extends CI_Controller
 		$data['categoria'] 	= $this->input->post('categoria');	
 
 		// Busca as informações para enviar para view //	
-		$data['ncms'] 		= $this->ncm_model->listNcm();
-		$data['anos'] 		= $this->ncm_model->listYear();
-		$data['categorias'] = $this->category_model->listCategory();
+		$data['ncms']		= $this->ncm_model->listNcm();
+		$data['anos']		= $this->ncm_model->listYear();
+		$data['categorias']	= $this->category_model->listCategory();
 
 		if (($data['categoria']))
 		{
-
 			// Recebe toas as NCMs da categoria //
-			$data['ncm']			= $this->listNcmYearByCategory($data['categoria']);
+			$data['ncm'] = $this->listNcmYearByCategory($data['categoria']);
 
 			for ($i=0; $i <sizeof($data['ncm']); $i++)
 			{
-				$table 									= $data['ncm'][$i][0] . "_" . $data['ncm'][$i][1];
+				$table = $data['ncm'][$i][0] . "_" . $data['ncm'][$i][1];
 				
 				// pesquisa o último mês contendo dados para processar //
 				$lastUpdate 							= $this->ncm_model->getLastData($table);
@@ -143,13 +142,12 @@ class Administration extends CI_Controller
 		}
 		else
 		{
-
 			if (!empty($data['ncm']) && (!empty($data['ano'])))
 			{
 				$table = $data['ncm'] . "_" . $data['ano'];	
 			}
 
-			if(!empty($table))
+			if($this->ncm_model->checkNcm($table))
 			{
 				if ($this->ncm_model->checkNcm($table))
 				{
