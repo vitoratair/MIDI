@@ -107,6 +107,7 @@ class ncm_model extends CI_Model
 			$this->db->from($table);
 			$this->db->where('CID !=', 1);
 			$this->db->join('Categoria', 'Categoria = CID');
+			$this->db->where('MES', $mes);
 			$query = $this->db->get();
 			return $query->result();	
 		}	
