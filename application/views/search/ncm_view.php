@@ -18,11 +18,11 @@
 			<tr>			
 				<td width="16%" valign="top">
 					
-					<!-- Formulário para combobox sem botão submit -->
-					<?php
-						$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
-						echo form_open('search/ncm', $atributos); 
-					?>		
+<!-- Formulário para combobox sem botão submit -->
+<?php
+	$atributos = array('form class'=>'form',  'id'=>'FormCadastro', 'method'=>'POST');
+	echo form_open('search/ncm', $atributos); 
+?>		
 							
 						<fieldset>
 							<div class="control-group">
@@ -41,28 +41,53 @@
 
 				</td>
 
-				<td colspan="2" width="12%" valign="top">
+				<td colspan="" width="12%" valign="top">
 					
 						<fieldset>
 								<div class="control-group">
 									<div class="controls">
-										<select id="ano" onchange="this.form.submit()" name="ano" class="span2">
+										<select id="ano" name="ano" class="span2">
 											<option value="">Ano</option>
 											{anos}		
 												<option value="{AAno}">{AAno}</option>
 											{/anos}
 											
 									    </select>
-								    	<input type="hidden" name="controle" value="1">
 								   </div>
 							</div>
-						</fieldset>
-
-					</form>				
+						</fieldset>							
 
 				</td>
 
-				<td></td>
+				<td colspan="" width="12%" valign="top">
+					
+						<fieldset>
+								<div class="control-group">
+									<div class="controls">
+										<select id="mes" onchange="this.form.submit()" name="mes" class="span2">
+											<option value="">Mês</option>
+												<option value="0">Todos</option>
+												<option value="1">Janeiro</option>
+												<option value="2">Fevereiro</option>
+												<option value="3">Março</option>
+												<option value="4">Abril</option>
+												<option value="5">Maio</option>
+												<option value="6">Junho</option>
+												<option value="7">Julho</option>
+												<option value="8">Agosto</option>
+												<option value="9">Setembro</option>
+												<option value="10">Outubro</option>
+												<option value="11">Novembro</option>
+												<option value="12">Dezembro</option>											
+									    </select>
+								    	<input type="hidden" name="controle" value="1">
+								   </div>
+							</div>
+						</fieldset>							
+
+				</td>				
+
+</form>	
 
 
 				<td rowspan="2" align="">
@@ -119,7 +144,7 @@
 					</form>			
 
 				</td>				
-				<td width="20px" valign="top" align="left"><h4> - </h4></td>
+				
 				<td width="16%">
 					<!-- Formulário para combobox sem botão submit -->
 					<?php

@@ -172,13 +172,17 @@ class ncm_model extends CI_Model
 	}
 
 	// COUNT dos dados para paginação //
-	function countData($table, $id, $brand, $model, $search, $unSearch, $mes, $categoria)
+	function countData($table, $month, $id, $brand, $model, $search, $unSearch, $mes, $categoria)
 	{
 		// count total
 		if($id == 1) 
 		{
 			$this->db->select('COUNT(`IDN`)');
 			$this->db->from($table);
+			
+			if ($month != 0)
+				$this->db->where('MES',$month);
+			
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO');
 			
 			return $this->db->count_all_results();			
@@ -189,6 +193,10 @@ class ncm_model extends CI_Model
 			$this->db->select('COUNT(`IDN`)');
 			$this->db->from($table);
 			$this->db->where('Marca',$brand);
+			
+			if ($month != 0)
+				$this->db->where('MES',$month);
+
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO');
 			
 			return $this->db->count_all_results();			
@@ -200,6 +208,10 @@ class ncm_model extends CI_Model
 			$this->db->from($table);
 			$this->db->where('Marca',$brand);
 			$this->db->where('Modelo',$model);
+			
+			if ($month != 0)
+				$this->db->where('MES',$month);
+
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO');
 			
 			return $this->db->count_all_results();					
@@ -210,6 +222,10 @@ class ncm_model extends CI_Model
 			$this->db->select('COUNT(`IDN`)');
 			$this->db->from($table);
 			$this->db->like('DESCRICAO_DETALHADA_PRODUTO',$search);
+			
+			if ($month != 0)
+				$this->db->where('MES',$month);
+
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO');
 			
 			return $this->db->count_all_results();					
@@ -223,7 +239,11 @@ class ncm_model extends CI_Model
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
 			$this->db->like('DESCRICAO_DETALHADA_PRODUTO', $search);			
-			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);			
+			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);	
+
+			if ($month != 0)
+				$this->db->where('MES',$month);
+			
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			
 			return $this->db->count_all_results();					
@@ -236,7 +256,11 @@ class ncm_model extends CI_Model
 			$this->db->join('Categoria','Categoria.CID = Categoria');
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
-			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);			
+			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);
+
+			if ($month != 0)
+				$this->db->where('MES',$month);
+			
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			
 			return $this->db->count_all_results();					
@@ -250,6 +274,10 @@ class ncm_model extends CI_Model
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
 			$this->db->where('MES', $mes);
+			
+			if ($month != 0)
+				$this->db->where('MES',$month);
+
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			
 			return $this->db->count_all_results();					
@@ -263,6 +291,10 @@ class ncm_model extends CI_Model
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
 			$this->db->where('Categoria', $categoria);
+			
+			if ($month != 0)
+				$this->db->where('MES',$month);
+						
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			
 			return $this->db->count_all_results();					
@@ -270,7 +302,7 @@ class ncm_model extends CI_Model
 	}
 
 	// Busca os dados de improtações de acordo com os filtros do usuário //
-	function getData($limit, $start, $table, $id, $brand, $model, $search, $unSearch, $mes, $categoria)
+	function getData($limit, $start, $table, $month, $id, $brand, $model, $search, $unSearch, $mes, $categoria)
 	{
 		
 		if ($id == 1)
@@ -281,6 +313,10 @@ class ncm_model extends CI_Model
 			$this->db->join('Categoria','Categoria.CID = Categoria');
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
+
+			if ($month != 0)
+				$this->db->where('MES', $month);
+
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			$query = $this->db->get();
 
@@ -296,6 +332,10 @@ class ncm_model extends CI_Model
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
 			$this->db->where('Marca', $brand);
+
+			if ($month != 0)
+				$this->db->where('MES', $month);
+
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			$query = $this->db->get();
 
@@ -312,6 +352,10 @@ class ncm_model extends CI_Model
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
 			$this->db->where('Marca', $brand);
 			$this->db->where('Modelo', $model);
+
+			if ($month != 0)
+				$this->db->where('MES', $month);
+
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			$query = $this->db->get();
 
@@ -325,7 +369,11 @@ class ncm_model extends CI_Model
 			$this->db->join('Categoria','Categoria.CID = Categoria');
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
-			$this->db->like('DESCRICAO_DETALHADA_PRODUTO', $search);			
+			$this->db->like('DESCRICAO_DETALHADA_PRODUTO', $search);
+
+			if ($month != 0)
+				$this->db->where('MES', $month);
+			
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			$query = $this->db->get();
 
@@ -340,7 +388,11 @@ class ncm_model extends CI_Model
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
 			$this->db->like('DESCRICAO_DETALHADA_PRODUTO', $search);			
-			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);			
+			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);
+
+			if ($month != 0)
+				$this->db->where('MES', $month);
+			
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			$query = $this->db->get();
 
@@ -354,7 +406,11 @@ class ncm_model extends CI_Model
 			$this->db->join('Categoria','Categoria.CID = Categoria');
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
-			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);			
+			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);	
+
+			if ($month != 0)
+				$this->db->where('MES', $month);
+
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			$query = $this->db->get();
 
@@ -368,7 +424,10 @@ class ncm_model extends CI_Model
 			$this->db->join('Categoria','Categoria.CID = Categoria');
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
-			$this->db->where('MES', $mes);
+
+			if ($month != 0)
+				$this->db->where('MES', $month);
+			
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			$query = $this->db->get();
 
@@ -383,6 +442,10 @@ class ncm_model extends CI_Model
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
 			$this->db->where('Categoria', $categoria);
+
+			if ($month != 0)
+				$this->db->where('MES', $month);
+
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			$query = $this->db->get();
 
