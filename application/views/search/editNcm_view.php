@@ -53,7 +53,6 @@
 				<td width="%"><b>PAIS_AQUISICAO</td>
 				<td width="%"><b>UNIDADE_COMERCIALIZACAO</td>
 				<td width="%"><b>PESO_LIQUIDO_KG</td>
-				<td width="%"><b>Flag</td>				
 			</tr>			
 			
 			<tr class="table-condensed">	
@@ -63,13 +62,7 @@
 				<td>{PAIS_ORIGEM}</td>
 				<td>{PAIS_AQUISICAO}</td>				
 				<td>{UNIDADE_COMERCIALIZACAO}</td>
-				<td>{PESO_LIQUIDO_KG}</td>
-				<?php
-					if ($flag == 1)
-						echo "<td><input id=\"flag\" type=\"checkbox\" checked onclick=\"Update({ncm}, {year}, {IDN})\"></td>";
-					else
-						echo "<td><input id=\"flag\" type=\"checkbox\" onclick=\"Update({ncm}, {year}, {IDN})\"></td>"
-				?>				
+				<td>{PESO_LIQUIDO_KG}</td>			
 			</tr>			
 	</table>
 
