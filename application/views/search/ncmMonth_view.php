@@ -38,10 +38,7 @@
 				<td>{DESCRICAO_DETALHADA_PRODUTO}</td>
 				<td>{CNome}</td>
 				<td>{MANome}</td>
-				<!-- Exibindo o nome do modelo que não foi utilizado para o parser -->
-				<!-- <td>{MNome0}</td> -->
-
-				<td>{MNome}</td>
+				<td>{MNome0}</td>
 				<td>{QUANTIDADE_COMERCIALIZADA_PRODUTO}</td>				
 				<td><a href="<?php echo base_url();?>index.php/ncm/edit/{IDN}/{ncm}/{ano}" target="_blank"><i class="icon-edit"></a></i></td>
 			</tr>

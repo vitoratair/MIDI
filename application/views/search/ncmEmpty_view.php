@@ -157,7 +157,7 @@
 									<select id="modelo" name="modelo" class="span2" onchange="this.form.submit()">
 										<option value="">Modelo</option>	
 										{modelos}		
-											<option value="{MOID}">{MNome}</option>
+											<option value="{MOID}">{MNome0}</option>
 										{/modelos}								
 								    </select>
 								    <input type="hidden" name="controle" value="6">

@@ -157,7 +157,7 @@
 									<select id="modelo" name="modelo" class="span2" onchange="this.form.submit()">
 										<option value="">Modelo</option>	
 										{modelos}		
-											<option value="{MOID}">{MNome}</option>
+											<option value="{MOID}">{MNome0}</option>
 										{/modelos}								
 								    </select>
 								    <input type="hidden" name="controle" value="6">
@@ -209,7 +209,7 @@
 				<td>{QUANTIDADE_COMERCIALIZADA_PRODUTO}</td>
 				<td>{CNome}</td>
 				<td>{MANome}</td>
-				<td>{MNome}</td>				
+				<td>{MNome0}</td>				
 				<td><a href="<?php echo base_url();?>index.php/ncm/edit/{IDN}/{ncm}/{year}" target="_blank"><i class="icon-edit"></i></a></td>
 			</tr>
 		{/dados}
@@ -312,7 +312,7 @@
 		<div class="modal-body">			
 
 {modelos1}
-			<input type="radio" id ="modelo" name="modelo" value="{MOID}"> {MNome}<br>
+			<input type="radio" id ="modelo" name="modelo" value="{MOID}"> {MNome0}<br>
 {/modelos1}
 			</div>
 		<div class="modal-footer">
