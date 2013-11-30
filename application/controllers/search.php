@@ -351,7 +351,7 @@ class Search extends CI_Controller
 	{
 		$ncm 	= $this->input->post('ncm');
 		$ano 	= $this->input->post('ano');
-		$mes 	= $this->input->post('mes');		
+		$mes 	= $this->input->post('mes');	
 
 		// Caso a variável ncm esteja vazia, recebe os dados que estão em sessão //
 		if (empty($ncm))
@@ -377,14 +377,14 @@ class Search extends CI_Controller
 		$data['mes'] 	= $this->others->buscaMes($mes);
 
 		$config["base_url"] 	= base_url() . "index.php/search/visualizeNcmByMonth";
-        $config["total_rows"] 	= $this->ncm_model->countData($table, '7', NULL, NULL, NULL, NULL, $mes, NULL);			        			      
+        $config["total_rows"] 	= $this->ncm_model->countData($table, NULL, '7', NULL, NULL, NULL, NULL, $mes, NULL);
         $config["per_page"] 	= 20;
 
         $this->pagination->initialize($config);
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 		// Carrega os dados somente com ano e ncm //
-		$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, '7', NULL, NULL, NULL, NULL, $mes, NULL);
+		$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, NULL, '7', NULL, NULL, NULL, NULL, $mes, NULL);		
 		$data['dados'] = $this->others->formatarDados(1, $data['dados']);
 		$data["links"] = $this->pagination->create_links();			
 

@@ -38,17 +38,6 @@
 				{/anos}
 				
 		    </select>	
-		    
-		    &nbsp;&nbsp;&nbsp;
-
-<!-- 			<select id="categoria" name="categoria" class="span3" onchange="this.form.submit()">
-				
-				<option value="">Selecione uma categoria</option>
-				{categorias}		
-					<option value="{CID}">{CNome}</option>
-				{/categorias}
-				
-		    </select>	 -->		    
 
 		</form>	
 	</blockquote>

@@ -5,7 +5,7 @@
         <ul class="pull-right breadcrumb">
             <li><a href="<?php echo base_url();?>index.php/app/home">Home</a> <span class="divider"> / </span></li>
             <li>Administração <span class="divider"> / </span></li>
-            <li class="active">Processamento</li>
+            <li class="active">Estatísticas</li>
         </ul>
     </div><!--/container-->
 </div><!--/breadcrumbs-->
@@ -37,9 +37,11 @@
 					<option value="{AAno}">{AAno}</option>
 				{/anos}
 				
-		    </select>		    
+		    </select>		        
 
 		</form>	
+
+
 	</blockquote>
 
 	<hr>
@@ -52,18 +54,18 @@
 				<td width=""><b>Marcas</td>
 				<td width=""><b>Modelos</td>
 				<td width=""><b>Outros</td>
-				<td width=""><b>Categorias</td>
+				<td width=""><b>Categorias</td>			
 			</tr>			
 		</thead>	
 		{dados}	
 		
 			<tr class="table-condensed">	
-				<td>{mes}</td>
+				<td><a onclick='Visualizar("{mesID}")' data-toggle="modal" href="#">{mes}</a></td>
 				<td>{total}</td>
 				<td>{marcaEncontrada}</td>
 				<td>{modeloEncontrado}</td>
 				<td>{outros}</td>	
-				<td>{categorias}</td>			
+				<td>{categorias}</td>							
 			</tr>
 		
 		{/dados}
@@ -81,3 +83,17 @@
 
 
 </div>
+
+<script type="text/javascript">
+	function Visualizar(mes)
+	{
+		var url = '<?php echo base_url();?>index.php/search/visualizeNcmByMonth';
+		var form = $('<form action="' + url + '" method="POST">' +
+		  '<input type="hidden" name="mes" value="' + mes + '" />' +
+		  '<input type="hidden" name="ano" value="' + <?php echo $ano;?> + '" />' +
+		  '<input type="hidden" name="ncm" value="' + <?php echo $ncm;?> + '" />' +
+		  '</form>');
+		$('body').append(form);
+		$(form).submit();
+	}	
+</script>	
