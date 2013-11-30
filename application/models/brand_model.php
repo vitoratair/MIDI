@@ -67,6 +67,12 @@ class Brand_model extends CI_Model
 		return $this->db->insert('Marca', $data);
 	}		
 	
+	// Insere marca no banco uma request //
+	function saveRequest($data) 
+	{		
+		return $this->db->insert('MarcaRequest', $data);
+	}
+
 	// Deleta a referência da marca das tabelas NCMs //
 	function deleteBrandNcm($data,$id)
 	{
@@ -98,6 +104,18 @@ class Brand_model extends CI_Model
 		$this->db->select('MAID, MANome');
 		$this->db->FROM('Marca');
 		$this->db->join('Modelo','MAID = Marca_MAID');
+		$this->db->where('MOID',$id);
+		$query = $this->db->get();
+
+		return $query->result();		
+	}	
+
+	// Retorna a marca de um modelo Request //
+	function getBrandByModelRequest($id)
+	{
+		$this->db->select('MAID, MANome');
+		$this->db->FROM('Marca');
+		$this->db->join('ModeloRequest','MAID = Marca_MAID');
 		$this->db->where('MOID',$id);
 		$query = $this->db->get();
 

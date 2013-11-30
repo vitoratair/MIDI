@@ -53,14 +53,7 @@ class Brand extends CI_Controller
 			$data["links"] 			= $this->pagination->create_links();			
 		}
 
-		if ($this->session->userdata('usuarioTipo') == 2)
-		{
-			$data['main_content'] 	= 'brand/brandUser_view';
-		}
-		else
-		{
-			$data['main_content'] 	= 'brand/brand_view';
-		}
+		$data['main_content'] 	= 'brand/brand_view';
 
 		$this->parser->parse('template', $data);
 
@@ -80,7 +73,11 @@ class Brand extends CI_Controller
 		$data['MANome']		= $this->input->post('marcaNome');
 		$data['MANome1']	= $this->input->post('marcaNome1');
 		$data['MANome2'] 	= $this->input->post('marcaNome2');
-		$this->brand_model->save($data);
+
+		if ($this->session->userdata('usuarioTipo') == 1)
+			$this->brand_model->save($data);
+		else
+			$this->brand_model->saveRequest($data);
 
 		redirect('brand/listAll');
 	}

@@ -198,6 +198,18 @@ class Category_model extends CI_Model
 		return $query->result();
 	}
 
+	// Retorna o categoria de um modeloRequest //
+	public function getCategoryModelRequest($id)
+	{		
+		$this->db->select('CNome, CID');
+		$this->db->from('Categoria');
+		$this->db->join('ModeloRequest', 'Categoria_CID = CID');
+		$this->db->where('MOID',$id);
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
 	// Retorna as subcategorias de um modelo //
 	function listTitleByModel($modelo, $id)
 	{		
@@ -211,6 +223,21 @@ class Category_model extends CI_Model
 
 		return $query[0]->$coluna;
 	}
+
+	// Retorna as subcategorias de um modeloRequest //
+	function listTitleByModelRequest($modelo, $id)
+	{		
+		$coluna = "SubCategoria".$id."_SCID";
+
+		$this->db->select($coluna);
+		$this->db->from('ModeloRequest');
+		$this->db->where('MOID',$modelo);
+		$query = $this->db->get();
+		$query = $query->result();
+
+		return $query[0]->$coluna;
+	}
+
 
 	// Retorna os itens de subcategoria de um modelo //
 	function getItensByID($coluna, $id)
@@ -226,7 +253,7 @@ class Category_model extends CI_Model
 
 		return $query[0]->SCNome;
 
-	}	
+	}		
 
 	// Busca um item //
 	function getItem($table, $id)

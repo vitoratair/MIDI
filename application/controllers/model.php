@@ -202,39 +202,72 @@ class Model extends CI_Controller
 	public function editModel($id)
 	{		
 		// Busca informações do modelo //
-		
-		$data['marca'] 			= $this->brand_model->getBrandByModel($id);
-		$data['categoria']		= $this->category_model->getCategoryModel($id);
+		$userType = $this->session->userdata('usuarioTipo');
 
-		$data['subcategoria1']	= $this->category_model->listElement('SubCategoria1', $data['categoria'][0]->CID);
-		$data['subcategoria2']	= $this->category_model->listElement('SubCategoria2', $data['categoria'][0]->CID);
-		$data['subcategoria3']	= $this->category_model->listElement('SubCategoria3', $data['categoria'][0]->CID);		
-		$data['subcategoria4']	= $this->category_model->listElement('SubCategoria4', $data['categoria'][0]->CID);
-		$data['subcategoria5']	= $this->category_model->listElement('SubCategoria5', $data['categoria'][0]->CID);
-		$data['subcategoria6']	= $this->category_model->listElement('SubCategoria6', $data['categoria'][0]->CID);
-		$data['subcategoria7']	= $this->category_model->listElement('SubCategoria7', $data['categoria'][0]->CID);
-		$data['subcategoria8']	= $this->category_model->listElement('SubCategoria8', $data['categoria'][0]->CID);		
-
-		if (!empty($data['categoria']))
-		{
-			$data['titulos']	= $this->category_model->listTitle($data['categoria'][0]->CID);			
-		}
-
-		// Loop para verficar as subcategorias do modelo //
-		if (!empty($data['titulos']))
-		{
-			foreach ($data['titulos'] as $key => $value)
-			{
-				$data['titulos'][$key]->SubCategoriaID 	= $this->category_model->listTitleByModel($id, $value->TColuna);				
-				$data['titulos'][$key]->SubCategoria 	= $this->category_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
-			}					
-		}
-	
 		// Lista de informações para view //
 		$data['marcas'] 	= $this->brand_model->listAllBrand();
-		$data['modelos'] 	= $this->model_model->getModel($id);
 		$data['categorias'] = $this->category_model->listCategory();
 
+		if ($userType == 1)
+		{
+			$data['marca'] 			= $this->brand_model->getBrandByModel($id);
+			$data['categoria']		= $this->category_model->getCategoryModel($id);
+			$data['subcategoria1']	= $this->category_model->listElement('SubCategoria1', $data['categoria'][0]->CID);
+			$data['subcategoria2']	= $this->category_model->listElement('SubCategoria2', $data['categoria'][0]->CID);
+			$data['subcategoria3']	= $this->category_model->listElement('SubCategoria3', $data['categoria'][0]->CID);		
+			$data['subcategoria4']	= $this->category_model->listElement('SubCategoria4', $data['categoria'][0]->CID);
+			$data['subcategoria5']	= $this->category_model->listElement('SubCategoria5', $data['categoria'][0]->CID);
+			$data['subcategoria6']	= $this->category_model->listElement('SubCategoria6', $data['categoria'][0]->CID);
+			$data['subcategoria7']	= $this->category_model->listElement('SubCategoria7', $data['categoria'][0]->CID);
+			$data['subcategoria8']	= $this->category_model->listElement('SubCategoria8', $data['categoria'][0]->CID);		
+
+			if (!empty($data['categoria']))
+			{
+				$data['titulos']	= $this->category_model->listTitle($data['categoria'][0]->CID);			
+			}
+
+			// Loop para verficar as subcategorias do modelo //
+			if (!empty($data['titulos']))
+			{
+				foreach ($data['titulos'] as $key => $value)
+				{
+					$data['titulos'][$key]->SubCategoriaID 	= $this->category_model->listTitleByModel($id, $value->TColuna);				
+					$data['titulos'][$key]->SubCategoria 	= $this->category_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+				}					
+			}
+			$data['modelos'] 	= $this->model_model->getModel($id);
+		}
+		elseif ($userType == 2)
+		{
+			$data['marca'] 			= $this->brand_model->getBrandByModelRequest($id);
+			$data['categoria']		= $this->category_model->getCategoryModelRequest($id);
+			$data['subcategoria1']	= $this->category_model->listElement('SubCategoria1', $data['categoria'][0]->CID);
+			$data['subcategoria2']	= $this->category_model->listElement('SubCategoria2', $data['categoria'][0]->CID);
+			$data['subcategoria3']	= $this->category_model->listElement('SubCategoria3', $data['categoria'][0]->CID);		
+			$data['subcategoria4']	= $this->category_model->listElement('SubCategoria4', $data['categoria'][0]->CID);
+			$data['subcategoria5']	= $this->category_model->listElement('SubCategoria5', $data['categoria'][0]->CID);
+			$data['subcategoria6']	= $this->category_model->listElement('SubCategoria6', $data['categoria'][0]->CID);
+			$data['subcategoria7']	= $this->category_model->listElement('SubCategoria7', $data['categoria'][0]->CID);
+			$data['subcategoria8']	= $this->category_model->listElement('SubCategoria8', $data['categoria'][0]->CID);		
+
+			if (!empty($data['categoria']))
+			{
+				$data['titulos']	= $this->category_model->listTitle($data['categoria'][0]->CID);			
+			}
+
+			// Loop para verficar as subcategorias do modelo //
+			if (!empty($data['titulos']))
+			{
+				foreach ($data['titulos'] as $key => $value)
+				{
+					$data['titulos'][$key]->SubCategoriaID 	= $this->category_model->listTitleByModelRequest($id, $value->TColuna);				
+					$data['titulos'][$key]->SubCategoria 	= $this->category_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+				}					
+			}
+			$data['modelos'] 	= $this->model_model->getModelRequest($id);			
+		}
+	
+		
 		// Envia todas as informações para tela //
 		$data['main_content'] = 'model/editModel_view';
 		$this->parser->parse('template', $data);
@@ -244,6 +277,8 @@ class Model extends CI_Controller
 	// Atualiza um modelo //
 	public function updateModel()
 	{
+		$userType = $this->session->userdata('usuarioTipo');
+
 		$id 			= $this->input->post('id');
 		$data['MOID'] 	= $id;
 		$control 		= $this->input->post('controle');
@@ -262,9 +297,16 @@ class Model extends CI_Controller
 				$data['Marca_MAID'] = $this->input->post('marca');
 			}			
 			
-			$oldCategory 				= $this->model_model->getCategoryByModel($id); 			
-			$oldCategory 				= $oldCategory[0]->Categoria_CID;
-
+			if ($userType == 1)
+			{
+				$oldCategory 				= $this->model_model->getCategoryByModel($id); 			
+				$oldCategory 				= $oldCategory[0]->Categoria_CID;
+			}
+			elseif ($userType == 2)
+			{
+				$oldCategory 				= $this->model_model->getCategoryByModelRequest($id); 			
+				$oldCategory 				= $oldCategory[0]->Categoria_CID;	
+			}
 			if ($this->input->post('categoria') != $oldCategory)
 			{
 				$data['Categoria_CID'] 		= $this->input->post('categoria');	
@@ -315,7 +357,11 @@ class Model extends CI_Controller
 			}				
 		}		
 
-		$this->model_model->updateModel($data);		
+		if ($userType == 1)
+			$this->model_model->updateModel($data);		
+		
+		elseif ($userType == 2)
+			$this->model_model->updateModelRequest($data);			
 		
 		redirect("model/editModel/$id");				
 	}
@@ -347,25 +393,49 @@ class Model extends CI_Controller
 	public function addModel()
 	{
 		// Recebendo ID do modelo //
-		$data['modeloID']		= $this->model_model->getNextID();
-		$data['modeloID']		= $data['modeloID'][0]->Auto_increment;
-		
+		$userType = $this->session->userdata('usuarioTipo');
+
 		// Busca as informações //
 		$data['categorias'] = $this->category_model->listCategory();
 		$data['marcas'] 	= $this->brand_model->listAllBrand();
-		$data['categoria']	= $this->category_model->getCategoryModel($data['modeloID']);
 
-		if (!empty($data['categoria']))
+		if ($userType == 1)
 		{
-			$data['titulos']	= $this->category_model->listTitle($data['categoria'][0]->CID);			
+			$data['modeloID']		= $this->model_model->getNextID();
+			$data['modeloID']		= $data['modeloID'][0]->Auto_increment;			
 
-			// Loop para verficar as subcategorias do modelo //
-			foreach ($data['titulos'] as $key => $value)
+			$data['categoria']	= $this->category_model->getCategoryModel($data['modeloID']);
+			if (!empty($data['categoria']))
 			{
-				$data['titulos'][$key]->SubCategoriaID 	= $this->category_model->listTitleByModel($data['modeloID'], $value->TColuna);
-				$data['titulos'][$key]->SubCategoria 	= $this->category_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
-			}
+				$data['titulos']	= $this->category_model->listTitle($data['categoria'][0]->CID);			
+
+				// Loop para verficar as subcategorias do modelo //
+				foreach ($data['titulos'] as $key => $value)
+				{
+					$data['titulos'][$key]->SubCategoriaID 	= $this->category_model->listTitleByModel($data['modeloID'], $value->TColuna);
+					$data['titulos'][$key]->SubCategoria 	= $this->category_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+				}
+			}			
 		}
+		elseif ($userType == 2)
+		{
+			$data['modeloID']		= $this->model_model->getNextIDRequest();
+			$data['modeloID']		= $data['modeloID'][0]->Auto_increment;
+
+			$data['categoria']	= $this->category_model->getCategoryModelRequest($data['modeloID']);
+			if (!empty($data['categoria']))
+			{
+				$data['titulos']	= $this->category_model->listTitle($data['categoria'][0]->CID);		
+
+				// Loop para verficar as subcategorias do modelo //
+				foreach ($data['titulos'] as $key => $value)
+				{
+					$data['titulos'][$key]->SubCategoriaID 	= $this->category_model->listTitleByModelRequests($data['modeloID'], $value->TColuna);
+					$data['titulos'][$key]->SubCategoria 	= $this->category_model->getItensByID($value->TColuna, $data['titulos'][$key]->SubCategoriaID);
+				}
+			}									
+		}
+
 
 		$data['main_content'] 	= 'model/addModel_view';
 		$this->parser->parse('template', $data);
@@ -394,9 +464,14 @@ class Model extends CI_Controller
 		$data['SubCategoria7_SCID']	= 1;		
 		$data['SubCategoria8_SCID']	= 1;		
 
-		// Chama o model responsável pela inserção no banco //
-		$this->model_model->save($data);
+		$userType = $this->session->userdata('usuarioTipo');
 
+		if ($userType == 1)		
+			$this->model_model->save($data);
+		
+		elseif ($userType == 2)
+			$this->model_model->saveRequest($data);
+		
 		// Redereciona a página //
 		redirect("model/editModel/$id");
 
