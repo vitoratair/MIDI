@@ -61,6 +61,22 @@
                             </ul>
                             <b class="caret-out"></b>                        
                         </li>
+                        
+                        <li>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Cadastro
+                                <b class="caret"></b>                            
+                            </a>
+                            
+                            <ul class="dropdown-menu">
+
+                                <li><?php echo anchor('model/addModel','Modelo');?></li>                                
+
+                                <li><?php echo anchor('brand/setBrandView','Marca');?></li>
+                                                                
+                            </ul>
+                            
+                            <b class="caret-out"></b>                        
+                        </li>
 
                         <li>
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" href="#">

@@ -16,11 +16,11 @@
 	<div class="container">
 
 		<p align="right">
-			<a href="<?php echo base_url();?>/index.php/brand/setBrandView" class="btn-u"><i class="icon-plus icon-white"></i> Nova marca</a>	  	
+			<a href="<?php echo base_url();?>	index.php/brand/setBrandView" class="btn-u"><i class="icon-plus icon-white"></i> Nova marca</a>	  	
 		</p>
 
 		<?php
-			$atributos = array('form class'=>'form-search',  'align'=>'right', 'method'=>'POST');
+			$atributos = array('form class'=>'form-search',  'align'=>'left', 'method'=>'POST');
 			echo form_open('brand/listAll', $atributos); 
 		?>		
 					

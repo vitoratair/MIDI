@@ -135,6 +135,7 @@
 
 			</div>
 		<div class="modal-footer">
+			<a href="<?php echo base_url();?>index.php/brand/setBrandView" class="btn">Outra</a>
 			<a href="" class="btn" data-dismiss="modal">Não</a>
 			<button type="submit" class="btn btn-danger">Sim</button>
 			<input type="hidden" name="ncm" value="{ncm}">
@@ -163,6 +164,7 @@
 
 			</div>
 		<div class="modal-footer">
+			<a href="<?php echo base_url();?>index.php/model/addModel" class="btn" >Outro</a>
 			<a href="" class="btn" data-dismiss="modal">Não</a>
 			<button type="submit" class="btn btn-danger">Sim</button>
 			<input type="hidden" name="ncm" value="{ncm}">

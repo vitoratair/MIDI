@@ -184,12 +184,32 @@ class Model_model extends CI_Model
 		return $query->result();
 	}	
 
+	// Retorna todas as informações de um modelo request//
+	function getModelRequest($id)
+	{
+		$this->db->select('*');
+		$this->db->FROM('ModeloRequest');
+		$this->db->where('MOID',$id);
+		$this->db->join('Marca','MAID = Marca_MAID');
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
 	// Update de um modelo //
 	function updateModel($data) 
 	{				
 		$id = $data['MOID'];
 		$this->db->where('MOID', $id);
 		$this->db->update('Modelo', $data);
+	}
+
+	// Update de um modelo //
+	function updateModelRequest($data) 
+	{				
+		$id = $data['MOID'];
+		$this->db->where('MOID', $id);
+		$this->db->update('ModeloRequest', $data);
 	}
 
 	// Deleta o modelo //
@@ -207,12 +227,25 @@ class Model_model extends CI_Model
 		return $query->result();	
 	}
 	
+	// Retorna  o próximo ID da tabela modelo //
+	function getNextIDRequest()
+	{		
+		$query = $this->db->query("SHOW TABLE STATUS LIKE 'ModeloRequest'");
+		
+		return $query->result();	
+	}
+
 	// Insere o modelo no banco //
 	function save($data) 
 	{		
 		return $this->db->insert('Modelo', $data);
 	}	
 
+	// Insere o modelo no banco request //
+	function saveRequest($data) 
+	{		
+		return $this->db->insert('ModeloRequest', $data);
+	}	
 	// Lista todos os modelos //
 	function listAllModel()
 	{	
@@ -327,6 +360,17 @@ class Model_model extends CI_Model
 		return $query->result();
 	}
     
+	// Retorna a categoria de um modelo request //
+	function getCategoryByModelRequest($id)
+	{
+		$this->db->select('Categoria_CID');
+		$this->db->FROM('ModeloRequest');
+		$this->db->where('MOID',$id);
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
     // Retorna as peças importadas de uma lista de modelos //
     function sumPartsYearByModel($table, $marca, $categoria, $modelo, $dataInicial, $dataFinal)
     {
