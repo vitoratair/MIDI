@@ -16,34 +16,49 @@
 	
 {dados}
 
-	<!-- Tabela com a lista de linhas de NCMs -->
-	<table class='table table-bordered table-hover'>
-		<thead>
+	<table class='table table-bordered table-striped'>
+			
 			<tr class="">				
 				<td width="4%"><b>ID</b></td>
-				<td width="8%"><b>NCM</b></td>
-				<td width=""><b>Descrição</b></td>
-				<td width=""><b>Categoria</b></td>
-				<td width="%"><b>Marca</b></td>
-				<td width="%"><b>Modelo</b></td>
-				<td width="%"><b>Unidades</b></td>
+				<td width="8%"><b>NCM</td>
+				<td width="%"><b>Descrição</td>
+				<td width="%"><b>FOB</td>
+				<td width="%"><b>Unidades</td>				
 			</tr>			
-		</thead>		
 			
-		<tbody>
 			<tr class="table-condensed">	
 				<td>{IDN}</td>
 				<td>{ncm}</td>				
 				<td>{DESCRICAO_DETALHADA_PRODUTO}</td>
+				<td>{VALOR_UNIDADE_PRODUTO_DOLAR}</td>
+				<td>{QUANTIDADE_COMERCIALIZADA_PRODUTO}</td>
+				
+			</tr>			
+	</table>
+
+	<table class='table table-bordered table-striped'>
+			
+			<tr class="">				
+				<td width=""><b>Categoria</td>
+				<td width="%"><b>Marca</td>
+				<td width="%"><b>Modelo</td>
+				<td width="%"><b>PAIS_ORIGEM</b></td>
+				<td width="%"><b>PAIS_AQUISICAO</td>
+				<td width="%"><b>UNIDADE_COMERCIALIZACAO</td>
+				<td width="%"><b>PESO_LIQUIDO_KG</td>		
+			</tr>			
+			
+			<tr class="table-condensed">	
 				<td><a href="#categoriaAlterar" data-toggle="modal">{CNome}</a></td>
 				<td><a href="#marcaAlterar" data-toggle="modal">{MANome}</a></td>
-				<td><a href="#modeloAlterar" data-toggle="modal">{MNome0}</a></td>
-				<td>{QUANTIDADE_COMERCIALIZADA_PRODUTO}</td>				
-			</tr>
-		</tbody>
-			
+				<td><a href="#modeloAlterar" data-toggle="modal">{MNome0}</a></td>				
+				<td>{PAIS_ORIGEM}</td>
+				<td>{PAIS_AQUISICAO}</td>				
+				<td>{UNIDADE_COMERCIALIZACAO}</td>
+				<td>{PESO_LIQUIDO_KG}</td>			
+			</tr>			
 	</table>
-	
+
 	<!-- subcategorias -->
 	<h3 align="center">Itens Alterados</h3><br>
 		
@@ -64,7 +79,7 @@
 			<td>{modeloNome}</td>			
 		</tr>
 
-	</table>
+	</table>	
 
 </div>
 
