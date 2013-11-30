@@ -158,7 +158,7 @@
 		<div class="modal-body">			
 
 {modelos}
-			<input type="radio" id ="modelo" name="modelo" value="{MOID}"> {MNome}<br>
+			<input type="radio" id ="modelo" name="modelo" value="{MOID}"> {MNome0}<br>
 {/modelos}
 
 			</div>
