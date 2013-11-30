@@ -14,7 +14,7 @@
 
 	<?php
 		$atributos = array('form class'=>'form-search',  'align'=>'right', 'method'=>'POST');
-		echo form_open('model/listAll', $atributos); 
+		echo form_open('model/listModel', $atributos); 
 	?>	
 
 		<p align="right">

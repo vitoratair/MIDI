@@ -1,0 +1,134 @@
+Seguem os tópicos da folha:  
+
+ 
+
+(1) Possibilidade de exportar dados para excel;
+(1) Busca por categoria na área “estatística”/“Categoria-NCM”;
+(1) Filtro por mês na pesquisa de importações;
+ 
+
+(2) Usuário adicionar novas marcas e modelos pelo “alterar”;
+
+- Ter opção "outros" no momento de alterar os dados (abrir uma caixinha para inserir manualmente), para possibilitar a inclusão de novos modelos e marcas;
+
+ 
+
+(2) Análises por período e não por ano (ex.: de outubro de 2012 a março de 2013);
+
+ 
+
+(3) Selecionar mais de um item de uma subcategoria para análise (ex.: selecionar switches de 54, 150 e 300 Mbps de velocidade);
+
+ 
+
+(3) Possibilidade de inserir dados de produção nacional e estimativas;
+
+(3) No comparativo inicial entre os anos por categoria, adicionar o percentual de variação entre um ano e outro;
+
+ 
+
+(3) Adicionar uma flag para informa que não se deve atualizar um modelos ao processar;
+
+ 
+
+- Importar modelos
+- Importar marcas
+- Não exibir dados na pesquisa de importações quando não houver dados
+- Rever exclusão de sc {setar em 1 subcategoria }
+- Análise das categorias
+
+In Progress
+
+- Gráficos com botão do tipo "range" estão instáveis
+
+Done
+
+- Exibir data da última atualização por categoria;
+
+- Análise por marca.
+
+ 
+
+* usuário consegue modificar categoria e modelo, deixando marca em branco.
+
+Backlog
+
+	{tenso +-}
+
+	- Selecionar mais de um item de uma subcategoria para análise (ex.: selecionar switches de 54, 150 e 300 Mbps de velocidade);
+	- Possibilidade de inserir dados de produção nacional e estimativas.
+++++++++++++++++++++++++++++
+
+	- Na página de pesquisa de modelos, hoje é tem filtros para buscar um modelo por categoria e marca, criar uma função que busque por um nome de modelo em todas as categorias.
+
+	- No comparativo inicial entre os anos por categoria, adicionar o percentual de variação entre um ano e outro;
+	- Possibilidade de inserir dados de produção nacional e estimativas.
+	
+	- Importar modelos
+	- Importar marcas
+	- Possibilidade de exportar dados para excel;
+	
+	- Não exibir dados na pesquisa de importações quando não houver dados
+	- Rever exclusão de sc {setar em 1 subcategoria }		
+
+	- Adicionar uma flag para informa que não se deve atualizar um modelos ao processar.
+	- Análise das categorias
+	- deixar selecionado combobox escolhidos
+	
+	
+
+
+
+In Progress
+
+
+Bugs
+	- NCM com mais de 10.000 linhas	
+	- Gráficos com botão do tipo "range" estão instáveis
+
+Done
+	- Na página de pesquisa de modelos, hoje tem filtros para buscar um modelo por categoria e marca, criar uma função que busque por um nome de modelo em todas as categorias;
+	-“MNome1” está aparecendo como nome do modelo na área de pesquisa, deveria ser “MNome0”;
+	- Visualizar FOB na área de pesquisa de importações
+		Possibilidade de ver detalhamento das entradas (itens como peso, país de origem) quando necessário na tela USER
+	- Gráficos
+		- Evolução marca {datas - categoria {rodapé - subcategorias}}
+		- Pizza por marca {datas {rodapé - subcategorias}}
+		- Pizza por modelo {datas {rodapé - subcategorias}}
+		- Evolução modelo {datas - categoria {rodapé - subcategorias}}	
+	- share inicial {Datas}
+	- Alterar a frase "Pesquisa de importações" para "Análise de importações" na página Análise
+	- ALterar "Volume" por "Valor"
+	- Importar NCMs
+	- FOB com valor muito baixo. EX. 0,0003 é cadastrado como 0 no sistema
+	- Exclusão de modelos já catalogados pelo sistema.
+	- clicar 2 vezes no botão pesquisa.
+	- Rever código para análise de subcategoria
+	- Rever exclusão de modelos {setar em 1 categoria, marca e modelo e subcategorias}
+	- Rever exclusão de marcas {setar em 1 marca, modelo }
+	- Não é possível editar as NCMs cadastradas no sistema (mensagem de erro);
+	- No processamento da NCM 85.21.9090 (2012) mesmo depois de limpar todos os meses, no total aparece 1 marca e 1 modelo encontrados.
+	- Incluir campo com nome do modelo sem que o software busque esse nome nas entradas;
+	- Possibilidade de filtrar dados por mês;
+	- Trocar "volume" por "valor" (dar a ideia de $);
+	- Mostrar gráfico por valor (volume monetário) no início, juntamente com o gráfico de unidades;
+	- Possibilidade de ver detalhamento das entradas (itens como peso, país de origem) quando necessário;
+	- Colocar marca/modelo/ano em cima dos gráficos de evolução (falta colocar o ano, e nas de modelo só tem o nome do modelo, não de que marca esse modelo é).
+	- Ter opção "outros" no momento de alterar os dados (abrir uma caixinha para inserir manualmente), para possibilitar a inclusão de novos modelos e marcas;
+	- Comparar períodos de anos diferentes
+	- Ajustar cadastros de modelos e marcas para base única (usuários não visualizam a base de modelos e marcas né? Não seria bom eles visualizarem? Para conferências...);
+	- Exibir data da última atualização por categoria;
+	- Alterar todos
+	- No gráfico evolução da marca ter a opção de comparar com os dados da Intelbras e poder filtrar por categoria;		
+	- Verificar valores diferentes no primeiro gráfico para a análise por ano.
+	- Em Pesquisa não consigo filtrar por Marca. Ex.: escolhi a NCM 85171891/2013 e quando clico pra escolher a marca não aparecem opções, só {MANome}. Seria bom se tivesse como filtrar por categoria também;		
+	- No cadastro de novos modelos ele não dá a opção de escolher a subcategoria. Depois de inserido o modelo tenho que ir no php e editar por lá;	
+	- Na página de edição de modelos, quando modifico o nome e clico em “atualizar” ele apaga a subcategoria (que aparece embaixo do quadro de edição), substitui a subcategoria anterior por “-“.	
+	- Não é possível abrir os “Detalhes” do “Outros”, na Análise/Análise por ano, escolhendo uma categoria e ano específico;	
+	- No gráfico inicial da Análise/Análise por ano, não está sendo contabilizado o “Outros”, tanto em quantidade quanto em valor;
+	- Análise por marca	
+	- - Perguntar para Mayara {Na Análise/Análise por ano, em uma categoria e ano específicos, nos “Detalhes” de qualquer marca o valor FOB está sem os números depois da vírgula, são zero zero}
+	- Na Análise/Análise por ano, em uma categoria e ano específicos, na “Evolução” o gráfico está somando os valores FOB das entradas, não fazendo média ponderado pelas quantidades;	  	
+
+
+

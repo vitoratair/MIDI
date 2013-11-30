@@ -58,9 +58,21 @@ class Model_model extends CI_Model
 		return $query->result();
 	}
 
-	// Retorna uma lista de modelos referente a uma pesquisa //
-	function listModelSearch($search)
+	// Retorna o count de uma lista de modelos referente a uma pesquisa //
+	function countlistModelSearch($search)
 	{
+		$this->db->from('Modelo');		
+		$this->db->join('Marca' , 'MAID = Marca_MAID');
+		$this->db->join('Categoria' , 'CID = Categoria_CID');
+		$this->db->like('MNome',$search);
+
+		return $this->db->count_all_results();
+	}
+
+	// Retorna uma lista de modelos referente a uma pesquisa //
+	function listModelSearch($limit, $start, $search)
+	{
+		$this->db->limit($limit, $start);
 		$this->db->select('*');
 		$this->db->from('Modelo');		
 		$this->db->join('Marca' , 'MAID = Marca_MAID');

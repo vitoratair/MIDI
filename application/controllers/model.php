@@ -49,6 +49,7 @@ class Model extends CI_Controller
 		// Recebe os dados do form //
 		$categoria 					= $this->input->post('categoria');		
 		$marca 						= $this->input->post('marca');
+		$modelo 					= $this->input->post('buscaModelo');
 
 		$session['idCategoria'] 	= $categoria;
 		$session['idMarca'] 		= $marca;
@@ -57,70 +58,87 @@ class Model extends CI_Controller
 		$data['categorias'] 	= $this->category_model->listCategory();
 		$data['marcas'] 		= $this->brand_model->listAllBrand();
 
-		if (empty($categoria))
+		if (!empty($modelo))
 		{
-			$categoria = $this->session->userdata('idCategoria');
+	        $config["base_url"] 	= base_url() . "index.php/model/listModel";
+	        $config["total_rows"] 	= $this->model_model->countlistModelSearch($modelo);
+	        $config["per_page"] 	= 20;		
+
+	        $this->pagination->initialize($config);
+	        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;	        	
+
+	        $data["modelos"] 	= $this->model_model->listModelSearch($config['per_page'], $page, $modelo);
+	        $data["links"] 		= $this->pagination->create_links();
+
+			
 		}
 		else
 		{
-			$this->session->set_userdata($session);
-		}
+			if (empty($categoria))
+			{
+				$categoria = $this->session->userdata('idCategoria');
+			}
+			else
+			{
+				$this->session->set_userdata($session);
+			}
 
-		if (empty($marca))
-		{
-			$marca = $this->session->userdata('idMarca');
-		}
-		else
-		{
-			$this->session->set_userdata($session);
-		}		
+			if (empty($marca))
+			{
+				$marca = $this->session->userdata('idMarca');
+			}
+			else
+			{
+				$this->session->set_userdata($session);
+			}		
 
-		$check = FALSE;
+			$check = FALSE;
 
-		// Busca os modelos filtrando somente por categoria //
-		if (empty($marca) OR ($marca == 1) AND (!empty($categoria)))
-		{
-			// Configurando paginação //
-	        $config["base_url"] 	= base_url() . "index.php/model/listModel";
-	        $config["total_rows"] 	= $this->model_model->countModelByCategory($categoria);
-	        $config["per_page"] 	= 20;
-	        
-	        $this->pagination->initialize($config);
-	        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+			// Busca os modelos filtrando somente por categoria //
+			if (empty($marca) OR ($marca == 1) AND (!empty($categoria)))
+			{
+				// Configurando paginação //
+		        $config["base_url"] 	= base_url() . "index.php/model/listModel";
+		        $config["total_rows"] 	= $this->model_model->countModelByCategory($categoria);
+		        $config["per_page"] 	= 20;
+		        
+		        $this->pagination->initialize($config);
+		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-	        // Lista todos os modelos //
-	        $data["modelos"] 	= $this->model_model->listModelByCategory($config['per_page'], $page, $categoria);
-	        $data["links"] 		= $this->pagination->create_links();
-		}
-		// Busca os modelos filtrando somente por marca //
-		elseif( (empty($categoria) AND !empty($marca)) OR ($categoria == 1) AND (!empty($marca)))
-		{
-			// Configurando paginação //
-	        $config["base_url"] 	= base_url() . "index.php/model/listModel";
-	        $config["total_rows"] 	= $this->model_model->countModelByBrand($marca);
-	        $config["per_page"] 	= 20;
-	        
-	        $this->pagination->initialize($config);
-	        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		        // Lista todos os modelos //
+		        $data["modelos"] 	= $this->model_model->listModelByCategory($config['per_page'], $page, $categoria);
+		        $data["links"] 		= $this->pagination->create_links();
+			}
+			// Busca os modelos filtrando somente por marca //
+			elseif( (empty($categoria) AND !empty($marca)) OR ($categoria == 1) AND (!empty($marca)))
+			{
+				// Configurando paginação //
+		        $config["base_url"] 	= base_url() . "index.php/model/listModel";
+		        $config["total_rows"] 	= $this->model_model->countModelByBrand($marca);
+		        $config["per_page"] 	= 20;
+		        
+		        $this->pagination->initialize($config);
+		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-	        // Lista todos os modelos //
-	        $data["modelos"] 	= $this->model_model->listModelByBrand($config['per_page'], $page, $marca);
-	        $data["links"] 		= $this->pagination->create_links();
-		}
-		// Busca os modelos filtrando por marca e categoria //
-		elseif ( !empty($marca) AND !empty($categoria) AND $categoria != 1 AND $marca != 1 )
-		{
-			// Configurando paginação //
-	        $config["base_url"] 	= base_url() . "index.php/model/listModel";
-	        $config["total_rows"] 	= $this->model_model->countModelByBrandAndCategory($marca, $categoria);
-	        $config["per_page"] 	= 20;
-	        
-	        $this->pagination->initialize($config);
-	        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		        // Lista todos os modelos //
+		        $data["modelos"] 	= $this->model_model->listModelByBrand($config['per_page'], $page, $marca);
+		        $data["links"] 		= $this->pagination->create_links();
+			}
+			// Busca os modelos filtrando por marca e categoria //
+			elseif ( !empty($marca) AND !empty($categoria) AND $categoria != 1 AND $marca != 1 )
+			{
+				// Configurando paginação //
+		        $config["base_url"] 	= base_url() . "index.php/model/listModel";
+		        $config["total_rows"] 	= $this->model_model->countModelByBrandAndCategory($marca, $categoria);
+		        $config["per_page"] 	= 20;
+		        
+		        $this->pagination->initialize($config);
+		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-	        // Lista todos os modelos //
-	        $data["modelos"] 	= $this->model_model->listModelByBrandAndCategory($config['per_page'], $page, $marca, $categoria);
-	        $data["links"] 		= $this->pagination->create_links();
+		        // Lista todos os modelos //
+		        $data["modelos"] 	= $this->model_model->listModelByBrandAndCategory($config['per_page'], $page, $marca, $categoria);
+		        $data["links"] 		= $this->pagination->create_links();
+			}
 		}
 
 		// pegar todas as tabelas de NCMs do sistema
