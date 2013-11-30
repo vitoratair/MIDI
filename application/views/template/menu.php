@@ -36,7 +36,9 @@
 
                                 <li><?php echo anchor('administration/processing','Processamento');?></li>
 
-                                <li><?php echo anchor('administration/statistic','Estatísticas');?></li>
+                                <li><?php echo anchor('administration/statistic','Estatísticas - NCM');?></li>
+
+                                <li><?php echo anchor('administration/statisticCategory','Estatísticas - Categoria');?></li>
 
                                 <li><?php echo anchor('upload/fileUpload','Importar arquivos');?></li>
 

@@ -15,7 +15,7 @@
 		
 		<!-- Formulário para combobox sem botão submit -->
 		<?php
-			$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align'=> 'right',  'method'=>'POST');
+			$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align'=> 'left',  'method'=>'POST');
 			echo form_open('administration/processing', $atributos); 
 		?>		
 			
