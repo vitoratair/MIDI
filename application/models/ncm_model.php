@@ -275,10 +275,6 @@ class ncm_model extends CI_Model
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
 			$this->db->where('MES', $mes);
-			
-			if ($month != 0)
-				$this->db->where('MES',$month);
-
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			
 			return $this->db->count_all_results();					
@@ -424,11 +420,8 @@ class ncm_model extends CI_Model
 			$this->db->from($table);
 			$this->db->join('Categoria','Categoria.CID = Categoria');
 			$this->db->join('Marca','Marca.MAID = Marca');
-			$this->db->join('Modelo','Modelo.MOID = Modelo');
-
-			if ($month != 0)
-				$this->db->where('MES', $month);
-			
+			$this->db->join('Modelo','Modelo.MOID = Modelo');	
+			$this->db->where('MES', $mes);
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			$query = $this->db->get();
 
