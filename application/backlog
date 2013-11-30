@@ -4,8 +4,7 @@ Seguem os tópicos da folha:
 
 (1) Possibilidade de exportar dados para excel;
 (1) Busca por categoria na área “estatística”/“Categoria-NCM”;
-(1) Filtro por mês na pesquisa de importações;
- 
+
 
 (2) Usuário adicionar novas marcas e modelos pelo “alterar”;
 
@@ -87,6 +86,7 @@ Bugs
 	- Gráficos com botão do tipo "range" estão instáveis
 
 Done
+	- Filtro por mês na pesquisa de importações;
 	- Na página de pesquisa de modelos, hoje tem filtros para buscar um modelo por categoria e marca, criar uma função que busque por um nome de modelo em todas as categorias;
 	-“MNome1” está aparecendo como nome do modelo na área de pesquisa, deveria ser “MNome0”;
 	- Visualizar FOB na área de pesquisa de importações

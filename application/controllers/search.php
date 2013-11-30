@@ -29,6 +29,7 @@ class Search extends CI_Controller
 		// Verifica se existe dados de formulário //
 		$ncm 			= $this->input->post('ncm');
 		$year 			= $this->input->post('ano');	
+		$month 			= $this->input->post('mes');
 		$brand 			= $this->input->post('marca');
 		$model 			= $this->input->post('modelo');
 		$search 		= $this->input->post('search');
@@ -64,13 +65,15 @@ class Search extends CI_Controller
 			if (!empty($this->session->userdata['ncm']))
 			{
 				$ncm 	= $this->session->userdata['ncm'];	
-				$year 	= $this->session->userdata['ano'];			
+				$year 	= $this->session->userdata['ano'];
+				$month 	= $this->session->userdata['mes'];
 			}	
 		}
 		else
 		{
 			$session['ncm'] 	= $ncm;
 			$session['ano'] 	= $year;
+			$session['mes'] 	= $month;
 			$session['control'] = $control;			
 			$this->session->set_userdata($session);
 		}
@@ -192,6 +195,7 @@ class Search extends CI_Controller
 			// Carrega o array com a ncm e o ano para a view //
 			$data['ncm'] 	= $ncm;
 			$data['year'] 	= $year;
+			$data['month'] 	= $month;
 
 			// Pesquisando por uma palavra chave
 			if (!empty($search) AND (($control == SEARCH) OR ($control == SEARCH_SEARCH) OR ($control == SEARCH_SEARCH_UNSEARCH)))
@@ -245,15 +249,14 @@ class Search extends CI_Controller
 			elseif ($control == WITHOUT_FILTER)
 			{
 				// echo "<br>SEM FILTROS<br>";
-				// Configurando paginação //
-		        $config["total_rows"] 	= $this->ncm_model->countData($table, '1', NULL, NULL, NULL, NULL, NULL, NULL);
+		        $config["total_rows"] 	= $this->ncm_model->countData($table, $month, '1', NULL, NULL, NULL, NULL, NULL, NULL);
 		        $config["per_page"] 	= 20;
 		        
 		        $this->pagination->initialize($config);
 		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 				// Carrega os dados somente com ano e ncm //
-				$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, '1', NULL, NULL, NULL, NULL, NULL, NULL);
+				$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table,$month, '1', NULL, NULL, NULL, NULL, NULL, NULL);
 				$data["links"] 	= $this->pagination->create_links();
 			}
 			elseif ($control == CATEGORY)
