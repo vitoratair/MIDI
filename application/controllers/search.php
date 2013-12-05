@@ -205,14 +205,14 @@ class Search extends CI_Controller
 				{
 					// echo "<br>SEARCH E UNSEARCH<br>";
 					// Configurando paginação //
-			        $config["total_rows"] 	= $this->ncm_model->countData($table, '5', NULL, NULL, $search, $unSearch, NULL, NULL);
+			        $config["total_rows"] 	= $this->ncm_model->countData($table, $month, '5', NULL, NULL, $search, $unSearch, NULL, NULL);
 			        $config["per_page"] 	= 20;
 			        
 			        $this->pagination->initialize($config);
 			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 					// Carrega os dados somente com ano e ncm //
-					$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, '5', NULL, NULL, $search, $unSearch, NULL, NULL);
+					$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, $month, '5', NULL, NULL, $search, $unSearch, NULL, NULL);
 					$data["links"] 	= $this->pagination->create_links();
 				}
 				// Pesquisando por uma palavra chave
@@ -220,14 +220,14 @@ class Search extends CI_Controller
 				{
 					// echo "<br>SEARCH<br>";
 					// Configurando paginação //
-			        $config["total_rows"] 	= $this->ncm_model->countData($table, '4', NULL, NULL, $search, NULL, NULL, NULL);
+			        $config["total_rows"] 	= $this->ncm_model->countData($table,$month, '4', NULL, NULL, $search, NULL, NULL, NULL);
 			        $config["per_page"] 	= 20;
 			        
 			        $this->pagination->initialize($config);
 			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 					// Carrega os dados somente com ano e ncm //
-					$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, '4', NULL, NULL, $search, NULL, NULL, NULL);
+					$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, $month, '4', NULL, NULL, $search, NULL, NULL, NULL);
 					$data["links"] 	= $this->pagination->create_links();
 				}
 			}			
@@ -235,14 +235,14 @@ class Search extends CI_Controller
 			{
 				// echo "<br>UNSEARCH<br>";
 				// Configurando paginação //
-		        $config["total_rows"] 	= $this->ncm_model->countData($table, '6', NULL, NULL, NULL, $unSearch, NULL, NULL);
+		        $config["total_rows"] 	= $this->ncm_model->countData($table,$month, '6', NULL, NULL, NULL, $unSearch, NULL, NULL);
 		        $config["per_page"] 	= 20;
 		        
 		        $this->pagination->initialize($config);
 		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 				// Carrega os dados somente com ano e ncm //
-				$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, '6', NULL, NULL, NULL, $unSearch, NULL, NULL);
+				$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, $month, '6', NULL, NULL, NULL, $unSearch, NULL, NULL);
 				$data["links"] 	= $this->pagination->create_links();								
 
 			}			
@@ -256,20 +256,20 @@ class Search extends CI_Controller
 		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 				// Carrega os dados somente com ano e ncm //
-				$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table,$month, '1', NULL, NULL, NULL, NULL, NULL, NULL);
+				$data['dados'] 	= $this->ncm_model->getData($config['per_page'], $page, $table, $month, '1', NULL, NULL, NULL, NULL, NULL, NULL);
 				$data["links"] 	= $this->pagination->create_links();
 			}
 			elseif ($control == CATEGORY)
 			{
 		        // echo "<br>CATEGORIA<br>";
-		        $config["total_rows"] 	= $this->ncm_model->countData($table, '8', NULL, NULL, NULL, NULL, NULL, $categoria);
+		        $config["total_rows"] 	= $this->ncm_model->countData($table, $month, '8', NULL, NULL, NULL, NULL, NULL, $categoria);
 		        $config["per_page"] 	= 20;
 		        
 		        $this->pagination->initialize($config);
 		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 				// Carrega os dados somente com ano e ncm //
-				$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, '8', NULL, NULL, NULL, NULL, NULL, $categoria);
+				$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, $month, '8', NULL, NULL, NULL, NULL, NULL, $categoria);
 				$data["links"] = $this->pagination->create_links();									
 			}			
 			elseif ($control == BRAND)
@@ -278,14 +278,14 @@ class Search extends CI_Controller
 				// Carrega todos os modelos da marca selecionada //
 				$data['modelos'] = $this->model_model->getModelByBrand($brand, NULL);			
 
-		        $config["total_rows"] 	= $this->ncm_model->countData($table, '2', $brand, NULL, NULL, NULL, NULL, NULL);
+		        $config["total_rows"] 	= $this->ncm_model->countData($table, $month, '2', $brand, NULL, NULL, NULL, NULL, NULL, NULL);
 		        $config["per_page"] 	= 20;
 
 		        $this->pagination->initialize($config);
 		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 				// Carrega os dados somente com ano e ncm //
-				$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, '2', $brand, NULL, NULL, NULL, NULL, NULL);
+				$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, $month, '2', $brand, NULL, NULL, NULL, NULL, NULL, NULL);
 				$data["links"] = $this->pagination->create_links();	
 
 			}
@@ -294,7 +294,7 @@ class Search extends CI_Controller
 				// echo "<br>MODELO<br>";
 				// Pesquisando por modelo
 				$data['modelos'] 		= $this->model_model->getModelByBrand($brand, NULL);			
-		        $config["total_rows"] 	= $this->ncm_model->countData($table, '3', $brand, $model, NULL, NULL, NULL, NULL);
+		        $config["total_rows"] 	= $this->ncm_model->countData($table, $month, '3', $brand, $model, NULL, NULL, NULL, NULL);
 
 		        if ($config["total_rows"] > 0)
 		        {				        
@@ -303,7 +303,7 @@ class Search extends CI_Controller
 			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 					// Carrega os dados somente com ano e ncm //
-					$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, '3', $brand, $model, NULL, NULL, NULL, NULL);
+					$data['dados'] = $this->ncm_model->getData($config['per_page'], $page, $table, $month, '3', $brand, $model, NULL, NULL, NULL, NULL);
 					$data["links"] = $this->pagination->create_links();				       		
 		       	}
 			}
