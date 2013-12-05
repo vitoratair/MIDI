@@ -89,8 +89,6 @@
 
 </form>	
 
-				<td></td>
-
 
 				<td rowspan="2" align="">
 
@@ -146,7 +144,7 @@
 					</form>			
 
 				</td>				
-				<!-- <td width="20px" valign="top" align="left"><h4> - </h4></td> -->
+				
 				<td width="16%">
 					<!-- Formulário para combobox sem botão submit -->
 					<?php
@@ -198,6 +196,7 @@
 
 			</tr>	
 		</table>
+
 
 	</blockquote>
 	
