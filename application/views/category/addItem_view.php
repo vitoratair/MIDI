@@ -1,7 +1,7 @@
 <!--=== Breadcrumbs ===-->
 <div class="row-fluid breadcrumbs margin-bottom-40">
 	<div class="container">
-        <h1 class="pull-left">Adionar <small>itens</small></h1>
+        <h1 class="pull-left">Adicionar <small>itens</small></h1>
         <ul class="pull-right breadcrumb">
             <li><a href="<?php echo base_url();?>index.php/app/home">Home</a> <span class="divider"> / </span></li>
             <li><a href="<?php echo base_url();?>index.php/model/listAll">Cadastro</a> <span class="divider"> / </span></li>

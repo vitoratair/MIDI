@@ -195,6 +195,9 @@ class ncm_model extends CI_Model
 			$this->db->from($table);
 			$this->db->where('Marca',$brand);
 			
+			if ($categoria != 1)
+				$this->db->where('Categoria', $categoria);
+
 			if ($month != 0)
 				$this->db->where('MES',$month);
 
@@ -210,6 +213,9 @@ class ncm_model extends CI_Model
 			$this->db->where('Marca',$brand);
 			$this->db->where('Modelo',$model);
 			
+			if ($categoria != 1)
+				$this->db->where('Categoria',$categoria);
+
 			if ($month != 0)
 				$this->db->where('MES',$month);
 
@@ -287,7 +293,9 @@ class ncm_model extends CI_Model
 			$this->db->join('Categoria','Categoria.CID = Categoria');
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
-			$this->db->where('Categoria', $categoria);
+			
+			if ($categoria != 1)
+				$this->db->where('Categoria', $categoria);
 			
 			if ($month != 0)
 				$this->db->where('MES',$month);
@@ -330,6 +338,9 @@ class ncm_model extends CI_Model
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
 			$this->db->where('Marca', $brand);
 
+			if ($categoria != 1)
+				$this->db->where('Categoria', $categoria);
+
 			if ($month != 0)
 				$this->db->where('MES', $month);
 
@@ -350,6 +361,9 @@ class ncm_model extends CI_Model
 			$this->db->where('Marca', $brand);
 			$this->db->where('Modelo', $model);
 
+			if ($categoria != 1)
+				$this->db->where('Categoria',$categoria);
+			
 			if ($month != 0)
 				$this->db->where('MES', $month);
 
@@ -435,7 +449,9 @@ class ncm_model extends CI_Model
 			$this->db->join('Categoria','Categoria.CID = Categoria');
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
-			$this->db->where('Categoria', $categoria);
+			
+			if ($categoria != 1)	
+				$this->db->where('Categoria', $categoria);
 
 			if ($month != 0)
 				$this->db->where('MES', $month);
