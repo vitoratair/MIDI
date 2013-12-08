@@ -71,7 +71,7 @@ class Request_model extends CI_Model
 	}
 
 	// Adicionar uma nova requisição
-	function addRequest($id, $user, $ncm, $year, $idn, $item)
+	function addRequest($id, $user, $ncm, $year, $idn, $modelo, $marca, $categoria)
 	{
 
 		if ($id == 1)
@@ -80,7 +80,7 @@ class Request_model extends CI_Model
 			$this->db->set('RequestNcm', $ncm);
 			$this->db->set('RequestAno', $year);
 			$this->db->set('RequestIDN', $idn);
-			$this->db->set('RequestCategoria', $item);
+			$this->db->set('RequestCategoria', $categoria);
 			$this->db->insert('Request');
 		}
 		elseif ($id == 2)
@@ -89,7 +89,7 @@ class Request_model extends CI_Model
 			$this->db->set('RequestNcm', $ncm);
 			$this->db->set('RequestAno', $year);
 			$this->db->set('RequestIDN', $idn);
-			$this->db->set('RequestMarca', $item);
+			$this->db->set('RequestMarca', $marca);
 			$this->db->insert('Request');
 		}	
 		elseif ($id == 3)
@@ -98,27 +98,29 @@ class Request_model extends CI_Model
 			$this->db->set('RequestNcm', $ncm);
 			$this->db->set('RequestAno', $year);
 			$this->db->set('RequestIDN', $idn);
-			$this->db->set('RequestModelo', $item);
+			$this->db->set('RequestModelo', $modelo);
+			$this->db->set('RequestMarca', $marca);
+			$this->db->set('RequestCategoria', $categoria);			
 			$this->db->insert('Request');
 		}	
 		
 	}
 
 	// Atualiza um item da requisição //
-	function updateItem($id, $idRe, $ncm, $year, $idn, $item)
+	function updateItem($id, $idRe, $ncm, $year, $idn, $modelo, $marca, $categoria)
 	{
 
 		if ($id == 1)
 		{
-			$this->db->query("UPDATE Request SET RequestCategoria = '$item' WHERE RequestID = '$idRe'");	
+			$this->db->query("UPDATE Request SET RequestCategoria = $categoria WHERE RequestID = '$idRe'");	
 		}
 		elseif ($id == 2)
 		{
-			$this->db->query("UPDATE Request SET RequestMarca = '$item' WHERE RequestID = '$idRe'");	
+			$this->db->query("UPDATE Request SET RequestMarca = $marca, RequestModelo = NULL WHERE RequestID = '$idRe'");	
 		}
 		elseif ($id == 3)
 		{
-			$this->db->query("UPDATE Request SET RequestModelo = '$item' WHERE RequestID = '$idRe'");	
+			$this->db->query("UPDATE Request SET RequestModelo = '$modelo', RequestMarca = '$marca', RequestCategoria = '$categoria' WHERE RequestID = '$idRe'");	
 		}				
 	}
 
@@ -148,6 +150,18 @@ class Request_model extends CI_Model
 		{
 			$this->db->query("UPDATE $table SET Modelo = '$item' WHERE IDN = '$idn'");	
 		}	
+	}
+
+	// Verifica se a requisição tem valores diferentes de NULL //
+	function checkRequestIsNUll($id)
+	{
+		$this->db->where('RequestCategoria !=', 'NULL');
+		$this->db->or_where('RequestMarca !=', 'NULL');
+		$this->db->or_where('RequestModelo !=', 'NULL');
+		$this->db->where('RequestID',$id);
+		$this->db->from('Request');
+		return $this->db->count_all_results();		
+
 	}
 
 }

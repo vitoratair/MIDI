@@ -60,7 +60,10 @@
 	</table>
 
 	<!-- subcategorias -->
-	<h3 align="center">Itens Alterados</h3><br>
+	<div class="headline" align="center">
+		<h3 align="center">Itens Alterados</h3>
+	</div>
+	
 		
 	<table class="table table-bordered table-hover">
 		

@@ -157,8 +157,19 @@ class ncm extends CI_Controller
 			// Verfica se já existe dados de requisições para esse ID //
 			$check = $this->request_model->checkRequest($ncm, $year, $idn);
 
+			if($check)
+			{		
+				if ($this->request_model->checkRequestIsNUll($check[0]->RequestID) == 0)
+				{
+					$this->request_model->deleteRequest($check[0]->RequestID);
+				}
+			}
+
+			// Verfica se já existe dados de requisições para esse ID //
+			$check = $this->request_model->checkRequest($ncm, $year, $idn);
+
 			if (empty($check))
-			{
+			{		
 				// verifica os dados atuais da NCM //
 				$categoria 	= $this->ncm_model->getCategoryByNcm($table, $idn);				
 				$marca 		= $this->ncm_model->getBrandByNcm($table, $idn);						
@@ -262,10 +273,12 @@ class ncm extends CI_Controller
 		{
 			case 'Categoria':
 				$categoria = $this->input->post('categoria');
+				
 				if (!empty($categoria))
 				{
 					$this->ncm_model->update(1, $table, $id, $idn, $categoria);	
 				}				
+				
 				break;
 
 			case 'CategoriaAll':
@@ -283,10 +296,12 @@ class ncm extends CI_Controller
 
 			case 'Marca':
 				$marca = $this->input->post('marca');
+				
 				if (!empty($marca))
 				{
 					$this->ncm_model->update(2, $table, $id, $idn, $marca);
 				}
+				
 				break;
 
 			case 'MarcaAll':
@@ -297,15 +312,19 @@ class ncm extends CI_Controller
 				{
 					$this->ncm_model->update(5, $table, $id, $ids, $marca);
 				}
+
 				redirect("search/ncm/");
+
 				break;
 
 			case 'Modelo':
 				$modelo = $this->input->post('modelo');
+				
 				if (!empty($modelo))
 				{
 					$this->ncm_model->update(1, $table, $id, $idn, $modelo);					
-				}				
+				}
+
 				break;
 			
 			case 'ModeloAll':
@@ -316,82 +335,92 @@ class ncm extends CI_Controller
 				{
 					$this->ncm_model->update(6, $table, $id, $ids, $modelo);
 				}
+
 				redirect("search/ncm/");
+
 				break;											
 			
 			case 'SubCategoria':
 				$subcategoria = $this->input->post('subcategoria');
+				
 				if (!empty($subcategoria))
 				{
 					$this->ncm_model->update(3, $table, $coluna, $idn, $subcategoria);					
-				}			
+				}	
+
 				break;	
 
 			case 'CategoriaRequisicao':
 				$categoria = $this->input->post('categoria');				
 				
+				if (empty($categoria))
+					break;
+
+				if ($categoria == 1)
+					$categoria = 'NULL';
+
 				$check = $this->request_model->checkRequest($ncm, $year, $idn);				
 				
 				if (!empty($check))
 				{
-					if (!empty($categoria))
-					{						 
-						 $this->request_model->updateItem(1, $check[0]->RequestID, $ncm, $year, $idn, $categoria);					
-					}
+					$this->request_model->updateItem(1, $check[0]->RequestID, $ncm, $year, $idn, NULL, NULL, $categoria);
 				} 
 				else
 				{					
-					if (!empty($categoria))
-					{
-						 $this->request_model->addRequest(1, $user, $ncm, $year, $idn, $categoria);					
-					}
+					$this->request_model->addRequest(1, $user, $ncm, $year, $idn, NULL, NULL, $categoria);
 				}
+
 				break;	
 
 			case 'MarcaRequisicao':
 				$marca = $this->input->post('marca');				
+				
+				if (empty($marca))
+					break;
+
+				if ($marca == 1)
+					$marca = 'NULL';
+
 				$check = $this->request_model->checkRequest($ncm, $year, $idn);				
 				
 				if (empty($check))
 				{
-					if (!empty($marca))
-					{
-						 $this->request_model->addRequest(2, $user, $ncm, $year, $idn, $marca);					
-					}
+					$this->request_model->addRequest(2, $user, $ncm, $year, $idn, NULL, $marca, $categoria);
 				}
 				else
 				{
-					if (!empty($marca))
-					{
-						 $this->request_model->updateItem(2, $check[0]->RequestID, $ncm, $year, $idn, $marca);					
-					}
+					$this->request_model->updateItem(2, $check[0]->RequestID, $ncm, $year, $idn, NULL, $marca, $categoria);
 				}
+
 				break;
 
 			case 'ModeloRequisicao':
 				$modelo = $this->input->post('modelo');				
-				$check = $this->request_model->checkRequest($ncm, $year, $idn);				
+
+				if (empty($modelo))
+					break;
+
+				$marca 		= $this->brand_model->getBrandByModel($modelo)[0]->MAID; 
+				$categoria 	= $this->category_model->getCategoryModel($modelo)[0]->CID;
+
+				// Verifica se já existe uma requisição com essa IDN 
+				$check 	= $this->request_model->checkRequest($ncm, $year, $idn);
 
 				if ($check)
 				{
-					if (!empty($modelo))
-					{
-						 $this->request_model->updateItem(3, $check[0]->RequestID, $ncm, $year, $idn, $modelo);					
-					}
+					$this->request_model->updateItem(3, $check[0]->RequestID, $ncm, $year, $idn, $modelo, $marca, $categoria);					
 				}
 				else
-				{
-					if (!empty($modelo))
-					{
-						 $this->request_model->addRequest(3, $user, $ncm, $year, $idn, $modelo);
-					}
+				{				
+					$this->request_model->addRequest(3, $user, $ncm, $year, $idn, $modelo, $marca, $categoria);					
 				}
+
 				break;
 
 			case 'Flag':
-				$this->ncm_model->update(7, $table, $id, $idn, 1);	
-				print_r($this->db->last_query());				
-			// print_r($flag);
+				// $this->ncm_model->update(7, $table, $id, $idn, 1);	
+				// print_r($this->db->last_query());				
+				// print_r($flag);
 
 				break;													
 
