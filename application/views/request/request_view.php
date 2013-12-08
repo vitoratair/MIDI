@@ -28,8 +28,13 @@
 				{/categorias}
 				
 		    </select>			
-		</div>	
+		</div>
+
 	</form>	
+
+	<div class="headline" align="center">
+		<h3>Requisições referente a categoria {categoria}</h3>
+	</div>
 
 
 	<!-- Tabela com a lista de linhas de NCMs -->

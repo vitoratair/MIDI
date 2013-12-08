@@ -31,4 +31,8 @@
 		</div>	
 	</form>	
 
+	<div class="headline" align="center">
+		<h3>Não consta requisições para a categoria {categoria}</h3>
+	</div>
+
 </div>
