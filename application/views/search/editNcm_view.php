@@ -19,7 +19,7 @@
 
 	<!-- Legenda da pesquisa -->
 	<div class="headline" align="center">
-		<h3 align="center"><small>Visualização da na NCM </small><b>{ncm}</b><small> no ano de </small>{year}</h3><br>
+		<h3 align="center"><small>Visualização da NCM </small><b>{ncm}</b><small> no ano de </small>{year}</h3><br>
 	</div>
 	
 	<!-- Tabela com a lista de linhas de NCMs -->
@@ -67,7 +67,9 @@
 	</table>
 
 	<!-- subcategorias -->
-	<h3 align="center"><small>Subcategorias de </small><strong>{CNome}</strong></h3><br>
+	<div class="headline" align="center">
+		<h3 align="center"><small>Subcategorias de </small><strong>{CNome}</strong></h3><br>
+	</div>
 		
 	<!-- Tabela com a lista dos categoria do sistema -->
 	<table class='table table-bordered table-striped'>			

@@ -24,7 +24,7 @@ class Request extends CI_Controller
 	{
 
 		$categoria = $this->input->post('categoria');
-
+		$data['categoria'] = $this->category_model->getCategory($categoria)[0]->CNome;
 		if (empty($categoria) OR $categoria == 1)
 		{
 			// Configura paginação //
