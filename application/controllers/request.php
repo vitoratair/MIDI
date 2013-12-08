@@ -23,8 +23,13 @@ class Request extends CI_Controller
 	public function listAll()
 	{
 
-		$categoria = $this->input->post('categoria');
-		$data['categoria'] = $this->category_model->getCategory($categoria)[0]->CNome;
+		$categoria 	= $this->input->post('categoria');
+		
+		if (empty($categoria))
+			$categoria = 1;
+
+		$data['categoria'] 	= $this->category_model->getCategory($categoria)[0]->CNome;
+
 		if (empty($categoria) OR $categoria == 1)
 		{
 			// Configura paginação //
@@ -100,9 +105,73 @@ class Request extends CI_Controller
 				$data['main_content'] = 'request/requestEmpty_view';
 				$this->parser->parse('template',$data);					
 			}
-
 		}
+	}
 
+	// Apresenta a view para requisições de marcas e modelos
+	function brandAndModel()
+	{
+
+		$op = $this->input->post('radio');
+		
+		if (empty($op))
+			$op = 1;			
+			
+		if ($op == 1)
+		{
+			// Configura paginação //
+	        $config["base_url"] 	= base_url() . "index.php/request/brandAndModel";
+			$config["total_rows"] 	= $this->request_model->countRequestByBrand();		
+			$config["per_page"] 	= 20;
+
+			if ($config['total_rows'] > 0)
+			{
+		        $this->pagination->initialize($config);
+		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+				$data['dados'] 	= $this->request_model->requestByBrand($config["per_page"], $page);	
+				$data["links"] 	= $this->pagination->create_links();										
+
+				$data['dados']	= $this->parserInData(3, $data['dados']);
+
+				$data['main_content'] = 'request/requestBrand_view';					
+			}
+			else
+			{
+				$data['main_content'] = 'request/requestBrandEmpty_view';
+			}
+		}
+		elseif ($op == 2)
+		{			
+			// Configura paginação //
+	        $config["base_url"] 	= base_url() . "index.php/request/brandAndModel";
+			$config["total_rows"] 	= $this->request_model->countRequestByModel();		
+			$config["per_page"] 	= 20;
+
+			if ($config['total_rows'] > 0)
+			{
+		        $this->pagination->initialize($config);
+		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+				$data['dados1'] = $this->request_model->requestByModel($config["per_page"], $page);	
+				$data["links"] 	= $this->pagination->create_links();										
+
+				$data['dados']			= $this->parserInData(4, $data['dados1']);
+				$data['subcategorias']	= $this->parserInData(5, $data['dados1']);
+
+				$data['main_content'] = 'request/requestModel_view';					
+			}
+			else
+			{
+				$data['main_content'] = 'request/requestModelEmpty_view';
+			}
+		}
+		
+
+
+		$data['op'] = $op;
+		
+		$this->parser->parse('template',$data);		
 	}
 
 	// Busca as informações de NCM e monta em um único array //
@@ -146,6 +215,56 @@ class Request extends CI_Controller
 				$dados[$key]			= $this->ncm_model->listDataNcm($table, $idn);
 			}		
 		}
+		elseif($id == 3)
+		{
+			foreach ($data as $key => $value)
+			{
+				$dados[$key]['maid'] = $value->MAID;
+				$dados[$key]['nome'] = $value->MANome;
+				$dados[$key]['nome1'] = $value->MANome1;
+				$dados[$key]['nome2'] = $value->MANome2;
+			}
+		}
+
+		elseif($id == 4)
+		{
+			foreach ($data as $key => $value)
+			{
+				$dados[$key]['moid']			= $value->MOID;
+				$dados[$key]['nome'] 			= $value->MNome0;
+				$dados[$key]['nome1'] 			= $value->MNome;
+				$dados[$key]['nome2'] 			= $value->MNome1;
+				$dados[$key]['nome3'] 			= $value->MNome2;
+				$dados[$key]['nome4'] 			= $value->MNome3;
+				$dados[$key]['nome5'] 			= $value->MNome4;
+				$dados[$key]['categoria']		= $value->Categoria_CID;
+				$dados[$key]['marca']			= $value->Marca_MAID;
+				$dados[$key]['categoriaNome']	= $value->CNome;
+				$dados[$key]['marcaNome']		= $value->MANome;
+				$dados[$key]['sc1']				= $value->SubCategoria1_SCID;
+				$dados[$key]['sc2']				= $value->SubCategoria2_SCID;
+				$dados[$key]['sc3']				= $value->SubCategoria3_SCID;
+				$dados[$key]['sc4']				= $value->SubCategoria4_SCID;
+				$dados[$key]['sc5']				= $value->SubCategoria5_SCID;
+				$dados[$key]['sc6']				= $value->SubCategoria6_SCID;
+				$dados[$key]['sc7']				= $value->SubCategoria7_SCID;
+				$dados[$key]['sc8']				= $value->SubCategoria8_SCID;
+			}
+		}
+		elseif ($id == 5)
+		{
+			foreach ($data as $key => $value)
+			{
+				$categoria = $value->Categoria_CID;
+				$titulo = $this->category_model->getTitleByCategoryAndColun($categoria, ($key + 1));
+				
+				if (!empty($titulo))
+					$dados[$key]['titulo'] 	= $titulo[0]->TNome;
+
+				$dados[$key]['moid'] 	= $value->MOID;	
+				$dados[$key]['nome'] 	= $value->SubCategoria1_SCID;
+			}
+		}		
 
 		return $dados;
 	}
@@ -227,10 +346,40 @@ class Request extends CI_Controller
 		redirect('request/listAll');
 	}	
 
+	// Exclusão de requisição de modelo //
+	public function deleteRequestModel($id)
+	{
+		
+		$this->request_model->deleteRequestModel($id);
 
-	/**
-	 * Atualiza um requisição do usuário
-	 */
+		redirect('request/brandAndModel');
+	}
+
+	// Deleta a requisição de marca //
+	public function deleteRequestBrand($id)
+	{		
+		$this->brand_model->deleteRequest($id);
+
+		redirect('request/brandAndModel');
+	}	
+
+	// Adicionar uma nova requisição de marca //
+	public function setBrandRequest()
+	{
+		// Recebe os dados do FORM //
+		$id = $this->input->post('maid'); 			
+		$data['MANome']		= $this->input->post('marcaNome');
+		$data['MANome1']	= $this->input->post('marcaNome1');
+		$data['MANome2'] 	= $this->input->post('marcaNome2');
+
+		$this->brand_model->save($data);
+
+		$this->brand_model->deleteBrandRequest($id);
+
+		redirect('request/brandAndModel');
+	}
+
+	// Atualiza um requisição do usuário //
 	public function updateRequest($id, $table, $idn, $categoria, $marca, $modelo)
 	{
 
@@ -249,14 +398,10 @@ class Request extends CI_Controller
 			$this->request_model->updateRequest(3, $table, $idn, $modelo);
 		}				
 
-
 		$this->request_model->deleteRequest($id);
 		
 		redirect('request/listAll');
 
-	}	
-
-
-
+	}
 }
 ?>

@@ -181,8 +181,6 @@
           '</form>');
         $('body').append(form);
         $(form).submit();
-
-
     }
 
     $(function () {

@@ -219,6 +219,13 @@ class Model_model extends CI_Model
 		$this->db->delete('Modelo');
 	}	
 
+	// Deleta a requisição de modelo //
+	function deleteRequest($id)
+	{
+		$this->db->where('MOID',$id);
+		$this->db->delete('ModeloRequest');
+	}
+
 	// Retorna  o próximo ID da tabela modelo //
 	function getNextID()
 	{		
