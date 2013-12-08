@@ -68,6 +68,8 @@
 				<td>{nome2}</td>
 				<td><a onclick='Excluir("{maid}")' data-toggle="modal" href="#deletar" class='icon-trash'></a></td>								
 				<td><a onclick='Adicionar("{maid}", "{nome}", "{nome1}", "{nome2}")' data-toggle="modal" href="#add" class='icon-check'></a></td>
+				<!-- <td><a onclick='altera("{idRe}", "{idn}", "{table}", "{categoriaReID}", "{marcaReID}", "{modeloReID}")' data-toggle="modal" href="#alterar" class='icon-check'></a></td> -->
+
 			</tr>					
 		{/dados}			
 	</table>
@@ -120,7 +122,7 @@
 
 			 <div class="modal-footer">
 				<a href="" class="btn" data-dismiss="modal">Não</a>
-				<a href="" class="btn-u btn-u-red" id="add">Sim</a>
+				<a href="" class="btn-u btn-u-red" id="Adicionar">Sim</a>
 		 	</div>
 	</div>
 
@@ -132,17 +134,11 @@
 		document.getElementById('Excluir').href="<?php echo base_url();?>index.php/request/deleteRequestBrand/"+id;
 	}
 
-	function Adicionar(maid, nome, nome1, nome2)
+	function Adicionar(id, nome, nome1, nome2)
 	{
-		var url = '<?php echo base_url();?>index.php/request/setBrandRequest';
-        form = $('<form action="' + url + '" method="POST">' +
-		'<input type="hidden" name="maid" value="' + maid + '" />' +
-		'<input type="hidden" name="marcaNome" value="' + nome + '" />' +
-		'<input type="hidden" name="marcaNome1" value="' + nome1 + '" />' +
-		'<input type="hidden" name="marcaNome2" value="' + nome2 + '" />' +	
-		'</form>');
-        $('body').append(form);
-        $(form).submit();
+		document.getElementById("Adicionar");
+		document.getElementById('Adicionar').href="<?php echo base_url();?>index.php/request/setBrandRequest/"+id+"/"+nome+"/"+"/"+nome1+"/"+nome2;
+
 	}	
 
 </script>
