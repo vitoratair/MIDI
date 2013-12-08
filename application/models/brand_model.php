@@ -175,6 +175,13 @@ class Brand_model extends CI_Model
 		return $query->result();
 	}
 
+	// Deleta a requisição de uma marca //
+	function deleteBrandRequest($id)
+	{
+		$this->db->where('MAID',$id);
+		$this->db->delete('MarcaRequest');
+	}
+
 }
 
 ?>

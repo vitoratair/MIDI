@@ -105,6 +105,18 @@ class Category_model extends CI_Model
 		return $query->result();	
 	}
 
+	// Retorna o nome da subcategoria pela coluna e categoria //
+	function getTitleByCategoryAndColun($categoria, $coluna)
+	{
+		$this->db->select('TID,TNome,TColuna,Categoria_CID');
+		$this->db->from('Titulo');
+		$this->db->where('Categoria_CID',$categoria);
+		$this->db->where('TColuna',$coluna);
+		$query = $this->db->get();
+
+		return $query->result();
+	}	
+
 	// Update da subcategoria no banco //
 	public function updateTitle($data, $id)
 	{

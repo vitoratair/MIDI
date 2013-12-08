@@ -110,6 +110,7 @@
                             <ul class="dropdown-menu">
                                 <li><?php echo anchor("user/perfil/$usuario",'Perfil');?></li>
                                 <li><?php echo anchor("request/listAll",'Requisições');?></li>
+                                <li><?php echo anchor("request/brandAndModel",'Marcas e modelos');?></li>
                                 <li><?php echo anchor('login/logout','Logout');?></li>
                             </ul>
                             <b class="caret-out"></b>                        

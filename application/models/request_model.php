@@ -56,6 +56,48 @@ class Request_model extends CI_Model
 		return $query->result();				
 	}
 
+	// Retorna a quantidade de requisições para novas marcas
+	function countRequestByBrand()
+	{
+		$this->db->from('MarcaRequest');
+		$this->db->order_by('MAID');
+		return $this->db->count_all_results();
+	}
+
+	// Retorna a lista de requisiçoes para novas marcas
+	function requestByBrand($limit, $start)
+	{
+		$this->db->limit($limit, $start);
+		$this->db->select('*');
+		$this->db->from('MarcaRequest');
+		$this->db->order_by('MAID');
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
+	// Retorna a quantidade de requisições para novos modelos
+	function countRequestByModel()
+	{
+		$this->db->from('ModeloRequest');
+		$this->db->order_by('MOID');
+		return $this->db->count_all_results();
+	}
+
+	// Retorna a lista de requisiçoes para novos modelos
+	function requestByModel($limit, $start)
+	{
+		$this->db->limit($limit, $start);
+		$this->db->select('*');
+		$this->db->from('ModeloRequest');
+		$this->db->join('Categoria', 'CID = Categoria_CID');
+		$this->db->join('Marca', 'MAID = Marca_MAID');
+		$this->db->order_by('MOID');
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
 	// Verficar se existe uma requisição para a NCM //
 	function checkRequest($ncm, $ano, $idn)
 	{
@@ -129,6 +171,13 @@ class Request_model extends CI_Model
 	{
 		$this->db->where('RequestID',$id);
 		$this->db->delete('Request');
+	}
+
+	// Exlcuir uma requisição de modelo//
+	function deleteRequestModel($id)
+	{
+		$this->db->where('MOID',$id);
+		$this->db->delete('ModeloRequest');
 	}
 
 	// Atualiza um requisição //

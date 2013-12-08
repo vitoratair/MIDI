@@ -477,6 +477,40 @@ class Model extends CI_Controller
 
 	}	
 
+	// Cadastrar um nova requisição de modelos //
+	public function setRequestModel()
+	{
+		// Recebe os dados do FORM //
+		$id							= $this->input->post('moid');
+		$data['MNome0']				= $this->input->post('nome');
+		$data['MNome']				= $this->input->post('nome1');
+		$data['MNome1']				= $this->input->post('nome2');
+		$data['MNome2']				= $this->input->post('nome3');
+		$data['MNome3']				= $this->input->post('nome4');
+		$data['MNome4']				= $this->input->post('nome5');		
+		$data['Marca_MAID']			= $this->input->post('marca');
+		$data['Categoria_CID']		= $this->input->post('categoria');
+		$data['SubCategoria1_SCID']	= $this->input->post('sc1');		
+		$data['SubCategoria2_SCID']	= $this->input->post('sc2');			
+		$data['SubCategoria3_SCID']	= $this->input->post('sc3');			
+		$data['SubCategoria4_SCID']	= $this->input->post('sc4');			
+		$data['SubCategoria5_SCID']	= $this->input->post('sc5');			
+		$data['SubCategoria6_SCID']	= $this->input->post('sc6');			
+		$data['SubCategoria7_SCID']	= $this->input->post('sc7');			
+		$data['SubCategoria8_SCID']	= $this->input->post('sc8');			
+	
+		$this->model_model->save($data);
+
+		// Deletar oa requisição de modelo //
+		$this->model_model->deleteRequest($id);
+
+		print_r($this->db->last_query());
+		
+		// Redereciona a página //
+		redirect("request/brandAndModel");
+
+	}	
+
 }
 
 

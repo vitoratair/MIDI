@@ -104,7 +104,6 @@ class Brand extends CI_Controller
 		$this->brand_model->updateBrand($data);
 
 		redirect('brand/listAll');
-	
 	}
 
 }
