@@ -11,7 +11,6 @@
 </div><!--/breadcrumbs-->
 
 <div class="container">	
-	
 	<blockquote class="">
 		
 		<!-- Formulário para combobox sem botão submit -->
@@ -56,27 +55,7 @@
 
 	<br>
 	<div class="headline" align="center">
-		<h3>Lista de NCMs que constam a categoria {categoria}</h3>
+		<h3>Selecione uma categoria ou ncm e ano para consulta</h3>
 	</div>
 	<br>
-	<table class="table table-bordered">
-		<thead>
-			<tr class="">				
-				<td width="10%"><b>NCM</td>
-				<td width=""><b>Ano</td>
-				<td width=""><b>Quantidade encontrada</td>
-				<td width=""><b>Associada a Categoria</td>
-			</tr>			
-		</thead>
-
-		{dados}	
-			<tr class="table-condensed">	
-				<td>{ncms}</td>
-				<td>{anos}</td>	
-				<td>{qtd}</td>		
-				<td>{cadastrada}</td>	
-			</tr>
-		{/dados}
-	</table>
-
 </div>
