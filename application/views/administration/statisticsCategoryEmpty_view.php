@@ -17,19 +17,47 @@
 		<!-- Formulário para combobox sem botão submit -->
 		<?php
 			$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align'=> 'left',  'method'=>'POST');
-			echo form_open('administration/statisticCategory', $atributos); 
+			echo form_open('administration/statistic', $atributos); 
 		?>		
 
-			<select id="categoria" name="categoria" class="span2" onchange="this.form.submit()">
+			<select id="categoriaCombo" name="categoria" class="span2" onchange="this.form.submit()">
 				
 				<option value="">Categoria</option>
 				{categorias}		
 					<option value="{CID}">{CNome}</option>
 				{/categorias}
 				
-		    </select>			    
+		    </select>
+ 			
+ 			&nbsp;&nbsp;&nbsp; -  &nbsp;&nbsp;&nbsp;
+
+			<select id="ncm" name="ncm" class="span2">
+				
+				<option value="">NCM</option>
+				{ncms}		
+					<option value="{NNome}">{NNome}</option>
+				{/ncms}
+				
+		    </select>
+
+		    &nbsp;
+
+			<select id="anoCombo" name="ano" class="span2" onchange="this.form.submit()">
+				
+				<option value="">Ano</option>
+				{anos}		
+					<option value="{AAno}">{AAno}</option>
+				{/anos}
+				
+		    </select>	
 
 		</form>	
 	</blockquote>
+
+	<br>
+	<div class="headline" align="center">
+		<h3>Não foi encontrado nenhuma referência a {categoria}</h3>
+	</div>
+	<br>
 
 </div>

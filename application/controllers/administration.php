@@ -107,6 +107,13 @@ class Administration extends CI_Controller
 		// Recebe os dados do formulário //
 		$data['ncm'] 		= $this->input->post('ncm');
 		$data['ano']		= $this->input->post('ano');
+		$categoria			= $this->input->post('categoria');
+		
+		if (!empty($categoria))
+		{	
+			$data['categoria']	= $this->category_model->getCategory($categoria);
+			$data['categoria']	= $data['categoria'][0]->CNome;
+		}
 
 		// Busca as informações para enviar para view //	
 		$data['ncms']		= $this->ncm_model->listNcm();
@@ -123,43 +130,94 @@ class Administration extends CI_Controller
 			$table = NULL;
 		}
 
-		// verifica se a NCM existe na base de dados 
-		if ($this->ncm_model->checkNcm($table))
+		if ((empty($categoria)) AND (!empty($table)))
 		{
-			// Busca os detalhes da NCM desejada por Mês //
-			for ($i=1; $i <= 12; $i++)
-			{ 			
-				$data['dados'][$i]['mesID'] 			= $i;
-				$data['dados'][$i]['mes'] 				= $this->others->buscaMes($i);
-				$data['dados'][$i]['total'] 			= $this->ncm_model->statistics(1, 	$table, $i);
-				$data['dados'][$i]['marcaEncontrada'] 	= $this->ncm_model->statistics(2, 	$table, $i);
-				$data['dados'][$i]['modeloEncontrado'] 	= $this->ncm_model->statistics(3, 	$table, $i);
-				$data['dados'][$i]['marca_modelo'] 		= $this->ncm_model->statistics(4, 	$table, $i);
-				$data['dados'][$i]['outros'] 			= $this->ncm_model->statistics(5, 	$table, $i);
-				$categorias 							= $this->ncm_model->statistics(11, 	$table, $i);			
-				$data['dados'][$i]['categorias']	 	= $this->others->formataCategorias($categorias);
+			// verifica se a NCM existe na base de dados 
+			if ($this->ncm_model->checkNcm($table))
+			{
+				// Busca os detalhes da NCM desejada por Mês //
+				for ($i=1; $i <= 12; $i++)
+				{ 			
+					$data['dados'][$i]['mesID'] 			= $i;
+					$data['dados'][$i]['mes'] 				= $this->others->buscaMes($i);
+					$data['dados'][$i]['total'] 			= $this->ncm_model->statistics(1, 	$table, $i);
+					$data['dados'][$i]['marcaEncontrada'] 	= $this->ncm_model->statistics(2, 	$table, $i);
+					$data['dados'][$i]['modeloEncontrado'] 	= $this->ncm_model->statistics(3, 	$table, $i);
+					$data['dados'][$i]['marca_modelo'] 		= $this->ncm_model->statistics(4, 	$table, $i);
+					$data['dados'][$i]['outros'] 			= $this->ncm_model->statistics(5, 	$table, $i);
+					$categorias 							= $this->ncm_model->statistics(11, 	$table, $i);			
+					$data['dados'][$i]['categorias']	 	= $this->others->formataCategorias($categorias);
 
-				// pesquisa o último mês contendo dados para processar //
-				$lastUpdate 							= $this->ncm_model->getLastData($table);
-				$data['dados'][$i]['lastUpdate'] 		= $this->others->buscaMes($lastUpdate[0]->MES);
+					// pesquisa o último mês contendo dados para processar //
+					$lastUpdate 							= $this->ncm_model->getLastData($table);
+					$data['dados'][$i]['lastUpdate'] 		= $this->others->buscaMes($lastUpdate[0]->MES);
 
-				// pesquisa o último mês processado //
-				$lastProcessing 						= $this->ncm_model->getLastProcessing($table);
-				$data['dados'][$i]['lastProcessing'] 	= $this->others->buscaMes($lastProcessing[0]->MES);
+					// pesquisa o último mês processado //
+					$lastProcessing 						= $this->ncm_model->getLastProcessing($table);
+					$data['dados'][$i]['lastProcessing'] 	= $this->others->buscaMes($lastProcessing[0]->MES);
 
+				}
+				// Busca os dados referente a NCM completa //
+				$data['total'] 				= $this->ncm_model->statistics(6, $table, NULL);
+				$data['marcaEncontrada'] 	= $this->ncm_model->statistics(7, $table, NULL);
+				$data['modeloEncontrado'] 	= $this->ncm_model->statistics(8, $table, NULL);
+				$data['marca_modelo'] 		= $this->ncm_model->statistics(9, $table, NULL);
+				$data['outros'] 			= $this->ncm_model->statistics(10, $table, NULL); 
+
+				$data['main_content'] = 'administration/statistics_view';				
 			}
-			// Busca os dados referente a NCM completa //
-			$data['total'] 				= $this->ncm_model->statistics(6, $table, NULL);
-			$data['marcaEncontrada'] 	= $this->ncm_model->statistics(7, $table, NULL);
-			$data['modeloEncontrado'] 	= $this->ncm_model->statistics(8, $table, NULL);
-			$data['marca_modelo'] 		= $this->ncm_model->statistics(9, $table, NULL);
-			$data['outros'] 			= $this->ncm_model->statistics(10, $table, NULL); 
-
-			$data['main_content'] = 'administration/statistics_view';				
+			else
+			{
+				$data['main_content'] = 'administration/statisticsEmpty_view';
+			}
 		}
-		else
+		elseif (!empty($categoria))
 		{
-			$data['main_content'] = 'administration/statisticsEmpty_view';
+			$j = 0;
+			$table 	= TABLE;
+			// $data['ncms'] = NULL;
+			$data['ncm'] = $this->ncm_model->listAllNcm();
+
+			if (!empty($data['ncm']))
+			{
+				for ($i=0; $i < sizeof($data['ncm']); $i++)
+				{
+					$tables = $data['ncm'][$i]->$table;
+					$count 	= $this->ncm_model->checkCategoryOnNCM($tables, $categoria);
+					if ($count > 0)
+					{
+						$data['dados'][$j]['ncms'] 		= explode("_", $tables)[0];
+						$data['dados'][$j]['anos'] 		= explode("_", $tables)[1];
+						$data['dados'][$j]['qtd'] 		= $count;
+						
+						// Verifica se categoria esta associada a NCM
+						if ($this->ncm_model->checkLinkCategory($categoria, $data['dados'][$j]['ncms']) > 0)
+						{
+							$data['dados'][$j]['cadastrada'] = "Sim"; 	
+						}
+						else
+						{
+							$data['dados'][$j]['cadastrada'] = "Não";
+						}
+						
+
+						$j += 1; 					
+					}
+				}
+			}
+			
+			if (empty($data['dados']))
+			{
+				$data['main_content'] = 'administration/statisticsCategoryEmpty_view';
+			}
+			else
+			{
+				$data['main_content'] = 'administration/statisticsCategory_view';	
+			}
+		}
+		elseif ((empty($categoria)) AND (empty($table)))
+		{
+			$data['main_content'] = 'administration/statisticsFullEmpty_view';
 		}
 		
 		$this->parser->parse('template', $data);		

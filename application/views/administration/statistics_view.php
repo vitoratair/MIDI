@@ -19,6 +19,17 @@
 			echo form_open('administration/statistic', $atributos); 
 		?>		
 			
+			<select id="categoriaCombo" name="categoria" class="span2" onchange="this.form.submit()">
+				
+				<option value="">Categoria</option>
+				{categorias}		
+					<option value="{CID}">{CNome}</option>
+				{/categorias}
+				
+		    </select>
+ 			
+ 			&nbsp;&nbsp;&nbsp; -  &nbsp;&nbsp;&nbsp;
+
 			<select id="ncm" name="ncm" class="span2">
 				
 				<option value="{ncm}">{ncm}</option>
@@ -28,7 +39,7 @@
 				
 		    </select>
 
-		    &nbsp;&nbsp;&nbsp;
+		    &nbsp;
 
 			<select id="anoCombo" name="ano" class="span2" onchange="this.form.submit()">
 				

@@ -18,21 +18,32 @@
 			$atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align'=> 'left',  'method'=>'POST');
 			echo form_open('administration/statistic', $atributos); 
 		?>		
-			
+
+			<select id="categoriaCombo" name="categoria" class="span2" onchange="this.form.submit()">
+				
+				<option value="">Categoria</option>
+				{categorias}		
+					<option value="{CID}">{CNome}</option>
+				{/categorias}
+				
+		    </select>
+ 			
+ 			&nbsp;&nbsp;&nbsp; -  &nbsp;&nbsp;&nbsp;
+
 			<select id="ncm" name="ncm" class="span2">
 				
-				<option value="">Selecione uma NCM</option>
+				<option value="">NCM</option>
 				{ncms}		
 					<option value="{NNome}">{NNome}</option>
 				{/ncms}
 				
 		    </select>
 
-		    &nbsp;&nbsp;&nbsp;
+		    &nbsp;
 
 			<select id="anoCombo" name="ano" class="span2" onchange="this.form.submit()">
 				
-				<option value="">Selecione um ano</option>
+				<option value="">Ano</option>
 				{anos}		
 					<option value="{AAno}">{AAno}</option>
 				{/anos}
@@ -42,5 +53,9 @@
 		</form>	
 	</blockquote>
 
-	<br><br><br><br><br><br><br><br><br>
+	<br>
+	<div class="headline" align="center">
+		<h3>A NCM {ncm} no ano de {ano} não consta na base de dados</h3>
+	</div>
+	<br>
 </div>

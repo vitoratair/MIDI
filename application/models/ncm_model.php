@@ -831,8 +831,23 @@ class ncm_model extends CI_Model
 		return $query->result();
 	}
 
+	// Verifica se existe a categoria na NCM //
+	function checkCategoryOnNCM($table, $categoria)
+	{
+		$this->db->where('Categoria', $categoria);
+		$this->db->from($table);			
+		return $this->db->count_all_results();
+	}
 
-
+	// Verifica se a categoria esta associada a NCM //
+	function checkLinkCategory($categoria, $ncm)
+	{
+		$this->db->where('NNome', $ncm);
+		$this->db->where('Categoria_CID', $categoria);		
+		$this->db->from('NCM_has_Categoria');			
+		$this->db->join('NCM', 'NCM_NID = NID');
+		return $this->db->count_all_results();
+	}
 }
 
 ?>
