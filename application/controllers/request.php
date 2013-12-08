@@ -364,13 +364,11 @@ class Request extends CI_Controller
 	}	
 
 	// Adicionar uma nova requisição de marca //
-	public function setBrandRequest()
-	{
-		// Recebe os dados do FORM //
-		$id = $this->input->post('maid'); 			
-		$data['MANome']		= $this->input->post('marcaNome');
-		$data['MANome1']	= $this->input->post('marcaNome1');
-		$data['MANome2'] 	= $this->input->post('marcaNome2');
+	public function setBrandRequest($id, $marcaNome, $marcaNome1, $marcaNome2)
+	{			
+		$data['MANome']		= $marcaNome;
+		$data['MANome1']	= $marcaNome1;
+		$data['MANome2'] 	= $marcaNome2;
 
 		$this->brand_model->save($data);
 

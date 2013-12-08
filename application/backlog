@@ -1,9 +1,8 @@
 Backlog
-	- Usuário consegue modificar categoria e modelo, deixando marca em branco.
+	
 	- No comparativo inicial entre os anos por categoria, adicionar o percentual de variação entre um ano e outro;
 	- Possibilidade de inserir dados de produção nacional e estimativas.
-	- Exportar dados para excel;
-	- Busca por categoria na área “estatística”/“Categoria-NCM”
+	- Exportar dados para excel;	
 	- Análise por marca.
 	- Análise das categorias		
 	- Análises por período e não por ano (ex.: de outubro de 2012 a março de 2013)
@@ -15,15 +14,16 @@ Backlog
 Bugs
 	- NCM com mais de 10.000 linhas	
 	- Gráficos com botão do tipo "range" estão instáveis
-	- Rever exclusão de sc {setar em 1 subcategoria }
-
 Done
 	
+	- Busca por categoria na área “estatística”/“Categoria-NCM”
+	- Usuário consegue modificar categoria e modelo, deixando marca em branco.
 	- Exibir data da última atualização por categoria;
 	- Deixar selecionado combobox escolhidos
 	- Não exibir dados na pesquisa de importações quando não houver dados
 	- Ter opção "outros" no momento de alterar os dados (abrir uma caixinha para inserir manualmente), para possibilitar a inclusão de novos modelos e marcas;
 	- Filtro por mês na pesquisa de importações;
+	- Rever exclusão de sc {setar em 1 subcategoria }
 	- Na página de pesquisa de modelos, hoje tem filtros para buscar um modelo por categoria e marca, criar uma função que busque por um nome de modelo em todas as categorias;
 	-“MNome1” está aparecendo como nome do modelo na área de pesquisa, deveria ser “MNome0”;
 	- Visualizar FOB na área de pesquisa de importações
