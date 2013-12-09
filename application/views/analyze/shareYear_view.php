@@ -13,19 +13,19 @@
 <div class="container">
 
     <!-- Range para escolha das peças mínimas por marca -->
+    <blockquote>
     <?php
         $atributos = array('form class'=>'form-horizontal',  'id'=>'FormCadastro', 'align' => 'left', 'method'=>'POST');
         echo form_open('analyze/analyzeYearShare', $atributos); 
     ?>
-        
-        <input id="" onchange="this.form.submit()" class="" type="range" min="1" max="{maximo}" step="1" value="{valor}" name="valor" onchange="updateSlider(this.value)">
+        <input type="text" name="valor" placeholder="número de marcas" class="span2">
         <input type="hidden" name="categoria" value="{categoria}">
         <input type="hidden" name="ano" value="{ano}">
         <input type="hidden" name="subcategorias" value="{postSubcategorias}">
         <input type="hidden" name="dataInicial" value="{dataInicial}">
         <input type="hidden" name="dataFinal" value="{dataFinal}">
         </form>
-    
+    </blockquote>
     <br>
 
     <div class="" id="participacao_de_mercadoPeca" style="min-width: 700px; height: 600px; margin: 0 auto"></div>                    
