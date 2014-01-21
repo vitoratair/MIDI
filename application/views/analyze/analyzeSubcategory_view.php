@@ -140,6 +140,7 @@
                                             <td width="10%"><b>Unidades</td>
                                             <td width="10%"><b>Valor</td>
                                             <td width="10%"><b>Detalhes</td>
+                                            <td width="10%"><b>Exportar</td>
                                         </tr>           
 
                                         {dados}
@@ -149,6 +150,7 @@
                                             <td>{unidades}</td>
                                             <td>{volume}</td>
                                             <td><a onclick="enviar({categoriaID}, {ano});" href="#" class='icon-search'> <a/></td>
+                                            <td><a onclick="exportar({categoriaID}, {ano});" href="#" class='icon-download'> <a/></td>
                                         </tr>
 
                                         {/dados}                            
@@ -182,6 +184,23 @@
         $('body').append(form);
         $(form).submit();
     }
+
+    function exportar(categoria, ano)
+    {    
+
+        var url = '<?php echo base_url();?>index.php/analyze/export';
+        var form = $('<form action="' + url + '" method="POST">' +
+          '<input type="hidden" name="categoria" value="' + categoria + '" />' +
+          '<input type="hidden" name="ano" value="' + ano + '" />' +
+
+          '<input type="hidden" name="dataInicial" value="' + <?php echo $dataInicial;?> + '" />' +
+          '<input type="hidden" name="dataFinal" value="' + <?php echo $dataFinal;?> + '" />' +
+
+          '<input type="hidden" name="subcategorias" value="' + <?php echo $postSubcategorias;?> + '" />' +
+          '</form>');
+        $('body').append(form);
+        $(form).submit();
+    }    
 
     $(function () {
         $('#analyze_1').highcharts({

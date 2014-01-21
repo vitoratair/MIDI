@@ -3910,6 +3910,10 @@ input[type="submit"].btn.btn-mini {
   color: #468847;
 }
 
+.alert-success h4 {
+  color: #468847;
+}
+
 .alert-danger,
 .alert-error {
   color: #b94a48;

@@ -306,7 +306,7 @@ class ncm_model extends CI_Model
 		}		
 	}
 
-	// Busca os dados de improtações de acordo com os filtros do usuário //
+	// Busca os dados de importações de acordo com os filtros do usuário //
 	function getData($limit, $start, $table, $month, $id, $brand, $model, $search, $unSearch, $mes, $categoria)
 	{
 		
@@ -847,6 +847,32 @@ class ncm_model extends CI_Model
 		$this->db->from('NCM_has_Categoria');			
 		$this->db->join('NCM', 'NCM_NID = NID');
 		return $this->db->count_all_results();
+	}
+
+	// Retorna os dados para exportar para excel //
+	function export($table, $categoria, $sc, $ano)
+	{
+		$this->db->select('*');
+		$this->db->from($table);
+		$this->db->join('Categoria','Categoria = CID');
+		$this->db->join('Marca','Marca = MAID');
+		$this->db->join('Modelo','Modelo = MOID');
+		$this->db->where('Categoria', $categoria);
+
+		// Procura nas subcategorias especificadas //
+		foreach ($sc as $key => $value)
+		{
+			$coluna = $table . ".SubCategoria". ($key + 1) ."_SCID";
+			if (!empty($value) && ($value != 'false'))
+			{
+				$this->db->where($coluna, $value);
+			}
+		}
+
+		$query = $this->db->get();
+		
+		return $query->result();		
+
 	}
 }
 

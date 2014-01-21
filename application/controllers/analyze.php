@@ -113,6 +113,91 @@ class Analyze extends CI_Controller
 		$this->parser->parse('template', $data);
 	}	
 
+	// Exportar dados para excel //
+	public function export()
+	{
+		// Recebendo dados via POST //
+		$categoria 		= $this->input->post('categoria');
+		$dataInicial 	= $this->input->post('dataInicial');
+		$dataFinal 		= $this->input->post('dataFinal');
+		$ano 			= $this->input->post('ano');
+		$sc1 			= $this->input->post('subcategorias');
+		$sc 			= explode(",", $sc1);
+
+		$data['titulos']		= $this->category_model->listTitle($categoria);
+		$data['ncm']			= $this->listNcmYearByCategory($categoria);	
+		
+		$i = 0;
+		foreach ($data['ncm'] as $key => $value)
+		{
+			if ($value[1] == $ano)
+			{			
+				$ncms[$i] = $value[0] . "_" . $value[1];	
+				$i++;
+			}
+		}
+		
+		foreach ($ncms as $key => $value)
+		{
+			$result = $this->ncm_model->export($value, $categoria, $sc, $ano);
+		}
+
+		// Busca o título das subcategorias
+		$titulos = $this->category_model->listTitle($categoria);
+
+		header("Content-type: text/html;charset=utf-8");
+	    header("Content-type: application/vnd.ms-excel");
+	    header("Content-type: application/force-download");
+	    header("Content-Disposition: attachment; filename=midi.xls");
+	    header("Pragma: no-cache");
+		
+		echo "<table class=\"table\">
+		<tr>
+			<td>Marca</td>
+			<td>Categoria</td>
+			<td>Modelo</td>
+			<td>Unidades</td>
+			<td>FOB</td>
+			<td>Descrição</td>
+		";
+		foreach ($titulos as $key => $value)
+		{
+			echo "<td>" . $value->TNome . "</td>";
+		}
+		echo "</tr>";
+
+		foreach ($result as $key => $value)
+		{
+			$i=1;
+			echo "<tr><td>";
+			echo $value->MANome;
+			echo "</td><td>";
+			echo $value->CNome;
+			echo "</td><td>";
+			echo $value->MNome0;
+			echo "</td><td>";
+			echo $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;			
+			echo "</td><td>";
+			echo $value->VALOR_TOTAL_PRODUTO_DOLAR;			
+			echo "</td><td>";			
+			echo $value->DESCRICAO_DETALHADA_PRODUTO;
+			echo "</td>";
+
+			while($i <= sizeof($titulos))
+			{
+				$aux = "SubCategoria" . $i . "_SCID";
+				echo "</td><td>";			
+				echo $value->$aux;
+				echo "</td>";
+				$i +=1;				
+			}
+			echo "</tr>";
+		}
+		
+		echo "</table>";		
+
+	}
+
 	// Análise de um ano //
 	public function yearAnalyze()
 	{
