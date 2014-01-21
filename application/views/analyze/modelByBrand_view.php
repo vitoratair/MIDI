@@ -17,7 +17,7 @@
     <table class='table table-bordered' align="right">
 		<thead>
             <tr>
-                <td width=""><b>Marca</b></td>
+                <td width=""><b>Modelo</b></td>
                 <td width=""><b>Unidades</b></td>
                 <td width=""><b>Valor</b></td>
                 <td width=""><b>FOB</b></td>

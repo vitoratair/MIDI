@@ -1517,7 +1517,7 @@ class Analyze extends CI_Controller
 				$dados 						= $this->model_model->sumDataModelByYear($table, $value, $categoria, $dataInicial, $dataFinal);
 				$array[$key]['modelo'] 		= $value;
 				$array[$key]['modeloNome'] 	= $this->model_model->getModel($value);
-				$array[$key]['modeloNome']	= $array[$key]['modeloNome'][0]->MNome;
+				$array[$key]['modeloNome']	= $array[$key]['modeloNome'][0]->MNome0;
 				$array[$key]['unidades'] 	= $dados[0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
 				$array[$key]['volume'] 		= $dados[0]->VALOR_TOTAL_PRODUTO_DOLAR;
 			}			
