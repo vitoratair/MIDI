@@ -42,8 +42,8 @@ a:hover {
 h1, h2, h3, h4, h5 {
 	color:#555; 
 	margin-top:5px; 
-	text-shadow:none; 
-	text-shadow:0 0 1px #f6f6f6;
+/*	text-shadow:none; 
+	text-shadow:0 0 1px #f6f6f6;*/
 	font-weight:normal !important; 
 	font-family:'Open Sans', sans-serif; 
 } 

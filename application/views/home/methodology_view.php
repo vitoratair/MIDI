@@ -14,7 +14,7 @@
 
                         </td>
                         <td>
-                            <img src="<?php echo base_url();?>assets/img/receita.png" class="margin-bottom-10" width="70%" alt="">
+                            <img src="<?php echo base_url();?>assets/img/receita.png" class="margin-bottom-10" width="100%" alt="">
                             
                         </td>
 
@@ -58,7 +58,7 @@
                         </td>
                         <td>
                     <p><h3 align="center">Entre os dados fornecidos estão:
-                        <strong>Descrição detalhada do produto</strong>
+                        <strong>descrição detalhada do produto</strong>,
                         país de origem, preço FOB e quantidade comercializada.
                         </h3>
                     </p>
@@ -93,17 +93,18 @@
                         <td>
                             <p>
                                 <h3 align="center">
-                                    Esta descrição pode ser completa, contendo <strong>marca</strong> e <strong>modelo</strong>...
+                                    <font color="white">Esta descrição pode ser completa, contendo <strong>marca</strong> e <strong>modelo</strong>...</font>
                                 </h3>
 
                                 <table width="100%" border="0px">
                                     <tr>
-                                        <td>
+                                        <td align="center">
                                             <code >
                                                 APARELHOS TELEFONICOS, MONOCANAL, MARCA <strong><i>ELGIN</i></strong>,
                                                 COD: HCD-81, MODELO <strong><i>TCF-2000</i></strong>,
                                                 COR PRETO
-                                            <code>                                             
+                                            </code> 
+                                        </td>                                           
                                     </tr>
                                 </table>
 
@@ -111,13 +112,16 @@
                             <br><br>
                             <p>
                                 <h3 align="center">
-                                    Ou incompleta, permitindo muitas vezes apenas a identificação da categoria...
+                                    <font color="white"> Ou incompleta, permitindo muitas vezes apenas a identificação da <strong>categoria</strong>...</font>
                                 </h3>
                                 
-                                <table width="100%" border="1px">
+                                <table width="100%" border="0px">
                                     <tr>
-                                        <td>
-                                            <h4 align="center"><strong><i>TELEFONE COM FIO</i></strong> - REF: RM-9047</h4>
+                                        <td align="center">
+                                            <code>
+                                                <strong><i>TELEFONE COM FIO</i></strong> - REF: RM-9047
+                                            </code>
+                                        </td>
                                     </tr>
                                 </table>
                             </p> 
@@ -141,14 +145,14 @@
                     <tr>
                         <td width="10%"></td>
                         <td>
-                            <h3>
+                            <h3 align="center">
                                 O trabalho do <strong>MIDI</strong> é buscar nestas descrições
-                                <strong>marcas</strong> e <strong>Modelos</strong>,
+                                <strong>marcas</strong> e <strong>modelos</strong>,
                                 possiblitando o agrupamento dos dados em
                                 <strong>categorias de produtos</strong>
                             </h3>
 
-                            <h3>Telefone com fio, DVR, Switch, Terminal IP...</h4>
+                            <h3 align="center">Telefone com fio, DVR, Switch, Terminal IP...</h3>
                         </td>                                        
 
                         <td>
@@ -168,16 +172,16 @@
 
 
 
-    <div class="one-page-inner one-red">
+    <div class="one-page-inner one-blue">
         <div class="container">
                 <table width="100%" border="0px">
                     <tr>
                         <td width="10%"></td>
                         <td>
                             <h3 align="center">
-                            Para que o <strong>MIDI</strong> realize estas buscas, é necessário
+                            <font color="white">Para que o <strong>MIDI</strong> realize estas buscas, é necessário
                             alimentá-lo com bases de <strong>marcas</strong> e <strong>modelos</strong>.
-                            Você pode entender melhor como criá-las em</h3>
+                            Você pode entender melhor como criá-las em</font></h3>
                         </td>
                         <td width="10%"></td>
                     </tr>
@@ -190,7 +194,7 @@
 
                     <tr>
                         <td colspan="3" width="100%" align="center">
-                            <img src="<?php echo base_url();?>assets/img/Folhas.png" class="margin-bottom-10" width="40%">
+                            <img src="<?php echo base_url();?>assets/img/Folhas.png" class="margin-bottom-10" width="50%">
                         </td>
                     </tr>
 
@@ -198,11 +202,10 @@
         </div>
     </div>
 
-    <div class="one-page-inner one-blue">
+    <div class="one-page-inner one-default">
         <div class="container">    
             <div class="row-fluid">
-
-
+            <br>
                 <table border="0px">
                     <tr>
                         <td width="10%"></td>
@@ -219,16 +222,15 @@
                     <tr>
                         <td width="10%"></td>
                         <td align="center">
-                            <img src="<?php echo base_url();?>assets/img/seta3.png" class="" width="60px">
+                            <img src="<?php echo base_url();?>assets/img/seta1.png" class="" width="60px">
                         </td>
                         <td width="10%"></td>
                     </tr>
 
                     <tr>
                         <td width="10%"></td>
-                        <td align="right">
-                            <h3><strong>Refinamento dos dados&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></h3>
+                        <td align="center">
+                            <h3><strong>Refinamento dos dados</strong></h3>
                         </td>
                         <td width="10%"></td>
                     </tr>
@@ -237,32 +239,7 @@
         </div>
     </div>
 
-    <br><br><br>
-    <div class="one-page-inner one-default">
-        <div class="container">
-            <div class="row-fluid">
-
-                <table border="1px">
-                    <tr>
-                        <td width="10%"></td>
-                        <td>
-                            <h3 align="center">
-                                O refinamento dos dados é responsabilidade de cada segmento de produto, por deter o
-                                conhecimento específico.
-                                A qualidade das informações depende desta etapa, é indispensável
-                                realizá-la antes de utilizar as informações no processo de tomada de decisão,   
-                            </h3>
-                        </td>
-                        <td >
-                            <img src="<?php echo base_url();?>assets/img/Alerta.png" class="margin-bottom-10" width="" >
-                        </td>
-                    </tr>
-                </table>
-        </div>
-    </div>
-
-
-    <br><br><br>
+    <br><br>
 
     <div class="one-page-inner one-blue">
         <div class="container">
@@ -271,7 +248,37 @@
                     <tr>
                         <td width="10%"></td>
                         <td>
-                            <img src="<?php echo base_url();?>assets/img/grafico.png" class="margin-bottom-10" width="">
+                            <h3 align="center">
+                                <font color="white">
+                                O refinamento dos dados é responsabilidade de cada segmento de produto, por deter o
+                                conhecimento específico.
+                                A qualidade das informações depende desta etapa, é indispensável
+                                realizá-la antes de utilizar as informações no processo de tomada de decisão.
+                                </font>
+                            </h3>
+                        </td>
+                        <td >
+                            <img src="<?php echo base_url();?>assets/img/Alerta.png" class="margin-bottom-10" width="200px" >
+                        </td>                        
+                        <td width="10%"></td>
+
+                    </tr>
+                </table>
+        </div>
+    </div>
+    </div>
+
+
+    <br><br><br>
+
+    <div class="one-page-inner one-default">
+        <div class="container">
+            <div class="row-fluid">
+                <table border="0px">
+                    <tr>
+                        <td width="10%"></td>
+                        <td>
+                            <img src="<?php echo base_url();?>assets/img/grafico.png" class="margin-bottom-10" width="100%">
                         </td>
 
                         <td>
@@ -280,7 +287,7 @@
                                 análises de importações por <strong>categoria</strong>,
                                 <strong>marca</strong> e <strong>modelo</strong>.<br><br>
                                 Gráficos e tabelas podem ser gerados com diferentes combinações
-                                de variáveis, auxiliando no processo de <strong>tomada de desições</strong>
+                                de variáveis, auxiliando no processo de <strong>tomada de decisões</strong>.
                             </h3>
                         </td>
                         <td width="10%"></td>
@@ -291,11 +298,4 @@
     </div>
 
 </div>
-
-    <br><br><br>
-<!--         
-        <p align="center">
-            <img src="<?php echo base_url();?>assets/img/Logo_MIDI.jpg" class="margin-bottom-10" width="">
-        </p> -->
-
 

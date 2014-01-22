@@ -981,8 +981,8 @@ pre {
 }
 
 code {
-  padding: 2px 4px;
-  color: #d14;
+  padding: 12px 10px;
+  color: #555;
   white-space: nowrap;
   background-color: #f7f7f9;
   border: 1px solid #e1e1e8;
