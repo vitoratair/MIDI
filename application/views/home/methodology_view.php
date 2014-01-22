@@ -1,5 +1,15 @@
+<!--=== Breadcrumbs ===-->
+<div class="row-fluid breadcrumbs margin-bottom-40">
+    <div class="container">
+        <h1 class="pull-left">Métodos <small></small></h1>
+        <ul class="pull-right breadcrumb">
+            <li><a href="<?php echo base_url();?>index.php/app/home">Home</a> <span class="divider"> / </span></li>
+            <li class="active">Métodos</li>
+        </ul>
+    </div><!--/container-->
+</div><!--/breadcrumbs-->
 
-<br><br><br><br><br><br><br>
+
 <div class="container-fluid one-page">
 
     <div class="one-page-inner one-blue">
@@ -188,7 +198,8 @@
 
                     <tr>
                         <td colspan="3" align="center">
-                            <a class="btn-u btn-u-large btn-u-red one-page-btn"><i class="icon-pencil"></i> Nova pesquisa</a>
+                            <a href="<?echo base_url();?>index.php/app/newSearch/"
+                            class="btn-u btn-u-large btn-u-red one-page-btn"><i class="icon-pencil"></i> Nova pesquisa</a>
                         </td>
                     </tr>
 
