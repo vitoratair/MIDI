@@ -1,10 +1,10 @@
 <!--=== Breadcrumbs ===-->
 <div class="row-fluid breadcrumbs margin-bottom-40">
     <div class="container">
-        <h1 class="pull-left">Métodos <small></small></h1>
+        <h1 class="pull-left">Método <small></small></h1>
         <ul class="pull-right breadcrumb">
             <li><a href="<?php echo base_url();?>index.php/app/home">Home</a> <span class="divider"> / </span></li>
-            <li class="active">Métodos</li>
+            <li class="active">Método</li>
         </ul>
     </div><!--/container-->
 </div><!--/breadcrumbs-->
@@ -24,14 +24,14 @@
 
                         </td>
                         <td>
-                            <img src="<?php echo base_url();?>assets/img/receita.png" class="margin-bottom-10" width="100%" alt="">
+                            <img src="<?php echo base_url();?>assets/img/receita.png" class="margin-bottom-10" width="80%" alt="">
                             
                         </td>
 
                         <td>
                             <p valign="middle">
-                                <h2 align="center">Mensalmente são disponibilizados pela <strong>Receita Federal</strong>
-                                dados dos produtos importados, agrupados por <strong>NCM</strong>.</h2>
+                                <h3 align="center"><font color="white">Mensalmente são disponibilizados pela <strong>Receita Federal</strong>
+                                dados dos produtos importados, agrupados por <strong>NCM</strong>.</font></h3>
                             </p>
 
                         </td>
@@ -75,7 +75,7 @@
                         <br>
                         <h3 align="center">A Receita não informa a <strong>marca</strong> e o <strong>modelo</strong>
                             dos produtos. Estas informações devem ser buscadas no texto da <strong>descrição
-                            detalhada do produto</strong></h3>                            
+                            detalhada do produto</strong>.</h3>                            
                         </td>
 
                         <td width="10%"></td>
@@ -144,9 +144,6 @@
         </div>
     </div>
 
-
-    <br><br>
-
     <div class="one-page-inner one-default">
         <div class="container">
             <div class="row-fluid">       
@@ -159,18 +156,28 @@
                                 O trabalho do <strong>MIDI</strong> é buscar nestas descrições
                                 <strong>marcas</strong> e <strong>modelos</strong>,
                                 possiblitando o agrupamento dos dados em
-                                <strong>categorias de produtos</strong>
-                            </h3>
-
-                            <h3 align="center">Telefone com fio, DVR, Switch, Terminal IP...</h3>
+                                <strong>categorias de produtos</strong>.
+                            </h3>                            
                         </td>                                        
 
-                        <td>
+                        <td rowspan="3">    
                             <img src="<?php echo base_url();?>assets/img/search.png" width="100%" alt="">
                         </td>
 
+                    </tr>
+                    <tr>
                         <td width="10%"></td>
-
+                        <td align="right" >
+                            <img src="<?php echo base_url();?>assets/img/seta1.png" class="" width="60px">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </td>                    
+                    </tr>
+                    <tr>
+                        <td width="10%"></td>
+                        <td><h3 align="center">Telefone com fio, DVR, Switch, Terminal IP...</h3></td>
+                        
                     </tr>
                 </table>  
                 <br><br>                                  
@@ -198,7 +205,7 @@
 
                     <tr>
                         <td colspan="3" align="center">
-                            <a href="<?echo base_url();?>index.php/app/newSearch/"
+                            <a href="<?php echo base_url();?>index.php/app/newSearch/"
                             class="btn-u btn-u-large btn-u-red one-page-btn"><i class="icon-pencil"></i> Nova pesquisa</a>
                         </td>
                     </tr>
@@ -269,7 +276,7 @@
                             </h3>
                         </td>
                         <td >
-                            <img src="<?php echo base_url();?>assets/img/Alerta.png" class="margin-bottom-10" width="200px" >
+                            <img src="<?php echo base_url();?>assets/img/Alerta.png" class="margin-bottom-10" width="200px">
                         </td>                        
                         <td width="10%"></td>
 
@@ -298,7 +305,7 @@
                                 análises de importações por <strong>categoria</strong>,
                                 <strong>marca</strong> e <strong>modelo</strong>.<br><br>
                                 Gráficos e tabelas podem ser gerados com diferentes combinações
-                                de variáveis, auxiliando no processo de <strong>tomada de decisões</strong>.
+                                de variáveis, auxiliando no processo de <strong>tomada de decisão</strong>.
                             </h3>
                         </td>
                         <td width="10%"></td>
