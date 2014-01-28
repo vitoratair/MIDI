@@ -19,7 +19,7 @@
                 
                 <table border="0px">
                     <tr>
-                        <td width="20%"></td>
+                        <td width="10%"></td>
                         <td>
                             <p valign="middle">
                                 <h2 align="center">
@@ -27,17 +27,15 @@
 									adicionar uma nova pesquisa no
 									MIDI sugerimos que entenda
 									primeiro o<br><br>
-									<a href="<?echo base_url();?>index.php/app/methodology"
+									<a href="<?php echo base_url();?>index.php/app/methodology"
 									class="btn-u btn-u-large btn-u-red one-page-btn"><i class="icon-pencil"></i> Método</a>
                                 </h2>
                             </p>
-
                         </td>
 
                         <td width="10%"></td>
                     </tr>
                 </table>
-
             </div>
         </div>
     </div>
@@ -58,7 +56,7 @@
 									É com ela que o MIDI busca nas descrições
 									dos produtos importados marcas e
 									modelos, possibilitando seu agrupamento
-									em categorias e análise.									
+									em categorias.
 		                        </h2>
 		                    </p>
 	                    <td width="10%"> </td>	
@@ -113,10 +111,10 @@
                         <td>
 		                    <p>
 		                    	<h2 align="center">
-									Complementarmente é possível definir
+									De forma complementar é possível definir
 									<strong>subcategorias</strong>,
 									características que diferenciam os produtos
-									de uma mesma categoria									
+									de uma mesma categoria.						
 		                        </h2>
 		                    </p>
 		                </td>
@@ -162,7 +160,7 @@
 		                    	<h2 align="center">
 								Um passo importante antes de construir uma nova
 								base é definir qual a NCM da nova categoria a ser
-								adicionada.
+								adicionada...
 		                        </h2>
 		                    </p>
 	                    </td>
@@ -194,7 +192,7 @@
                         <td>
 		                    <p>
 		                    	<h2 align="center">
-									E analisar suas descrições, com o objetivo de
+									...e analisar suas descrições, com o objetivo de
 									conhecer a forma como são escritas, tornando o
 									conteúdo da base de marcas e modelos mais
 									preciso.
@@ -224,7 +222,7 @@
 								adicionada ao banco de dados do MIDI, juntamente
 								com as bases da NCM relacionada. Os dados são
 								processados e é possível seguir para as etapas de
-								refinamento e análise
+								refinamento e análise.
 		                        </h2>
 		                    </p>
 	                    </td>
@@ -250,7 +248,7 @@
 		                    	<h4 align="left">
 		                    	<font color="#555">
 								<strong>Nota:</strong> Devem ser adicionadas no MIDI apenas
-								pesquisas que necessitam de <strong>acompanhamento
+								pesquisas que necessitem de <strong>acompanhamento
 								periódico</strong>, para pesquisas pontuais outras
 								formas são mais eficazes. Se este for o seu caso,
 								entre em contato com a gente!</font>
