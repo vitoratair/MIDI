@@ -213,8 +213,8 @@
 		
 		<thead>
 			<tr class="">				
-				<td width="4%"><b>ID</b></td>
 				<td width="8%"><b>NCM</b></td>
+				<td width=""><b>FOB</b></td>
 				<td width=""><b>Descrição</b></td>
 				<td width="%"><b>Unidades</b></td>
 				<td width=""><b>Categoria</b></td>				

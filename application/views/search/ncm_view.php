@@ -213,9 +213,9 @@
 	<table class='table table-bordered table-hover'>
 		<thead>
 			<tr class="">				
-				<td width="4%"><b>ID</b></td>
 				<td width="4%"><b>Mês</b></td>
 				<td width="8%"><b>NCM</b></td>
+				<td width=""><b>FOB</b></td>
 				<td width=""><b>Descrição</b></td>
 				<td width="%"><b>Unidades</b></td>
 				<td width=""><b>Categoria</b></td>				
@@ -227,9 +227,9 @@
 
 		{dados}
 			<tr>	
-				<td>{IDN}</td>
 				<td>{MES}</td>
-				<td>{ncm}</td>				
+				<td>{ncm}</td>	
+				<td>$ {VALOR_UNIDADE_PRODUTO_DOLAR}</td>				
 				<td>{DESCRICAO_DETALHADA_PRODUTO}</td>
 				<td>{QUANTIDADE_COMERCIALIZADA_PRODUTO}</td>
 				<td>{CNome}</td>
