@@ -148,10 +148,10 @@ class Others
 				else
 					$dados[$key]->PESO_LIQUIDO_KG 				= $value->PESO_LIQUIDO_KG;
 				
-				if ($value->VALOR_UNIDADE_PRODUTO_DOLAR > 0)
-					$dados[$key]->VALOR_UNIDADE_PRODUTO_DOLAR 		= number_format($value->VALOR_UNIDADE_PRODUTO_DOLAR,2,",",".");
-				else
-					$dados[$key]->VALOR_UNIDADE_PRODUTO_DOLAR 		= $value->VALOR_UNIDADE_PRODUTO_DOLAR;
+				// if ($value->VALOR_UNIDADE_PRODUTO_DOLAR > 0)
+				// 	$dados[$key]->VALOR_UNIDADE_PRODUTO_DOLAR 		= number_format($value->VALOR_UNIDADE_PRODUTO_DOLAR,2,",",".");
+				// else
+				// 	$dados[$key]->VALOR_UNIDADE_PRODUTO_DOLAR 		= $value->VALOR_UNIDADE_PRODUTO_DOLAR;
 				
 			}			
 		}	
