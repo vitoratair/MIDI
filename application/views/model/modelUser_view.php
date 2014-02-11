@@ -73,8 +73,8 @@
 			
 			<tr class="table-condensed">	
 				<td>{MNome0}</td>
+				<td>{MNome}</td>
 				<td>{MNome1}</td>
-				<td>{MNome2}</td>
 				<td>{MANome}</td>
 				<td>{CNome}</td>			
 				<td><i class="{CHECK}"></i></td>				
