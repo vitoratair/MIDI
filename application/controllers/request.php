@@ -358,7 +358,7 @@ class Request extends CI_Controller
 	// Deleta a requisição de marca //
 	public function deleteRequestBrand($id)
 	{		
-		$this->brand_model->deleteRequest($id);
+		$this->request_model->deleteRequestBrand($id);
 
 		redirect('request/brandAndModel');
 	}	

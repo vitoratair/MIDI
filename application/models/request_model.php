@@ -180,6 +180,13 @@ class Request_model extends CI_Model
 		$this->db->delete('ModeloRequest');
 	}
 
+	// Exlcuir uma requisição de marca//
+	function deleteRequestBrand($id)
+	{
+		$this->db->where('MAID',$id);
+		$this->db->delete('MarcaRequest');
+	}	
+
 	// Atualiza um requisição //
 	function updateRequest($id, $table, $idn, $item)
 	{
