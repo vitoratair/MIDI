@@ -838,13 +838,13 @@ class Analyze extends CI_Controller
 			foreach ($ncms as $key => $table)
 			{
 				$aux[$key] 	= $this->getDataByYear($table, $categoria, $sc, $dataInicial, $dataFinal);
+				$outros['unidades'] += $aux[$key][0]['outros'][0]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
 			}
 
 			$aux 			= $this->mergeTable($aux);
 			$aux 			= $this->mergeBrand($aux);
 			$aux 			= $this->orderTable($aux, 'unidades');
 			$data['maximo'] = sizeof($aux);
-			
 			
 			if (empty($valor))
 			{
@@ -859,7 +859,16 @@ class Analyze extends CI_Controller
 
 			foreach ($aux as $key => $value)
 			{
-				$dados 	= $dados . "," . "['" . $value['marcaNome'] . "'," . $value['unidades'] . "]";
+				if ($value['marcaNome'] == "Outros")
+				{
+					$soma = $outros['unidades'] + $value['unidades'];
+					$dados 	= $dados . "," . "['" . $value['marcaNome'] . "'," . $soma . "]";	
+				}
+				else
+				{
+					$dados 	= $dados . "," . "['" . $value['marcaNome'] . "'," . $value['unidades'] . "]";	
+				}
+				
 			}			
 
 			if (substr($dados,0,1) == ",")
@@ -872,7 +881,6 @@ class Analyze extends CI_Controller
 			}
 
 			$data['dados'] 	= $dados;
-			
 
 		}
 
