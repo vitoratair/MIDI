@@ -845,17 +845,35 @@ class Analyze extends CI_Controller
 			$aux 			= $this->mergeBrand($aux);
 			$aux 			= $this->orderTable($aux, 'unidades');
 			$data['maximo'] = sizeof($aux);
-			
-			if (empty($valor))
+
+			// Verificando máximo de entradas com valores acima de 1
+			$j=0;
+			for ($i=0; $i < sizeof($aux); $i++)
+			{ 
+				if ($aux[$i]['unidades'] > 0)
+				{
+					$j++;
+				}
+			}
+
+			if ((empty($valor) AND ($j > 10)))
 			{
 				$valor = 10;
 			}
+			elseif ((empty($valor) AND ($j < 10)))
+			{
+				$valor = $j;
+			}
+			elseif ((!empty($valor) AND ($valor > $j)))
+			{
+				$valor = $j;
+			}			
 
 			$data['valor'] = $valor;
 
 			// exclui as entradas acima do valor especificado no segundo argumento //
 			$aux 	= $this->mountOthers($aux, $valor, $data['maximo']);
-		
+			
 
 			foreach ($aux as $key => $value)
 			{
