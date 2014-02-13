@@ -84,8 +84,10 @@ class Others
 		if($id == 1)
 		{
 			foreach ($dados as $key => $value)
-			{
+			{			
+				$dados[$key]->VALOR_UNIDADE_PRODUTO_DOLAR 		= number_format($value->VALOR_UNIDADE_PRODUTO_DOLAR,2,",",".");
 				$dados[$key]->QUANTIDADE_COMERCIALIZADA_PRODUTO = number_format($value->QUANTIDADE_COMERCIALIZADA_PRODUTO,0,",",".");
+
 			}			
 		}
 		elseif($id == 2)
