@@ -1527,35 +1527,32 @@ class Analyze extends CI_Controller
 	}	
 
 	// Merge de modelos //
-	function mergeModel($result)
-	{
+	function mergeModel($array)
+	{	
 
-		for ($i=0; $i<sizeof($result); $i++)		// compara o primeira posição do vetor com todas as outras
-		{
-			for ($j=1; $j<sizeof($result); $j++)
-			{	
-				if ($result[$i]['modelo'] == $result[$j]['modelo'])
-				{					
-					if ($i != $j)
-					{
-						$result[$i]['unidades'] = $result[$i]['unidades'] + $result[$j]['unidades'];
-						$result[$i]['volume'] 	= $result[$i]['volume'] + $result[$j]['volume'];					
-						unset($result[$j]);
-					}
-				}					
-				
-			} 				
-		}
+	    foreach ($array as $k => $v)
+	    {
+	        foreach ($array as $k2 => $v2)
+	        {
+	            if (($v2['modelo'] == $v['modelo']) && ($k != $k2))
+	            {
+
+					$array[$k2]['unidades'] 	= $array[$k]['unidades'] + $array[$k2]['unidades'];
+					$array[$k2]['volume'] 		= $array[$k]['volume'] + $array[$k2]['volume'];		                
+                	unset($array[$k]);
+	            }
+	        }
+	    }
 
 		// Exclui resultados em branco
-		foreach ($result as $key => $value)
+		foreach ($array as $key => $value)
 		{
 			if($value['unidades'] < 1)
 			{
-				unset($result[$key]);
+				unset($array[$key]);
 			}
 		}
-		return $result;		
+		return $array;		
 	}
 
 	// Montar array somente com os valore de OUTROS //
