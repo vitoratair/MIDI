@@ -140,7 +140,6 @@
                                             <td width="10%"><b>Unidades</td>
                                             <td width="10%"><b>Valor</td>
                                             <td width="10%"><b>Detalhes</td>
-                                            <td width="10%"><b>Exportar</td>
                                         </tr>           
 
                                         {dados}
@@ -150,7 +149,6 @@
                                             <td>{unidades}</td>
                                             <td>{volume}</td>
                                             <td><a onclick="enviar({categoriaID}, {ano});" href="#" class='icon-search'> <a/></td>
-                                            <td><a onclick="exportar({categoriaID}, {ano});" href="#" class='icon-download'> <a/></td>
                                         </tr>
 
                                         {/dados}                            
