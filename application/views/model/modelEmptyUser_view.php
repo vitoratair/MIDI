@@ -63,6 +63,9 @@
 				<td width=""><b>Modelo</td>
 				<td width=""><b>Sinônimo</td>
 				<td width=""><b>Sinônimo</td>
+				<td width=""><b>Sinônimo</td>
+				<td width=""><b>Sinônimo</td>				
+				<td width=""><b>Sinônimo</td>
 				<td width=""><b>Marca</td>
 				<td width=""><b>Categoria</td>
 				<td width="8%"><b>Encontrado</td>
