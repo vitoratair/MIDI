@@ -94,11 +94,11 @@ class Others
 		{
 			foreach ($dados as $key => $value)
 			{
-				$dados[$key]['unidades']		= number_format($value['unidades'],0,",",".");
-				$dados[$key]['volume'] 			= number_format($value['volume'],0,",",".");
-				$dados[$key]['fob'] 			= number_format($value['fob'],2,",",".");
-				$dados[$key]['shareUnidades'] 	= number_format($value['shareUnidades'],2,",",".");
-				$dados[$key]['shareVolume'] 	= number_format($value['shareVolume'],2,",",".");				
+				$dados[$key]->QUANTIDADE_COMERCIALIZADA_PRODUTO		= number_format($value->QUANTIDADE_COMERCIALIZADA_PRODUTO,0,",",".");
+				$dados[$key]->VALOR_TOTAL_PRODUTO_DOLAR				= number_format($value->VALOR_TOTAL_PRODUTO_DOLAR,0,",",".");
+				$dados[$key]->fob 									= number_format($value->fob,2,",",".");
+				$dados[$key]->shareUnidades 						= number_format($value->shareUnidades,2,",",".");
+				$dados[$key]->shareVolume 							= number_format($value->shareVolume,2,",",".");				
 			}			
 		}
 		elseif ($id == 3)
