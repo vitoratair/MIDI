@@ -66,6 +66,7 @@
 				<td width=""><b>Sinônimo</td>
 				<td width=""><b>Sinônimo</td>
 				<td width=""><b>Sinônimo</td>				
+				<td width=""><b>Sinônimo</td>
 				<td width=""><b>Marca</td>
 				<td width=""><b>Categoria</td>
 				<td width="8%"><b>Encontrado</td>
@@ -78,7 +79,8 @@
 				<td>{MNome}</td>
 				<td>{MNome1}</td>
 				<td>{MNome2}</td>
-				<td>{MNome3}</td>								
+				<td>{MNome3}</td>
+				<td>{MNome4}</td>								
 				<td>{MANome}</td>
 				<td>{CNome}</td>			
 				<td><i class="{CHECK}"></i></td>				

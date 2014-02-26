@@ -540,24 +540,42 @@ class Analyze extends CI_Controller
 			}		
 
 			// Recebe as opções de detalhes de NCM //
-			$i= 0;
+			$query = NULL;
 			foreach ($ncms as $key => $table)
 			{
-				$aux[$key]	= $this->getDataModel($table, $categoria, $sc, $marca, $dataInicial, $dataFinal);
+		    	$query .= "SELECT * FROM " . $ncms[$key];
+		    	$query .= " JOIN Modelo WHERE Modelo = MOID AND Categoria = " . $categoria;
+		    	$query .= " AND Marca = " . $marca;
+		    	$query .= " AND MES BETWEEN " . $dataInicial . " AND " . $dataFinal;
+
+		    	for ($i=0; $i < sizeof($sc); $i++)
+		    	{ 
+		    		$j = $i + 1;
+
+		    		if ($sc[$i] != 'false')
+		    		{
+		    			$query .= " AND SubCategoria".$j."_SCID = " . $sc[$i];
+		    		}
+		    	}
+
+		    	$query .= " UNION ";
 			}
-			
-			$aux 					= $this->mergeTable($aux);			
-			$data['dados'] 			= $this->mergeModel($aux);						
+		    	
+		    $query = substr($query, 0, -7); 	
+		    
+			// Executa a query para busca de modelos //
+			$aux 					= $this->model_model->getDataModel($query);
+			$data['dados'] 			= $this->mergeModel($aux);	
 			$data['dados'] 			= $this->calcFob($data['dados']);
-			$data['total'][0] 		= $this->calcTotal($data['dados']);		
+			$data['total'][0] 		= $this->calcTotal($data['dados']);	
 			$data['dados'] 			= $this->calcShare(1, $data['dados'], $data['total'][0]);						
-			$data['dados'] 			= $this->orderTable($data['dados'], 'unidades');
+			$data['dados'] 			= $this->orderTable($data['dados'], 'QUANTIDADE_COMERCIALIZADA_PRODUTO');
 
 			// Formatando os dados com as devidas casa decimais //			
 			$data['total'][0] 		= $this->others->formatarDados(7, $data['total'][0]);
-
 			$data['dados'] 			= $this->others->formatarDados(2, $data['dados']);
 
+			// Busca informações para legendas na view
 			$marca 					= $this->brand_model->getBrand($marca);
 			$data['marca'] 			= $marca[0]->MANome;
 			$data['marcaID'] 		= $marca[0]->MAID;
@@ -572,7 +590,7 @@ class Analyze extends CI_Controller
 		$data['dataFinal'] 			= $dataFinal;
 		$data['mesInicial']			= $this->others->buscaMes($dataInicial);
 		$data['mesFinal']			= $this->others->buscaMes($dataFinal);			
-		$data['postSubcategorias'] 	= json_encode($sc1	);
+		$data['postSubcategorias'] 	= json_encode($sc1);
 
 		$data['main_content'] 	= 'analyze/modelByBrand_view';
 		$this->parser->parse('template', $data);
@@ -1233,7 +1251,7 @@ class Analyze extends CI_Controller
 		{
 			foreach ($data as $key => $row)
 			{
-			   $filtro[$key] = $row[$op];
+			   $filtro[$key] = $row->$op;
 			}
 			array_multisort($filtro, SORT_DESC, $data);			
 		}
@@ -1258,7 +1276,7 @@ class Analyze extends CI_Controller
 	{
 		foreach ($dados as $key => $value)
 		{
-			$dados[$key]['fob'] = ($value['volume'] / $value['unidades']);		
+			$dados[$key]->fob = ($value->VALOR_TOTAL_PRODUTO_DOLAR / $value->QUANTIDADE_COMERCIALIZADA_PRODUTO);		
 		}
 
 		return $dados;
@@ -1272,8 +1290,8 @@ class Analyze extends CI_Controller
 
 		foreach ($dados as $key => $value)
 		{
-			$total['totalunidades']	+= $value['unidades'];
-			$total['totalvolume'] 	+= $value['volume'];
+			$total['totalunidades']	+= $value->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+			$total['totalvolume'] 	+= $value->VALOR_TOTAL_PRODUTO_DOLAR;
 		}
 		return $total;
 	}		
@@ -1291,8 +1309,8 @@ class Analyze extends CI_Controller
 			
 			foreach ($dados as $key => $value)
 			{
-				$dados[$key]['shareUnidades'] 	= (($value['unidades'] / $totalUnidades) * 100);
-				$dados[$key]['shareVolume'] 	= (($value['volume'] / $totalVolume) * 100);
+				$dados[$key]->shareUnidades 	= (($value->QUANTIDADE_COMERCIALIZADA_PRODUTO / $totalUnidades) * 100);
+				$dados[$key]->shareVolume 		= (($value->VALOR_TOTAL_PRODUTO_DOLAR / $totalVolume) * 100);
 			
 			}
 		}
@@ -1560,11 +1578,11 @@ class Analyze extends CI_Controller
 	    {
 	        foreach ($array as $k2 => $v2)
 	        {
-	            if (($v2['modelo'] == $v['modelo']) && ($k != $k2))
+	            if (($v2->Modelo == $v->Modelo) && ($k != $k2))
 	            {
 
-					$array[$k2]['unidades'] 	= $array[$k]['unidades'] + $array[$k2]['unidades'];
-					$array[$k2]['volume'] 		= $array[$k]['volume'] + $array[$k2]['volume'];		                
+					$array[$k2]->QUANTIDADE_COMERCIALIZADA_PRODUTO 	= $array[$k]->QUANTIDADE_COMERCIALIZADA_PRODUTO + $array[$k2]->QUANTIDADE_COMERCIALIZADA_PRODUTO;
+					$array[$k2]->VALOR_TOTAL_PRODUTO_DOLAR 		= $array[$k]->VALOR_TOTAL_PRODUTO_DOLAR + $array[$k2]->VALOR_TOTAL_PRODUTO_DOLAR;		                
                 	unset($array[$k]);
 	            }
 	        }
@@ -1573,7 +1591,7 @@ class Analyze extends CI_Controller
 		// Exclui resultados em branco
 		foreach ($array as $key => $value)
 		{
-			if($value['unidades'] < 1)
+			if($value->QUANTIDADE_COMERCIALIZADA_PRODUTO < 1)
 			{
 				unset($array[$key]);
 			}

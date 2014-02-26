@@ -406,6 +406,12 @@ class Model_model extends CI_Model
         return $query->result();
     }
 
+    // Retorna a lista de modelos com todas as NCMs juntas //
+    function getDataModel($query)
+    {
+    	$query = $this->db->query($query);
+		return $query->result();
+    }
 }
 
 ?>

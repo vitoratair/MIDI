@@ -32,16 +32,16 @@
     {dados}      
     	<tbody>
             <tr class="table-condensed">
-                <td>{modeloNome}</td>
-                <td>{unidades}</td>
-                <td>$ {volume}</td>
+                <td>{MNome0}</td>
+                <td>{QUANTIDADE_COMERCIALIZADA_PRODUTO}</td>
+                <td>$ {VALOR_TOTAL_PRODUTO_DOLAR}</td>
                 <td>$ {fob}</td>
                 <td>{shareUnidades}</td>
                 <td>{shareVolume}</td>
-                <td width="5%"><a onclick="enviar(1, {modelo});" href="#" class='icon-search'></a></td>
-                <td width="5%"><a onclick="enviar(2, {modelo});" href="#" class='icon-search'></a></td>
+                <td width="5%"><a onclick="enviar(1, {Modelo});" href="#" class='icon-search'></a></td>
+                <td width="5%"><a onclick="enviar(2, {Modelo});" href="#" class='icon-search'></a></td>
                 <!-- <td width="5%"><a target="blank" href="https://www.google.com.br/search?q={marca}+{modeloNome}&safe=off&biw=1440&bih=805&source=lnms&sa=X&ei=wIO-Uaj0C8ux0AGW1YHICw&ved=0CAgQ_AUoAA"><img width="25px" src="<?php echo base_url();?>assets/img/google.png"></a></td> -->
-                <td width="5%"><a target="blank" href="https://www.google.com.br/search?q={marca}+{modeloNome}&safe=off&biw=1440&bih=805&source=lnms&sa=X&ei=wIO-Uaj0C8ux0AGW1YHICw&ved=0CAgQ_AUoAA"><i class="icon icon-search"></i></a></td>
+                <td width="5%"><a target="blank" href="https://www.google.com.br/search?q={marca}+{MNome0}&safe=off&biw=1440&bih=805&source=lnms&sa=X&ei=wIO-Uaj0C8ux0AGW1YHICw&ved=0CAgQ_AUoAA"><i class="icon icon-search"></i></a></td>
             </tr>
         </tbody>
     {/dados}
