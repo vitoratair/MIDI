@@ -41,7 +41,7 @@
 				<label>Sinônimo</label>
 				<input type="text" class="span12" id="nomeModelo" value="{MNome4}" name="nomeModelo4">
             </div>
-
+        
             <div class="controls">
                 <div class="span6">
                     <label>Marca <span class="color-red">*</span></label>
