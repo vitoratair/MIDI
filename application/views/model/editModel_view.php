@@ -20,7 +20,7 @@
 	?>
 
 	{modelos}
-			<h3>Edição de modelos</h3>
+			<h3>Edição de modelos</h3>			
 				
             <div class="controls">    
                 <label>Modelo <span class="color-red">*</span></label>
@@ -88,6 +88,7 @@
 		
             <div class="controls form-inline">
             	<input type="hidden" value="{MOID}" name="id">
+            	<input type="hidden" value="{CHECK}" name="check">
             	<input type="hidden" value="2" name="controle">
                 <button class="btn-u pull-right" type="submit">Atualizar</button>
             </div>
