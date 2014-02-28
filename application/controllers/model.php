@@ -142,18 +142,30 @@ class Model extends CI_Controller
 		}
 
 		// pegar todas as tabelas de NCMs do sistema
-		$ncms = $this->ncm_model->listAllNcm();
+		// $ncms = $this->ncm_model->listAllNcm();
+		$anos = $this->ncm_model->listYear();
 		
 		// Verfica se o modelo encontra-se em alguma NCM //
 		foreach ($data['modelos'] as $key1 => $value1)
 		{
+			$i = 0;
+			$ncmsCategoria = $this->ncm_model->listNcmByCategory($value1->Categoria_CID);
 			
+			foreach ($ncmsCategoria as $k => $ncmsC)
+			{
+				foreach ($anos as $key1 => $ano)
+				{
+					$ncms[$i] = $ncmsC->NNome . "_" . $ano->AAno;
+					$i = $i + 1;
+				}				
+			}
+
 			$check = FALSE;
 
 			// Loop para percorrer as NCMs
 			foreach ($ncms as $key => $value)
 			{
-				$countModelos = $this->model_model->findModel($value->$table, $value1->MOID);
+				$countModelos = $this->model_model->findModel($value, $value1->MOID);
 				$countModelos = $countModelos[0]->IDN;
 
 				if ($countModelos != 0)
