@@ -92,7 +92,7 @@
 				<td>{MANome}</td>
 				<td>{CNome}</td>			
 				<td><i class="{CHECK}"></i></td>				
-				<td><a href="<?php echo base_url();?>index.php/model/editModel/{MOID}" class='icon-edit'> <a/></td>
+				<td><a href="<?php echo base_url();?>index.php/model/editModel/{MOID}/{CHECK}" class='icon-edit'> <a/></td>
 				<td><a onclick='Remove("{MOID}")' data-toggle="modal" href="#myModal" class='icon-trash'></a></td>
 			</tr>
 
