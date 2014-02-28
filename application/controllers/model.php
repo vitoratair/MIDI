@@ -6,6 +6,7 @@ class Model extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 		$this->logged();		
 	}
 
@@ -141,16 +142,15 @@ class Model extends CI_Controller
 			}
 		}
 
-		// pegar todas as tabelas de NCMs do sistema
-		// $ncms = $this->ncm_model->listAllNcm();
 		$anos = $this->ncm_model->listYear();
+		
 		
 		// Verfica se o modelo encontra-se em alguma NCM //
 		foreach ($data['modelos'] as $key1 => $value1)
 		{
 			$i = 0;
 			$ncmsCategoria = $this->ncm_model->listNcmByCategory($value1->Categoria_CID);
-			
+
 			foreach ($ncmsCategoria as $k => $ncmsC)
 			{
 				foreach ($anos as $key1 => $ano)
@@ -165,16 +165,18 @@ class Model extends CI_Controller
 			// Loop para percorrer as NCMs
 			foreach ($ncms as $key => $value)
 			{
-				$countModelos = $this->model_model->findModel($value, $value1->MOID);
-				$countModelos = $countModelos[0]->IDN;
-
-				if ($countModelos != 0)
+				if ($this->ncm_model->checkNcm($value))
 				{
-					$check = TRUE;
-					break;
-				}				
-			}			
+					$countModelos = $this->model_model->findModel($value, $value1->MOID);				
+					$countModelos = $countModelos[0]->IDN;				
 
+					if ($countModelos != 0)
+					{
+						$check = TRUE;
+						break;
+					}					
+				}
+			}			
 			if ($check == TRUE)
 			{
 				$value1->CHECK = 'icon-ok';
@@ -185,6 +187,7 @@ class Model extends CI_Controller
 			}
 
 		}
+
 
 		if (!empty($marca))
 		{
@@ -211,7 +214,7 @@ class Model extends CI_Controller
 	}
 
 	// Apresenta a view para edição de modelos
-	public function editModel($id)
+	public function editModel($id, $check)
 	{		
 		// Busca informações do modelo //
 		$userType = $this->session->userdata('usuarioTipo');
@@ -219,6 +222,8 @@ class Model extends CI_Controller
 		// Lista de informações para view //
 		$data['marcas'] 	= $this->brand_model->listAllBrand();
 		$data['categorias'] = $this->category_model->listCategory();
+
+		$data['CHECK'] = $check;
 
 		if ($userType == 1)
 		{
@@ -281,8 +286,16 @@ class Model extends CI_Controller
 	
 		
 		// Envia todas as informações para tela //
-		$data['main_content'] = 'model/editModel_view';
+		if ($data['CHECK'] == 'icon-ok')
+		{
+			$data['main_content'] = 'model/editModelFind_view';
+		}	
+		else
+			$data['main_content'] = 'model/editModel_view';
+		
+		
 		$this->parser->parse('template', $data);
+		
 
 	}
 
@@ -292,7 +305,10 @@ class Model extends CI_Controller
 		$userType = $this->session->userdata('usuarioTipo');
 
 		$id 			= $this->input->post('id');
+		$check 			= $this->input->post('check');
+		
 		$data['MOID'] 	= $id;
+		
 		$control 		= $this->input->post('controle');
 
 		if ($control == 2)
@@ -319,7 +335,8 @@ class Model extends CI_Controller
 				$oldCategory 				= $this->model_model->getCategoryByModelRequest($id); 			
 				$oldCategory 				= $oldCategory[0]->Categoria_CID;	
 			}
-			if ($this->input->post('categoria') != $oldCategory)
+			$categoria = $this->input->post('categoria');
+			if (($categoria != $oldCategory) && (!empty($categoria)))
 			{
 				$data['Categoria_CID'] 		= $this->input->post('categoria');	
 				$data['SubCategoria1_SCID'] = 1;
@@ -331,7 +348,6 @@ class Model extends CI_Controller
 				$data['SubCategoria7_SCID'] = 1;
 				$data['SubCategoria8_SCID'] = 1;
 			}			
-
 		}
 		elseif ($control == 1)
 		{
@@ -375,7 +391,7 @@ class Model extends CI_Controller
 		elseif ($userType == 2)
 			$this->model_model->updateModelRequest($data);			
 		
-		redirect("model/editModel/$id");				
+		redirect("model/editModel/$id/$check");				
 	}
 
 	// Deletar modelo //
