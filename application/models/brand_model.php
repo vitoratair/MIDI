@@ -11,11 +11,11 @@ class Brand_model extends CI_Model
 	}
 
 	// Lista de todas as marcas //
-	function listAllBrand()
+	function listAllBrand($order = 'asc')
 	{
 		$this->db->select('*');
 		$this->db->from('Marca');
-		$this->db->order_by('MANome');
+		$this->db->order_by('MANome', $order);
 		$query = $this->db->get();
 
 		return $query->result();

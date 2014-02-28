@@ -453,7 +453,7 @@ class ncm extends CI_Controller
 		$table = $ncm . "_" . $ano;
 
 		// Busca todos os modelos cadastrados no sistema //
-		$modelos = $this->model_model->listAllModel();		
+		$modelos = $this->model_model->listAllModel('desc');		
 
 		// Percorre o array de modelos buscando referência em cada linha de importação //
 		foreach ($modelos as $key => $value)
@@ -467,7 +467,7 @@ class ncm extends CI_Controller
 		}
 
 		// Busca todos as marcas cadastrados no sistema //
-		$marcas = $this->brand_model->listAllBrand();
+		$marcas = $this->brand_model->listAllBrand('desc');
 
 		foreach ($marcas as $key => $value)
 		{

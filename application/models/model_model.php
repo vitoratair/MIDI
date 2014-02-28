@@ -254,13 +254,17 @@ class Model_model extends CI_Model
 		return $this->db->insert('ModeloRequest', $data);
 	}	
 	// Lista todos os modelos //
-	function listAllModel()
+	function listAllModel($order = null)
 	{	
 		$this->db->select('*');
 		$this->db->from('Modelo');
 		$this->db->join('Marca' , 'MAID = Marca_MAID');
 		$this->db->join('Categoria' , 'CID = Categoria_CID');
 		$this->db->where('MOID !=', '1');
+		
+		if ($order != null)
+			$this->db->order_by('MNome', $order);
+
 		$query = $this->db->get();
 
 		return $query->result();	
