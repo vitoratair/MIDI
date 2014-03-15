@@ -137,12 +137,20 @@
 			<h3>Alteração da categoria</h3>
 		</div>	
 		<div class="modal-body">			
-
-{categorias}
-			<input type="radio" id ="categoria" name="categoria" value="{CID}"> {CNome}<br>
-{/categorias}
-
+		
+            <div class="controls">
+                <div class="" align="left">
+					<br>
+					<select id="categoria"  name="categoria" class="span3">					
+					<option value="">Selecione uma categoria</option>
+					{categorias}	
+						<option value="{CID}">{CNome}</option>
+					{/categorias}						
+				    </select>			
+				</div>
 			</div>
+
+		</div>
 		<div class="modal-footer">
 			<a href="<?php echo base_url();?>index.php/category/listAll" target="_blank" class="btn">Outros</a>
 			<a href="" class="btn" data-dismiss="modal">Não</a>
@@ -163,13 +171,21 @@
 			<button type="button" class="close" data-dismiss="modal">×</button>
 			<h3>Alteração da marca</h3>
 		</div>	
-		<div class="modal-body">			
+		<div class="modal-body">
 
-{marcas}
-			<input type="radio" id ="marca" name="marca" value="{MAID}"> {MANome}<br>
-{/marcas}
+            <div class="controls">
+            	<br>
+                <div class="" align="left">
+					<select id="marca"  name="marca" class="">					
+					<option value="">Selecione uma marca</option>
+					{marcas}	
+						<option value="{MAID}">{MANome}</option>
+					{/marcas}						
+				    </select>			
+				</div>
+			</div>					
 
-			</div>
+		</div>
 		<div class="modal-footer">
 			<a href="<?php echo base_url();?>index.php/brand/setBrandView" target="_blank" class="btn">Outros</a>
 			<a href="" class="btn" data-dismiss="modal">Não</a>
@@ -190,12 +206,20 @@
 			<button type="button" class="close" data-dismiss="modal">×</button>
 			<h3>Alteração do modelo</h3>
 		</div>	
-		<div class="modal-body">			
-
-{modelos}
-			<input type="radio" id ="modelo" name="modelo" value="{MOID}"> {MNome0}<br>
-{/modelos}
-			</div>
+		<div class="modal-body">	
+			<br>
+            <div class="controls">
+                <div class="" align="left">
+					<br>
+					<select id="modelo"  name="modelo" class="span3">					
+					<option value="">Selecione um modelo</option>
+					{modelos}	
+						<option value="{MOID}">{MNome0}</option>
+					{/modelos}						
+				    </select>			
+				</div>
+			</div>				
+		</div>
 		<div class="modal-footer">
 			<a href="<?php echo base_url();?>index.php/model/addModel" target="_blank" class="btn">Outros</a>
 			<a href="" class="btn" data-dismiss="modal">Não</a>
