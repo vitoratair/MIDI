@@ -572,11 +572,11 @@ class ncm_model extends CI_Model
 		{		
 			$this->db->query("UPDATE $table SET $colun = $item WHERE IDN = $idn");	
 		}
-		elseif ($id == 4)
+		elseif ($id == 4) // Atualiza a categoria de vários ids //
 		{					
 			$this->db->query("UPDATE $table SET Categoria = $item , Modelo = 1, Marca = 1 WHERE IDN IN ($idn)");	
 		}		
-		elseif ($id == 5)
+		elseif ($id == 5) // Atualiza a marca de vários ids //
 		{					
 			$this->db->query("UPDATE $table SET Marca = $item , Modelo = 1 WHERE IDN IN ($idn)");	
 		}				
