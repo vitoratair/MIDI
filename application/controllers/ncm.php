@@ -276,7 +276,24 @@ class ncm extends CI_Controller
 				
 				if (!empty($categoria))
 				{
-					$this->ncm_model->update(1, $table, $id, $idn, $categoria);	
+					// Verifica se já existe uma categoria definida para essa entrada //
+					$oldCategory = $this->category_model->getCategoryByIDN($idn, $table);
+
+					if (empty($oldCategory))
+					{
+						// Sem alterar modelos e marcas //
+						$this->ncm_model->update(8, $table, $id, $idn, $categoria);	
+					}
+					elseif ($oldCategory[0]->Categoria == 1)
+					{
+						// Sem alterar modelos e marcas //
+						$this->ncm_model->update(8, $table, $id, $idn, $categoria);	
+					}
+					else
+					{
+						// Atualizando modelo e marca para 1 //
+						$this->ncm_model->update(9, $table, $id, $idn, $categoria);		
+					}				
 				}				
 				
 				break;

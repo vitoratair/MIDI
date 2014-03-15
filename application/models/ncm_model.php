@@ -587,7 +587,15 @@ class ncm_model extends CI_Model
 		elseif ($id == 7)
 		{					
 			$this->db->query("UPDATE $table SET Handle = $item WHERE IDN = '$idn'");
-		}		
+		}
+		elseif ($id == 8) // Atualiza categoria sem alterar modelo e marca
+		{					
+			$this->db->query("UPDATE $table SET Categoria = $item WHERE IDN = '$idn'");	
+		}
+		elseif ($id == 9) // Atualiza categoria zerando modelos e marcas
+		{					
+			$this->db->query("UPDATE $table SET Categoria = $item , Modelo = 1, Marca = 1 WHERE IDN IN ($idn)");	
+		}						
 	}	
 
 	// Update da NCM com modelo = 1 //

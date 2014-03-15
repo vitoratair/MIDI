@@ -299,7 +299,16 @@ class Category_model extends CI_Model
 		$this->db->delete($table);
 	}
 
-
+	// Retorna a categoria de uma IDN //
+	function getCategoryByIDN($id, $table)
+	{
+		$this->db->select('Categoria');
+		$this->db->from($table);
+		$this->db->where('IDN',$id);
+		$query = $this->db->get();
+		
+		return $query->result();		
+	}
 
 
 }
