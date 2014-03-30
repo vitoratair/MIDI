@@ -444,8 +444,6 @@ class ncm extends CI_Controller
 						{
 							$this->request_model->addRequest(1, $user, $ncm, $year, $idn, NULL, NULL, $categoria);
 						}																			
-						print_r($this->db->last_query());
-						echo "<br>";
 					}
 
 				}

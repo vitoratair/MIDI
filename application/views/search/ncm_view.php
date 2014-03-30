@@ -136,8 +136,7 @@
 										{categorias2}		
 											<option value="{CID}">{CNome}</option>
 										{/categorias2}								
-								    </select>
-								    <input type="hidden" name="controle" value="4">						
+								    </select>					
 								</div>
 							</div>
 						</fieldset>
@@ -280,11 +279,19 @@
 		</div>	
 		<div class="modal-body">			
 
-{categorias1}
-			<input type="radio" id ="categoria" name="categoria" value="{CID}"> {CNome}<br>
-{/categorias1}
-
+            <div class="controls">
+                <div class="" align="left">
+					<br>
+					<select id="categoria1"  name="categoria1" class="span3">					
+					<option value="">Selecione uma categoria</option>
+					{categorias1}	
+						<option value="{CID}">{CNome}</option>
+					{/categorias1}						
+				    </select>			
+				</div>
 			</div>
+
+		</div>
 		<div class="modal-footer">
 			<a href="<?php echo base_url();?>index.php/category/listAll" target="_blank" class="btn">Outros</a>
 			<a href="" class="btn" data-dismiss="modal">Não</a>
@@ -301,12 +308,17 @@
 			<h3>Alteração da marca</h3>
 		</div>	
 		<div class="modal-body">			
-
-{marcas2}
-			<input type="radio" id ="marca" name="marca" value="{MAID}"> {MANome}<br>
-{/marcas2}
-
+            <div class="" align="left">
+				<br>
+				<select id="marca1"  name="marca1" class="span3">					
+				<option value="">Selecione uma marca</option>
+				{marcas2}	
+					<option value="{MAID}">{MANome}</option>
+				{/marcas2}						
+			    </select>			
 			</div>
+
+		</div>
 		<div class="modal-footer">
 			<a href="<?php echo base_url();?>index.php/brand/setBrandView" target="_blank" class="btn">Outros</a>
 			<a href="" class="btn" data-dismiss="modal">Não</a>
@@ -340,7 +352,7 @@
     {
 	    var idSelector = function() { return this.id; };
 	    var idsSelecionados = $(":checkbox:checked").map(idSelector).get() ;
-	    var marca = $("input[id='marca']:checked").val();
+	    var marca = $("#marca1").val();	
 
 	    $(':checkbox:checked').removeAttr('checked');
 
@@ -359,7 +371,7 @@
     {
 	    var idSelector = function() { return this.id; };
 	    var idsSelecionados = $(":checkbox:checked").map(idSelector).get() ;
-	    var categoria = $("input[id='categoria']:checked").val();
+		var categoria = $("#categoria1").val();		
 
 	    $(':checkbox:checked').removeAttr('checked');
 
