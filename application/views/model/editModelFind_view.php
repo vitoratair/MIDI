@@ -26,20 +26,20 @@
                 <label>Modelo <span class="color-red">*</span></label>
 				<input type="text" class="span12" id="nomeModelo0" value="{MNome0}" name="nomeModelo0">
 
-                <label>Sinônimo <span class="color-red">*</span></label>
-				<input type="text" class="span12" id="nomeModelo" value="{MNome}" name="nomeModelo">				
+                <label>Sinônimo</label>
+				<input type="text" disabled="true" class="span12" id="nomeModelo" value="{MNome}" name="nomeModelo">				
                 
 				<label>Sinônimo</label>
-				<input type="text" class="span12" id="nomeModelo" value="{MNome1}" name="nomeModelo1">
+				<input type="text" disabled="true" class="span12" id="nomeModelo" value="{MNome1}" name="nomeModelo1">
 				
 				<label>Sinônimo</label>
-				<input type="text" class="span12" id="nomeModelo" value="{MNome2}" name="nomeModelo2">
+				<input type="text" disabled="true" class="span12" id="nomeModelo" value="{MNome2}" name="nomeModelo2">
 
 				<label>Sinônimo</label>
-				<input type="text" class="span12" id="nomeModelo" value="{MNome3}" name="nomeModelo3">
+				<input type="text" disabled="true" class="span12" id="nomeModelo" value="{MNome3}" name="nomeModelo3">
 
 				<label>Sinônimo</label>
-				<input type="text" class="span12" id="nomeModelo" value="{MNome4}" name="nomeModelo4">
+				<input type="text" disabled="true" class="span12" id="nomeModelo" value="{MNome4}" name="nomeModelo4">
             </div>
         
             <div class="controls">
