@@ -226,27 +226,44 @@ class ncm_model extends CI_Model
 		// count por palavra pesquisada
 		elseif ($id == 4) 
 		{
+			$search1 = explode(",", $search);
+
 			$this->db->select('COUNT(`IDN`)');
-			$this->db->from($table);
-			$this->db->like('DESCRICAO_DETALHADA_PRODUTO',$search);
+			$this->db->from($table);			
 			
 			if ($month != 0)
 				$this->db->where('MES',$month);
 
+			foreach ($search1 as $key => $value)
+			{
+				$this->db->like('DESCRICAO_DETALHADA_PRODUTO', $value);
+			}
+			
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO');
 			
 			return $this->db->count_all_results();					
 		}
 		// count por palavra pesquisada  e palavra retirada
 		elseif ($id == 5) 
-		{
+		{			
+			$search1 	= explode(",", $search);
+			$unSearch1	= explode(",", $unSearch);
+
 			$this->db->select('COUNT(`IDN`)');
 			$this->db->from($table);
 			$this->db->join('Categoria','Categoria.CID = Categoria');
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
-			$this->db->like('DESCRICAO_DETALHADA_PRODUTO', $search);			
-			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);	
+
+			foreach ($search1 as $key => $value)
+			{
+				$this->db->like('DESCRICAO_DETALHADA_PRODUTO', $value);
+			}
+			
+			foreach ($unSearch1 as $key => $value)
+			{
+				$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);		
+			}
 
 			if ($month != 0)
 				$this->db->where('MES',$month);
@@ -258,12 +275,17 @@ class ncm_model extends CI_Model
 		// count por palavra retirada
 		elseif ($id == 6) 
 		{
+			$unSearch1 = explode(",", $unSearch);
 			$this->db->select('COUNT(`IDN`)');
 			$this->db->from($table);
 			$this->db->join('Categoria','Categoria.CID = Categoria');
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
-			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);
+
+			foreach ($unSearch1 as $key => $value)
+			{
+				$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $value);			
+			}
 
 			if ($month != 0)
 				$this->db->where('MES',$month);
@@ -374,32 +396,47 @@ class ncm_model extends CI_Model
 		}
 		elseif ($id == 4)
 		{
+			$search1 = explode(",", $search);
 			$this->db->limit($limit, $start);
 			$this->db->select('*');
 			$this->db->from($table);
 			$this->db->join('Categoria','Categoria.CID = Categoria');
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
-			$this->db->like('DESCRICAO_DETALHADA_PRODUTO', $search);
+			
+			foreach ($search1 as $key => $value)
+			{
+				$this->db->like('DESCRICAO_DETALHADA_PRODUTO', $value);			
+			}
 
 			if ($month != 0)
 				$this->db->where('MES', $month);
 			
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			$query = $this->db->get();
-
+			
 			return $query->result();						
 		}		
 		elseif ($id == 5)
 		{
+			$search1 	= explode(",", $search);
+			$unSearch1 	= explode(",", $unSearch);
 			$this->db->limit($limit, $start);
 			$this->db->select('*');
 			$this->db->from($table);
 			$this->db->join('Categoria','Categoria.CID = Categoria');
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
-			$this->db->like('DESCRICAO_DETALHADA_PRODUTO', $search);			
-			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);
+			
+			foreach ($search1 as $key => $value)
+			{
+				$this->db->like('DESCRICAO_DETALHADA_PRODUTO', $value);			
+			}				
+			
+			foreach ($unSearch1 as $key => $value)
+			{
+				$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $value);			
+			}							
 
 			if ($month != 0)
 				$this->db->where('MES', $month);
@@ -411,20 +448,25 @@ class ncm_model extends CI_Model
 		}	
 		elseif ($id == 6)
 		{
+			$unSearch1 = explode(",", $unSearch);
 			$this->db->limit($limit, $start);
 			$this->db->select('*');
 			$this->db->from($table);
 			$this->db->join('Categoria','Categoria.CID = Categoria');
 			$this->db->join('Marca','Marca.MAID = Marca');
 			$this->db->join('Modelo','Modelo.MOID = Modelo');
-			$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);	
+			
+			foreach ($unSearch1 as $key => $value)
+			{
+				$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $value);			
+			}	
 
 			if ($month != 0)
 				$this->db->where('MES', $month);
 
 			$this->db->order_by('QUANTIDADE_COMERCIALIZADA_PRODUTO','DESC');
 			$query = $this->db->get();
-
+			
 			return $query->result();
 		}
 		elseif ($id == 7)

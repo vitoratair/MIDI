@@ -100,13 +100,13 @@
 
 			 				<div class="control-group" align="right">
 							  	<div class="controls">
-							    	<input type="text" class="span3 search-query" placeholder="Pesquisar por ..." name="search">
+							    	<input type="text" class="span3 search-query" placeholder="Pesquisar por palavra,palavra1..." name="search">
 								</div>
 							</div>
 
 			 				<div class="control-group" align="right">
 							  	<div class="controls">
-							    	<input type="text" class="span3 search-query" placeholder="Retirar a palavra ..." name="unSearch">
+							    	<input type="text" class="span3 search-query" placeholder="Retirar a palavra, palavra1..." name="unSearch">
 								</div>
 							</div>
 

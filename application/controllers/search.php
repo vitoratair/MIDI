@@ -37,8 +37,6 @@ class Search extends CI_Controller
 		$categoria 		= $this->input->post('categoria');
 		$control 		= $this->input->post('controle');
 				
-		// echo "string";
-		// break;		
 		// Carrega os dados necessários da model //
 		$data['ncms'] 			= $this->ncm_model->listNcm();
 		$data['anos'] 			= $this->ncm_model->listYear();					
@@ -219,9 +217,9 @@ class Search extends CI_Controller
 				if (!empty($unSearch))
 				{
 					// echo "<br>SEARCH E UNSEARCH<br>";
-			        $config["total_rows"] 	= $this->ncm_model->countData($table, $month, '5', NULL, NULL, $search, $unSearch, NULL, NULL);
+			        $config["total_rows"] 	= $this->ncm_model->countData($table, $month, '5', NULL, NULL, $search, $unSearch, NULL, NULL);		       
 			        $config["per_page"] 	= 20;
-			        
+
 			        $this->pagination->initialize($config);
 			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
@@ -365,6 +363,7 @@ class Search extends CI_Controller
 			// Exibe uma view vazia //
 			$data['main_content'] = 'search/ncmEmpty_view';
 		}
+
     	$this->parser->parse('template', $data);	
 		
 	}
