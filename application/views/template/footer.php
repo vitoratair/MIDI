@@ -35,12 +35,12 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </h3></div> 
-                <address>
+<!--                 <address>
                 Vitor Atair <br/>
                 Banda Larga sem Fio - INET <br />
                 55 (48) 3281-9440 <br />
                 Email: <a href="mailto:vitor.atair@intelbras.com.br" class="">vitor.atair@intelbras.com.br</a>
-                </address>
+                </address> -->
             </div><!--/span4-->
 
         </div><!--/row-fluid--> 
