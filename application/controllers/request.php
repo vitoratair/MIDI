@@ -23,6 +23,9 @@ class Request extends CI_Controller
 	public function listAll()
 	{
 
+		$userType = $this->session->userdata('usuarioTipo');
+		$userId   = $this->session->userdata('usuarioID');
+
 		$categoria 	= $this->input->post('categoria');
 		
 		if (empty($categoria))
@@ -32,80 +35,160 @@ class Request extends CI_Controller
 
 		if (empty($categoria) OR $categoria == 1)
 		{
-			// Configura paginação //
-	        $config["base_url"] 	= base_url() . "index.php/request/listAll";
-			$config["total_rows"] 	= $this->request_model->countRequest();
-
-			if ($config["total_rows"] > 0)
+			if ($userType != 1)
 			{
-				$config["per_page"] 	= 20;
+				// Configura paginação //
+		        $config["base_url"] 	= base_url() . "index.php/request/listAll";
+				$config["total_rows"] 	= $this->request_model->countRequest($userId);
+			
+				if ($config["total_rows"] > 0)
+				{
+					$config["per_page"] 	= 20;
 
-		        $this->pagination->initialize($config);
-		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+			        $this->pagination->initialize($config);
+			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-				$data['dados'] 	= $this->request_model->getRequest($config["per_page"], $page);	
-				$data["links"] 	= $this->pagination->create_links();
+					$data['dados'] 	= $this->request_model->getRequest($config["per_page"], $page, $userId);	
+					$data["links"] 	= $this->pagination->create_links();
 
-				$data['dadosRequisicao'] 	= $this->parserInData(1, $data['dados']);
+					$data['dadosRequisicao'] 	= $this->parserInData(1, $data['dados']);
 
-				// Busca as informações da NCM //
-				$data['dados'] 	= $this->parserInData(2, $data['dados']);
-				
-				$data['dados']	= $this->others->mergeTableNcm($data['dados']);
+					// Busca as informações da NCM //
+					$data['dados'] 	= $this->parserInData(2, $data['dados']);				
+					$data['dados']	= $this->others->mergeTableNcm($data['dados']);
 
 
-				// Juntando os arrays //
-				$data['dados'] 	= $this->joinArray($data['dados'], $data['dadosRequisicao']);					
+					// Juntando os arrays //
+					$data['dados'] 	= $this->joinArray($data['dados'], $data['dadosRequisicao']);					
 
-				$data['categorias'] = $this->category_model->listCategory();
+					$data['categorias'] = $this->category_model->listCategory();
 
-				$data['main_content'] = 'request/request_view';
-				$this->parser->parse('template',$data);														
+					$data['main_content'] = 'request/request_view';
+					$this->parser->parse('template',$data);														
+				}
+				else
+				{
+					$data['categorias'] = $this->category_model->listCategory();
+					
+					$data['main_content'] = 'request/requestEmpty_view';
+					$this->parser->parse('template',$data);									
+				}
 			}
 			else
-			{
-				$data['categorias'] = $this->category_model->listCategory();
-				
-				$data['main_content'] = 'request/requestEmpty_view';
-				$this->parser->parse('template',$data);									
+			{				
+				// Configura paginação //
+		        $config["base_url"] 	= base_url() . "index.php/request/listAll";
+				$config["total_rows"] 	= $this->request_model->countRequest();
+
+				if ($config["total_rows"] > 0)
+				{
+					$config["per_page"] 	= 20;
+
+			        $this->pagination->initialize($config);
+			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+					$data['dados'] 	= $this->request_model->getRequest($config["per_page"], $page);	
+					$data["links"] 	= $this->pagination->create_links();
+
+					$data['dadosRequisicao'] 	= $this->parserInData(1, $data['dados']);
+
+					// Busca as informações da NCM //
+					$data['dados'] 	= $this->parserInData(2, $data['dados']);				
+					$data['dados']	= $this->others->mergeTableNcm($data['dados']);
+
+
+					// Juntando os arrays //
+					$data['dados'] 	= $this->joinArray($data['dados'], $data['dadosRequisicao']);					
+
+					$data['categorias'] = $this->category_model->listCategory();
+
+					$data['main_content'] = 'request/request_view';
+					$this->parser->parse('template',$data);														
+				}			
+				else
+				{
+					$data['categorias'] = $this->category_model->listCategory();
+					
+					$data['main_content'] = 'request/requestEmpty_view';
+					$this->parser->parse('template',$data);									
+				}
 			}
 		}
 		else
 		{
-			
-			// Configura paginação //
-	        $config["base_url"] 	= base_url() . "index.php/request/listAll";
-			$config["total_rows"] 	= $this->request_model->countRequestByCategory($categoria);
-			$config["per_page"] 	= 20;
-
-			if ($config['total_rows'] > 0)
+			if ($userType != 1)
 			{
-		        $this->pagination->initialize($config);
-		        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+				// Configura paginação //
+		        $config["base_url"] 	= base_url() . "index.php/request/listAll";
+				$config["total_rows"] 	= $this->request_model->countRequestByCategory($categoria, $userId);
+				$config["per_page"] 	= 20;
 
-				$data['dados'] 	= $this->request_model->getRequestByCategory($config["per_page"], $page, $categoria);	
-				$data["links"] 	= $this->pagination->create_links();										
+				if ($config['total_rows'] > 0)
+				{
+			        $this->pagination->initialize($config);
+			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-				$data['dadosRequisicao'] 	= $this->parserInData(1, $data['dados']);
+					$data['dados'] 	= $this->request_model->getRequestByCategory($config["per_page"], $page, $categoria, $userId);	
+					$data["links"] 	= $this->pagination->create_links();										
 
-				// Busca as informações da NCM //
-				$data['dados'] 	= $this->parserInData(2, $data['dados']);
-				$data['dados']	= $this->others->mergeTableNcm($data['dados']);
+					$data['dadosRequisicao'] 	= $this->parserInData(1, $data['dados']);
 
-				// // Juntando os arrays //
-				$data['dados'] 	= $this->joinArray($data['dados'], $data['dadosRequisicao']);					
+					// Busca as informações da NCM //
+					$data['dados'] 	= $this->parserInData(2, $data['dados']);
+					$data['dados']	= $this->others->mergeTableNcm($data['dados']);
 
-				$data['categorias'] = $this->category_model->listCategory();
+					// // Juntando os arrays //
+					$data['dados'] 	= $this->joinArray($data['dados'], $data['dadosRequisicao']);					
 
-				$data['main_content'] = 'request/request_view';
-				$this->parser->parse('template',$data);					
+					$data['categorias'] = $this->category_model->listCategory();
+
+					$data['main_content'] = 'request/request_view';
+					$this->parser->parse('template',$data);					
+				}
+				else
+				{
+					$data['categorias'] = $this->category_model->listCategory();
+					
+					$data['main_content'] = 'request/requestEmpty_view';
+					$this->parser->parse('template',$data);					
+				}	
 			}
 			else
 			{
-				$data['categorias'] = $this->category_model->listCategory();
-				
-				$data['main_content'] = 'request/requestEmpty_view';
-				$this->parser->parse('template',$data);					
+				// Configura paginação //
+		        $config["base_url"] 	= base_url() . "index.php/request/listAll";
+				$config["total_rows"] 	= $this->request_model->countRequestByCategory($categoria);
+				$config["per_page"] 	= 20;
+
+				if ($config['total_rows'] > 0)
+				{
+			        $this->pagination->initialize($config);
+			        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+					$data['dados'] 	= $this->request_model->getRequestByCategory($config["per_page"], $page, $categoria);	
+					$data["links"] 	= $this->pagination->create_links();										
+
+					$data['dadosRequisicao'] 	= $this->parserInData(1, $data['dados']);
+
+					// Busca as informações da NCM //
+					$data['dados'] 	= $this->parserInData(2, $data['dados']);
+					$data['dados']	= $this->others->mergeTableNcm($data['dados']);
+
+					// // Juntando os arrays //
+					$data['dados'] 	= $this->joinArray($data['dados'], $data['dadosRequisicao']);					
+
+					$data['categorias'] = $this->category_model->listCategory();
+
+					$data['main_content'] = 'request/request_view';
+					$this->parser->parse('template',$data);					
+				}
+				else
+				{
+					$data['categorias'] = $this->category_model->listCategory();
+					
+					$data['main_content'] = 'request/requestEmpty_view';
+					$this->parser->parse('template',$data);					
+				}				
 			}
 		}
 	}

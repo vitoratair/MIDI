@@ -9,22 +9,30 @@ class Request_model extends CI_Model
 	}
 
 	// Count da lista requisições //
-	public function countRequest()
+	public function countRequest($user = NULL)
 	{		
 		$this->db->select('*');
 		$this->db->from('Request');
 		$this->db->join('Usuario', 'usuarioID = RequestUser');
+		
+		if ($user != NULL)
+			$this->db->where('RequestUser', $user);
+		
 		$this->db->order_by('RequestID');
 		return $this->db->count_all_results();
 	}
 
 	// Retorna a lista requisições //
-	public function getRequest($limit, $start)
+	public function getRequest($limit, $start, $user = NULL)
 	{		
 		$this->db->limit($limit, $start);
 		$this->db->select('*');
 		$this->db->from('Request');
 		$this->db->join('Usuario', 'usuarioID = RequestUser');
+		
+		if ($user != NULL)
+			$this->db->where('RequestUser', $user);
+		
 		$this->db->order_by('RequestID');
 		$query = $this->db->get();
 
@@ -32,24 +40,32 @@ class Request_model extends CI_Model
 	}
 
 	// Count da lista requisições de uma categoria //
-	public function countRequestbyCategory($categoria)
+	public function countRequestbyCategory($categoria, $user = NULL)
 	{		
 		$this->db->select('*');
 		$this->db->from('Request');
 		$this->db->join('Usuario', 'usuarioID = RequestUser');
 		$this->db->where('RequestCategoria', $categoria);
+		
+		if ($user != NULL)
+			$this->db->where('RequestUser', $user);		
+		
 		$this->db->order_by('RequestID');
 		return $this->db->count_all_results();
 	}
 
 	// Retorna a lista de requisoções de uma categoria
-	public function getRequestByCategory($limit, $start, $categoria)
+	public function getRequestByCategory($limit, $start, $categoria, $user = NULL)
 	{		
 		$this->db->limit($limit, $start);
 		$this->db->select('*');
 		$this->db->from('Request');
 		$this->db->join('Usuario', 'usuarioID = RequestUser');
 		$this->db->where('RequestCategoria', $categoria);
+
+		if ($user != NULL)
+			$this->db->where('RequestUser', $user);	
+					
 		$this->db->order_by('RequestID');
 		$query = $this->db->get();
 
