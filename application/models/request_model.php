@@ -132,6 +132,7 @@ class Request_model extends CI_Model
 			$this->db->set('RequestAno', $year);
 			$this->db->set('RequestIDN', $idn);
 			$this->db->set('RequestMarca', $marca);
+			$this->db->set('RequestModelo', '1');
 			$this->db->insert('Request');
 		}	
 		elseif ($id == 3)
@@ -145,6 +146,17 @@ class Request_model extends CI_Model
 			$this->db->set('RequestCategoria', $categoria);			
 			$this->db->insert('Request');
 		}	
+		elseif ($id == 4)
+		{
+			$this->db->set('RequestUser', $user);
+			$this->db->set('RequestNcm', $ncm);
+			$this->db->set('RequestAno', $year);
+			$this->db->set('RequestIDN', $idn);
+			$this->db->set('RequestCategoria', $categoria);
+			$this->db->set('RequestModelo', '1');
+			$this->db->set('RequestMarca', '1');						
+			$this->db->insert('Request');
+		}		
 		
 	}
 
@@ -158,12 +170,16 @@ class Request_model extends CI_Model
 		}
 		elseif ($id == 2)
 		{
-			$this->db->query("UPDATE Request SET RequestMarca = $marca, RequestModelo = NULL WHERE RequestID = '$idRe'");	
+			$this->db->query("UPDATE Request SET RequestMarca = $marca, RequestModelo = 1 WHERE RequestID = '$idRe'");	
 		}
 		elseif ($id == 3)
 		{
 			$this->db->query("UPDATE Request SET RequestModelo = '$modelo', RequestMarca = '$marca', RequestCategoria = '$categoria' WHERE RequestID = '$idRe'");	
-		}				
+		}
+		elseif ($id == 4)
+		{
+			$this->db->query("UPDATE Request SET RequestCategoria = $categoria, RequestMarca = 1, RequestModelo = 1 WHERE RequestID = '$idRe'");	
+		}						
 	}
 
 	// Exlcuir uma requisição //

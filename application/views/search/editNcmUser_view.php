@@ -104,11 +104,19 @@
 		</div>	
 		<div class="modal-body">			
 
-{categorias}
-			<input type="radio" id ="categoria" name="categoria" value="{CID}"> {CNome}<br>
-{/categorias}
-
+            <div class="controls">
+                <div class="" align="left">
+					<br>
+					<select id="categoria"  name="categoria" class="span3">					
+					<option value="">Selecione uma categoria</option>
+					{categorias}	
+						<option value="{CID}">{CNome}</option>
+					{/categorias}						
+				    </select>			
+				</div>
 			</div>
+
+		</div>
 		<div class="modal-footer">
 			<a href="" class="btn" data-dismiss="modal">Não</a>
 			<button type="submit" class="btn btn-danger">Sim</button>
@@ -132,9 +140,14 @@
 		</div>	
 		<div class="modal-body">			
 
-{marcas}
-			<input type="radio" id ="marca" name="marca" value="{MAID}"> {MANome}<br>
-{/marcas}
+	        <div class="" align="left">
+				<select id="marca"  name="marca" class="">					
+				<option value="">Selecione uma marca</option>
+				{marcas}	
+					<option value="{MAID}">{MANome}</option>
+				{/marcas}						
+			    </select>			
+			</div>
 
 			</div>
 		<div class="modal-footer">
@@ -161,9 +174,15 @@
 		</div>	
 		<div class="modal-body">			
 
-{modelos}
-			<input type="radio" id ="modelo" name="modelo" value="{MOID}"> {MNome0}<br>
-{/modelos}
+            <div class="" align="left">
+				<br>
+				<select id="modelo"  name="modelo" class="span3">					
+				<option value="">Selecione um modelo</option>
+				{modelos}	
+					<option value="{MOID}">{MNome0}</option>
+				{/modelos}						
+			    </select>			
+			</div>
 
 			</div>
 		<div class="modal-footer">

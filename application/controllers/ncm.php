@@ -373,18 +373,33 @@ class ncm extends CI_Controller
 				if (empty($categoria))
 					break;
 
-				if ($categoria == 1)
-					$categoria = 'NULL';
+
+				$oldCategory = $this->category_model->getCategoryByIDN($idn, $table);
 
 				$check = $this->request_model->checkRequest($ncm, $year, $idn);				
 				
 				if (!empty($check))
 				{
-					$this->request_model->updateItem(1, $check[0]->RequestID, $ncm, $year, $idn, NULL, NULL, $categoria);
+					if ($oldCategory[0]->Categoria != 1)
+					{
+						$this->request_model->updateItem(4, $check[0]->RequestID, $ncm, $year, $idn, NULL, NULL, $categoria);
+					}
+					else
+					{
+						$this->request_model->updateItem(1, $check[0]->RequestID, $ncm, $year, $idn, NULL, NULL, $categoria);
+					}					
+					
 				} 
 				else
-				{					
-					$this->request_model->addRequest(1, $user, $ncm, $year, $idn, NULL, NULL, $categoria);
+				{
+					if ($oldCategory[0]->Categoria != 1)
+					{
+						$this->request_model->addRequest(4, $user, $ncm, $year, $idn, NULL, NULL, $categoria);	
+					}
+					else
+					{
+						$this->request_model->addRequest(1, $user, $ncm, $year, $idn, NULL, NULL, $categoria);
+					}																			
 				}
 
 				break;	
@@ -398,15 +413,16 @@ class ncm extends CI_Controller
 				if ($marca == 1)
 					$marca = 'NULL';
 
+
 				$check = $this->request_model->checkRequest($ncm, $year, $idn);				
 				
 				if (empty($check))
 				{
-					$this->request_model->addRequest(2, $user, $ncm, $year, $idn, NULL, $marca, $categoria);
+					$this->request_model->addRequest(2, $user, $ncm, $year, $idn, NULL, $marca, NULL);
 				}
 				else
 				{
-					$this->request_model->updateItem(2, $check[0]->RequestID, $ncm, $year, $idn, NULL, $marca, $categoria);
+					$this->request_model->updateItem(2, $check[0]->RequestID, $ncm, $year, $idn, NULL, $marca, NULL);
 				}
 
 				break;
