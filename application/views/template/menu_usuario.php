@@ -40,6 +40,8 @@
                                 <li><?php echo anchor('model/listAll','Modelo');?></li>
 
                                 <li><?php echo anchor('administration/statistic','Categoria - NCM');?></li>
+
+                                <li><?php echo anchor('administration/date','Últimas atualizações');?></li>
                                 
                             </ul>
                             

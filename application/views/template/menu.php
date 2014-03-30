@@ -45,6 +45,8 @@
                                 <!-- <li><?php echo anchor('app/home','Upload Marcas');?></li> -->
 
                                 <!-- <li><?php echo anchor('app/home','Upload Modelos');?></li> -->
+
+                                <li><?php echo anchor('administration/date','Últimas atualizações');?></li>
                             </ul>
                             
                             <b class="caret-out"></b>                        

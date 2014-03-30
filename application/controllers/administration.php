@@ -308,6 +308,46 @@ class Administration extends CI_Controller
 		return FALSE;		
 	}
 
+	// Exibe último mês atualizado em cada NCM de uma categoria //
+	function date()
+	{	
+		$categoria = $this->input->post('categoria');
+
+		$data['categorias']	= $this->category_model->listCategory();
+		
+		if (empty($categoria) or $categoria == 1)
+		{	
+			$data['dados'][0]['ncm'] = NULL;
+			$data['dados'][0]['ano'] = NULL;
+			$data['dados'][0]['mes'] = NULL;
+			$data['categoria']		= "-";
+		}
+		else
+		{
+			$data['categoria']	= $this->category_model->getCategory($categoria);
+			$data['categoria']	= $data['categoria'][0]->CNome;
+
+			$categorias = $this->listNcmYearByCategory($categoria);
+
+			$i = 0;
+			foreach ($categorias as $key => $value)
+			{
+				$table = $value[0] . "_" . $value[1];
+					
+				if ($this->ncm_model->checkNcm($table))
+				{		
+
+					$data['dados'][$i]['ncm'] = $value[0];
+					$data['dados'][$i]['ano'] = $value[1];
+					$data['dados'][$i]['mes'] = $this->others->buscaMes($this->ncm_model->getLastData($table)[0]->MES);
+					$i = $i + 1;
+				}
+			}
+		}
+
+		$data['main_content'] = 'administration/date_view';	
+		$this->parser->parse('template', $data);	
+	}
 
 }
 
