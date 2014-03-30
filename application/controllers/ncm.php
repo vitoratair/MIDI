@@ -387,8 +387,7 @@ class ncm extends CI_Controller
 					else
 					{
 						$this->request_model->updateItem(1, $check[0]->RequestID, $ncm, $year, $idn, NULL, NULL, $categoria);
-					}					
-					
+					}										
 				} 
 				else
 				{
@@ -458,19 +457,18 @@ class ncm extends CI_Controller
 				if (empty($marca))
 					break;
 
-				if ($marca == 1)
-					$marca = 'NULL';
-
-
 				$check = $this->request_model->checkRequest($ncm, $year, $idn);				
 				
+				$categoria = $this->category_model->getCategoryByIDN($idn, $table);
+				$categoria = $categoria[0]->Categoria;
+
 				if (empty($check))
 				{
-					$this->request_model->addRequest(2, $user, $ncm, $year, $idn, NULL, $marca, NULL);
+					$this->request_model->addRequest(2, $user, $ncm, $year, $idn, NULL, $marca, $categoria);
 				}
 				else
 				{
-					$this->request_model->updateItem(2, $check[0]->RequestID, $ncm, $year, $idn, NULL, $marca, NULL);
+					$this->request_model->updateItem(2, $check[0]->RequestID, $ncm, $year, $idn, NULL, $marca, $categoria);
 				}
 
 				break;
