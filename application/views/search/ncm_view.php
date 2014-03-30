@@ -64,7 +64,7 @@
 						<fieldset>
 								<div class="control-group">
 									<div class="controls">
-										<select id="mes" onchange="this.form.submit()" name="mes" class="span2">
+										<select id="mes" onchange="sendForm()" name="mes" class="span2">
 											<option value="">Mês</option>
 												<option value="0">Todos</option>
 												<option value="1">Janeiro</option>
@@ -381,6 +381,34 @@
     $("#botaoMarca").bind("click", function(){
        marcaAll();
     });       
+
+    function sendForm()
+    {
+    	var ncm = $("#ncm").val();
+    	var ano = $("#ano").val();
+    	var mes = $("#mes").val();
+    	
+    	if (ncm == "")
+    		ncm = <?php echo $ncm;?>
+
+    	if (ano == "")
+			ano = <?php echo $year;?>    		
+
+    	// console.log(ncm);
+    	// console.log(ano);
+    	// console.log(mes);
+    	// console.log('#############');
+
+		var url = '<?php echo base_url();?>index.php/search/ncm/';
+		var form = $('<form action="' + url + '" method="POST">' +
+		  '<input type="hidden" name="ncm" value="' + ncm + '" />' +
+		  '<input type="hidden" name="ano" value="' + ano + '" />' +
+		  '<input type="hidden" name="mes" value="' + mes + '" />' +
+		  '</form>');
+		$('body').append(form);
+		$(form).submit();    	
+
+    }
 
 </script>
 
