@@ -44,6 +44,7 @@
 			<tr class="">				
 				<td width="4%"><b>ID</b></td>
 				<td width=""><b>Descrição</b></td>
+				<td width=""><b>Usuário</b></td>
 				<td width=""><b>Categoria</b></td>
 				<td width=""><b>Marca</b></td>
 				<td width=""><b>Modelo</b></td>
@@ -55,6 +56,7 @@
 			<tr class="table-condensed">	
 				<td>{idn}</td>	
 				<td>{descricao}</td>
+				<td>{user}</td>
 				<td><font color=""><strong>{categoriaRe}</strong></font></td>
 				<td><font color=""><strong>{marcaRe}</strong></font></td>				
 				<td><font color=""><strong>{modeloRe}</strong></font></td>							

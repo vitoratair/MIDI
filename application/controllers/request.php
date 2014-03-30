@@ -50,7 +50,9 @@ class Request extends CI_Controller
 
 				// Busca as informações da NCM //
 				$data['dados'] 	= $this->parserInData(2, $data['dados']);
+				
 				$data['dados']	= $this->others->mergeTableNcm($data['dados']);
+
 
 				// Juntando os arrays //
 				$data['dados'] 	= $this->joinArray($data['dados'], $data['dadosRequisicao']);					
@@ -213,6 +215,7 @@ class Request extends CI_Controller
 				$table 					= $value->RequestNcm . "_" . $value->RequestAno;
 				$idn 					= $value->RequestIDN;
 				$dados[$key]			= $this->ncm_model->listDataNcm($table, $idn);
+				$user 					= $value->RequestUser;
 			}		
 		}
 		elseif($id == 3)
@@ -280,6 +283,9 @@ class Request extends CI_Controller
 			$array[$key]['table'] 				= $dadosRequisicao[$key]['table'];
 			$array[$key]['idn'] 				= $value->IDN;
 			$array[$key]['idRe'] 				= $dadosRequisicao[$key]['idRe'];
+
+			$array[$key]['idUser'] 				= $this->user_model->getUserById($dadosRequisicao[$key]['user']);			
+			$array[$key]['user']				= $array[$key]['idUser'][0]->usuarioNome;
 
 			$array[$key]['descricao']			= $value->DESCRICAO_DETALHADA_PRODUTO;
 			$array[$key]['categoria'] 			= $value->CNome;
