@@ -213,6 +213,7 @@
 	<table class='table table-bordered table-hover'>
 		<thead>
 			<tr class="">				
+				<td width="4%"><b>Seleção</b></td>
 				<td width="4%"><b>Mês</b></td>
 				<td width="8%"><b>NCM</b></td>
 				<td width=""><b>Descrição</b></td>
@@ -226,6 +227,7 @@
 
 		{dados}
 			<tr>	
+				<td><input type="checkbox" id="{IDN}" value="{IDN}"/></td>
 				<td>{MES}</td>
 				<td>{ncm}</td>				
 				<td>{DESCRICAO_DETALHADA_PRODUTO}</td>
@@ -244,15 +246,14 @@
 		</thead>
 
 		<!-- Alterar todas as NCMs visíveis na tela -->
-<!-- 		<thead>
+		<thead>
 			<tr class="">
-				<td colspan=5><p align="center">Alterar todas as entradas acima</p></td>
+				<td colspan=6><p align="center">Alterar todas as entradas acima</p></td>
 				<td><a href="#categoriaAlterar" class="" data-toggle="modal">Categoria</a></td>
 				<td><a href="#marcaAlterar" data-toggle="modal">Marca</a></td>
-				<td><a href="#modeloAlterar" data-toggle="modal">Modelo</a></td>
 				<td></td>
 			</tr>
-		</thead> -->
+		</thead>
 
 	</table>
 
@@ -268,61 +269,46 @@
 	+++++++++++++++++++++++++++++++++++++++++++++++++++
 -->
 
-<!-- Modal para alteração da categoria -->
-<form action="<?php echo base_url();?>index.php/ncm/update/CategoriaAll/" method="POST">	
-	
-	<div class="modal hide" id="categoriaAlterar">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">×</button>
-			<h3>Alteração da categoria</h3>
-		</div>	
-		<div class="modal-body">			
+<!-- Modal para alteração da categoria -->	
+<div class="modal hide" id="categoriaAlterar">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3>Alteração da categoria</h3>
+	</div>	
+	<div class="modal-body">			
 
-{categorias}
-			<input type="radio" id ="categoria" name="categoria" value="{CID}"> {CNome}<br>
-{/categorias}
+{categorias1}
+		<input type="radio" id ="categoria" name="categoria" value="{CID}"> {CNome}<br>
+{/categorias1}
 
-			</div>
-		<div class="modal-footer">
-			<a href="<?php echo base_url();?>index.php/category/listAll" target="_blank" class="btn">Outros</a>
-			<a href="" class="btn" data-dismiss="modal">Não</a>
-			<button type="submit" class="btn btn-danger">Sim</button>			
-			<input type="hidden" name="ncm" value="{ncm}">
-			<input type="hidden" name="year" value="{year}">
-			<input type="hidden" name="idn" value="{IDN}">
-			<input type="hidden" name="ids" value="{ids}">
-		</div>	
-	</div>
+		</div>
+	<div class="modal-footer">
+		<a href="<?php echo base_url();?>index.php/category/listAll" target="_blank" class="btn">Outros</a>
+		<a href="" class="btn" data-dismiss="modal">Não</a>
+		<button type="submit" class="btn btn-danger" id="botaoCategoria">Sim</button>
+	</div>	
+</div>
 
-</form>
 
 <!-- Modal para alteração da Marca -->
-<form action="<?php echo base_url();?>index.php/ncm/update/MarcaAll/" method="POST">	
-	
-	<div class="modal hide" id="marcaAlterar">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">×</button>
-			<h3>Alteração da marca</h3>
-		</div>	
-		<div class="modal-body">			
+<div class="modal hide" id="marcaAlterar">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3>Alteração da marca</h3>
+	</div>	
+	<div class="modal-body">			
 
-{marcas}
-			<input type="radio" id ="marca" name="marca" value="{MAID}"> {MANome}<br>
-{/marcas}
+{marcas2}
+		<input type="radio" id ="marca" name="marca" value="{MAID}"> {MANome}<br>
+{/marcas2}
 
-			</div>
-		<div class="modal-footer">
-			<a href="<?php echo base_url();?>index.php/brand/setBrandView" target="_blank" class="btn">Outros</a>
-			<a href="" class="btn" data-dismiss="modal">Não</a>
-			<button type="submit" class="btn btn-danger">Sim</button>
-			<input type="hidden" name="ncm" value="{ncm}">
-			<input type="hidden" name="year" value="{year}">
-			<input type="hidden" name="idn" value="{IDN}">
-			<input type="hidden" name="ids" value="{ids}">			
-		</div>	
-	</div>
-
-</form>
+		</div>
+	<div class="modal-footer">
+		<a href="<?php echo base_url();?>index.php/brand/setBrandView" target="_blank" class="btn">Outros</a>
+		<a href="" class="btn" data-dismiss="modal">Não</a>
+		<button type="submit" class="btn btn-danger" id="botaoMarca">Sim</button>
+	</div>	
+</div>
 
 <!-- Modal para alteração do Modelo -->
 <form action="<?php echo base_url();?>index.php/ncm/update/ModeloAll/" method="POST">	
@@ -353,6 +339,53 @@
 
 <script type="text/javascript">
     
+    function marcaAll()
+    {
+	    var idSelector = function() { return this.id; };
+	    var idsSelecionados = $(":checkbox:checked").map(idSelector).get() ;
+	    var marca = $("input[id='marca']:checked").val();
+
+	    $(':checkbox:checked').removeAttr('checked');
+
+		var url = '<?php echo base_url();?>index.php/ncm/update/MarcaAllRequisicao/';
+		var form = $('<form action="' + url + '" method="POST">' +
+		  '<input type="hidden" name="ncm" value="' + <?php echo $ncm;?> + '" />' +
+		  '<input type="hidden" name="year" value="' + <?php echo $year;?> + '" />' +
+		  '<input type="hidden" name="marca" value="' + marca + '" />' +
+		  '<input type="hidden" name="ids" value="' + idsSelecionados + '" />' +
+		  '</form>');
+		$('body').append(form);
+		$(form).submit();		
+    }
+
+    function categoriaAll()
+    {
+	    var idSelector = function() { return this.id; };
+	    var idsSelecionados = $(":checkbox:checked").map(idSelector).get() ;
+	    var categoria = $("input[id='categoria']:checked").val();
+   	
+	    $(':checkbox:checked').removeAttr('checked');
+
+		var url = '<?php echo base_url();?>index.php/ncm/update/CategoriaAllRequisicao/';
+		var form = $('<form action="' + url + '" method="POST">' +
+		  '<input type="hidden" name="ncm" value="' + <?php echo $ncm;?> + '" />' +
+		  '<input type="hidden" name="year" value="' + <?php echo $year;?> + '" />' +
+		  '<input type="hidden" name="categoria" value="' + categoria + '" />' +
+		  '<input type="hidden" name="ids" value="' + idsSelecionados + '" />' +
+		  '</form>');
+		$('body').append(form);
+		$(form).submit();
+    }
+
+    $("#botaoCategoria").bind("click", function(){
+        categoriaAll();
+    });
+
+    $("#botaoMarca").bind("click", function(){
+       marcaAll();
+    });   
+
+
     function sendForm()
     {
     	var ncm = $("#ncm").val();

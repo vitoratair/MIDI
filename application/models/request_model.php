@@ -132,6 +132,7 @@ class Request_model extends CI_Model
 			$this->db->set('RequestAno', $year);
 			$this->db->set('RequestIDN', $idn);
 			$this->db->set('RequestMarca', $marca);
+			$this->db->set('RequestCategoria', $categoria);
 			$this->db->set('RequestModelo', '1');
 			$this->db->insert('Request');
 		}	

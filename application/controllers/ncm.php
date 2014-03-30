@@ -401,8 +401,56 @@ class ncm extends CI_Controller
 						$this->request_model->addRequest(1, $user, $ncm, $year, $idn, NULL, NULL, $categoria);
 					}																			
 				}
-
 				break;	
+
+			case 'CategoriaAllRequisicao':
+				$categoria 	= $this->input->post('categoria');				
+				$ids 		= $this->input->post('ids');
+				$user 		= $this->session->userdata('usuarioID');
+
+				if (empty($categoria))
+					break;
+
+				$idns = explode(",", $ids);
+
+				foreach ($idns as $key => $idn)
+				{
+					$oldCategory = $this->category_model->getCategoryByIDN($idn, $table);
+
+					if (empty($oldCategory))
+						$oldCategory = 1;
+					else
+						$oldCategory = $oldCategory[0]->Categoria;
+
+					$check = $this->request_model->checkRequest($ncm, $year, $idn);				
+					
+					if (!empty($check))
+					{
+						if ($oldCategory != 1)
+						{
+							$this->request_model->updateItem(4, $check[0]->RequestID, $ncm, $year, $idn, NULL, NULL, $categoria);
+						}
+						else
+						{
+							$this->request_model->updateItem(1, $check[0]->RequestID, $ncm, $year, $idn, NULL, NULL, $categoria);
+						}										
+					} 
+					else
+					{
+						if ($oldCategory!= 1)
+						{
+							$this->request_model->addRequest(4, $user, $ncm, $year, $idn, NULL, NULL, $categoria);	
+						}
+						else
+						{
+							$this->request_model->addRequest(1, $user, $ncm, $year, $idn, NULL, NULL, $categoria);
+						}																			
+						print_r($this->db->last_query());
+						echo "<br>";
+					}
+
+				}
+				break;				
 
 			case 'MarcaRequisicao':
 				$marca = $this->input->post('marca');				
@@ -426,6 +474,42 @@ class ncm extends CI_Controller
 				}
 
 				break;
+
+			case 'MarcaAllRequisicao':
+				$marca = $this->input->post('marca');	
+				$ids 		= $this->input->post('ids');
+				$user 		= $this->session->userdata('usuarioID');							
+				
+				if (empty($marca))
+					break;
+
+				if ($marca == 1)
+					$marca = 'NULL';
+
+				$idns = explode(",", $ids);
+
+				foreach ($idns as $key => $idn)
+				{
+					
+					$oldCategory = $this->category_model->getCategoryByIDN($idn, $table);
+
+					if (!empty($oldCategory))
+						$oldCategory = $oldCategory[0]->Categoria;					
+
+					$check = $this->request_model->checkRequest($ncm, $year, $idn);				
+					
+					if (empty($check))
+					{
+						$this->request_model->addRequest(2, $user, $ncm, $year, $idn, NULL, $marca, $oldCategory);
+					}
+					else
+					{
+						$this->request_model->updateItem(2, $check[0]->RequestID, $ncm, $year, $idn, NULL, $marca, NULL);
+					}
+				}
+
+				break;
+
 
 			case 'ModeloRequisicao':
 				$modelo = $this->input->post('modelo');				
@@ -462,7 +546,12 @@ class ncm extends CI_Controller
 				break;
 		}	
 
-		redirect("ncm/edit/$idn/$ncm/$year/$idn");
+		if ($id == 'CategoriaAllRequisicao' or $id == 'MarcaAllRequisicao')
+		
+			redirect("search/ncm/");	
+		
+		else			
+			redirect("ncm/edit/$idn/$ncm/$year/$idn");
 	}	
 
 	// Limpa uma determinada NCM, colocando 1 em todos os campos dinâmicos //
