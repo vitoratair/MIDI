@@ -24,6 +24,8 @@ class Brand extends CI_Controller
 	public function listAll()
 	{
 
+		$user = $this->session->userdata('usuarioTipo');
+		
 		// Recebe os dados do FORM //			
 		$search		= $this->input->post('buscaMarca');
 
@@ -53,7 +55,11 @@ class Brand extends CI_Controller
 			$data["links"] 			= $this->pagination->create_links();			
 		}
 
-		$data['main_content'] 	= 'brand/brand_view';
+		if ($user == 1)
+			$data['main_content'] 	= 'brand/brand_view';
+
+		else
+			$data['main_content'] 	= 'brand/brandUser_view';			
 
 		$this->parser->parse('template', $data);
 
