@@ -27,25 +27,25 @@
 				<input type="text" class="span12" id="nomeModelo0" value="{MNome0}" name="nomeModelo0">
 
                 <label>Sinônimo</label>
-				<input type="text" disabled="true" class="span12" id="nomeModelo" value="{MNome}" name="nomeModelo">				
+				<input type="text" class="span12" id="nomeModelo" value="{MNome}" name="nomeModelo">				
                 
 				<label>Sinônimo</label>
-				<input type="text" disabled="true" class="span12" id="nomeModelo" value="{MNome1}" name="nomeModelo1">
+				<input type="text" class="span12" id="nomeModelo" value="{MNome1}" name="nomeModelo1">
 				
 				<label>Sinônimo</label>
-				<input type="text" disabled="true" class="span12" id="nomeModelo" value="{MNome2}" name="nomeModelo2">
+				<input type="text" class="span12" id="nomeModelo" value="{MNome2}" name="nomeModelo2">
 
 				<label>Sinônimo</label>
-				<input type="text" disabled="true" class="span12" id="nomeModelo" value="{MNome3}" name="nomeModelo3">
+				<input type="text"  class="span12" id="nomeModelo" value="{MNome3}" name="nomeModelo3">
 
 				<label>Sinônimo</label>
-				<input type="text" disabled="true" class="span12" id="nomeModelo" value="{MNome4}" name="nomeModelo4">
+				<input type="text" class="span12" id="nomeModelo" value="{MNome4}" name="nomeModelo4">
             </div>
         
             <div class="controls">
                 <div class="span6">
                     <label>Marca <span class="color-red">*</span></label>
-					<select id="marca"  disabled="true" name="marca" class="span12">					
+					<select id="marca" name="marca" class="span12">					
 						{marca}
 							<option value="{MANome}"> {MANome}</option>					
 						{/marca}
@@ -58,7 +58,7 @@
                 <div class="span6">
                     <label>Categoria <span class="color-red">*</span></label>
 
-					<select id="categoria" disabled="true" name="categoria" class="span12" onchange="this.form.submit()">					
+					<select id="categoria" name="categoria" class="span12" onchange="this.form.submit()">					
 						{categoria}
 							<option value="{CID}"> {CNome}</option>					
 						{/categoria}
