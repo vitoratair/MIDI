@@ -48,7 +48,7 @@
 				<td width=""><b>Categoria</b></td>
 				<td width=""><b>Marca</b></td>
 				<td width=""><b>Modelo</b></td>
-				<td colspan="2" width=""><b>Opções</b></td>
+				<td width=""><b>Opções</b></td>
 			</tr>			
 		</thead>
 		{dados}	
@@ -61,7 +61,6 @@
 				<td><font color=""><strong>{marcaRe}</strong></font></td>				
 				<td><font color=""><strong>{modeloRe}</strong></font></td>							
 				<td><a onclick='Excluir("{idRe}")' data-toggle="modal" href="#deletar" class='icon-trash'></a></td>								
-				<td><a onclick='altera("{idRe}", "{idn}", "{table}", "{categoriaReID}", "{marcaReID}", "{modeloReID}")' data-toggle="modal" href="#alterar" class='icon-check'></a></td>
 			</tr>					
 		{/dados}			
 	</table>
