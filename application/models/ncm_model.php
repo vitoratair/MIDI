@@ -262,7 +262,7 @@ class ncm_model extends CI_Model
 			
 			foreach ($unSearch1 as $key => $value)
 			{
-				$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);		
+				$this->db->or_not_like('DESCRICAO_DETALHADA_PRODUTO', $unSearch);		
 			}
 
 			if ($month != 0)
@@ -284,7 +284,7 @@ class ncm_model extends CI_Model
 
 			foreach ($unSearch1 as $key => $value)
 			{
-				$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $value);			
+				$this->db->or_not_like('DESCRICAO_DETALHADA_PRODUTO', $value);			
 			}
 
 			if ($month != 0)
@@ -435,7 +435,7 @@ class ncm_model extends CI_Model
 			
 			foreach ($unSearch1 as $key => $value)
 			{
-				$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $value);			
+				$this->db->or_not_like('DESCRICAO_DETALHADA_PRODUTO', $value);			
 			}							
 
 			if ($month != 0)
@@ -458,7 +458,7 @@ class ncm_model extends CI_Model
 			
 			foreach ($unSearch1 as $key => $value)
 			{
-				$this->db->not_like('DESCRICAO_DETALHADA_PRODUTO', $value);			
+				$this->db->or_not_like('DESCRICAO_DETALHADA_PRODUTO', $value);			
 			}	
 
 			if ($month != 0)
